@@ -1,0 +1,302 @@
+.lab-container-page {
+  height: 80vh;
+  overflow-y: auto; 
+  padding:5px;
+}
+
+/* Hide scrollbars */
+.lab-container-page::-webkit-scrollbar {
+  display: none;
+}
+
+.lab-container-page {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+
+.lab-page2 {
+  width: 100%;
+  padding: 10px;
+  height: 80vh;
+}
+
+
+.lab-page2{
+  height: 80vh;
+  overflow-y: auto; 
+  padding:5px;
+}
+
+/* Hide scrollbars */
+.lab-page2-scrollbar {
+  display: none; /* Hides the scrollbar */
+}
+
+.lab-page2{
+  -ms-overflow-style: none;  /* Hides scrollbar in IE */
+  scrollbar-width: none; /* Hides scrollbar in Firefox */
+}
+
+
+
+
+
+.back-button{
+  background-color: var(--button-color);
+  border: none;
+  padding: 5px 10px;
+  color: white;
+  border-radius: 5px;
+}
+
+.back-button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border:1px solid var(--button-hover-border-color);
+  }
+ 
+.lab-container2 {
+  border: 0.5px solid black;
+  background-color: white;
+  margin: 10px;
+  padding: 20px;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+/* header{
+  display: flex;
+  justify-content: center;
+  height: 10%;
+  color:rgb(10, 145, 199) ;
+  background-color: white;
+ justify-content: space-between;
+} */
+
+.lab-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center; /* Center horizontally */
+}
+
+
+.lab-circle {
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid var(--button-color);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.lab-plus {
+  font-size: 40px;
+  font-weight: bolder;
+  margin-top: -10px;
+}
+
+.lab-text {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.lab-hospital {
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px; /* Optional spacing below the logo */
+}
+.lab-contact {
+  display: flex;
+  flex-direction: column;
+  margin-right: 5px;
+}
+
+.lab-patient-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border: 0.5px solid black;
+  background-color: white;
+  padding: 5px;
+}
+
+.lab-patient-details p {
+  margin: 0px;
+}
+
+.lab-table-container {
+  margin-bottom: 20px;
+}
+
+/* table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+th {
+  text-align: left;
+  background-color: lightgray;
+} */
+
+.lab-comments {
+  margin-bottom: 20px;
+}
+
+.lab-comments textarea {
+  width: 100%;
+}
+
+
+/* textarea {
+  width: 98%;
+  height: 50px;
+  resize: vertical;
+  padding: 10px;
+  
+} */
+ 
+.lab-disclaimer {
+  font-size: 12px;
+  color: gray;
+}
+
+
+.lab-signatory-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.lab-signatory {
+  display: flex;
+  flex-direction: column;
+  color: red;
+  margin: 10px;
+  width: 30%;
+ 
+}
+.lab-signatory ::placeholder{
+  color: red;
+}
+
+
+
+.lab-signatory input {
+  padding: 8px;
+  border: 1px solid gray;
+  background-color: lightslategray;
+  
+}
+.lab-signatories {
+width: 400px;
+}
+
+
+.lab-signatories p {
+  color: black;
+  font-weight: bold;
+}
+
+
+.lab-update {
+  margin-left: 40%;
+}
+
+.lab-print-button {
+  background-color: var(--button-color);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  align-self: center;
+  /* margin: 15px; */
+  border-radius: 5px;
+}
+
+.lab-print-button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+
+.print-button:hover {
+  background-color: darkblue;
+  background-color: white;
+}
+.selected-doctor-info{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.doctor-info-sig img{
+ border-radius: 0;
+ height: 50px;
+ width: 150px;
+ border-bottom: 1px solid black;
+}
+.doctor-info-sig{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.lab-update-finalBtn{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.final-lab-report-confirmBox{
+  width: 250px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.final-lab-report-confirmBox-inputs{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 16px;
+}
+.final-lab-report-confirmBox-inputs input{
+  border: 1px solid #ccc;
+  border-radius: 7px;
+}
+.final-lab-report-confirmBox-inputs button{
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  background: var(--button-color);
+}
+/* Print Styles */
+@media print {
+  body * {
+    display: none; /* Hide everything */
+  }
+  
+  #printLabResult {
+    display: block !important;
+    width: 100%; /* Ensure it's full width for print */
+    background-color: white;
+    color: black;
+    overflow: visible; /* Ensure no clipping of content */
+  }
+  
+  .lab-container-page {
+    height: auto; /* Allow page to grow based on content */
+    overflow: visible; /* Ensure everything fits */
+  }
+}

@@ -1,0 +1,76 @@
+/* Akash Pawar CSSD 14/24 */
+.cssd-component {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+  }
+  
+  .cssd-component-header {
+    padding: 20px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0px;
+    z-index: 10;
+  }
+  
+  .cssd-component-header ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+  
+  .cssd-component-header ul li {
+    color: black;
+    /* margin-right: 20px; */
+    cursor: pointer;
+    font-size: 14px;
+    padding:0 15px;
+  }
+  .cssd-component-header a{
+    text-decoration: none;
+    border-radius: var(--input-box-padding);
+    padding: var(--input-box-padding);
+    color: black;
+  }
+  
+  .cssd-component-header a:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+     border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .cssd-component-header ul li .active {
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    padding: 5px 10px;
+    background-color: var(--button-bg-color);
+  }
+  
+  .cssd-component-header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* .cssd-component-refresh-btn {
+    background-color: #1890ff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  .cssd-component-active-account {
+    background-color: #52c41a;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+  } */

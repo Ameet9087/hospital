@@ -1,0 +1,133 @@
+/* swapnil Rokade Opd Adding className And color and table css 18/09 */
+.opd-patient-list {
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  background-color: var(--background-color);
+}
+
+.opd-top-buttons {
+  margin-bottom: 20px;
+}
+
+.opd-top-buttons button {
+  padding:5px;
+  margin-right: 10px;
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.opd-top-buttons button:hover{
+  color: var( --button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.opd-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.opd-filters select {
+  padding: var( --input-box-padding);
+}
+
+.opd-search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.opd-search-bar input {
+  padding: var( --input-box-padding);
+  margin-right: 5px;
+}
+
+.opd-search-bar button {
+  padding: 5px 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.opd-results {
+  color: var(--button-hover-text-color);
+}
+
+.opd-print {
+  padding: 5px 10px;
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-hover-border-color);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.opd-print:hover
+{
+  color: var( --button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+  background-color: var(--button-hover-background-color);
+
+}
+/* Table styling for .opd-list-table */
+.opd-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  font-family: Arial, sans-serif;
+  margin-bottom: 20px; /* Adjust margin if needed */
+}
+
+.opd-list-table th,
+.opd-list-table td {
+  border: 1px solid #ddd;
+  padding: 8px; /* Increased padding for better readability */
+  text-align: left;
+}
+
+.opd-list-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.opd-list-table tbody tr:hover {
+  background-color: #f9f9f9; /* Light hover effect for table rows */
+}
+
+.opd-list-table td button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 2px;
+  padding: 4px; /* Adds padding for click area */
+}
+
+.opd-list-table td button:hover {
+  background-color: #e6f3ff; /* Subtle hover effect for buttons */
+  border-radius: 3px;
+}
+
+/* Optional: Add pagination styles if needed */
+.opd-paginat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.opd-paginat button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.opd-paginat button:hover {
+  background-color: #357ab8; /* Darker shade on hover */
+}

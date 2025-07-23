@@ -1,0 +1,35 @@
+.horizontalList-container {
+  font-family: Arial, sans-serif; /* Optional font style */
+}
+
+.horizontalList-horizontal-container {
+  display: flex;
+  /* background-color: white;  */
+  /* padding: 10px;  */
+}
+
+.horizontalList-item {
+  text-align: center; /* Center text horizontally */
+  padding: 10px; /* Optional padding */
+  margin: 0 5px; /* Add margin between buttons */
+  background-color: var(--button-color); /* Blue background */
+  color: white; /* White text */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth transition */
+}
+
+.horizontalList-item:hover {
+  background-color: white; /* Darker blue on hover */
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.horizontalList-settings-content {
+  margin-top: 10px; /* Optional margin to separate the list from the content */
+  padding: 20px; /* Optional padding for the content */
+  /* background-color: #f9f9f9;  */
+  border-radius: 5px; /* Rounded corners for content area */
+  /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); */
+}

@@ -1,0 +1,81 @@
+.Vendors {
+  padding: 20px;
+}
+
+.Vendors-add-btn {
+  background-color: var(--button-color);
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.Vendors-search-container {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+.Vendors-search-filter
+{
+  width: 30%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 5px;
+}
+
+.Vendors-search-input {
+  flex: 1;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  margin-right: 10px;
+}
+
+.Vendors-search-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.Vendors-table-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+
+.Vendors-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.Vendors-resizable-th {
+  position: relative;
+}
+
+.Vendors-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Vendors-resizer {
+  width: 5px;
+  height: 100%;
+  background: #ccc;
+  cursor: col-resize;
+}
+
+.Vendors-edit-btn,
+.Vendors-print-btn {
+  background-color: var(--button-color);
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}

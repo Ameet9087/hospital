@@ -1,0 +1,50 @@
+.tansportpatientalllist-container {
+    padding: 20px;
+    background-color: #e3fffe;
+    border-radius: 8px;
+  }
+  
+  .tansportpatientalllist-header {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .tansportpatientalllist-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .tansportpatientalllist-th,
+  .tansportpatientalllist-td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .tansportpatientalllist-th {
+    background-color: #f4f4f4;
+    color: black;
+    font-size: 14px;
+  }
+  
+  .tansportpatientalllist-td {
+    font-size: 14px;
+    background-color: white;
+  }
+  
+
+  
+  /* Transport Status Styling */
+  .tansportpatientalllist-td.transported {
+    color: green;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .tansportpatientalllist-td.not-transported {
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  

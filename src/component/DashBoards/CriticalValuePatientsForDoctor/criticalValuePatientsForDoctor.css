@@ -1,0 +1,95 @@
+.criticalValuePatientsForDoctor-schedule {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .criticalValuePatientsForDoctor-header {
+    background-color: var(--button-hover-border-color);
+    color: white;
+    padding: 10px;
+  }
+  
+  .criticalValuePatientsForDoctor-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .criticalValuePatientsForDoctor-controls {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  
+  .criticalValuePatientsForDoctor-nav-btn, .criticalValuePatientsForDoctor-action-btn {
+    padding: 4px 8px;
+    background-color: white;
+    color: var( --button-color);
+    border: 1px solid white;
+    border-radius: 5px;
+    /* margin: 1px; */
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+}
+.criticalValuePatientsForDoctor-nav-btn:hover,.criticalValuePatientsForDoctor-action-btn:hover{
+      border: 1px solid white;
+    color: white;
+    background-color: var(--button-color);
+  }
+  .criticalValuePatientsForDoctor-date-range {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .criticalValuePatientsForDoctor-date-range input {
+    width: 80px;
+    padding: 4px;
+  }
+  
+  .criticalValuePatientsForDoctor-settings-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .criticalValuePatientsForDoctor-content {
+    display: flex;
+    flex: 1;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  .criticalValuePatientsForDoctor-left-panel, .criticalValuePatientsForDoctor-right-panel {
+    border: 1px solid #ccc;
+    flex: 1;
+  }
+  
+  .criticalValuePatientsForDoctor-panel-header {
+    background-color: #f0f0f0;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .criticalValuePatientsForDoctor-panel-title {
+    font-weight: bold;
+  }
+  
+  .criticalValuePatientsForDoctor-menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .criticalValuePatientsForDoctor-no-records {
+    padding: 20px;
+    text-align: center;
+    color: red;
+  }

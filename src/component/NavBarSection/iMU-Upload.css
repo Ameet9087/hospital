@@ -1,0 +1,165 @@
+.imuUpload-page {
+    background-color: var(--background-color);
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    height: 70vh;
+  }
+  
+  .imuUpload-filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .imuUpload-controls {
+    display: flex;
+  }
+  .imuUpload-date-range {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    background-color: #f0f0f0;
+    padding: 1px 10px;
+  }
+  .imuUpload-date-range label{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    font-size: var(--font-size);
+  }
+  
+  .imuUpload-date-range input[type="date"] {
+    padding: 3px;
+    margin-left: 10px;
+  }
+
+  .imuUpload-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .imuUpload-upload-to-imu {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+   .imuUpload-upload-to-imu:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color)
+  }
+  
+
+  .imuUpload-search-bar{
+    position: relative;
+    /* margin-bottom: 10px; */
+  /* margin-left: -15px; */
+
+    /* padding-left: -10px; */
+    /* opacity: 0; */
+    /* animation: slideIn 1s forwards 0.8s; */
+  }
+  .imuUpload-search-bar i{
+    position: absolute;
+    top: 8px;
+    left: 180px;
+    /* display: flex;
+    justify-content: ; */
+    color: gray;
+  }
+  .imuUpload-search-input {
+    padding: 5px;
+    font-size: var(--font-size);
+    width: 200px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  
+  
+  .imuUpload-upload-status {
+    /* margin-bottom: 20px; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--font-size);
+  }
+  
+  .imuUpload-upload-status label {
+    margin-right: 20px;
+  }
+  .imuUpload-Showing span{
+    /* color: #0F63AF; */
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+  }
+  .imuUpload-print-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-top: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+    padding: 5px 10px;
+  }
+  .imuUpload-print-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .imuUpload-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .imuUpload-data-table th, .imuUpload-data-table td {
+    border: 1px solid #e6e3e3;
+    padding: 3px;
+    text-align: center;
+  }
+  
+  .imuUpload-data-table th {
+    background-color: #A5ACAC;
+    /* color: #5a5959; */
+    font-size: var(--heading-font);
+  }
+  
+  .imuUpload-pagination {
+    text-align: right;
+  }
+  
+  .imuUpload-pagination button {
+    background-color: var(--background-color);
+    /* color: gray; */
+    font-size: var(--font-size);
+    margin-left: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+  }
+  .imuUpload-search-N-upload{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .imuUpload-checkbx{
+    /* width: 20%; */
+    font-size: var(--font-size);
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }

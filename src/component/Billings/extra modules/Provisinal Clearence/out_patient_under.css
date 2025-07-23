@@ -1,0 +1,106 @@
+/* General styles for the out_patient_under component */
+.out_patient_under-list {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #e0f5fc;
+    padding: 10px;
+  }
+  
+  .out_patient_under-nav-content {
+    margin-bottom: 20px;
+  }
+  
+  .out_patient_under-checkbox-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .out_patient_under-label {
+    margin-left: 8px;
+    font-size: 20px;
+    color: black;
+    font-weight: 500;
+  }
+  
+  .out_patient_under-search-print {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .out_patient_under-search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .out_patient_under-inputsearchbar {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .out_patient_under-searchbar-btn {
+    background-color: white; /* Blue background */
+    color: black; /* White text */
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: -20px;
+  }
+  
+  .out_patient_under-print-btn {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .out_patient_under-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .out_patient_under-table th, .out_patient_under-table td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: left;
+    font-size: 12px;
+  }
+  
+  .out_patient_under-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .out_patient_under-action-btn {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  
+  .out_patient_under-pagination {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .out_patient_under-pagination-btn {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin: 0 4px;
+    border-radius: 4px;
+  }
+  
+  .out_patient_under-pagination span {
+    margin: 0 8px;
+  }
+  

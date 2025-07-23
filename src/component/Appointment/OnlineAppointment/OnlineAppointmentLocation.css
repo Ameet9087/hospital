@@ -1,0 +1,33 @@
+.Location-locations-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 50px;
+}
+
+.Location-locations-list span {
+  display: flex;
+  flex-direction: row;
+  /* height: 50px; */
+  padding: 5px 20px;
+  width: 250px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: white;
+  border-radius: 50px;
+  cursor: pointer;
+}
+.Location-locations-list h3 {
+  margin-top: 10px;
+  font-size: 24px;
+}
+.location-icon {
+  color: var(--button-color);
+  font-size: 40px;
+}
+.location-icon {
+  margin-top: 5px;
+}

@@ -1,0 +1,76 @@
+
+/* Swapnil ROkade RadioOrder adding class name and table centralization 23/09 */
+
+.RadioOrder-container {
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .RadioOrder-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  .RadioOrder-group {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .RadioOrder-group label {
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+  }
+  
+  .RadioOrder-group input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  .RadioOrder-action-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .RadioOrder-action-container-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.1s;
+  }
+  
+  .RadioOrder-action-container-btn:active {
+    transform: scale(0.98);
+  }
+  
+  .RadioOrder-action-container-btn-sign {
+    background-color: var(--button-color);
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+  }
+  
+  .RadioOrder-action-container-btn-sign:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-color);
+    border: 1px solid var(--button-color);
+  }
+  
+  .RadioOrder-action-container-btn-cancel {
+    background-color: #e74c3c;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+  }
+  
+  .RadioOrder-action-container-btn-cancel:hover {
+    background-color: #c0392b;
+  }

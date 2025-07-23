@@ -1,0 +1,129 @@
+/* swapnil Rokade surgical-history Adding className And color and table css 18/09 */
+.surgical-history-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  display: flex;
+}
+.surgical-history-subdiv
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.surgical-history-main {
+  margin: 0 auto;
+}
+.surgicalhist{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+}
+
+.surgical-history-section {
+  margin-bottom: 20px;
+}
+
+.surgical-history-section label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+
+.surgical-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.surgical-history-table th,
+.surgical-history-table td {
+  padding: 8px;
+  text-align: left;
+}
+
+.surgical-history-table th {
+  background-color: #f2f2f2;
+}
+
+.surgical-history-table-data {
+  padding: 8px;
+}
+
+.surgical-history-modal-overlay {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.surgical-history-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+  position: relative;
+  
+}
+
+
+.surgical-history-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.surgical-history-form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+}
+
+.surgical-history-form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  display: block;
+  width: 50%;
+}
+
+.surgical-history-form-group input,
+.surgical-history-form-group textarea {
+  /* width: 100%; */
+  padding: 5px;
+  margin-top: 4px;
+  /* box-sizing: border-box; */
+}
+
+
+.surgical-history-add-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding:5px;
+  cursor: pointer;
+  border: 1px solid var(--button-hover-border-color);
+}
+.surgical-history-add-button:hover
+{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.surgical-historyadd-print-btn{
+  display: flex;
+  gap: 5px;
+  
+}

@@ -1,0 +1,283 @@
+/* Employee Table Styles */
+.employee-page-table {
+  background-color: var(--background-color);
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.employee-table-container {
+  background-color: var(--background-color);
+  border-radius: 5px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  padding: 20px;
+}
+
+.employee-manage-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.add-employee-role-role-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--button-color);
+}
+.add-employee-role-role-btn:hover {
+  color: var(--button-color);
+  background-color: white;
+  border-bottom: 1px solid var(--button-color);
+}
+
+.employee-search-input {
+  width: 200px;
+  margin: 10px 0;
+}
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.employee-table th,
+.employee-table td {
+  border: 1px solid #e0e0e0;
+  /* padding: 10px; */
+  text-align: left;
+  font-size: 14px;
+}
+
+.employee-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Hover effect for table rows */
+.employee-table tbody tr:hover {
+  background-color: #f0f0f0; /* Light gray background on hover */
+}
+
+.employee-edit-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  border-bottom: 1px solid var(--button-color);
+}
+.employee-edit-btn:hover {
+  color: var(--button-color);
+  background-color: white;
+  border-bottom: 1px solid var(--button-color);
+}
+
+.employee-pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .employee-pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #0F63AF;
+  color: white;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+} */
+
+.employee-pagination span {
+  margin: 0 10px;
+  font-size: 14px;
+}
+
+/* Employee Header Styles */
+.employee-header {
+  background-color: white;
+  font-size: 16px;
+  position: static;
+  /* overflow-x: scroll;  */
+  white-space: nowrap;
+}
+
+.employee-header-form::-webkit-scrollbar {
+  display: none;
+  scrollbar-width: 5px;
+}
+
+/* .employee-header {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;    
+} */
+
+.employee-header-form {
+  list-style-type: none;
+  display: flex;
+  gap: 10px;
+  padding: 5px;
+  margin: 0;
+  overflow-x: scroll;
+  width: 100%;
+}
+
+.employee-header-form li a {
+  padding: 10px 15px;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 8px;
+  margin-left: 5px;
+}
+
+.employee-header-form li a:hover {
+  background-color: white;
+  color: var(--button-color);
+}
+.employee-header-form li a.active {
+  background-color: var(--button-bg-color); /* Background color when active */
+  color: white; /* Text color when active */
+}
+
+.employee-sub-nav,
+.department-sub-nav {
+  background-color: var(--background-color);
+  padding: 0;
+}
+
+.sub-nav-container ul {
+  list-style-type: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+.sub-nav-container li a {
+  padding: 10px 10px;
+  cursor: pointer;
+  color: black;
+}
+
+.sub-nav-container li a:hover {
+  background-color: var(--background-color);
+  color: black;
+}
+.sub-nav-container li a.active {
+  background: transparent;
+  border-bottom: 5px solid var(--button-bg-color);
+}
+/* Responsive Design */
+/* @media (max-width: 768px) {
+  .employee-header-form {
+    flex-direction: column;
+  }
+
+  .employee-header-form li {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .employee-search-input {
+    width: 100%;
+  }
+
+  .employee-table th, .employee-table td {
+    font-size: 12px;
+  }
+
+  .employee-manage-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+ 
+} */
+
+/* Common Sub-navigation Styles */
+.sub-nav-container ul {
+  list-style-type: none; /* Remove default list styling */
+  padding: 0;
+  margin: 0;
+}
+
+.sub-nav-container li {
+  position: relative; /* Position relative for the pseudo-element */
+}
+
+.sub-nav-container a {
+  text-decoration: none; /* Remove default underline */
+  color: black; /* Set text color to black */
+  font-size: 16px; /* Set font size */
+  display: block; /* Make the entire link area clickable */
+  padding-bottom: 5px; /* Space between text and underline */
+  position: relative; /* Position relative to use pseudo-element */
+}
+
+.sub-nav-container a::after {
+  content: ""; /* Empty content for pseudo-element */
+  position: absolute;
+  left: 0;
+  bottom: -4.8px;
+  width: 100%;
+  height: 5px;
+  background-color: var(--button-bg-color); /* Blue underline */
+  transform: scaleX(0); /* Start with 0 width for the animation */
+  transform-origin: bottom right; /* Origin for the animation */
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.sub-nav-container a:hover::after {
+  transform: scaleX(1); /* Scale to full width on hover */
+  transform-origin: bottom left; /* Change origin for the hover effect */
+}
+
+/* Responsive Design for Billing Sub-nav */
+@media (max-width: 768px) {
+  .billing-sub-nav ul {
+    flex-direction: column;
+  }
+
+  .billing-sub-nav li {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+.more-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #f9f9f9;
+  /* min-width: 100px; */
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.more-dropdown ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.more-dropdown li a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.more-dropdown li a:hover {
+  background-color: #f1f1f1;
+}

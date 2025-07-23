@@ -1,0 +1,210 @@
+.location-master {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  /* max-width: 1400px; */
+  margin: 0 auto;
+}
+
+.location-master__header {
+  cursor: pointer;
+  color: white;
+  padding: 10px;
+  background-color: var(--button-color);  
+  margin: 0;
+}
+
+.location-master__header h3 {
+  margin: 0;
+  color: white;
+}
+
+.location-master__form-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.location-master__left-column,
+.location-master__right-column {
+  flex: 1;
+}
+
+.location-master__form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.location-master__form-group label {
+  font-weight: bold;
+  margin-right: 10px;
+  min-width: 150px; /* Ensures consistent label width */
+}
+
+.location-master__form-group input,
+.location-master__form-group textarea,
+.location-master__form-group select {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.location-master__appointment-desk {
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.location-master__appointment-desk h4 {
+  margin: 0;
+}
+
+.location-master__checkbox-group {
+  margin-top: 10px;
+}
+
+.location-master__income-head-mapping {
+  margin-top: 20px;
+}
+
+.location-master__income-head-mapping h4 {
+  background-color: var(--button-color);  
+  color: white;
+  padding: 5px;
+  margin: 0;
+}
+
+.location-master__income-head-mapping table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.location-master__income-head-mapping th,
+.location-master__income-head-mapping td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.location-master__income-head-mapping th {
+  background-color: #f2f2f2;
+}
+
+.location-master__link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.location-master__link:hover {
+  text-decoration: underline;
+}
+
+.location-master-headers{
+   margin-top: 10px;
+ margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.location-master-headers{
+  margin-top: 10px;
+margin-bottom: 10px;
+ font-weight: bold;
+ font-size: 20px;
+}
+
+.location-master__submit-button{
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin-top: 20px;
+}
+
+.location-master__submit-button:hover{
+  background-color: white;
+  color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.search-icon-button{
+
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin-left: 10px;
+}
+
+.search-icon-button{
+
+  background-color: white;
+  color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+
+}
+
+
+/* General Styles for SearchPopup Component */
+.SearchPopup {
+  width: 100%; /* Adjust width to your needs, e.g., 80% or 600px */
+  max-width: 600px; /* Optional: Set a maximum width to make it more responsive */
+  margin: 0 auto; /* Centers the content horizontally */
+  text-align: left; /* Align text to the left */
+  padding: 20px;
+}
+
+/* Search bar styling */
+.SearchPopup-search-bar {
+  margin-bottom: 20px;
+}
+
+.SearchPopup-input {
+  width: 100%; /* Makes the input field take up full width */
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Table styling */
+.SearchPopup-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.SearchPopup-table th,
+.SearchPopup-table td {
+  padding: 8px;
+  text-align: left; /* Align table text to the left */
+  border: 1px solid #ddd;
+}
+
+.SearchPopup-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+/* Styling for loading state */
+.SearchPopup-table td {
+  text-align: center;
+}
+
+/* Optional: Style for table rows when filtered */
+.SearchPopup-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.SearchPopup-table tr:hover {
+  background-color: #f1f1f1;
+}
+

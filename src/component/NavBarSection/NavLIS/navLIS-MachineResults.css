@@ -1,0 +1,94 @@
+.labLIS-MachineResults-upload-page {
+    background-color: var(--background-color);
+    padding: 10px 10px 0px 0px;
+    font-family: Arial, sans-serif;
+    height: 75vh;
+  }
+  
+  .labLIS-MachineResults-filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .labLIS-MachineResults-controls {
+    display: flex;
+  }
+  .labLIS-MachineResults-date-range {
+    display: flex;
+    align-items: center;
+    /* width: 95%; */
+    gap: 10px;
+    background-color: #f0f0f0;
+    padding: 1px 10px;
+  }
+  .labLIS-MachineResults-date-range label{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    font-size: var(--font-size);
+  }
+  
+  .labLIS-MachineResults-date-range input[type="date"] {
+    padding: 3px;
+    margin-left: 10px;
+  }
+  .labLIS-MachineResults-star-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color:var(--button-color) ;
+    cursor: pointer;
+  }
+  .labLIS-MachineResults-ok-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .labLIS-MachineResults-ok-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+   .labLIS-MachineResults-more-btn {
+    background-color: #B9B9CA;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: white;
+  }
+  
+  .labLIS-MachineResults-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .labLIS-MachineResults-load-data{
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .labLIS-MachineResults-load-data:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+    
+  

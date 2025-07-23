@@ -1,0 +1,59 @@
+/* StaffTransportTable.css */
+.StaffTransportManagement-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.StaffTransportManagement-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.StaffTransportManagement-table th, .StaffTransportManagement-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.StaffTransportManagement-table th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.StaffTransportManagement-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.StaffTransportManagement-table tr:hover {
+  background-color: #ddd;
+}
+
+.StaffTransportManagement-table button {
+  padding: 5px 10px;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.StaffTransportManagement-table button:hover {
+  background-color: #005f73;
+}
+
+/* Add button styling */
+.StaffTransportManagement-add-button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.StaffTransportManagement-add-button:hover {
+  background-color: #45a049;
+}

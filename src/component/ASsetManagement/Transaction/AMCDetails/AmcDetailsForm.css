@@ -1,0 +1,243 @@
+
+
+.amc_Details {
+    background-color:var(--background-color);
+    padding: 4px;
+    font-size: 12px;
+    max-width: 1300px;
+  }
+  
+  .AMCDetails-title-bar {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 8px;
+    margin-bottom: 4px;
+  }
+  
+  .AMCDetails-header {
+    font-size: var(--heading-font);
+  }
+  
+  .AMCDetails-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .AMCDetails-main-section {
+    display: flex;
+    gap: 4px;
+  }
+  
+  .AMCDetails-panel {
+    flex: 1;
+    background: white;
+    border: 1px solid #ccc;
+  }
+  
+  .AMCDetails-panel-header {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 5px 10px;
+    font-size: var(--heading-font);
+  }
+  
+  .AMCDetails-panel-content {
+    padding: 8px;
+  }
+  
+  .AMCDetails-form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 4px;
+    font-size: var(--font-size);
+  }
+  
+  
+ 
+  
+
+  .AMCDetails-magnifier-btn {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 2px 6px;
+    cursor: pointer;
+  }
+  .AMCDetails-status-controls {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--font-size);
+  }
+  
+  .AMCDetails-radio-group {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .AMCDetails-services-section {
+    background: white;
+    border: 1px solid #ccc;
+  }
+  
+  .AMCDetails-tab-bar {
+    display: flex;
+    gap: 5px;
+    background: var(--upperBar-bg-color);
+    padding: 4px ;
+  }
+  
+  .AMCDetails-tab {
+    padding: 4px 12px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    color: white;
+    font-size: var(--font-size);
+    background: var(--button-color);
+    cursor: pointer;
+  }
+  
+  .amc-detail-input
+  {
+    text-align: center; /* Center the text inside the input */
+    padding: 5px; /* Optional for better appearance */
+    width: 90%; /* Adjust width as needed */
+    box-sizing: border-box; /* Ensures padding doesn't exceed the input width */
+  }
+  
+  .AMCDetails-tab.active {
+    color: var(--button-hover-background-color);
+    font-weight: bold;
+    color: black;
+    background:var(--button-hover-background-color);
+
+  }
+  
+  .AMCDetailsservices-table {
+    padding: 8px;
+  }
+
+  .AMCDetailssurgery-events-table-actions {
+    margin-bottom: 4px;
+  } 
+  
+  .AMCDetails-add-btn,
+  .AMCDetails-del-btn {
+    margin-right: 4px;
+    padding: 2px 8px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: var(--font-size);
+  }
+  .AMCDetails-add-btn {
+    background-color: green;
+  }
+  .AMCDetails-del-btn {
+    background-color: red;
+  }
+  
+  
+  
+  .AMCDetails-action-buttons {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+  
+  
+
+  .AMCDetails-action-buttons-add {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+    margin: 0 auto; /* Centers the button horizontally */
+    display: block; /* Ensures proper centering */
+    text-align: center; /* Aligns text within the button */
+  }
+  
+  .AMCDetails-action-buttons button {
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+
+  }
+  .AMCDetails-action-buttons button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color); 
+  }
+
+  .AMCDetails-action-buttons-add
+  {
+    background-color: var(--button-color);
+    color: #fff;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 4px;
+    width: fit-content;
+    cursor: pointer;
+    margin: 0 auto; /* Centers the button horizontally */
+    display: block; /* Ensures proper centering */
+    text-align: center; /* Aligns text within the button */
+  }
+  
+  .AMCDetailssurgery-events-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
+  }
+  
+  .AMCDetailssurgery-events-popup button {
+    margin-top: 10px;
+  }
+  
+
+
+  /* ================================== */
+
+  .AMCDetailsPanels {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the elements */
+  }
+  
+  .AMCDetailsPanels .text-input {
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  
+  .AMCDetailsPanel2 .file-input {
+    padding: 5px;
+  }
+  
+  .AMCDetailsPanels .upload-button {
+    padding: 5px 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: 1px solid var(--button-hover-border-color);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .AMCDetailsPanels .upload-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+  }
+  

@@ -1,0 +1,37 @@
+.purchase-grid {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 40px;
+    row-gap: 20px;
+  }
+  
+  .purchase-item {
+    background-color: var(--background-color);
+    padding: 20px;
+    margin-top: 20px;
+    margin-left: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  
+  .purchase-icon {
+    font-size: var(--heading-font);
+    margin-right: 10px;
+  }
+  
+  .purchase-text h3 {
+    margin: 0;
+    font-size: var(--heading-font);
+    color: #333;
+  }
+  
+  .purchase-text p {
+    margin: 0;
+    font-size: var(--heading-font);
+    color: #666;
+  }
+  

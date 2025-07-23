@@ -1,0 +1,116 @@
+.desPriscription-container{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.desPriscription-content{
+  background: white;
+  padding: 10px;
+  width: 45%;
+  height: 75%;
+  
+}
+.desPriscription-close{
+  display: flex;                 
+  justify-content: flex-end;    
+  padding: 10px; 
+  color: white;
+}
+.desPriscription-close button{
+  cursor: pointer;
+  font-size: 15px;
+  color: #fff;
+  background-color: rgb(211, 0, 0);   
+  border: none;
+  border-radius: 20%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.desPriscription-close button:hover {
+  background-color: #c82333;   
+}
+.desPriscription-head{
+  text-align: center;
+  padding: 15px;
+  border-radius: 8px; 
+  max-width: 400px; 
+  margin: 8px auto; 
+}
+
+.desPriscription-head p {
+  margin: 2px 0; 
+  line-height: 1.2; 
+}
+
+.desPriscription-head h3 {
+  margin: 5px 0;
+  font-size: 1.5em;
+}
+  
+
+.desPriscription-mid{
+  display: flex;
+  justify-content: space-between;
+}
+.mid-right{
+  float: right;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th, td {
+  padding: 8px;
+  text-align: center;
+}
+.desPriscription-prescription{
+  margin-top: 20px;
+}
+
+
+.desPriscription-pop-btn {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 15px 0;
+  margin-bottom: 20px;
+  
+}
+
+.desPriscription-pop-btn button {
+  
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1em;
+  border-radius: 8px;
+  
+  
+}
+.desPriscription-print{
+  background-color: #f8c725 ;
+  width: 18%;
+  border: none;
+}
+.desPriscription-dispatch{
+  width: 20%;
+  background-color: blue;
+}
+

@@ -1,0 +1,97 @@
+.radiation-therapy-integration-container {
+    width: auto;
+    margin: 20px;
+}
+
+.radiation-therapy-integration {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: var(--background-color);
+    height: 90vh;
+    overflow-y: auto; /* Change to 'auto' for better scrolling behavior */
+}
+
+/* Flex items */
+.radiation-therapy-integration-left,
+.radiation-therapy-integration-right {
+    width: 48%;
+}
+
+/* Integration group */
+.radiation-therapy-integration-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.radiation-therapy-integration-group label {
+    flex: 0 0 120px;
+    margin-right: 10px;
+    margin-left: 20px;
+    font-size: var(--heading-font);
+}
+
+.radiation-therapy-integration-group input[type="text"],
+.radiation-therapy-integration-group input[type="number"],
+.radiation-therapy-integration-group input[type="date"],
+.radiation-therapy-integration-group input[type="email"],
+.radiation-therapy-integration-group textarea {
+    flex: 1;
+    padding: 4px;
+    font-size: var(--font-size);
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.radiation-therapy-integration-submit-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    margin-left: 20px;
+    padding: 5px 10px; /* Adjust padding for better button size */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.radiation-therapy-integration-submit-btn:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-color);
+    background-color: white;
+}
+
+.mandatory {
+    color: red;
+}
+
+.radiation-therapy-integration-left h3,
+.radiation-therapy-integration-right h3 {
+    font-size: var(--heading-font);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .radiation-therapy-integration {
+        flex-direction: column; /* Stack the left and right sections vertically */
+        height: auto; /* Allow height to adjust based on content */
+        padding: 10px; /* Reduce padding for smaller screens */
+    }
+
+    .radiation-therapy-integration-left,
+    .radiation-therapy-integration-right {
+        width: 100%; /* Full width on small screens */
+        margin-bottom: 20px; /* Add space between sections */
+    }
+
+    .radiation-therapy-integration-group label {
+        flex: 0 0 100px; /* Adjust label width for smaller screens */
+    }
+
+    .radiation-therapy-integration-submit-btn {
+        margin-left: 0; /* Remove left margin for smaller screens */
+        width: 100%; /* Full width button */
+        padding: 10px; /* Increase padding for better touch targets */
+    }
+}

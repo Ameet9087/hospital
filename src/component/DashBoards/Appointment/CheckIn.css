@@ -1,0 +1,214 @@
+.checkIn__container {
+  background-color: #e6f7ff;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  width: 100%;
+  height: 90vh;
+}
+
+.checkIn__header {
+  /* color: #fff; */
+  font-size: 12px;
+}
+
+.checkIn__topbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color:  #e6f7ff;
+}
+
+.checkIn__field {
+  display: flex;
+  align-items: center;
+}
+
+.checkIn__field label {
+  margin-right: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.checkIn__dropdown {
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.checkIn__content {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.checkIn__section {
+  background-color: #e6f7ff;
+  padding: 15px;
+  border-radius: 4px;
+  flex: 1;
+  border: 1px solid #ccc;
+}
+
+.checkIn__section--patient {
+  flex: 2.5;
+}
+
+.checkIn__section--visit, .checkIn__section--billing {
+  flex: 1.5;
+}
+
+.checkIn__section-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 5px;
+}
+
+.checkIn__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.checkIn__form-group-checkbox {
+  display: flex;
+  flex-direction: column;
+  width: calc(80% - 15px);
+}
+
+.checkIn__form-group-years{
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 15px);
+}
+
+.checkIn__form-group {
+  display: flex;
+  flex-direction: column;
+  width: calc(80% - 15px);
+}
+
+.checkIn__name-inputs, .checkIn__age-inputs, .checkIn__phone-inputs {
+  display: flex;
+  gap: 5px;
+}
+
+.checkIn__form-group--external {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.checkIn__billing-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.checkIn__print-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.checkIn__print-btn:hover {
+  background-color: #218838;
+}
+
+.checkIn__required {
+  color: red;
+}
+
+.checkIn-visit-billing{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+}
+
+.checkIn__section {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+.checkIn__section-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.checkIn__section-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.checkIn__form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 15px;
+}
+
+.checkIn__form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkIn__label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #495057;
+  margin-bottom: 5px;
+}
+
+.checkIn__input,
+.checkIn__select {
+  border: 1px solid #ced4da;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.checkIn__name-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.checkIn__age-inputs,
+.checkIn__phone-inputs {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+
+
+.checkIn__form-group--dob {
+  align-items: center;
+}
+
+.checkIn__required {
+  color: red;
+}
+
+.checkIn__input--address {
+  margin-top: 5px;
+}

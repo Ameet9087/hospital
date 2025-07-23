@@ -1,0 +1,132 @@
+.ip-addmission-sh-container {
+    /* padding: 20px; */
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+    margin-bottom: 10px;
+    /* height: 90vh; */
+    /* overflow-y: scroll; */
+}
+
+.ip-addmission-sh-header {
+    color: black;
+    padding: 10px;
+    text-align: center;
+    font-size: var(--heading-font);
+}
+.ip-addmission-sh-container h3{
+    font-size: var(--heading-font);
+    color: white;
+    font-weight: bold;
+    background: #00968f;
+    padding: 10px;
+
+}
+.ip-admission-headers h3{
+    font-size: var(--heading-font);
+    color: white;
+    font-weight: bold;
+    background: #00968f;
+    width: 100%;
+}
+.ip-addmission-sh-btn{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+.ip-addmission-sh-form {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 20px 5px;
+    border-radius: 5px;
+    /* background-color: var(--background-color); */
+}
+
+.ip-addmission-sh-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+.ip-addmission-sh-section i{
+    color: gray;
+}
+/* .ip-addmission-sh-section label {
+    width: 150px;
+}
+
+.ip-addmission-sh-section input,
+.ip-addmission-sh-section select   {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 200px;
+}
+ */
+ .ip-addmission-sh-section table{
+    table-layout: auto;
+ }
+
+
+.ip-addmission-sh-delete-btn{
+    padding: 5px;
+    margin-left: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10%;
+}
+.ip-addmission-sh-save-btn {
+    padding: 5px;
+    margin-left: 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10%;
+}
+
+.ip-addmission-sh-save-btn:hover {
+    background-color: white;
+    color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.ip-addmission-sh-sav{
+    padding: 5px 10px;
+    margin-left: 5px;
+    background-color: var(--button-color);
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.ip-addmission-sh-sav:hover{
+    background-color: white;
+    color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+
+.ip-addmission-add-btn,
+.ip-addmission-del-btn {
+  margin-right: 4px;
+  padding: 2px 8px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+.ip-addmission-add-btn {
+  background-color: green;
+}
+.ip-addmission-del-btn {
+  background-color: red;
+}

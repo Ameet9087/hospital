@@ -1,0 +1,24 @@
+
+  .bloodtesting-popup {
+    background: #fff;
+    /* padding: 20px; */
+    border-radius: 8px;
+    width: 400px;
+  }
+  
+  .bloodtesting-popup h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+    font-size: var(--heading-font);
+  }
+  
+  .bloodtesting-form-group {
+    margin-bottom: 15px;
+  }
+  
+ 
+  
+
+  
+

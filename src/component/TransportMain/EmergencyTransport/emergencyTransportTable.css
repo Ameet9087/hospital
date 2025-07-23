@@ -1,0 +1,144 @@
+ /* Dhanashree_EmergencyTransportTable_24/09_Starts */
+
+.emergencyTransportTable {
+  text-align: center;
+  padding: 20px;
+}
+
+.emergencyTransportTable-add-btn {
+  background-color: var(--button-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px;
+  position: absolute;
+  /* top: 10px; */
+  left: 10px;
+  z-index: 1; 
+}
+
+.emergencyTransportTable-add-btn:hover{
+  background-color: white;
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+
+}
+
+.emergencyTransportTable-emergency-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 60px; 
+}
+
+.emergencyTransportTable-emergency-table th,
+.emergencyTransportTable-emergency-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.emergencyTransportTable-emergency-table th {
+  background-color: #f2f2f2;
+  text-align: center;
+}
+
+.emergencyTransportTable-emergency-table td {
+  text-align: center;
+}
+
+.emergencyTransportTable-emergency-table td button {
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.emergencyTransportTable-emergency-table td button:hover {
+  background-color: white; 
+}
+
+.emergencyTransportTable-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; 
+}
+
+.emergencyTransportTable-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%; 
+  max-width: 400px; 
+}
+
+.emergencyTransportTable-close-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  float: right;
+  cursor: pointer;
+}
+
+.emergencyTransportTable-EmergencyEditCardForm-card {
+  max-width: 400px;
+  width: 90%; 
+}
+
+
+/* Edit button styles */
+.emergencyTransportTable-edit-btn {
+  background-color: var(--button-color); 
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.emergencyTransportTable-edit-btn:hover {
+  background-color: var(--button-hover-color); 
+  color: var(--button-color); 
+  border: 1px solid var(--button-hover-border-color); 
+}
+
+
+
+@media (max-width: 768px) {
+  .emergencyTransportTable-add-btn {
+      width: 100%; 
+      position: relative; 
+      margin: 10px 0; 
+  }
+
+  .emergencyTransportTable-emergency-table {
+      margin-top: 20px; 
+  }
+
+  .emergencyTransportTable-modal-content {
+      width: 95%; 
+  }
+}
+
+@media (max-width: 480px) {
+  .emergencyTransportTable-close-btn {
+      padding: 8px 12px; 
+  }
+
+  .emergencyTransportTable-EmergencyEditCardForm-card {
+      padding: 10px; 
+  }
+}
+
+ /* Dhanashree_EmergencyTransportTable_24/09_Ends */

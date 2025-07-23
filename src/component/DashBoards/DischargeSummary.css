@@ -1,0 +1,201 @@
+/* Swapnil ROkade DischargeSummary Adding className and table centralization */
+  .pat-container {
+    width: 100%;
+    height: 80vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pat-header {
+    display: flex;
+    justify-content: space-between;
+    background: var(--background-color);
+    padding: 5px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .pat-header h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .pat-header p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  
+  .pat-form-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .pat-form-group {
+    margin-bottom: 15px;
+  }
+  
+  .pat-form-group label {
+    font-weight: bold;
+    /* display: block; */
+    margin-bottom: 5px;
+  }
+  
+  .pat-form-group input,
+  .pat-form-group select,
+  .pat-form-group textarea {
+    width: 100%;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  
+  .pat-form-group textarea {
+    height: 60px;
+    resize: none;
+  }
+  
+  .pat-required-text {
+    color: red;
+    font-size: 12px;
+  }
+  
+  .pat-investigations {
+    grid-column: span 2;
+    background: #f2f2f2;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .pat-investigations h3 {
+    margin-top: 0;
+  }
+  
+  .pat-investigations label {
+    margin-right: 10px;
+  }
+
+  .pat-investigations .pat-lab-tests ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .pat-lab-tests h3{
+    text-align: start;
+  }
+  .pat-lab-test-subdiv
+  {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+  }
+  .pat-lab-test-subdiv-label
+  {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .pat-lab-test-subdiv-label-checkBox
+  {
+    width: fit-content !important;
+  }
+  .pat-investigations .pat-lab-tests li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .pat-medications {
+    margin-top: 20px;
+  }
+  
+  .pat-medications .pat-btn {
+    margin-right: 10px;
+  }
+  
+  .pat-save-add{
+    margin-top: 5px;
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .pat-form-group-subdiv
+  {
+    width: 100%;
+    padding: 5px 0px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+  .pat-close
+  {
+    padding: 5px 8px;
+    margin-left: 5px;
+    border-radius: 50%;
+    border: none;
+    background-color: #dc3545;
+    color: white;
+  }
+  .pat-save {
+    width: 15%;
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .pat-form-group-radio-container
+  {
+    width: 100%;
+    display: flex;
+  }
+  .pat-form-group-radio-container-label{
+    width: 30%;
+    display: flex;
+    align-items: center;
+
+  }
+  .pat-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .pat-btn.pat-add {
+    background-color: #28a745;
+  }
+  
+  .pat-btn.pat-add:hover {
+    background-color: #218838;
+  }
+  
+  .pat-btn.pat-remove {
+    background-color: #dc3545;
+  }
+  
+  .pat-btn.pat-remove:hover {
+    background-color: #c82333;
+  }
+  
+  .pat-btn.pat-save {
+    background-color: #007bff;
+    display: block;
+    width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    .pat-form-section {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  
+  

@@ -1,0 +1,46 @@
+.unique-container {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.unique-grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns as per requirement */
+  gap: 20px;
+}
+
+.unique-column {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.unique-column h2 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.unique-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.unique-table th, .unique-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.unique-table th {
+  background-color: #f7f7f7;
+  font-weight: bold;
+}
+
+.unique-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}

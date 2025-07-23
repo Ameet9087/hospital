@@ -1,0 +1,64 @@
+/* General styles for the form container */
+.addnewaptmtpatient {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #e3f2fd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styles for left and right sections */
+  .addnewaptmtpatient-left,
+  .addnewaptmtpatient-right {
+    width: 48%;
+  }
+  
+  .addnewaptmtpatient-group {
+    margin-bottom: 15px;
+  }
+  
+  .addnewaptmtpatient-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .addnewaptmtpatient-group input[type="text"],
+  .addnewaptmtpatient-group input[type="number"],
+  .addnewaptmtpatient-group input[type="date"],
+  .addnewaptmtpatient-group input[type="time"],
+  .addnewaptmtpatient-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .addnewaptmtpatient-gender-options,
+  .addnewaptmtpatient-age-options {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .addnewaptmtpatient-gender-options label,
+  .addnewaptmtpatient-age-options label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .addnewaptmtpatient-btn {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .addnewaptmtpatient-btn:hover {
+    opacity: 0.9;
+  }
+  

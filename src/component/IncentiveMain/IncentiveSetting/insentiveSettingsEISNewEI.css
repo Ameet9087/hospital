@@ -1,0 +1,180 @@
+
+/* Container styles */
+.insentiveSettingsEISNewEI-container {
+  width: 100%;
+  margin: auto;
+  background-color: #f8f8f8;
+  border-radius: 2px;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.insentiveSettingsEISNewEI-header {
+  font-size: var(--heading-font);
+  /* font-weight: bold; */
+ /* color: rgb(78, 78, 78); */
+  margin-bottom: 10px;
+}
+.insentiveSettingsEISNewEI-PriceCategory{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.insentiveSettingsEISNewEI-PriceCategory label{
+  font-size: var(--font-size);
+  /* font-weight: bold; */
+}
+.insentiveSettingsEISNewEI-PriceCategory select{
+  font-size: var(--font-size);
+  /* font-weight: bold; */
+}
+.insentiveSettingsEISNewEI-EmployeeName{
+  display: flex;
+  align-items: center;
+}
+
+/* Form Row */
+.insentiveSettingsEISNewEI-form-row {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: left;
+  font-size: var(--font-size);
+  /* font-weight: bold; */
+  /* align-items: center; */
+  margin-bottom: 15px;
+}
+
+.insentiveSettingsEISNewEI-form-label {
+  margin-right: 5px;
+}
+
+.insentiveSettingsEISNewEI-form-select, .insentiveSettingsEISNewEI-form-input {
+  margin-right: 10px;
+  padding: 5px;
+  font-size: var(--font-size);
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.insentiveSettingsEISNewEI-search-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  /* margin-right:150px ; */
+}
+
+.insentiveSettingsEISNewEI-save-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+.insentiveSettingsEISNewEI-save-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+/* Checkbox Section */
+.insentiveSettingsEISNewEI-checkbox-section {
+  display: flex;
+  align-items: center;
+}
+
+.insentiveSettingsEISNewEI-select-profile-section {
+  margin-left: 20px;
+  /* font-size: 12px; */
+}
+
+/* Profile List Table */
+.insentiveSettingsEISNewEI-profile-list {
+  margin-top: 10px;
+}
+
+.insentiveSettingsEISNewEI-profile-table {
+  width: 30%;
+  border-collapse: collapse;
+  font-weight: bold;
+  /* color: #464545; */
+  background-color: #DDE3E9;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+}
+
+.insentiveSettingsEISNewEI-profile-table th, .insentiveSettingsEISNewEI-profile-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  font-size: var(--font-size);
+}
+.insentiveSettingsEISNewEI-profile-table th{
+  
+  font-size: var(--heading-font);
+}
+
+.insentiveSettingsEISNewEI-preview-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 1px 5px;
+}
+.insentiveSettingsEISNewEI-preview-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+/* Action Buttons */
+.insentiveSettingsEISNewEI-action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 15px;
+}
+
+.insentiveSettingsEISNewEI-discard-button, .insentiveSettingsEISNewEI-ok-button {
+  border: none;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.insentiveSettingsEISNewEI-discard-button {
+  font-size: var(--font-size);
+  background-color: #E31D2D;
+  color: white;
+}
+
+.insentiveSettingsEISNewEI-ok-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+.insentiveSettingsEISNewEI-ok-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}

@@ -1,0 +1,52 @@
+/* General styling for the navbar */
+.labour-mgnt-navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: white; /* Set your preferred background color */
+    overflow: hidden;
+    display: flex;
+    justify-content: left;
+    margin-right: 50px;
+   margin-top: 1px;
+    padding: 20px;
+}
+
+/* Styling for each link */
+.labour-nav-link {
+    color: white; /* Set your preferred text color */
+    background-color: var(--button-color); /* Use your defined variable or a specific color */
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    margin-right: 50px;
+}
+
+
+/* .labour-nav-link:hover {
+    background-color: var(--button-hover-background-color); 
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+} */
+
+/* Active class for the currently active link */
+/* .active {
+    background-color: var(--button-bg-color); 
+} */
+
+/* Responsive layout for smaller screens */
+@media (max-width: 600px) {
+    .labour-mgnt-navbar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .labour-nav-link {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

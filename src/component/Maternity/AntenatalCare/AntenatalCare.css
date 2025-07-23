@@ -1,0 +1,86 @@
+.maternity-antenatalcare {
+    padding: 20px;
+    background-color: var(--background-color);
+}
+
+.maternity-antenatalcare-btn, .maternity-antenatalcare-edit-btn {
+    margin-bottom: 20px;
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+}
+.maternity-antenatalcare-btn:hover , .maternity-antenatalcare-edit-btn:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+
+}
+
+.maternity-antenatalcare-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+}
+
+.maternity-antenatalcare-modal-content {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    width: 80%;
+
+}
+
+.antenatalmaturnity-modalform{
+    display: flex;
+    padding: 10px;
+    width: 100%;
+}
+
+.antenatalmaturnity-modalform label {
+    display: block;
+    margin:  5px;
+    width: 200px;
+}
+
+.antenatalmaturnity-modalform input, .antenatalmaturnity-modalform textarea {
+    width: 100%;
+    padding: 1px;
+    margin-bottom: 1px;
+}
+
+.antenatalmaturnity-modalform input[type="date"] {
+    padding: 5px;
+}
+
+.antenatalmodalbtn {
+    margin-bottom: 20px;
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.antenatalmodalbtn:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+
+}

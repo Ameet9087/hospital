@@ -1,0 +1,305 @@
+/* Mohini_ItemWiseSalesReport_WholePage_14/sep/2024 */
+.item-wise-sales-report-container {
+    padding: 20px;
+    height: 90vh;
+    background-color: var(--background-color);
+    font-family: Arial, sans-serif;
+}
+
+.item-wise-sales-report-title {
+    font-size: 16px;
+    color:black;
+    margin-bottom: 10px;
+}
+
+.item-wise-sales-filter-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.item-wise-sales-filter-group {
+    display: flex;
+    background-color: #f2f2f2;
+    align-items: center;
+    gap: 10px;
+}
+
+.item-wise-sales-filter-group label {
+    font-size: 14px;
+    color: black;
+}
+
+.item-wise-sales-filter-group input,
+.item-wise-sales-filter-group select {
+    padding: 5px;
+    font-size: 16px;
+    width: 60%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.item-wise-sales-action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.item-wise-sales-btn {
+    background-color:var( --button-color);
+    color: white;
+    border: none;
+    margin-right: 10px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+    transition: background-color 0.3s ease;
+
+}
+.item-wise-sale-button{
+  display: flex;
+}
+.item-wise-sales-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+.item-wise-sales-report-table {
+    /* width: 20%; */
+    /* background-color: white; */
+    /* border: 1px solid #e0e0e0; */
+    padding: 10px;
+}
+.item-wise-sales-table{
+    background-color: white
+    ;
+}
+.item-wise-sales-search-bar {
+    /* width: 100%; */
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+.item-wise-sales-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff; /* Same as invoice table */
+  }
+  
+  .item-wise-sales-table th,
+  .item-wise-sales-table td {
+    padding: 10px;
+    font-size: 14px; /* Matches font size */
+    border: 1px solid #ddd;
+    text-align: center; /* Matches center alignment */
+  }
+  
+  .item-wise-sales-table th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-size: 16px; /* Matches header font size */
+    position: sticky; /* Keeps headers sticky */
+    top: 0;
+    z-index: 10; /* Ensures headers are above content */
+  }
+  
+  .item-wise-sales-no-rows {
+    text-align: center;
+    background-color: #fff3e0; /* Matches background color for no rows */
+    color: #999; /* Matches text color */
+  }
+  
+  .item-wise-sales-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px; /* Adjusted margin */
+  }
+  
+  .item-wise-sales-pagination button {
+    padding: 5px 10px;
+    background-color: #42a5f5; /* Matches button style */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px; /* Adds margin between buttons */
+  }
+  
+  .item-wise-sales-pagination button:hover {
+    background-color: #1e88e5; /* Darker color on hover */
+  }
+  
+
+.item-wise-sales-summary-section {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: #e3f2fd;
+    margin-top: 10px;
+}
+.item-sale-summary{
+    color: #6c5ac8;
+    font-size: 16px;
+    justify-content: center;
+}
+
+.item-wise-sales-summary-item {
+    display: flex;
+    justify-content: center;
+    width: 10%;
+    font-size: 14px;
+}
+
+.item-wise-sales-summary-item span:last-child {
+    color: blue;
+}
+.item-wise-sales-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Space between buttons and text */
+    margin-top: 10px;
+}
+
+.item-wise-sales-pagination button {
+    padding: 5px 10px;
+    background-color: #564eb1;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.item-wise-sales-pagination span {
+    color: #555;
+}
+/*  */
+.item-wise-sales-table-container {
+    overflow-x: auto; /* Enables horizontal scrolling */
+    width: 100%; /* Ensures the container takes full available width */
+    background-color: #fff; /* Optional: to match the table background */
+  }
+  
+  .item-wise-sales-ta {
+    width: 100%; /* Ensures the table takes full available width */
+    min-width: 1600px; /* Adjust this value according to your table's width */
+    border-collapse: collapse;
+    background-color: #fff;
+  }
+  
+  .item-wise-sales-ta th,
+  .item-wise-sales-ta td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .item-wise-sales-ta th {
+    background-color: #f2f2f2;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .item-wise-sales-no-rows {
+    text-align: center;
+    background-color: #ffffc0;
+  }
+  /*  */
+  /* Apply font size to all labels within the filter groups */
+.item-wise-sales-filter-groups label {
+    font-size: 14px; /* Set font size for labels */
+    margin-right: 10px; /* Add space between label and input/select */
+}
+
+/* Style input fields */
+.item-wise-sales-filter-groups input[type="text"] {
+    padding: 5px; /* Add padding inside input fields */
+    border: 1px solid #ccc; /* Optional: border for input fields */
+    border-radius: 4px; /* Optional: rounded corners for input fields */
+    font-size: 14px; /* Set font size for text in input fields */
+}
+
+/* Style select fields */
+.item-wise-sales-filter-groups select {
+    padding: 5px; /* Add padding inside select fields */
+    border: 1px solid #ccc; /* Optional: border for select fields */
+    border-radius: 4px; /* Optional: rounded corners for select fields */
+    font-size: 14px; /* Set font size for text in select fields */
+}
+
+/* Flexbox styling to ensure items are aligned properly */
+.item-wise-sales-filter-groups {
+    display: flex; /* Enable flexbox layout */
+    align-items: center; /* Vertically align items in the center */
+    margin-bottom: 10px; /* Optional: Add space between filter groups */
+}
+
+
+/*  */
+
+
+.item-wise-sale-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 20px;    */
+}
+
+/* .item-wise-sales-report-table {
+  flex: 1;
+} */
+
+.search-bar-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.item-wise-sales-search-bar {
+  width: 200px; /* Adjust width as needed */
+  padding: 5px;
+}
+
+.invoice-billing-search-button {
+  margin-left: 5px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.item-wise-export-print-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+}
+.item-wise-export-button,
+.item-wise-print-button{
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+
+.item-wise-export-button:hover,
+.item-wise-print-button:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.item-wise-pagination-info {
+  margin-right: 20px;
+}
+
+
+
+/* Mohini_ItemWiseSalesReport_WholePage_14/sep/2024 */

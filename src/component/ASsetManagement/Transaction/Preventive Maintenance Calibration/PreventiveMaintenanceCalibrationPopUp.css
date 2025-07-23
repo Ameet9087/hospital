@@ -1,0 +1,384 @@
+.PreventiveMaintenanceCalibrationPopUp-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5px;
+    background-color: var(--background-color);
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-header {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 5px;
+    font-size: var(--heading-font);
+    border-radius: 5px 5px 0 0;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-form-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    background-color: white;
+    padding: 5px;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 32px;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-label {
+    width: 130px;
+    font-size: var(--font-size);
+    color: black;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-separator {
+    color: #718096;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-input-field {
+    flex: 1;
+    padding: 5px 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: var(--font-size);
+    transition: border-color 0.2s;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-input-field:focus {
+    outline: none;
+    border-color: #008cba;
+    box-shadow: 0 0 0 2px rgba(22, 160, 133, 0.1);
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-date-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-calendar-icon {
+    width: 20px;
+    height: 20px;
+    color: black;
+    cursor: pointer;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-calendar-icon:hover {
+    color: #16a085;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-section-header {
+    background-color: var(--upperBar-bg-color);
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    color: white;
+    border-radius: 5px;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-format-section {
+    margin-top: 10px;
+    padding: 5px;
+    background-color: white;
+    border-radius: 5px;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-file-upload {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-btn-secondary {
+    padding: 5px 10px;
+    background-color: #e2e8f0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    transition: background-color 0.2s;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-btn-secondary:hover {
+    background-color: #cbd5e0;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-tabs-section {
+    margin-top: 10px;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-tab-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-tab-btn {
+    padding: 5px 10px;
+    background-color: #e2e8f0;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 5px 5px 0 0;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-tab-btn:hover {
+    background-color: #cbd5e0;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-tab-btn.active {
+    background-color: #16a085;
+    color: white;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-table-container {
+    background-color: white;
+    padding: 10px;
+    border-radius: 0 5px 5px 5px;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-table-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: var(--font-size);
+    color: black;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-btn-add {
+    color: #16a085;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: color 0.2s;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-btn-add:hover {
+    color: #13896f;
+    text-decoration: underline;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-data-table th,
+.PreventiveMaintenanceCalibrationPopUp-data-table td {
+    border: 1px solid gray;
+    padding: 5px;
+    text-align: left;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-data-table th {
+    background-color: #f7fafc;
+    color: black;
+    font-size: var(--font-size);
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-data-table tr:hover {
+    background-color: #f7fafc;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-data-table input,
+.PreventiveMaintenanceCalibrationPopUp-data-table select {
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: var(--font-size);
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-data-table input:focus,
+.PreventiveMaintenanceCalibrationPopUp-data-table select:focus {
+    outline: none;
+    border-color: #16a085;
+    box-shadow: 0 0 0 2px rgba(22, 160, 133, 0.1);
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-btn-delete {
+    color: red;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+  
+.PreventiveMaintenanceCalibrationPopUp-btn-delete:hover {
+    color: #c53030;
+    text-decoration: underline;
+}
+  
+/* Required field indicator */
+.PreventiveMaintenanceCalibrationPopUp-label:has(+ .PreventiveMaintenanceCalibrationPopUp-separator + .PreventiveMaintenanceCalibrationPopUp-input-field[required])::after {
+    content: "*";
+    color: #e53e3e;
+    margin-left: 5px;
+}
+
+/* =========================================================================== */
+.PreventiveMaintenanceCalibrationPopUp-input-field {
+    width: 100%; /* Adjust width as needed */
+    font-size: var(--font-size); /* Adjust font size as needed */
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .PreventiveMaintenanceCalibrationPopUp-input-field:focus {
+    outline: none;
+    border-color: #008cba; /* Highlight color on focus */
+    box-shadow: 0 0 3px rgba(0, 140, 186, 0.5); /* Optional: glowing effect */
+  }
+  
+  .PreventiveMaintenanceCalibrationPopUp-input-field option {
+    color: black;
+    background-color: white;
+  }
+  
+
+  .PreventiveMaintenanceCalibrationPopUp-status {
+    display: flex;
+    align-items: center;
+  }
+  
+  .PreventiveMaintenanceCalibrationPopUp-label {
+    margin-right: 10px; /* Space between the label and the radio buttons */
+  }
+  
+  .PreventiveMaintenanceCalibrationPopUp-radio-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .PreventiveMaintenanceCalibrationPopUp-radio-buttons input {
+    margin-right: 5px; /* Space between the radio button and its label */
+  }
+  
+  .PreventiveMaintenanceCalibrationPopUp-radio-buttons label {
+    margin-right: 20px; /* Space between the two labels */
+  }
+  
+  .PreventiveMaintenanceCalibrationPopUp-submit-button{ 
+    margin-top: 10px;
+    background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+  }
+  
+  .PreventiveMaintenanceCalibrationPopUp-submit-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  }
+  
+
+
+
+
+
+  
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .PreventiveMaintenanceCalibrationPopUp-form-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .PreventiveMaintenanceCalibrationPopUp-table-container {
+        overflow-x: auto;
+    }
+    
+    .PreventiveMaintenanceCalibrationPopUp-data-table {
+        min-width: 800px;
+    }
+}
+  
+@media (max-width: 640px) {
+    .PreventiveMaintenanceCalibrationPopUp-container {
+        padding: 10px;
+    }
+    
+    .PreventiveMaintenanceCalibrationPopUp-form-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .PreventiveMaintenanceCalibrationPopUp-label {
+        width: 100%;
+    }
+    
+    .PreventiveMaintenanceCalibrationPopUp-input-field {
+        width: 100%;
+    }
+    
+    .PreventiveMaintenanceCalibrationPopUp-file-upload {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .PreventiveMaintenanceCalibrationPopUp-tab-buttons {
+        flex-direction: column;
+    }
+    
+    .PreventiveMaintenanceCalibrationPopUp-tab-btn {
+        width: 100%;
+        border-radius: 4px;
+    }
+}
+  
+/* Print styles */
+@media print {
+    .PreventiveMaintenanceCalibrationPopUp-container {
+        padding: 0;
+        max-width: none;
+    }
+    
+    .PreventiveMaintenanceCalibrationPopUp-btn-add,
+    .PreventiveMaintenanceCalibrationPopUp-btn-delete,
+    .PreventiveMaintenanceCalibrationPopUp-btn-secondary {
+        display: none;
+    }
+    
+    .PreventiveMaintenanceCalibrationPopUp-table-container {
+        background-color: white;
+    }
+    
+    .PreventiveMaintenanceCalibrationPopUp-data-table {
+        border: 1px solid #000;
+    }
+    
+    .PreventiveMaintenanceCalibrationPopUp-data-table th,
+    .PreventiveMaintenanceCalibrationPopUp-data-table td {
+        border: 1px solid #000;
+    }
+}

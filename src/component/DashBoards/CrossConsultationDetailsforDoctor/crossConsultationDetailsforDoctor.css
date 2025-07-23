@@ -1,0 +1,95 @@
+.crossConsultationDetailsforDoctor-schedule {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .crossConsultationDetailsforDoctor-header {
+    background-color: var(--button-hover-border-color);
+    color: white;
+    padding: 10px;
+  }
+  
+  .crossConsultationDetailsforDoctor-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .crossConsultationDetailsforDoctor-controls {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  
+  .crossConsultationDetailsforDoctor-nav-btn, .crossConsultationDetailsforDoctor-action-btn {
+    padding: 4px 8px;
+    background-color: white;
+    color: var( --button-color);
+    border: 1px solid white;
+    border-radius: 5px;
+    /* margin: 1px; */
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+}
+.crossConsultationDetailsforDoctor-nav-btn:hover,.crossConsultationDetailsforDoctor-action-btn:hover{
+      border: 1px solid white;
+    color: white;
+    background-color: var(--button-color);
+  }
+  .crossConsultationDetailsforDoctor-date-range {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .crossConsultationDetailsforDoctor-date-range input {
+    width: 80px;
+    padding: 4px;
+  }
+  
+  .crossConsultationDetailsforDoctor-settings-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .crossConsultationDetailsforDoctor-content {
+    display: flex;
+    flex: 1;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  .crossConsultationDetailsforDoctor-left-panel, .crossConsultationDetailsforDoctor-right-panel {
+    border: 1px solid #ccc;
+    flex: 1;
+  }
+  
+  .crossConsultationDetailsforDoctor-panel-header {
+    background-color: #f0f0f0;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .crossConsultationDetailsforDoctor-panel-title {
+    font-weight: bold;
+  }
+  
+  .crossConsultationDetailsforDoctor-menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .crossConsultationDetailsforDoctor-no-records {
+    padding: 20px;
+    text-align: center;
+    color: red;
+  }

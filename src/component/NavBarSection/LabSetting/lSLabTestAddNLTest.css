@@ -1,0 +1,175 @@
+.lSLabTestAddNLTest-container {
+    width: 100%;
+    /* max-width: 1200px; */
+    margin: auto;
+    border: 1px solid #ddd;
+    padding: 14px;
+    background-color: white;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    /* color: rgb(82, 81, 81); */
+  }
+  
+  .lSLabTestAddNLTest-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 16px;
+  }
+  
+  .lSLabTestAddNLTest-header h4 {
+    font-size: var(--heading-font);
+    margin: 0;
+  }
+  
+  .lSLabTestAddNLTest-close-btn {
+    background-color: #E52F3E;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  
+  .lSLabTestAddNLTest-form .lSLabTestAddNLTest-lSLabTestAddNLTest-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .lSLabTestAddNLTest-form-group {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-size: var(--font-size);
+    /* width: 220px; */
+    /* border: 1px solid red; */
+  }
+
+.lSLabTestAddNLTest-checkbox-row {
+      /* border: 1px solid #d40707; */
+      width: 100%;
+      justify-content: space-between;
+    display: flex;
+    
+    flex-wrap: wrap;
+    font-size: var(--font-size);
+    gap: 16px;
+    margin-bottom: 16px;
+
+  }
+  
+  .lSLabTestAddNLTest-full-width {
+    width: 100%;
+  }
+  
+  .lSLabTestAddNLTest-select-components-section {
+    margin-top: 24px;
+    border-top: 1px solid #ddd;
+    padding-top: 16px;
+  }
+  
+  .lSLabTestAddNLTest-select-components-section h4 {
+    margin-bottom: 8px;
+  }
+  
+  .lSLabTestAddNLTest-select-components-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 8px;
+  }
+  
+  .lSLabTestAddNLTest-select-components-section table th,
+  .lSLabTestAddNLTest-select-components-section table td {
+    border: 1px solid #ddd;
+    padding: 3px;
+    text-align: center;
+  }
+  
+  .lSLabTestAddNLTest-add-component-btn,.lSLabTestAddNLTest-add-new-component-btn {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--heading-font);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 1px 5px;
+  }
+  .lSLabTestAddNLTest-add-component-btn:hover,.lSLabTestAddNLTest-add-new-component-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+  .lSLabTestAddNLTest-create-new-component {
+    display: block;
+    margin-top: 8px;
+    color: #0F63AF;
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .lSLabTestAddNLTest-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    font-size: var(--font-size);
+    gap: 8px;
+    margin-top: 16px;
+  }
+  
+  .lSLabTestAddNLTest-add-btn {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .lSLabTestAddNLTest-add-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .lSLabTestAddNLTest-form-group-1row{
+    display: flex;
+    gap: 5px;
+    justify-content: space-between;
+  }
+  .lSLabTestAddNLTest-form-group-sub{
+    display: flex;
+    justify-content: space-between;
+    /* width: 600px; */
+    /* border: 1px solid red; */
+  }
+  .lSLabTestAddNLTest-checkbox-N-form-group{
+    display: flex;
+    justify-content: space-between;
+  }
+  .lSLabTestAddNLTest-AddNew{
+    display: flex;
+    justify-content: center;
+  }
+  .lSLabTestAddNLTest-AddNew a{
+    
+    color: #0F63AF;
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+    text-decoration: none;
+  }

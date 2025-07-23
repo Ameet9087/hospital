@@ -1,0 +1,77 @@
+/* .invoice-search {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #e6f3ff;
+  }
+  
+  .tabs, .sub-tabs {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .tabs button, .sub-tabs button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .tabs button.active, .sub-tabs button.active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .date-picker {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  
+  .date-picker label {
+    margin-right: 5px;
+  }
+  
+  .date-picker input {
+    padding: 5px;
+  }
+  
+  button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .favorite {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: #ccc;
+  }
+  
+  .favorite.active {
+    color: gold;
+  }
+  
+  .load {
+    background-color: #007bff;
+    color: white;
+    border: none;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+   
+
+     */

@@ -1,0 +1,111 @@
+/* Akash Pawar Vaccination 14/24 */
+.vaccination-followup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+   padding: 50px;
+   display: flex;
+   justify-content: center;
+   align-items: start;
+   z-index: 120;
+  }
+  
+  .vaccination-followup-modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    width: 900px;
+  }
+  
+  .vaccination-followup-close-button {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .vaccination-followup-modal h2 {
+    margin-top: 0;
+    font-size: 16px;
+    margin-bottom: 20px;
+  color: #000;  
+  }
+  
+  .vaccination-followup-patient-info {
+    margin-bottom: 20px;
+    background-color: #ccc;
+    padding: 10px;
+  }
+  
+  .vaccination-followup-patient-info {
+    margin-bottom: 20px;
+    background-color: #f7f7f7;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  .vaccination-followup-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .vaccination-followup-table td {
+    border: 1px solid gray;
+    padding: 5px;
+    text-align: left; /* Align text to the left for better readability */
+  }
+  
+  .vaccination-followup-table td label {
+    font-weight: bold;
+  }
+  
+  .vaccination-followup-table .merged-cell {
+    text-align: center; /* Center-align the text in the merged cells */
+  }
+  
+  .vaccination-followup-before-days {
+    color: blue;
+    font-size: 0.9em;
+  }
+  
+  
+  
+  .vaccination-followup-before-days {
+    color: blue;
+    font-size: 0.9em;
+  }
+  
+  .vaccination-followup-action {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .vaccination-followup-action p{
+    font-size: 14px;
+  }
+  
+  .vaccination-followup-save-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .vaccination-followup-save-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+     border: 1px solid var(--button-hover-border-color);
+  }

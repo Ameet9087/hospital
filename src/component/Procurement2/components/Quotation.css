@@ -1,0 +1,92 @@
+.QuotationRequest-container {
+  background-color: var(--background-color);
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.QuotationRequest-request-quotation {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.QuotationRequest-search-bar {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.QuotationRequest-search-bar input {
+  padding: 5px;
+  font-size: var(--font-size);
+  border: 1px solid #ced4da;
+}
+
+.QuotationRequest-search-button {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  padding: 5px ;
+  cursor: pointer;
+}
+
+.QuotationRequest-results-info {
+  display: flex;
+  justify-content: flex-end; /* Aligns content to the right */
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.QuotationRequest-print-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px ;
+  cursor: pointer;
+}
+
+.QuotationRequest-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  margin-bottom: 20px;
+}
+
+.QuotationRequest-data-table th, .QuotationRequest-data-table td {
+  border: 1px solid #dee2e6;
+  padding: 8px;
+  text-align: left;
+}
+
+.QuotationRequest-data-table th {
+  background-color: #f8f9fa;
+}
+
+.QuotationRequest-action-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px ;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.QuotationRequest-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.QuotationRequest-page-button {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+
+
+
+

@@ -1,0 +1,115 @@
+.PurchaseRequestView-details {
+  font-family: Arial, sans-serif;
+  background-color: #e6f3ff;
+  padding: 20px;
+}
+
+.PurchaseRequestView-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.PurchaseRequestView-back-button,
+.PurchaseRequestView-print-button {
+  background-color: #6495ed;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.PurchaseRequestView-content {
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.PurchaseRequestView-logo-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.PurchaseRequestView-sasa-logo,
+.PurchaseRequestView-qr-code {
+  width: 100px;
+  height: auto;
+}
+
+.PurchaseRequestView-hospital-info {
+  text-align: center;
+}
+
+.PurchaseRequestView-hospital-info h2 {
+  margin-bottom: 5px;
+}
+
+.PurchaseRequestView-hospital-info p {
+  margin: 2px 0;
+}
+
+.PurchaseRequestView-request-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.PurchaseRequestView-details-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.PurchaseRequestView-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.PurchaseRequestView-details-table th,
+.PurchaseRequestView-details-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+  font-size: 12px;
+}
+
+.PurchaseRequestView-details-table th {
+  background-color: #f0f0f0;
+}
+
+.PurchaseRequestView-signature-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.PurchaseRequestView-signature-block {
+  width: 30%;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.PurchaseRequestView-signature-block h4 {
+  margin-top: 0;
+  font-size: 14px;
+}
+
+.PurchaseRequestView-signature-block p {
+  margin: 5px 0;
+  font-size: 12px;
+}
+
+.PurchaseRequestView-add-purchase-order {
+  background-color: #6495ed;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}

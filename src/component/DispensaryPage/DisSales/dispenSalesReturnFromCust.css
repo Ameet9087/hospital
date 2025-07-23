@@ -1,0 +1,270 @@
+/* Ajhar Tamboli dispenSalesReturnFromCust.css 19-09-24 */
+
+.dispenSalesReturnFromCust-form {
+  /* font-family: Arial, sans-serif; */
+  /* max-width: 1200px; */
+  /* margin: 0 auto; */
+  padding: 10px;
+  background-color: var(--background-colo);
+}
+.dispenSalesReturnFromCust-buttons{
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+.dispenSalesReturnFromCust-buttons button {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  color: white;
+  padding: var(--input-box-padding);
+  border-radius: 5px;
+}
+.dispenSalesReturnFromCust-buttons button:hover {
+  background-color: white;
+  color: var(--button-color);
+}
+.dispenSalesReturnFromCust-options {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.dispenSalesReturnFromCust-search-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 10px;
+  background-color: #e9eaec;
+}
+
+.dispenSalesReturnFromCust-checkbox-group {
+  display: flex;
+  align-items: center;
+}
+.dispenSalesReturnFromCust-checkbox-group label {
+  font-size: var(--font-size);
+}
+
+.dispenSalesReturnFromCust-checkbox-group input[type="checkbox"] {
+  /* margin-right: 5px; */
+  margin: 0 10px;
+}
+
+.dispenSalesReturnFromCust-form-group-two {
+  display: flex;
+  justify-content: left;
+}
+.dispenSalesReturnFromCust-form-group-fs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  font-size: var(--font-size);
+  padding: 10px 0;
+}
+
+.dispenSalesReturnFromCust-btn-manual-return {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 10px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+.dispenSalesReturnFromCust-btn-manual-return:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.dispenSalesReturnFromCust-form h5 {
+  padding-top: 20px;
+  font-size: 16px;
+  color: black;
+  margin: 0px;
+}
+.dispenSalesReturnFromCust-patient-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size);
+}
+.dispenSalesReturnFromCust-patient-info label {
+  margin-right: 20px;
+}
+.dispenSalesReturnFromCust-form-group {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 5px;
+}
+
+.dispenSalesReturnFromCust-form-group label {
+  margin-bottom: 5px;
+}
+
+.dispenSalesReturnFromCust-form-group input,
+.dispenSalesReturnFromCust-form-group select,
+.dispenSalesReturnFromCust-form-group textarea {
+  padding: 3px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.dispenSalesReturnFromCust-search-input,
+.date-input {
+  position: relative;
+}
+
+.dispenSalesReturnFromCust-search-icon,
+.dispenSalesReturnFromCust-calendar-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.dispenSalesReturnFromCust-error-messages {
+  color: red;
+  font-size: var(--font-size);
+  margin-top: 5px;
+}
+
+.dispenSalesReturnFromCust-return-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  border-top: 30px solid #cacaca;
+}
+
+.dispenSalesReturnFromCust-return-table th,
+.dispenSalesReturnFromCust-return-table td {
+  border: 1px solid #ccc;
+  padding: 3px;
+  text-align: center;
+  color: black;
+  font-size: var(--font-size);
+  background-color: white;
+}
+
+.dispenSalesReturnFromCust-return-table th {
+  background-color: #f5f5f5;
+  font-size: var(--heading-font);
+}
+
+.dispenSalesReturnFromCust-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dispenSalesReturnFromCust-btn-search {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 10px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+.dispenSalesReturnFromCust-btn-search:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.dispenSalesReturnFromCust-btn-remove {
+  background-color: #e31d2d;
+  border: 1px solid #e31d2d;
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 10px;
+  transition: background-color 0.3s ease;
+  padding: 5px 10px;
+}
+.dispenSalesReturnFromCust-btn-remove:hover {
+  border: 1px solid #e31d2d;
+  color: #e31d2d;
+  background-color: var(--button-hover-background-color);
+}
+
+.dispenSalesReturnFromCust-btn-add {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 10px;
+  transition: background-color 0.3s ease;
+  padding: 5px 10px;
+}
+.dispenSalesReturnFromCust-btn-add:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.dispenSalesReturnFromCust-PRB {
+  display: flex;
+  justify-content: center;
+}
+.dispenSalesReturnFromCust-btn-print {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 10px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+.dispenSalesReturnFromCust-btn-print:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.dispenSalesReturnFromCust-remarks {
+  margin-top: 20px;
+}
+
+.dispenSalesReturnFromCust-remarks textarea {
+  width: 100%;
+  height: 100px;
+}
+
+.dispenSalesReturnFromCust-text-right {
+  text-align: right;
+}
+.dispenSalesReturnFromCust-form-group-remarks {
+  display: flex;
+}
+.dispenSalesReturnFromCust-form-group-remarks label {
+  font-size: var(--font-size);
+}
+.dispenSalesReturnFromCust-form-group-remarks textarea {
+  margin-left: 100px;
+}

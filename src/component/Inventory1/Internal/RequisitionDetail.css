@@ -1,0 +1,120 @@
+/* Swapnil ROkade adding className And Applying colors 14/09 */
+.inventory-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.inventory-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 70%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.inventory-close-button {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    color: red;
+    background: transparent;
+    border: none;
+    font-size: 34px;
+    cursor: pointer;
+}
+.inventory-close-button:hover{
+    color: red;
+}
+.inventory-requisition-details {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.inventory-requi-h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: var(--heading-font);
+}
+
+.inventory-requi-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.inventory-requi-table, 
+.inventory-requi-table th, 
+.inventory-requi-table td {
+    border: 1px solid #ddd;
+}
+
+.inventory-requi-table th, 
+.inventory-requi-table td {
+    padding: 8px;
+    text-align: left;
+}
+
+.inventory-requi-table thead th {
+    background-color: #f2f2f2f2;
+}
+
+.inventory-remarks-section {
+    margin-bottom: 20px;
+}
+
+.inventory-remarks-section p {
+    margin: 5px 0;
+}
+
+.inventory-status-steps {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.inventory-step {
+    text-align: center;
+}
+
+.inventory-step span {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    background-color: #f2f2f2;
+    margin-bottom: 5px;
+}
+
+.inventory-step.completed span {
+    background-color:var(--button-color);
+    color: white;
+}
+
+.inventory-step.pending span {
+    background-color: #f2f2f2;
+    color: black;
+}
+/* RequisitionDetail.css */
+
+/* Add styling for the checkbox column */
+.inventory-requi-table th:first-child,
+.inventory-requi-table td:first-child {
+  text-align: center;
+}
+
+/* Style checkboxes if needed */
+.inventory-requi-table input[type="checkbox"] {
+  cursor: pointer;
+}

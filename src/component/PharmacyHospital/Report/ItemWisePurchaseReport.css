@@ -1,0 +1,302 @@
+/* Mohini_ItemWisePurchaseReport_14/sep/2024 */
+.iten-purchase-container {
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  padding: 20px;
+  height: 90vh;
+  border-radius: 5px;
+}
+
+.iten-purchase-header {
+  color: black;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+
+.iten-purchase-filterRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.iten-purchase-showReportButton {
+  background-color:var( --button-color);
+  color: white;
+  border: none;
+  margin-right: 10px;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: auto;
+  transition: background-color 0.3s ease;
+
+}
+.iten-purchase-showReportButton:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.iten-purchase-searchRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.iten-purchase-searchInput {
+  margin-right: 10px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.iten-purchase-button {
+  background-color:var( --button-color);
+  color: white;
+  border: none;
+  margin-right: 10px;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: auto;
+  transition: background-color 0.3s ease;
+
+}
+.iten-purchase-button:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.iten-purchase-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.iten-purchase-table th,
+.iten-purchase-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.iten-purchase-noRows {
+  text-align: center;
+  padding: 10px;
+  background-color: #fff3cd;
+}
+
+/* .iten-purchase-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+} */
+
+/* .iten-purchase-paginationButton {
+  background-color: #6495ed;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  margin: 0 5px;
+  cursor: pointer;
+} */
+
+/* 
+.item-purchase-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.item-purchase-btn span {
+  font-size: 14px;
+  color: black; 
+} */
+
+/* .item-purchase-button {
+  margin-left: 10px;
+  padding: 5px 15px;
+  background-color: #5468ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.item-purchase-button:hover {
+  background-color: #4054b2; 
+} */
+.item-purchase-ta{
+  background-color: white;
+}
+.item-purchase-ta{
+  background-color: white;
+}
+
+
+.item-purchase-btn {
+  display: flex;
+  justify-content: flex-end; /* Aligns the span and buttons to the right */
+  align-items: center; /* Vertically centers the content */
+  width: 100%; /* Ensures the container takes the full width */
+  margin-right: 0; /* Optional: Removes any unwanted margin */
+}
+
+.item-purchase-btn span {
+  margin-right: 15px; /* Adds space between the span and the first button */
+  font-size: 14px;
+}
+
+ .iten-purchase-button {
+  padding: 5px 10px;
+  /* background-color: #f2f2f2; */
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px; 
+} 
+
+
+.item-span span {
+  padding: 5px; /* Adds padding to the span */
+  font-size: 14px; /* Sets the font size for the label */
+}
+
+.item-span select,
+.item-span input {
+  padding: 5px; /* Adds padding to the select and input elements */
+  border: 1px solid #ccc; /* Optional: Adds a border to match styling */
+  border-radius: 4px; /* Optional: Adds rounded corners */
+  font-size: 14px; /* Optional: Ensures font size matches */
+}
+
+/*  */
+.item-span-item {
+  display: flex;
+  margin-left: 30%;
+  justify-content: flex-end; /* Aligns the whole div to the right */
+  align-items: center;       /* Centers content vertically */
+  font-size: 14px;           /* Sets font size for the span text */
+}
+
+.item-span-item select {
+  padding: 5px;              /* Adds padding to the select box */
+  font-size: 14px;           /* Sets font size for the select options */
+  border-radius: 4px;        /* Optional: rounds the corners */
+  border: 1px solid #ccc;    /* Optional: adds a border */
+}
+.item-data-date {
+  display: flex;
+  align-items: center;         /* Aligns the items vertically in the center */
+  background-color: #f2f2f2;   /* Applies the background color */
+  padding: 5px;                /* Adds padding around the container */
+  font-size: 14px;             /* Sets font size for the span text */
+  gap: 10px;                   /* Adds space between elements */
+}
+
+.item-data-date input[type="date"] {
+  padding: 5px;                /* Adds padding inside the date input */
+  font-size: 14px;             /* Sets font size for the date input */
+  border: 1px solid #ccc;      /* Optional: adds a border */
+  border-radius: 4px;          /* Optional: rounds the corners */
+}
+.iten-purchase-show-bt{
+  background-color:var( --button-color);
+  color: white;
+  margin-top: 5px;
+  border: none;
+  margin-right: 10px;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: auto;
+  border: 1px solid var( --button-hover-border-color);
+  transition: background-color 0.3s ease;
+
+}
+.iten-purchase-show-bt:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+
+}
+
+/* Responsive media queries */
+@media (max-width: 768px) {
+  .iten-purchase-container {
+    padding: 10px;
+  }
+
+  .iten-purchase-header {
+    font-size: 14px; /* Adjust font size */
+    margin-bottom: 10px;
+  }
+
+  .iten-purchase-filterRow {
+    flex-direction: column; /* Stack filters vertically */
+  }
+
+  .iten-purchase-searchInput {
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  .iten-purchase-button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .iten-purchase-table th,
+  .iten-purchase-table td {
+    padding: 6px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .iten-purchase-container {
+    padding: 5px;
+  }
+
+  .iten-purchase-header {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .iten-purchase-filterRow {
+    flex-direction: column;
+  }
+
+  .iten-purchase-searchInput {
+    font-size: 12px;
+  }
+
+  .iten-purchase-button {
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+
+  .iten-purchase-table th,
+  .iten-purchase-table td {
+    font-size: 10px;
+    padding: 5px;
+  }
+  
+  .iten-purchase-table {
+    font-size: 10px;
+    overflow-x: auto;
+  }
+}
+
+
+/*  */
+
+
+/* Mohini_ItemWisePurchaseReport_14/sep/2024 */
+

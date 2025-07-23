@@ -1,0 +1,111 @@
+/* 
+   .EditItems {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .EditItems-headings{
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .EditItems-headings h2 span {
+    color: blue;
+  }
+  
+  .form-row, .buttons-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .form-row label {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .form-row input, .form-row select {
+    flex: 3;
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .form-row span.no-result {
+    color: red;
+    margin-left: 10px;
+  }
+  
+  .buttons-row {
+    justify-content: space-between;
+  }
+  
+  .save-button, .discard-button, .print-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .save-button {
+    background-color: green;
+    color: white;
+  }
+  
+  .discard-button {
+    background-color: red;
+    color: white;
+  }
+  
+  .print-button {
+    background-color: blue;
+    color: white;
+  }
+  
+  .incentive-percentage-setting {
+    margin-top: 30px;
+  }
+  
+  .incentive-percentage-setting h3 {
+    margin-bottom: 15px;
+  }
+  
+  .search-bar {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+  }
+  
+  table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  table th {
+    background-color: #f2f2f2;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .pagination button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .pagination span {
+    font-size: 14px;
+  }
+   */

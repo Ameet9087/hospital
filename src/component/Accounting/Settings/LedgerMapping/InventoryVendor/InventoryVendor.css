@@ -1,0 +1,86 @@
+/* InventoryVendor.css */
+
+.inventory-vendor-container {
+    background-color: #e1f5fe;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.primary-group,
+.chart-account,
+.ledger-group {
+    margin-right: 10px;
+}
+
+.select-box {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 20px;
+}
+
+.search-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.search-input {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.checkbox {
+    margin-right: 5px;
+}
+
+.status-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+}
+
+.status-item .red {
+    background-color: #ffcccb;
+}
+.ledger-name {
+    color: green;
+    font-weight: bold;
+}
+
+.number-input {
+    width: 60px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.footer-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.save-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

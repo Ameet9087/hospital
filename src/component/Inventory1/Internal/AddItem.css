@@ -1,0 +1,90 @@
+.AddItemForm {
+  width: 100%;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.AddItemForm h2 {
+  text-align: center;
+}
+
+.AddItemForm-form-sections {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.AddItemForm-section {
+  flex: 1;
+}
+
+.AddItemForm-form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.AddItemForm-form-group label {
+  flex: 0 0 160px;
+  font-weight: bold;
+}
+.AddItemForm-header
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.AddItemForm-form-group input[type="text"],
+.AddItemForm-form-group input[type="number"],
+.AddItemForm-form-group select,
+.AddItemForm-form-group textarea {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.Add-Item-Modal-close{
+  border-radius: 50%;
+  padding: 7px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  background-color: red;
+  color: white;
+  border: none;
+}
+
+
+.AddItemForm-form-group textarea {
+  resize: vertical;
+  height: 50px;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+}
+
+
+.AddItemForm-radio-group {
+  display: flex;
+  gap: 10px;
+}
+
+.AddItemForm-submit {
+  padding: 5px 10px;
+  background-color: var(--button-color);
+  color: white;
+  font-size: 16px;
+  font-weight:500;
+  border: 1px solid var(--button-color);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.AddItemForm-submit:hover {
+  background-color: var(--button-hover-color);
+  color: var(--button-color);
+}

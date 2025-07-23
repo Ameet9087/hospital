@@ -1,0 +1,178 @@
+/* Container */
+.group-operation-type {
+    /* display: flex; */
+    /* align-items: center; */
+    /* text-align: center; */
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    /* color: #333; */
+    position: relative;
+  }
+  
+  /* Header Section */
+  .groupOperationType-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    font-size: var(--heading-font);
+    /* font-weight: bold; */
+    text-align: center;
+    line-height: 50px;
+  }
+  
+  /* Form Section */
+  .groupOperationType-form-section {
+    /* align-items: center; */
+    margin-top: 60px; 
+    margin-left: 25%;
+    padding: 0 20px;
+    /* flex: 1; */
+    width: 50%;
+    /* flex: 1; */
+    background: white;
+    border: 1px solid #ccc;
+  }
+  
+  .groupOperationType-form-title {
+  
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 4px 8px;
+    font-size: var(--heading-font);
+  }
+  
+  .groupOperationType-form-group {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .groupOperationType-form-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  .groupOperationType-form-group input[type="text"] {
+    width: 50%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Status Section */
+  .groupOperationType-status-section {
+    margin-top: 20px;
+    padding: 10px;
+    padding-left: 10%;
+    text-align: center;
+    border: 1px solid #ccc;
+    /* margin-left: 20%; */
+    font-size: var(--font-size);
+    display: flex;
+    align-items: center;
+    background-color: white;
+  }
+  
+  .groupOperationType-status-options {
+    /* margin-top: 10px; */
+    display: flex;
+    gap: 30px;
+  }
+  
+  .groupOperationType-status-options label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  /* Button Section */
+  .groupOperationType-button-section {
+    /* position: fixed;
+    top: 60px;
+    right: 0;
+    width: 140px;
+    background-color: #f0f0f0;
+    border-left: 1px solid #ccc;
+    height: calc(100% - 60px);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    overflow-y: auto;  */
+    position: fixed;
+    padding: 10px;
+    bottom: 10px;
+    right: 0;
+    display: flex;
+    /* top: 60px; */
+    /* left: 0; */
+    /* width: 140px; */
+    /* background-color: #f0f0f0; */
+    /* border-left: 1px solid #ccc; */
+    /* height: calc(100% - 60px); */
+    /* flex-direction: column; */
+    align-items: center;
+    gap: 10px;
+    overflow-y: auto;
+  }
+  
+  .groupOperationType-button-section button {
+    /* width: 100%; */
+    /* padding: 10px;
+    font-size: var(--font-size);
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center; */
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+
+  }
+  
+  .groupOperationType-button-section button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color); 
+  }
+  .groupOperationType-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .groupOperationType-popup-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    position: relative;
+  }
+  
+  .groupOperationType-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    border: none;
+    background: transparent;
+  }
+  

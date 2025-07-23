@@ -1,0 +1,90 @@
+/* CreateLedgerPopup.css */
+
+.cc-popup-overlay {
+  position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 150;
+}
+
+.cc-popup-content {
+  position: relative;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  /* overflow-y: auto; */
+  width: 600px;
+  height: 250px;
+}
+
+.cc-popup-content h2 {
+  color: black;
+  font-size: var(--heading-font);
+  margin-bottom: 20px;
+}
+
+.cc-form-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cc-form-group {
+  flex: 1;
+  display: flex;
+  margin-right: 10px;
+}
+
+.cc-form-group label {
+  white-space: nowrap;
+  font-size: var(--font-size);
+  margin-bottom: 5px;
+  width: 250px;
+}
+
+.cc-button-row {
+  text-align: right;
+}
+
+.cc-save-btn {
+  background-color: var(--button-color);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+  font-size: var(--font-size);
+  float: left;
+}
+.cc-save-btn:hover {
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.cc-close-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 5px 12px;
+  font-size: 16px;
+}
+.cc-form-group input,.cc-form-group select{
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 30px !important;
+}

@@ -1,0 +1,98 @@
+.update-subledger-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 150;
+}
+
+.update-subledger-popup-content {
+    position: relative;
+    background-color: #f0f0f0;
+    padding: 0 20px;
+    border-radius: 5px;
+    width: 600px;
+    height: 400px;
+}
+
+.update-subledger-popup-content h2 {
+    color: black;
+    font-size: var(--heading-font);
+    margin-bottom: 20px;
+}
+
+.uslp-form-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.uslp-form-group {
+    flex: 1;
+    display: flex;
+    margin-right: 10px;
+}
+
+.uslp-form-group label {
+    white-space: nowrap;
+    margin-bottom: 5px;
+    width: 250px;
+    font-size: var(--font-size);
+}
+
+.uslp-button-row {
+    text-align: right;
+}
+
+.uslp-save-btn {
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    float: left;
+    font-size: var(--font-size);
+}
+.uslp-save-btn:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.uslp-close-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 5px 12px;
+    font-size: 16px;
+}
+
+.uslp-form-group input[type="text"],
+.uslp-form-group input[type="number"],
+.uslp-form-group select {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 30px !important;
+}
+
+.uslp-form-group input[type="checkbox"] {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    scale: 1.5;
+    height: 30px !important;
+}

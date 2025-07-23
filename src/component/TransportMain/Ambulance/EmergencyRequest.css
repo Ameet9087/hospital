@@ -1,0 +1,189 @@
+/* EmergencyRequest.css */
+.emergency-request-com-module-form-container{
+  width: auto;
+  margin: 20px;
+}
+.emergency-request-com-module-form {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: var(--background-color);
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+/* Styles for left and right sections */
+.emergency-request-com-module-left,
+.emergency-request-com-module-right {
+  width: 48%;
+}
+
+.emergency-request-com-module-group {
+  display: flex; /* Change to flex for horizontal layout */
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* .emergency-request-com-module-group label {
+  flex: 0 0 120px;
+  margin-right: 10px;
+  margin-left: 20px;
+  font-size: var(--heading-font);
+} */
+
+.emergency-request-com-module-group input[type="text"],
+.emergency-request-com-module-group input[type="number"],
+.emergency-request-com-module-group input[type="date"],
+.emergency-request-com-module-group input[type="email"],
+.emergency-request-com-module-group textarea {
+  flex: 1; /* Allow input to take up the remaining space */
+  padding: 4px;
+  font-size: var(--font-size);
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.emergency-request-com-module-gender-options {
+  display: flex;
+  gap: 10px;
+}
+
+.emergency-request-com-module-gender-options label {
+  display: flex;
+  font-size: var(--font-size);
+  align-items: center;
+}
+
+.emergency-request-com-module-submit-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px; /* Adjust padding */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.emergency-request-com-module-submit-button:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-color);
+  background-color: white;
+}
+
+.emergency-request-com-module-group input[type="checkbox"] {
+  margin-right: 80px; /* Push checkbox to the right */
+}
+
+.emergency-request-com-module-group label .mandatory {
+  color: red; /* Set color of the asterisk to red */
+  margin-left: 5px; /* Space between label text and asterisk */
+}
+
+/* Additional styling for the button area */
+.emergency-request-com-module-button {
+  display: flex;                /* Use Flexbox for centering */
+  justify-content: flex-start;      /* Center horizontally */
+  align-items: center;          /* Center vertically */
+  margin-left: -50px; /* Adjust as necessary */
+}
+
+.mandatory {
+  color: red; /* Change the color to red */
+}
+.emergency-request-com-module-dispatch-date-time {
+  display: flex; /* Use flexbox to align items in a row */
+  align-items: center; /* Center align items vertically */
+  gap: 10px; /* Add some space between the inputs */
+}
+
+.emergency-request-com-module-dispatch-date-time input {
+  margin: 0; /* Remove default margins */
+  font-size: 14px;
+  padding: 5px;
+}
+.special-equipment-options {
+  display: flex; /* Use flexbox for alignment */
+  gap: 10px; /* Gap between radio buttons and their labels */
+  align-items: center; /* Align items vertically in the center */
+}
+
+.special-equipment-options label {
+  margin: 0; /* Remove default margin */
+}
+
+/* Optional: Adjust spacing between input and label text */
+.special-equipment-options label input {
+  margin-right: 5px; /* Adjust as needed for spacing */
+}
+.emergency-request-com-module-gender-options {
+  display: flex; /* Use flexbox for alignment */
+  gap: 10px; /* Gap between radio buttons */
+}
+
+.emergency-request-com-module-gender-options label {
+  margin: 0; /* Remove default margin */
+}
+
+/* Optional: Reduce the gap between the input and its label text */
+.emergency-request-com-module-gender-options label input {
+  margin-right: 5px; /* Adjust as needed for spacing */
+}
+.special-equipment-options {
+  display: flex;
+  gap: 10px; /* Adds space between the radio buttons */
+  align-items: center;
+}
+
+.special-equipment-label {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Space between radio button and label text */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .emergency-request-com-module-form {
+    flex-direction: column; /* Stack sections vertically */
+    height: auto; /* Allow height to adjust */
+  }
+
+  .emergency-request-com-module-left,
+  .emergency-request-com-module-right {
+    width: 100%; /* Full width for smaller screens */
+  }
+
+  .emergency-request-com-module-group {
+    flex-direction: column; /* Stack label and input vertically */
+    align-items: flex-start; /* Align items to the start */
+  }
+
+  .emergency-request-com-module-group label {
+    flex: none; /* Remove fixed width */
+    margin-bottom: 5px; /* Add space below label */
+  }
+
+  .emergency-request-com-module-submit-button {
+    width: 100%; /* Full width for button */
+    margin-top: 15px; /* Add space above button */
+  }
+}
+
+@media (max-width: 480px) {
+  .emergency-request-com-module-group input[type="text"],
+  .emergency-request-com-module-group input[type="number"],
+  .emergency-request-com-module-group input[type="date"],
+  .emergency-request-com-module-group input[type="email"],
+  .emergency-request-com-module-group textarea {
+    padding: 8px; /* Increase padding for better touch targets */
+    font-size: 14px; /* Adjust font size for readability */
+  }
+
+  .emergency-request-com-module-group label {
+    font-size: 14px; /* Adjust label font size */
+  }
+
+  .emergency-request-com-module-submit-button {
+    font-size: 14px; /* Adjust button font size */
+  }
+}

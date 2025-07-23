@@ -1,0 +1,93 @@
+
+  
+  .ot_display_setup {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 8px;
+  }
+  .ot_display_setup-header {
+    text-align: center;
+    font-size: var(--heading-font);
+    color: #fff;
+    background-color: var(--sideBar-bg-color);
+    padding: 10px 0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  .ot_section {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ot_section_title {
+    font-size: var(--heading-font);
+    font-weight: bold;
+    margin-bottom: 10px;
+    color:black;
+    background-color: var(--background-color);
+    padding: 10px;
+
+  }
+  
+  .ot_tat_row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    align-items: center;
+  }
+  
+  .ot_tat_label {
+    font-weight: bold;
+    color:black
+  }
+  
+  .ot_tat_input {
+    padding: var(--input-box-padding);
+    font-size: var(--font-size);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 50%; /* Input width set to 50% */
+    outline: none;
+  }
+  
+  .ot_tat_input:focus {
+    border-color: var(--upperBar-bg-color);
+  }
+  
+  .ot_tat_input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  
+  .ot_tat_input[type="number"]::-webkit-outer-spin-button,
+  .ot_tat_input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  .ot_tat_input:focus {
+    border-color: var(--button-bg-color);
+    box-shadow: 0 0 4px rgba(0, 151, 143, 0.5);
+  }
+  
+  /* button {
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+    border: none;
+    padding: 10px;
+    font-size: var(--font-size);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: var(--button-hover-background-color);
+    border-color: var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+  }
+   */

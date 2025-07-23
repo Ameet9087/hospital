@@ -1,0 +1,124 @@
+
+.AssetNewReplacementRequestPopUp-container {
+  width: 100%;
+  font-family: Arial, sans-serif;
+  max-width: 1200px; /* Increased max-width */
+  margin: 0 auto; /* Center the popup */
+  background-color: var(--background-color);
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow-y: auto; /* Allows scrolling if content overflows */
+}
+
+/* Header Styling */
+.AssetNewReplacementRequestPopUp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 16px;
+}
+
+.AssetNewReplacementRequestPopUp-header h4 {
+  font-size: var(--heading-font);
+  margin: 0;
+}
+
+/* Close Button Styling */
+.AssetNewReplacementRequestPopUp-close-btn {
+  background-color: var(--button-bg-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px 12px;
+}
+
+/* Form Styling */
+.AssetNewReplacementRequestPopUp-form {
+  margin-top: 16px;
+}
+
+/* Form Panels */
+.AssetNewReplacementRequestPopUp-form-panels {
+  display: flex;
+  gap: 16px;
+}
+
+.AssetNewReplacementRequestPopUp-left-panel, 
+.AssetNewReplacementRequestPopUp-right-panel {
+  width: 30%;
+  padding:5px;
+  
+}
+.AssetNewReplacementRequestPopUp-tab {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px 12px;
+  margin-bottom: 5px;
+  margin-right:5px;
+}
+
+/* Form Group Styling */
+.AssetNewReplacementRequestPopUp-form-group {
+  display: flex;
+  text-align: left;
+  align-items: center;
+  font-size: var(--font-size);
+  padding:4px
+ 
+}
+
+
+
+
+/* Action Buttons */
+.AssetNewReplacementRequestPopUp-form-actions {
+  display: flex;
+  /* justify-content: flex-end; */
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.AssetNewReplacementRequestPopUp-add-btn {
+  background-color: var(--button-bg-color);
+  border: 1px solid var(--upperBar-bg-color);
+  color: white;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  transition: background-color 0.3s ease;
+}
+
+.AssetNewReplacementRequestPopUp-add-btn:hover {
+  background-color: var(--button-hover-background-color);
+  border-color: var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+
+@media (max-width: 768px) {
+  .AssetNewReplacementRequestPopUp-container {
+    padding: 15px;
+    max-width: 90%;
+  }
+
+  .AssetNewReplacementRequestPopUp-form-group {
+    flex: 1 1 100%;
+  }
+
+  .AssetNewReplacementRequestPopUp-form-actions {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .AssetNewReplacementRequestPopUp-add-btn {
+    width: 100%;
+    margin-top: 8px;
+  }
+}

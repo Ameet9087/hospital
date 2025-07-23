@@ -1,0 +1,101 @@
+ /* Dhanashree_EmrTranEdit_24/09_Starts */
+
+ .EmrTranEdit-card {
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  max-width: 600px;
+  /* width: 100%;  */
+}
+
+.EmrTranEdit h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.EmrTranEdit-form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  flex-wrap: wrap; 
+}
+
+.EmrTranEdit label {
+  font-weight: bold;
+  margin-right: 10px;
+  flex: 1;
+}
+
+.EmrTranEdit input,
+.EmrTranEdit select {
+  flex: 2;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 100%; 
+}
+
+.EmrTranEdit-button {
+  width: 30%;
+  padding: 10px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+.EmrTranEdit-button:hover {
+  background-color: white;
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+@media (max-width: 768px) {
+  .EmrTranEdit-card {
+    padding: 15px;
+  }
+
+  .EmrTranEdit label,
+  .EmrTranEdit input,
+  .EmrTranEdit select {
+    flex: 100%; 
+  }
+
+  .EmrTranEdit-form-group {
+    flex-direction: column; 
+  }
+}
+
+@media (max-width: 480px) {
+  .EmrTranEdit-card {
+    padding: 10px;
+  }
+
+  .EmrTranEdit h2 {
+    font-size: 1.2rem; 
+  }
+
+  .EmrTranEdit label {
+    font-size: 0.9rem; 
+  }
+
+  .EmrTranEdit input,
+  .EmrTranEdit select {
+    font-size: 0.9rem;
+    padding: 6px;
+  }
+
+  .EmrTranEdit-button {
+    font-size: 1rem;
+    padding: 8px;
+  }
+}
+
+ /* Dhanashree_EmrTranEdit_24/09_Ends */

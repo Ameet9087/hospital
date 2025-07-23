@@ -1,0 +1,85 @@
+.payment-modes-container {
+    background-color: #e0f7ff;
+    padding: 20px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.header select,
+.search-input {
+    margin-right: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.checkbox-group label {
+    margin-left: 5px;
+    margin-right: 15px;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.ledger-table {
+    margin-bottom: 20px;
+}
+
+.ledger-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ledger-table th,
+.ledger-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.ledger-input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.save-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}

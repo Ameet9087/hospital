@@ -1,0 +1,178 @@
+
+.bedInformation-container {
+    font-family: Arial, sans-serif;
+    /* max-width: 800px; */
+    width: auto;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .bedInformation-stats-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .hhBedInformation-stat-card {
+    width: 30%;
+    padding: 15px;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+  }
+  
+  .hhBedInformation-stat-card h2 {
+    font-size: var(--heading-font);
+    margin-bottom: 10px;
+  }
+  
+  .hhBedInformation-stat-card .hhBedInformation-number {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .total { 
+background-color: #1481D5;
+display: flex;
+justify-content: space-between;
+align-items: first baseline; 
+height: 90px;
+}
+  .available { 
+    /* background-color: #007bff; */
+display: flex;
+justify-content: space-between;
+align-items: first baseline; 
+background-color: #44B6AE; 
+height: 90px;
+
+}
+  .occupied {
+    /* background-color: #007bff; */
+display: flex;
+justify-content: space-between;
+align-items: first baseline; 
+ background-color: #F3695B;
+ height: 90px;
+ 
+}
+  
+  .bedInformation-table-container {
+    background-color: white;
+    padding: 20px;
+    width: 60%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .bedInformation-table-container h4 {
+    color: #20c997;
+    margin-bottom: 15px;
+  }
+  
+  .bedInformation-table-container table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .bedInformation-table-container th, .bedInformation-table-container td {
+    padding: 3px 5px;
+    /* padding: 10px; */
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: var(--font-size);
+  }
+  
+  .bedInformation-table-container th {
+    font-size: var(--heading-font);
+    background-color: var( --button-bg-color);
+    color: white;
+  }
+  
+  .bedInformation-total-row {
+    font-weight: bold;
+  }
+  
+  .bedInformation-button-container {
+    margin-top: 15px;
+    text-align: right;
+  }
+  
+  .bedInformation-button-container button {
+    padding: 8px 15px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 2px;
+  }
+  
+  .bedInformation-print-btn {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .bedInformation-print-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .bedInformation-export-btn {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .bedInformation-export-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .hhBedInformation-wardNameColumn{
+    font-weight: bold;
+    color: #007bff;
+  }
+
+  .hhBedInformation-wardNameColumnBTN{
+    background-color: transparent;
+    color: var(--button-bg-color);
+    border: none;
+  }
+
+  /* Hide everything except the table during print */
+@media print {
+    body * {
+      visibility: hidden;
+    }
+    
+    .bedInformation-table-container,
+    .bedInformation-table-container * {
+      visibility: visible;
+    }
+  
+    .bedInformation-table-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+  
+    .bedInformation-button-container {
+      display: none;
+    }
+  }
+  

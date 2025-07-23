@@ -1,0 +1,161 @@
+  /*Swapnil ROkade InpatientPage added classname and table centralization 23/09  */
+  .InpatientPage-patient-orders {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+ .Patient-Dashboard-td-view{
+  background-color: var(--button-color);
+  border:1px solid var(--button-color);
+  padding: var(--input-box-padding);
+  border-radius: 5px;
+  color: white;
+ }
+ .Patient-Dashboard-td-view:hover{
+  background-color: white;
+  color: var(--button-color);
+ }
+  .InpatientPage-header {
+    background-color: #0066cc;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+    
+  .InpatientPage-logo {
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+    
+  .InpatientPage-logo img {
+    margin-right: 10px;
+  }
+    
+  .InpatientPage-home-button {
+    background-color: #ffcc00;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+    
+  .InpatientPage-content {
+    display: flex;
+    flex-grow: 1;
+  }
+    
+  .InpatientPage-sidebar {
+    width: 250px;
+    background-color: #0066cc;
+    color: white;
+    padding: 20px;
+  }
+    
+  .InpatientPage-patient-info {
+    position: relative;
+  }
+    
+  .InpatientPage-patient-avatar {
+    width: 80px;
+    height: 80px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+    
+  .InpatientPage-ipd-tag {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #ffcc00;
+    color: black;
+    padding: 2px 5px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+    
+  .InpatientPage-nav-menu ul {
+    list-style-type: none;
+    padding: 0;
+  }
+    
+  .InpatientPage-nav-menu li {
+    padding: 5px 0;
+    cursor: pointer;
+  }
+    
+  .InpatientPage-main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #e6f2ff;
+    display: flex;
+    gap: 20px;
+  }
+    
+  .InpatientPage-active-orders, .InpatientPage-new-orders {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+    
+  .InpatientPage-active-orders {
+    flex: 2;
+  }
+    
+  .InpatientPage-new-orders {
+    flex: 1;
+  }
+    
+  .InpatientPage-active-orders h3 {
+    margin-top: 0;
+    color: #333;
+  }
+    
+  .InpatientPage-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+    
+  .InpatientPage-orders-table th, .InpatientPage-orders-table td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+    
+  .InpatientPage-orders-table th {
+    background-color: #f2f2f2;
+  }
+    
+  .InpatientPage-print-medication {
+    background-color: #6666cc;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+    
+  .InpatientPage-order-input {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+    
+  .InpatientPage-order-type, .InpatientPage-search-order {
+    flex-grow: 1;
+    padding: 5px;
+  }
+    
+  .InpatientPage-search-button {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  

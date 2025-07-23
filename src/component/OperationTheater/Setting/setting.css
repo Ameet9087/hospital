@@ -1,0 +1,45 @@
+/* setting.css */
+
+/* Basic styling for the container */
+.setting-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navigation Bar */
+.setting-header {
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.setting-nav {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.setting-nav-item {
+  cursor: pointer;
+  padding: 10px;
+  transition: background-color 0.3s;
+}
+
+.setting-nav-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Active navigation item */
+.setting-nav-item.active {
+  font-weight: bold;
+  color: #007bff; /* Adjust the active color */
+  border-bottom: 2px solid #007bff; /* Underline active item */
+}
+
+/* Content Area */
+.setting-content {
+  padding: 20px;
+  background-color: #fff;
+  flex-grow: 1;
+}

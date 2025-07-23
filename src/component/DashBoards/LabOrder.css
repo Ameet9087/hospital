@@ -1,0 +1,71 @@
+/* Swapnil ROkade RadioOrder adding class name and table centralization 23/09 */
+
+
+.lab-order-container {
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--background-color);
+    border: 1px solid #d0e3f0;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .lab-order-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  .radio-group {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .radio-group label {
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+  }
+  
+  .radio-group input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  .lab-action-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .lab-action-container-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.1s;
+  }
+  
+  .lab-action-container-btn:active {
+    transform: scale(0.98);
+  }
+  
+  .lab-action-container-btn-sign {
+    background-color: var(--button-color);
+    color: white;
+  }
+  
+  .lab-action-container-btn-sign:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-color);
+    border: 1px solid var(--button-color);
+  }
+  
+  .lab-action-container-btn-cancel {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .lab-action-container-btn-cancel:hover {
+    background-color: #c0392b;
+  }

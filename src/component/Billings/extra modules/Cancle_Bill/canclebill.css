@@ -1,0 +1,172 @@
+.cancel_bill_list {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 10px;
+    background-color: #e0f5fc;
+  }
+  
+  .cancel_bill_nav-content {
+    margin-bottom: 20px;
+  }
+
+
+  .cancel_bill_date {
+    margin: 10px;
+    padding: 5px;
+    background-color: #f9f9f9;
+    width: 90%;
+  }
+  
+  .cancel_bill_date_range {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    background-color: #e0f5fc;
+  }
+  
+  .cancel_bill_input_date {
+    margin: 0 5px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .cancel_bill_star_btn,
+  .cancel_bill_plus_btn,
+  .cancel_bill_ok_btn {
+    margin-left: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+  }
+  
+  .cancel_bill_star_btn,
+  .cancel_bill_plus_btn {
+    background-color: #fff;
+    color: #333;
+  }
+  
+  .cancel_bill_star_btn:hover,
+  .cancel_bill_plus_btn:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .cancel_bill_ok_btn {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .cancel_bill_ok_btn:hover {
+    background-color: #45a049;
+  }
+  
+  
+  
+  
+  .cancel_bill_search-print {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .cancel_bill_search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .cancel_bill_inputsearchbar {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .cancel_bill_searchbar-btn {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: -20px;
+  }
+  
+  .cancel_bill_print-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .cancel_bill_table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .cancel_bill_table th, .cancel_bill_table td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: left;
+    font-size: 14px;
+  }
+  
+  .cancel_bill_table th {
+    background-color: #f2f2f2;
+  }
+  
+  .cancel_bill_action-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px
+  }
+  
+  /* Modal Styles */
+  .cancel_bill_modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .cancel_bill_modal_content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .cancel_bill_textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+  }
+  
+  .cancel_bill_modal button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .cancel_bill_modal button:hover {
+    background-color: #0056b3;
+  }
+  

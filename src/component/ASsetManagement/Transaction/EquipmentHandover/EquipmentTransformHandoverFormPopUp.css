@@ -1,0 +1,126 @@
+/* EquipmentTransformHandoverFormPopUp.css */
+.EquipmentTransformHandoverFormPopUp-header {
+  background-color: #2c3e50;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  border-radius: 5px 5px 0 0;
+  
+}
+
+.EquipmentTransformHandoverFormPopUp-form {
+  background-color: white;
+  padding: 20px;
+  
+  justify-content: center;
+  /* max-width: 900px; */
+  border-radius: 0 0 8px 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form Panels */
+.EquipmentTransformHandoverFormPopUp-panels {
+  display: flex;
+  justify-content:center;
+  align-items: center;
+
+}
+
+.EquipmentTransformHandoverFormPopUp-panel {
+  flex: 1;
+  padding: 10px;
+}
+
+/* Form Inputs */
+.EquipmentTransformHandoverFormPopUp-form-group {
+  margin-bottom: 15px;
+}
+
+
+
+
+
+.EquipmentTransformHandoverFormPopUp-form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.EquipmentTransformHandoverFormPopUp-form-select {
+  background-color: #f9f9f9;
+}
+
+.EquipmentTransformHandoverFormPopUp-form-input[type="file"] {
+  padding: 4px;
+}
+
+/* Actions */
+.EquipmentTransformHandoverFormPopUp-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.EquipmentTransformHandoverFormPopUp-save-button,
+.EquipmentTransformHandoverFormPopUp-close-button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.EquipmentTransformHandoverFormPopUp-save-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.EquipmentTransformHandoverFormPopUp-close-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.EquipmentTransformHandoverFormPopUp-save-button:hover {
+  background-color: #218838;
+}
+
+.EquipmentTransformHandoverFormPopUp-close-button:hover {
+  background-color: #c82333;
+}
+
+
+.EquipmentTransformHandoverFormPopUp-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.EquipmentTransformHandoverFormPopUp-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+/* Responsive Layout */
+@media screen and (max-width: 768px) {
+  .EquipmentTransformHandoverFormPopUp-panels {
+    flex-direction: column;
+  }
+
+  .EquipmentTransformHandoverFormPopUp-panel {
+    padding: 5px;
+  }
+
+  .EquipmentTransformHandoverFormPopUp-form {
+    width: 90%;
+  }
+}

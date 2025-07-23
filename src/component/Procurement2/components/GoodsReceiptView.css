@@ -1,0 +1,93 @@
+.goods-receipt-view {
+    /* width: 100%; */
+    font-family: Arial, sans-serif;
+    background-color: #e3f7fc;
+    padding: 10px;
+  }
+  
+  .receipt-view-header, .receipt-view-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .goods-receipt-btn-container
+  {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .receipt-view-header .logo h2 {
+    font-size: 24px;
+  }
+  
+  .receipt-view-header .hospital-info {
+    text-align: center;
+  }
+  
+  .qr-code {
+    text-align: right;
+  }
+  
+  .receipt-view-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .left-section{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .right-section
+  {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+  }
+  .summary-view-details
+  {
+    display: flex;justify-content: space-around;
+  }
+  .goods-view-details {
+    margin-top: 20px;
+  }
+  
+  .goods-view-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .goods-table th, .goods-table td {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 8px;
+  }
+  
+  .summary-view-section {
+    margin-top: 20px;
+    text-align: right;
+  }
+  
+  .receipt-view-footer {
+    margin-top: 20px;
+    text-align: center;
+  }
+  .goods-receipt-btn-print{
+    background-color:var( --button-color);
+    color: white;
+    border: 1px solid var( --button-hover-border-color);
+    margin-right: 10px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  .goods-receipt-btn-print:hover{
+     
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }

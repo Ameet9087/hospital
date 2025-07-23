@@ -1,0 +1,100 @@
+/* Mohini_RankMembershipwiseReport_WholePage_14/sep/2024 */
+.rank-wise-saales-report-page-container {
+  background-color: var(---background-color);
+  padding: 20px;
+  height: 90vh;
+}
+
+.rank-wise-saales-report-page-container h3 {
+  font-size: var(--heading-font);
+align-items: start;
+
+  margin-bottom: 20px;
+  color: black;
+}
+
+.rank-wise-saales-filters-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 50%;
+  background-color: #ffffff;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.rank-wise-saales-filter-item {
+  display: flex;
+  align-items: center;
+  font-size: var(--heading-font);
+}
+
+.rank-wise-saales-filter-item label {
+  margin-right: 5px;
+  font-size: var(--font-size);
+}
+
+.rank-wise-saales-filter-item input[type="date"] {
+  padding: 5px;
+  font-size: var(--font-size);
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.rank-membershipfavorite-btn,
+.rank-membership-reset-btn {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.rank-membershipfavorite-btn {
+  color: #0066cc;
+}
+
+.rank-membership-reset-btn {
+  color: #666666;
+}
+
+.rank-memeber-range {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 20px;
+}
+
+.rank-wise-saales-filter-item select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 200px;
+}
+
+.rank-wise-saalesfilter-item {
+  padding: 5px  5px;
+  background-color:var( --button-color);
+  color: white;
+  border-bottom:  1px solid var(--button-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.rank-wise-saalesfilter-item:hover{
+  color: var(---background-color);
+  background-color: white;
+  border-bottom:  1px solid var(--button-color);
+}
+
+
+/* Adjust the layout for smaller screens */
+@media (max-width: 768px) {
+  .rank-wise-saales-filters-container,
+  .rank-memeber-range {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+/* Mohini_RankMembershipwiseReport_WholePage_14/sep/2024 */

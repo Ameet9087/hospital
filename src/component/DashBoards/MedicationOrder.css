@@ -1,0 +1,67 @@
+/* SwapnilRokade_PatientDashboard_Adding_New_patientDashboard_13/09 */
+.MedicationOrder-form {
+    margin: 20px;
+    padding: 20px;
+    background-color: #e0f7fa;
+  }
+  .MedicationOrder-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .MedicationOrder-table th, .MedicationOrder-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    
+  }
+  .MedicationOrder-select
+  {
+    width: 100%;
+    padding: 2px;
+  }
+  
+  .MedicationOrder-table th {
+    background-color: #f2f2f2;
+    text-align: center;
+  }
+  
+  .MedicationOrder-input{
+    width: 100%;
+  }
+  
+  .MedicationOrder-deleteBtn {
+    padding: 5px 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .MedicationOrder-submitBtn {
+    width: 65px;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+    background-color: #00968f;
+    color: white;
+  }
+  .MedicationOrder-submitBtn:hover
+  {
+    background-color:white;
+    color: gray;
+  }
+  
+  .MedicationOrder-cancelBtn {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .MedicationOrder-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  

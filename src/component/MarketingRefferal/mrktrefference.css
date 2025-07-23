@@ -1,0 +1,39 @@
+/* neha-mktreffaral-transaction-19/09/24 */
+.mkrt_ref-header {
+    background-color: white; /* White background for the navbar */
+    padding: 10px; /* Padding around the navbar */
+  }
+  
+
+  .mkrt_ref-header-nav {
+    display: flex;
+    gap: 20px;
+    /* justify-content: space-around;  */
+    list-style-type: none; 
+  }
+  
+
+  .mkrt_ref-header-button {
+    color: black; /* Blue text color for links */
+    text-decoration: none; /* Remove underline */
+    padding: 5px; /* Padding for spacing */
+    font-size: 16px; /* Consistent font size */
+    border-radius: 4px; /* Slightly rounded corners */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+  }
+  
+  /* Hover and active state styling */
+  .mkrt_ref-header-button:hover,
+  .mkrt_ref-header-button.active {
+    color: white; 
+    background-color: var(--button-bg-color); 
+  }
+  
+  /* Main content area styling */
+  .mkrt_ref-main-content {
+    padding: 5px; /* Padding around the content */
+    background-color: #f4f4f4; /* Light background color */
+    min-height: 100vh; 
+  }
+  
+ 

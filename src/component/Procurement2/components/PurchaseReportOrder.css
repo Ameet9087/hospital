@@ -1,0 +1,135 @@
+.PurchaseReport-order {
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  /* padding: 20px; */
+}
+
+.PurchaseReport-order h2 {
+  color: black;
+  text-align: left; 
+  margin-bottom: 20px;
+  font-size: var(--heading-font); /* Assuming --heading-font is correctly defined */
+}
+
+
+.PurchaseReport-order-filters {
+  background-color: var(--background-color);
+  /* padding: 15px; */
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+
+.PurchaseReport-order-vendor-item-filters,
+.PurchaseReport-order-item-subcategory-filters {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.PurchaseReport-order-date-range input[type="date"],
+.PurchaseReport-order-vendor-item-filters select,
+.PurchaseReport-order-item-subcategory-filters input[type="text"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+.PurchaseReport-order-date-range{
+  margin-bottom: 20px;
+}
+.PurchaseReport-order-star-button,
+.PurchaseReport-order-more-button {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 5px;
+}
+
+.PurchaseReport-order-item-type-filter {
+  margin-bottom: 10px;
+}
+
+.PurchaseReport-order-item-type-filter input[type="radio"] {
+  margin-right: 5px;
+}
+
+.PurchaseReport-order-search-bar {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.PurchaseReport-order-search-bar input[type="text"] {
+  /* flex-grow: 1; */
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px 0 0 3px;
+}
+
+.PurchaseReport-order-search-bar button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-left: none;
+  padding: 5px 10px;
+  border-radius: 0 3px 3px 0;
+}
+
+.PurchaseReport-order-report-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.purchase-re-btn{
+  display: flex; 
+  justify-content: flex-end;
+}
+.PurchaseReport-order-results {
+
+  border-radius: 5px;
+  /* padding: 15px; */
+}
+
+.PurchaseReport-order-results-header {
+  display: flex; 
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+
+.PurchaseReport-order-export-button,
+.PurchaseReport-order-print-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+
+.PurchaseReport-order-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.PurchaseReport-order-pagination button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.PurchaseReport-order-pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

@@ -1,0 +1,240 @@
+.floor-container {
+  margin-top: 10px;
+  font-family: Arial, sans-serif;
+}
+.floor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+}
+.floors-Detail {
+  background-color: var(--button-bg-color);
+  color: #ffff;
+  padding: 5px;
+  font-size: 1rem;
+}
+.floor-form-group {
+  display: flex; /* Use flexbox to place label and input side by side */
+  align-items: center; /* Align label and input vertically */
+  gap: 10px; /* Add space between label and input */
+}
+/* 
+.floor-form-group label {
+  font-weight: bold;
+  color: var(--font-color);
+  min-width: 150px;
+  text-align: left;
+}
+
+.floor-form-group input,
+.floor-form-group select,
+.floor-form-group textarea {
+  padding: 5px;
+  font-size: 1rem;
+  border: 1px solid gray;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.floor-form-group textarea {
+  resize: none;
+} */
+.floor-btn {
+  background-color: var(--button-bg-color);
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: auto; /* Ensure the button width adjusts to its content */
+  max-width: 200px; /* Limit the width of the button */
+  margin: 0 auto; /* Center the button horizontally */
+  margin: 8px;
+}
+
+.floor-btn:hover {
+  background-color: var(--button-hover-bg-color);
+  color: white;
+}
+
+.floor-table {
+  width: 100%; /* Table spans the full width of the container */
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.floor-table th,
+.floor-table td {
+  text-align: left;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.floor-table th {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.no-data {
+  text-align: center;
+  font-style: italic;
+}
+
+/* Modal Styles */
+.floor-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.floor-modal {
+  width: 500px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.floor-modal h4 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.floor-modal .floor-modal-search-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.floor-modal .floor-modal-search-container label {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.floor-modal-search-container {
+  display: flex;
+  align-items: center; /* Aligns items vertically */
+  gap: 10px; /* Adds spacing between the input and select elements */
+}
+
+.floor-modal-search-container input[type="text"],
+.floor-modal-search-container select {
+  width: 500px; /* Sets width for both elements */
+  padding: 3px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+.add-floor-btn {
+  background-color: var(--button-bg-color);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: var(--input-box-padding);
+  margin-bottom: 10px;
+}
+
+.floor-modal .floor-modal-search-container input[type="button"] {
+  padding: 3px 15px;
+  font-size: 1rem;
+  background-color: #007973;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 200px;
+}
+
+.floor-modal .floor-modal-search-container input[type="button"]:hover {
+  background-color: #004d40;
+}
+
+.floor-modal .floor-modal-results {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.floor-modal .floor-modal-results ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.floor-modal .floor-modal-results li {
+  padding: 2px;
+  font-size: 14px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.floor-modal .floor-modal-results li:hover {
+  background-color: #e0f7fa;
+}
+
+.floor-modal .floor-modal-pagination {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.floor-modal .floor-modal-pagination span {
+  color: #007973;
+}
+
+.floor-modal .floor-modal-pagination button {
+  padding: 5px 10px;
+  background-color: #007973;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.floor-modal .floor-modal-pagination button:hover {
+  background-color: #004d40;
+}
+
+.floor-modal .floor-modal-close-btn {
+  padding: 5px 15px;
+  background-color: #007973;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.floor-modal .floor-modal-close-btn:hover {
+  background-color: #004d40;
+}
+
+.floor-delete-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: var(--input-box-padding);
+  margin-bottom: 10px;
+}
+
+.floor-delete-btn:hover {
+  background-color: darkred; /* Darker shade of red on hover */
+}
+
+.floor-edit-btn:hover {
+  background-color: var(--button-bg-color); /* Darker shade of red on hover */
+}

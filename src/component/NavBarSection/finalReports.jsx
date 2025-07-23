@@ -1,0 +1,271 @@
+import React, { useState, useRef, useEffect } from "react";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import "../NavBarSection/finalReports.css";
+
+import { API_BASE_URL } from "../api/api";
+import { useNavigate } from "react-router-dom";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { FloatingInput } from "../../FloatingInputs";
+
+const getCurrentDate = () => {
+  return new Date().toISOString().split("T")[0];
+};
+
+function FinalReports() {
+  const [dateFrom, setDateFrom] = useState(getCurrentDate()); // Set initial state to today's date
+  const [dateTo, setDateTo] = useState(getCurrentDate());
+  const [category, setCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState(""); // State to store search query
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
+  const [labResult, setLabResult] = useState(null);
+  const navigate = useNavigate();
+
+  const handlePrint = () => {
+    const doc = new jsPDF();
+    doc.text("Final Reports", 14, 16);
+    doc.text(`Reporting Date: From ${dateFrom} To ${dateTo}`, 14, 22);
+    // Generate the PDF and open in a new tab
+    const pdfData = doc.output("dataurlstring");
+    const newWindow = window.open();
+    if (newWindow) {
+      newWindow.document.write(
+        `<iframe src="${pdfData}" width="100%" height="100%" style="border:none;"></iframe>`
+      );
+    }
+  };
+
+  const handleDateFromChange = (event) => {
+    setDateFrom(event.target.value);
+  };
+
+  const handleDateToChange = (event) => {
+    setDateTo(event.target.value);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value); // Update the search query state on input change
+  };
+
+  const fetchLabResults = () => {
+    let link;
+
+    if (dateFrom && dateTo) {
+      link = `${API_BASE_URL}/lab-result/by-verify-dateRange?startDate=${dateFrom}&endDate=${dateTo}&approvalStatus=Approved`;
+    } else {
+      const todayDate = getCurrentDate();
+      console.log(todayDate);
+
+      link = `${API_BASE_URL}/lab-result/by-verify-dateRange?startDate=${todayDate}&endDate=${todayDate}&approvalStatus=Approved`;
+    }
+
+    // Fetch the data
+    fetch(link)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Fetched data: ", data); // Debugging log
+        setLabResult(data);
+      })
+      .catch((err) => {
+        console.log("Fetch error: ", err);
+      });
+  };
+
+  useEffect(() => {
+    fetchLabResults(); // Call to fetch lab results when the component mounts or dates change
+  }, [dateFrom, dateTo]);
+
+  // Filter labResult based on the search query
+  const filteredLabResults = labResult?.filter((result) => {
+    const patientName = `${
+      result.labRequest?.outPatient?.patient?.firstName || ""
+    } ${result.labRequest?.outPatient?.patient?.lastName || ""}`.toLowerCase();
+    const patientPhoneNumber =
+      result.labRequest?.inPatient?.patient?.mobileNumber ||
+      result.labRequest?.outPatient?.patient?.mobileNumber;
+    const testName = result?.labRequest.labTests
+      ?.map((test) => test.labTestName)
+      .join(", ")
+      .toLowerCase();
+
+    return (
+      patientName.includes(searchQuery.toLowerCase()) ||
+      patientPhoneNumber?.includes(searchQuery) ||
+      testName.includes(searchQuery.toLowerCase())
+    );
+  });
+
+  return (
+    <div className="finalReports-work-list">
+      <h4>Final Reports</h4>
+      <div className="finalReports-header">
+        <div className="finalReports-controls">
+          {/* Date range controls */}
+          <div className="finalReports-date-range">
+            <FloatingInput
+            label={"From"}
+             type="date"
+             name="dateFrom"
+             value={dateFrom}
+             onChange={handleDateFromChange}
+            />
+            <FloatingInput
+            label={"To"}
+            type="date"
+            name="dateTo"
+            value={dateTo}
+            onChange={handleDateToChange}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="finalReports-searchbar-N-showing">
+        <div className="finalReports-search-bar">
+
+          <FloatingInput
+          type="text"
+          label="Search"
+          value={searchQuery} // Bind the input field to the search query state
+          onChange={handleSearchChange}
+          />
+        </div>
+        <div className="finalReports-results-info">
+          <span>
+            Showing {filteredLabResults?.length} / {labResult?.length} results
+          </span>
+        </div>
+      </div>
+
+      <div className="table-container">
+        <table ref={tableRef}>
+          <thead>
+            <tr>
+              {[
+                "Sr No.",
+                "Patient Name",
+                "Age/Sex",
+                "Phone Number",
+                "Test Name",
+                "Report Generated By",
+                "Requesting Dept.",
+                "Run No.",
+                "Bar Code",
+                "Is Printed",
+                "Action",
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {filteredLabResults?.length > 0 ? (
+              filteredLabResults.map((result, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>
+                    {result.labRequest?.outPatient?.patient?.firstName ||
+                      result.labRequest?.inPatient?.patient?.firstName}{" "}
+                    {result.labRequest?.outPatient?.patient?.lastName ||
+                      result.labRequest?.inPatient?.patient?.lastName}
+                  </td>
+                  <td>
+                    {result.labRequest?.outPatient?.patient?.age ||
+                      result?.labRequest?.inPatient?.patient?.age}
+                    {" Y / "}
+                    {result.labRequest?.outPatient?.patient?.gender ||
+                      result.labRequest?.inPatient?.patient?.gender}
+                  </td>
+                  <td>
+                    {result.labRequest?.inPatient?.patient?.mobileNumber ||
+                      result.labRequest?.outPatient?.patient?.mobileNumber}
+                  </td>
+                  <td>
+                    {result?.labRequest.labTests?.map((labTest, index) => (
+                      <span key={index}>
+                        {index > 0 ? " , " : ""}
+                        {labTest.labTestName}
+                      </span>
+                    ))}
+                  </td>
+                  <td>{result.verifyBy}</td>
+                  <td>
+                    {result.labRequest?.inPatient?.inPatient != null
+                      ? "InPatient"
+                      : "Outpatient"}
+                  </td>
+                  <td>
+                    {result.labRequest?.sampleCollections &&
+                      result.labRequest?.sampleCollections.length > 0 &&
+                      result.labRequest?.sampleCollections.map(
+                        (collection, index) => (
+                          <span key={index}>
+                            {index > 0 ? " , " : ""}
+                            {collection.runNumber}
+                          </span>
+                        )
+                      )}
+                  </td>
+                  <td>
+                    {result.labRequest?.sampleCollections &&
+                      result.labRequest?.sampleCollections.length > 0 &&
+                      result.labRequest?.sampleCollections.map(
+                        (collection, index) => (
+                          <span key={index}>
+                            {index > 0 ? " , " : ""}
+                            {collection.barcode}
+                          </span>
+                        )
+                      )}
+                  </td>
+                  <td>{result.isPrinted ? "YES" : "NO"}</td>
+                  <td>
+                    <button
+                      className="pendingReports-table-btn"
+                      onClick={() =>
+                        navigate("/laboratory/finalreports/final-labResult", {
+                          state: {
+                            labRequestId: result.labRequest?.labRequestId,
+                          },
+                        })
+                      }
+                    >
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={"11"}>No results found</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+export default FinalReports;

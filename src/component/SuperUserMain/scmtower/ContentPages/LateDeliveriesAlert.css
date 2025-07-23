@@ -1,0 +1,31 @@
+.latedeliveriesscm-alert-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .latedeliveriesscm-alert {
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    border-left: 5px solid #e74c3c;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .latedeliveriesscm-alert.critical {
+    background-color: #fce4e4;
+  }
+  
+  .latedeliveriesscm-alert-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .latedeliveriesscm-alert-text {
+    font-size: 16px;
+    color: #555;
+  }
+  

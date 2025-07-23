@@ -1,0 +1,149 @@
+.NewUserFrom-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 900px;
+}
+.NewUserFrom-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.newUser-dropdown {
+  padding: 5px;
+  padding-bottom: 6px;
+  border-radius: 5px 0px 0px 5px;
+}
+.NewUserFrom-header input {
+  padding: var(--input-box-padding);
+  outline: none;
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid gray;
+}
+.NewUserFrom-header-inputs {
+  display: flex;
+  gap: 10px;
+}
+.NewUserFrom-header-inputs input {
+  padding: var(--input-box-padding);
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+.NewUserFrom-header-inputs select {
+  border-radius: 5px;
+  padding: 5px;
+}
+.NewUserForm-Details {
+  width: 100%;
+}
+.NewUserForm-Search{
+  display: flex;
+}
+.NewUserForm-Details {
+  width: 100%;
+  display: flex;
+  border-radius: 5px;
+  justify-content: space-between;
+  /* flex-wrap: wrap; */
+  border-bottom: 1px solid gray;
+  background-color: var(--background-color);
+  height: 52px;
+}
+.NewUserForm-info {
+  width: 45%;
+  display: flex;
+  justify-content: start;
+}
+.NewUserForm-Heading {
+  font-size: 16px;
+  width: 30%;
+  padding: 2px;
+}
+.NewUserForm-span {
+  font-size: 14px;
+}
+.NewUserForm-SubContainer {
+  width: 100%;
+}
+.NewUserForm-SubContainer-input {
+  padding: var(--input-box-padding);
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+.NewUserForm-SubContainer-column {
+  padding: 5px;
+  height: 300px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  flex: 1; /* Each column takes up half the available width */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between items in each column */
+}
+
+.NewUserForm-SubContainer-Main-component {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.NewUserForm-subcomponent-list {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap into new lines */
+  margin-top: 10px; /* Add some space above the list */
+}
+
+.NewUserForm-subcomponent-item {
+  flex: 1 1 calc(35.33% - 10px);
+  box-sizing: border-box; /* Ensures padding and border are included in the width */
+  margin: 5px; /* Add margin between items */
+}
+.NewUserForm-SubContainer-button {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+}
+.NewUserForm-SubContainer-reset,
+.NewUserForm-SubContainer-save {
+  padding: 5px;
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  color: white;
+  border-radius: 5px;
+}
+.NewUserForm-SubContainer-reset:hover,
+.NewUserForm-SubContainer-save:hover {
+  background-color: var(--button-hover-color);
+  color: var(--button-color);
+}
+.search-dropdown-list-new {
+  position: absolute;
+  width: 20%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  list-style-type: none;
+  padding: 5px;
+}
+.NewUserForm-Add-button-dropdown {
+  display: flex;
+  gap: 5px;
+}
+.NewUserForm-Add-button {
+  color: white;
+  background-color: var(--button-color);
+}
+.NewUserForm-delete-button {
+  color: white;
+  background-color: var(--button-color);
+}
+.NewUserForm-edit-button {
+  color: white;
+  background-color: var(--button-color);
+}

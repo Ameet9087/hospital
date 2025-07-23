@@ -1,0 +1,210 @@
+.clinical-notes-container {
+    background-color: var(--background-color);
+    padding: 20px;
+    height: 90vh;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .clinical-notes-form-section {
+    margin-bottom: 20px;
+  }
+  
+  .clinical-header h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  
+  .clinical-notes-form-group {
+    margin-bottom: 10px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .clinical-notes-form-group label {
+    width: 150px;
+    /* font-weight: bold; */
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .clinical-notes-form-group label span {
+    color: red;
+    margin-left: 3px;
+  }
+  
+  .clinical-notes-form-group input[type="text"],
+  .clinical-notes-form-group input[type="number"] {
+    width: 500px;
+    font-size: 16px;
+    justify-content: c;
+    padding: 5px;
+    margin-left: 100px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .clinical-notes-button-group {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .clinical-notes-clear-btn {
+    background-color: #ffcc00;
+    padding: 8px 15px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .clinical-notes-save-btn {
+    background-color: #4caf50;
+    padding: 8px 15px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .clinical-notes-search-section {
+    display: flex;
+   
+    width: 100%; /* Ensures the container takes up full width */
+}
+
+.clinical-notes-search-section input {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+  
+  .clinical-notes-search-section button {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 5px;
+  }
+  
+  .clinical-notes-table-section {
+    margin-top: 20px;
+  }
+  
+  .clinical-notes-table {
+    width: 100%;
+    font-size: 16px;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+  }
+  
+  .clinical-notes-table thead {
+    background-color: #f0f0f0;
+    font-size: 16px;
+  }
+  
+  .clinical-notes-table th, 
+  .clinical-notes-table td {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .clinical-notes-edit-btn {
+    background-color: var(--button-color);
+    border: none;
+    padding: 5px 5px;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .clinical-notes-edit-btn:hover{
+    color: var(--button-color);
+    background-color: white;
+    border-bottom:  1px solid var(--button-color);
+  }
+  .clinical-notes-pagination-buttons {
+    display: flex;
+    
+    justify-content: center; /* Centers the pagination buttons */
+    align-items: center;
+    gap: 10px; /* Adds space between the buttons */
+}
+
+.clinical-notes-pagination-buttons button {
+    background-color: var(--button-color); /* Sets the button color */
+    border: none;
+    font-size: 14px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.clinical-notes-pagination-buttons button:hover {
+    background-color: white; /* Optional: Slightly darker color on hover */
+    color: var(--button-color);
+}
+
+.clinical-notes-pagination-buttons span {
+    margin: 0 10px; /* Adds spacing around the page indicator */
+}
+
+  .clinical-notes-ta{
+    background-color: white;
+  }
+  .clicnical-notes-span{
+    text-align: right;
+    margin-bottom:-10px;
+    color: black;
+    font-size: 14px;
+    /* margin-top: 10px; */
+  }
+  .clinical-notes-button-group {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center; /* Centers the buttons horizontally */
+    gap: 10px; /* Adds space between the buttons */
+}
+
+.clinical-notes-clear-btn,
+.clinical-notes-save-btn {
+    padding: 5px 5px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.clinical-notes-clear-btn {
+    background-color: var(--button-color);
+    color: white;
+    border-bottom:  1px solid var(--button-color);
+
+}
+.clinical-notes-clear-btn:hover{
+  background-color: white;
+  color: var(--button-color);
+  border-bottom:  1px solid var(--button-color);
+
+}
+
+.clinical-notes-save-btn {
+  background-color: var(--button-color);
+  color: white;
+  border-bottom:  1px solid var(--button-color);
+
+}
+  
+.clinical-notes-save-btn:hover{
+  background-color: white;
+  color: var(--button-color);
+  border-bottom:  1px solid var(--button-color);
+}

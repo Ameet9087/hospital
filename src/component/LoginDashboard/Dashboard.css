@@ -1,0 +1,165 @@
+.admin-dash-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.admin-dash-header h1 {
+  text-align: center;
+  color: #333;
+  animation: admin-dash-fadeIn 1s ease-in-out;
+}
+
+.admin-dash-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  animation: admin-dash-slideIn 1s ease-in-out;
+}
+
+.admin-dash-stat {
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.admin-dash-stat:hover {
+  transform: scale(1.05);
+}
+
+.admin-dash-stat h2 {
+  margin: 0;
+  color: #555;
+}
+
+.admin-dash-stat p {
+  margin: 5px 0 0;
+  color: #777;
+}
+
+.admin-dash-details {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  animation: admin-dash-slideIn 1.5s ease-in-out;
+}
+
+.admin-dash-detail {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  transition: transform 0.3s ease;
+}
+
+.admin-dash-detail:hover {
+  transform: scale(1.05);
+}
+
+.admin-dash-detail h3 {
+  margin: 0;
+  color: #555;
+}
+
+.admin-dash-detail p {
+  margin: 5px 0 0;
+  color: #777;
+}
+
+.admin-dash-highlight {
+  color: #28a745;
+  font-weight: bold;
+  animation: admin-dash-pulse 1.5s infinite;
+}
+
+.admin-dash-patients {
+  text-align: center;
+  margin-top: 20px;
+  animation: admin-dash-fadeIn 2s ease-in-out;
+}
+
+.admin-dash-patient-count {
+  display: inline-block;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0 10px;
+  transition: transform 0.3s ease;
+}
+
+.admin-dash-patient-count:hover {
+  transform: scale(1.05);
+}
+
+.admin-dash-patient-count p {
+  margin: 0;
+  color: #777;
+}
+
+.admin-dash-patient-count h2 {
+  margin: 5px 0 0;
+  color: #555;
+}
+
+@keyframes admin-dash-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes admin-dash-slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes admin-dash-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+
+.admin-dash-graphs {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+  animation: admin-dash-fadeIn 2s ease-in-out;
+}
+
+.admin-dash-graph {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.admin-dash-graph:hover {
+  transform: scale(1.02);
+}
+
+.admin-dash-graph h3 {
+  margin: 0 0 20px;
+  color: #555;
+}

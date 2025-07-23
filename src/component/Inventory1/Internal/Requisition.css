@@ -1,0 +1,173 @@
+.requisition-inventory-content {
+  margin: 0 auto;
+  height: 90vh;
+  overflow-y: scroll;
+  padding: 10px;
+  background-color: var(--background-color);
+}
+.requisition-inventory-status-filter
+{
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.requisition-inventory-content::-webkit-scrollbar {
+  display: none;
+}
+
+.requisition-inventory-search-bar-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.requisition-inventory-direct-button
+{
+  padding: 5px;
+  background-color: var(--button-color);
+  color: white;
+  margin: 1px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+}
+
+.requisition-inventory-direct-dispatch {
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
+  padding: var(--input-box-padding);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.requisition-inventory-direct-dispatch:hover {
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+
+.requisition-inventory-search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  /* width: 60%; */
+  padding: 5px;
+  font-size: var(--font-size);
+  margin: 10px 0 20px;
+}
+.requisition-inventory-search-bar input{
+  padding: 5px;
+  font-size: var(--font-size);
+}
+
+.requisition-inventory-requisition-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+.requisition-inventory-requisition-table thead {
+  background-color: #f2f2f2;
+  color: black;
+  font-size: var(--heading-font);
+}
+.requisition-inventory-requisition-table th,
+.requisition-inventory-requisition-table td {
+  padding: 5px;
+  font-size: var(--heading-font);
+  border: 1px solid #ccc;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.requisition-inventory-results {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.requisition-inventory-results-span {
+  margin-right: 10px;
+  font-size: var(--font-size);
+  color: black;
+}
+.requisition-inventory-results-print {
+  font-size: var(--heading-font);
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-left: 10px;
+  border: none;
+  background-color: var(--button-color);
+  color: #fff;
+  cursor: pointer;
+}
+.requisition-inventory-results-print:hover {
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+
+.requisition-inventory-date-range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.requisition-inventory-date-range label {
+  display: flex;
+  align-items: center;
+  background-color: white;
+}
+.requisition-inventory-date-range input[type="date"] {
+  margin-left: 5px;
+  height: 30px;
+}
+
+.substore-select-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 0;
+}
+.substore-select-container label {
+  margin-right: 10px;
+}
+.substore-select {
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  font-size: var(--heading-font);
+  cursor: pointer;
+}
+
+.requisition-dispatch-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.requisition-dispatch-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 90%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+.requisition-dispatch-modal-close {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  float: right;
+}
+.requisition-dispatch-modal-close:hover {
+  background: #ff3333;
+}

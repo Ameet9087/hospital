@@ -1,0 +1,38 @@
+/* Swapnil ROkade adding className And Applying colors 14/09 */
+
+.supplier-grid {
+    display: flex;
+    padding:5px 0px ;
+    flex-wrap: wrap;
+    column-gap: 40px;
+    row-gap: 20px;
+  }
+  
+  .supplier-item {
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  
+  .supplier-icon {
+    font-size: var(--heading-font);
+    margin-right: 10px;
+  }
+  
+  .supplier-text h3 {
+    margin: 0;
+    font-size: var(--heading-font);
+    color: #333;
+  }
+  
+  .supplier-text p {
+    margin: 0;
+    font-size: var(--font-size);
+    color: #666;
+  }
+  

@@ -1,0 +1,39 @@
+/* // neha-utilities-utilitimain-19-9-24*/
+.utlt-header {
+    background-color: white; /* Background color for the navbar */
+    padding:  10px; /* Padding around the navbar */
+    margin-bottom: 10px;
+  }
+  
+  .utlt-nav-links {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .utlt-nav-links a {
+    text-decoration: none; 
+    padding: 5px; /* Padding around links */
+    font-size: 16px; /* Font size for links */
+    border-radius: 4px; /* Rounded corners for links */
+    transition: background-color 0.3s; 
+  }
+  
+  
+.utlt-header-button {
+  font-size: 16px; /* Consistent font size */
+  text-decoration: none; /* Remove underline */
+  color: #333; /* Dark text color */
+  padding: 10px 15px; /* Padding for spacing */
+  margin-right: 20px; /* Margin between links */
+  transition: color 0.3s, background-color 0.3s; /* Smooth transitions */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.utlt-header-button:hover,
+.utlt-header-button.active {
+  color: #fff; /* White text on hover/active */
+  background-color:var(--button-bg-color); /* Blue background on hover/active */
+}

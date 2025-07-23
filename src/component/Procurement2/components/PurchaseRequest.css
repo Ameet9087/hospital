@@ -1,0 +1,147 @@
+.tabb-table-container {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    padding: 20px;
+  }
+  
+  .tabb-date-range {
+    display: flex;
+    width: 50%;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: white;
+    padding: 5px;
+  }
+  
+  .tabb-date-range span {
+    margin-right: 10px;
+  }
+  
+  .tabb-date-range input[type="date"] {
+    border: 1px solid #ccc;
+    padding: 5px;
+  }
+  
+  .tabb-star-button, .tabb-minus-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .tabb-ok-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    cursor: pointer;
+  }
+  
+  .tabb-search-bar {
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  .tabb-search-bar input {
+    /* width: 100%; */
+    padding: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .tabb-search-icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .tabb-results-info {
+    display: flex;
+  justify-content: flex-end; /* Aligns content to the right */
+  margin-bottom: 5px;
+  gap: 10px;
+  }
+  
+  .tabb-print-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    cursor: pointer;
+  }
+  
+  .tabb-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+  }
+  
+  .tabb-th, .tabb-td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .tabb-th {
+    background-color: #f2f2f2;
+  }
+  
+  .tabb-po-created {
+    color: red;
+    text-align: center;
+  }
+  
+  .tabb-view-button, .tabb-add-po-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .tabb-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .tabb-pagination button, .tabb-pagination span {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .tabb-pagination span {
+    background-color: transparent;
+    color: black;
+  }
+  
+  .tabb-dropdown {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    margin-top: 10px;
+  }
+  
+  .tabb-dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .tabb-dropdown li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .tabb-dropdown li:hover {
+    background-color: #f0f0f0;
+  }
+  

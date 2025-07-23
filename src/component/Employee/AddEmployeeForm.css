@@ -1,0 +1,280 @@
+.add-employee-modal-overlay {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-employee-form {
+  background: white;
+  padding: 10px;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  display: flex;
+}
+/* Style for the header */
+.add-employee-form-header {
+  display: flex;
+  justify-content: space-between; /* Space between header and cancel button */
+  align-items: center; /* Align items vertically */
+  border-bottom: 2px solid #ccc;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.add-employee-form-header h2 {
+  font-size: 18px;
+  color: #333;
+  margin: 0; /* Remove default margin to avoid extra space */
+}
+
+.emp-cancel-button {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ff0000;
+  /* position: absolute; */
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.add-employee-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  /* width: 100%; */
+}
+
+/* .emp-form-add {
+  width: 33%;
+} */
+
+.emp-radio-sign {
+  width: 33%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.add-employee-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.add-employee-groups {
+  display: flex;
+  align-items: center;
+  /* margin-bottom: 10px; */
+  /* padding-bottom: 0px; */
+  /* border-bottom: 2px solid #ccc; */
+}
+
+.emp-input {
+  flex: 1;
+  font-size: 16px;
+
+  max-width: 150px; /* Ensures label doesn't take too much space */
+}
+
+input[type="checkbox"] {
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+.add-employee-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.add-employee-button,
+.cancel-button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--button-color);
+  color: white;
+  cursor: pointer;
+}
+/* .cancel-button {
+  background-color: #dc3545;
+} */
+
+/* Styles for file input */
+.emp-choose-file {
+  cursor: pointer;
+}
+
+.emp-radio-sign {
+  /* margin-left: 10px; */
+  /* border-left: 2px solid #ccc; */
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.emp-depart {
+  width: 33%;
+}
+.emp-modal-open .table {
+  background-color: #f0f0f0;
+}
+
+/*  */
+/* Style for .emp-app */
+.emp-app {
+  margin-top: 20px;
+  padding: 10px;
+  /* border-top: 1px solid #ccc;  */
+}
+
+.add-employee-groups {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.emp-select {
+  width: 50%;
+  padding: 5px;
+}
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+/* Style for the table */
+.service-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px; /* Space above the table */
+}
+
+.service-table th,
+.service-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.service-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.service-table td input[type="text"] {
+  width: 30%;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.service-table input[type="checkbox"] {
+  margin: 0;
+  margin-right: 10px;
+}
+
+.employee-EditAndDelete-section {
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  margin-top: 20px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.employee-EditAndDelete-section.half-width {
+  margin-bottom: 0;
+}
+
+.employee-EditAndDelete-header {
+  background-color: #00897b;
+  color: white;
+  padding: 7px 20px;
+  font-size: var(--heading-font);
+  font-weight: 500;
+}
+
+.employee-input-with-icon {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.employee-input-with-icon .table-input-employee {
+  padding-right: 30px; /* Add padding to prevent text overlap with the icon */
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+.employee-input-with-icon .employee-search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: gray;
+  font-size: 14px;
+}
+
+.employee-input-with-icon .table-input-employee {
+  padding-right: 30px; /* Add padding to prevent text overlap with the icon */
+  width: 100%;
+  border: 1px solid #ddd;
+}
+.table-input-employee {
+  padding-right: 5px; /* Add padding to prevent text overlap with the icon */
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+.table-input-employee {
+  width: 80%;
+  border-radius: 5px;
+}
+
+.employee-search-icon {
+  margin-left: 5px;
+  font-size: 14px;
+  color: gray;
+}
+
+.employee-input-with-icon .employee-search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: gray;
+  font-size: 14px;
+}
+
+.employee-add-btn,
+.employee-del-btn {
+  margin-right: 4px;
+  padding: 2px 8px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+.employee-add-btn {
+  background-color: green;
+}
+.employee-del-btn {
+  background-color: red;
+}

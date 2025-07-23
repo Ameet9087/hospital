@@ -1,0 +1,40 @@
+  /* Mohini_ExpiryManagement_Navbar_7/10/2024*/
+.expiry-management-navbar {
+ position: sticky;
+  top: 2px;
+  z-index: 1000; /* Ensure it stays on top of other content */
+  background-color: #fff; /* Adjust background color as needed */
+
+  
+}
+
+  .expiry-management-navbar-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    font-size: var(--heading-font);
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  }
+  
+  .expiry-management-navbar-link {
+    padding: 5px 10px; /* Slightly increased horizontal padding */
+    text-decoration: none;
+    background-color: var(--button-color);
+    color: white;
+    font-size: var(--heading-font);
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .expiry-management-navbar-link:hover {
+    background-color: #f0f0f0;
+    color: var(--button-color);
+    border-bottom: 1px solid var(--button-hover-border-color);
+  }
+  
+  .expiry-management-navbar-link.active {
+    background-color: var(--button-bg-color);
+    color: white;
+  }
+  /* Mohini_ExpiryManagement_Navbar_7/10/2024*/

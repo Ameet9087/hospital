@@ -1,0 +1,29 @@
+/* Stock.css */
+.stock-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.inventory-stock-tabs {
+    display: flex;
+    background-color: var( --background-color);
+  }
+  
+  .inventory-stock-tabs button {
+    /* flex: 1; */
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    text-align: center;
+    font-size: var(--heading-font);
+  }
+  
+  .inventory-stock-tabs .active {
+    border-bottom: 2px solid var(--sideBar-bg-color);
+  }
+  
+ 
+

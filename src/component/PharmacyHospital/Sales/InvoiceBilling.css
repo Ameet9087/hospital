@@ -1,0 +1,441 @@
+/* Mohini_InvoiceBilling_WholePage_14/sep/2024 */
+.invoice-billing-report-container {
+  background-color: var(--background-color);
+    padding: 20px;
+    height: 90vh;
+  border-radius: 10px;
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+  font-family: Arial, sans-serif;
+}
+
+.invoice-billing-report-title {
+  text-align: left;
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+
+.invoice-billing-filters-container {
+  display: flex;
+  /* justify-content: sp; */
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.invoice-billing-date-filter, 
+.invoice-billing-invoice-filter {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+.invoice-billing-date-filter label,
+.invoice-billing-invoice-filter label {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.invoice-billing-date-filter input,
+.invoice-billing-invoice-filter input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.invoice-billing-show-report-button {
+  background-color: var(--button-color);
+  color: white;
+  padding: 5px 5px;
+  border: none;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.invoice-billing-show-report-button:hover {
+  background-color: white;
+  color: var(--button-color);
+}
+
+.invoice-billing-note {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+  /* text-align: center; */
+}
+
+.invoice-billing-search-export-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.invoice-billing-search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.invoice-billing-search-bar input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+.invoice-billing-search-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: -40px;
+}
+
+.invoice-billing-export-print-buttons {
+  display: flex;
+}
+
+.invoice-billing-export-button,
+.invoice-billing-print-button {
+  background-color: var(--button-color);
+  color: white;
+  padding: 5px 5px;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.invoice-billing-export-button:hover,
+.invoice-billing-print-button:hover {
+  background-color: white;
+  color: var(--button-color);
+}
+
+.invoice-billing-sales-table {
+  width: 100%;
+  border-collapse: collapse;
+  /* margin-bottom: 20px; */
+}
+
+.invoice-billing-sales-table th,
+.invoice-billing-sales-table td {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.invoice-billing-sales-table th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-size: 16px;
+}
+
+.invoice-billing-no-rows {
+  text-align: center;
+  background-color: #fff3e0;
+  color: #999;
+}
+
+.invoice-billing-pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.invoice-billing-pagination-info {
+  margin-top: 10px;
+  color: black; /* Blue color */
+  font-size: 14px; /* Optional: Adjust the font size if needed */
+}
+
+
+.invoice-billing-pagination-buttons {
+  display: flex;
+  align-items: center;
+}
+
+/* .invoice-billing-pagination-button {
+  background-color: #42a5f5;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.invoice-billing-pagination-button:hover {
+  background-color: #1e88e5;
+} */
+.sales-invoice-billing-tab{
+  background-color: white;
+}
+.sales-invoice-number {
+  margin-left: 20px; /* Adjust the value as needed */
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center; /* Aligns the label and input in a straight line */
+}
+
+.sales-invoice-number label {
+  margin-right: 10px; /* Adds space between the label and the input */
+}
+
+.sales-invoice-number input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.invoice-billing-note {
+  text-align: right; /* Aligns the text within the div to the right */
+  margin-right: 20px; /* Optional: Adjust the right margin as needed */
+  font-style: italic; /* Optional: Keeps the note visually distinct */
+  font-size: 14px;
+}
+.invoice-billing-pagination-container {
+  display: flex;
+  justify-content: center; /* Centers the buttons horizontally */
+  align-items: center; /* Vertically centers the buttons if needed */
+  margin-top: 20px; /* Optional: Adds space above the pagination */
+}
+
+.invoice-billing-pagination-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* Adds space between the buttons */
+}
+
+.invoice-billing-pagination-button {
+  background-color: #42a5f5;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.invoice-billing-pagination-button:hover {
+  background-color: #1e88e5;
+}
+.sales-invoice-billing-tab{
+  background-color: white;
+}
+
+/*  */
+.invoice-billing-filters-container {
+  display: flex;
+  width: 50%;
+  background-color: #f2f2f2;
+  align-items: center;
+  gap: 10px; /* Adjust the gap between the entire label-input pairs */
+  margin-bottom: 10px; /* Optional: Add space below the container */
+}
+
+.invoice-billing-filters-container label {
+  margin-right: 10px; /* Add margin to the right of the label */
+  font-size: 14px; /* Optional: Adjust font size for labels */
+}
+
+.invoice-billing-filters-container input {
+  padding: 3px; /* Optional: Add padding inside the input fields */
+  border: 1px solid #ccc; /* Optional: Border styling for inputs */
+  border-radius: 4px; /* Optional: Rounded corners for inputs */
+}
+.invoice-billing-table-container {
+  overflow-x: auto; /* Enables horizontal scrolling */
+  width: 100%; /* Ensures the container takes full available width */
+  background-color: #fff; /* Optional: to match the table background */
+}
+
+.invoice-billing-sales-table {
+  width: 100%; /* Ensures the table takes full available width */
+  min-width: 1200px; /* Set a minimum width larger than the container to enable scrolling */
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+.invoice-billing-sales-table th,
+.invoice-billing-sales-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.invoice-billing-sales-table th {
+  background-color: #f2f2f2;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.invoice-billing-no-rows {
+  text-align: center;
+  background-color: #ffffc0;
+}
+/*  */
+.invoice-billing-table-container {
+  overflow-x: auto; /* Enables horizontal scrolling */
+  width: 100%; /* Ensures the container takes full available width */
+  background-color: #fff; /* Optional: to match the table background */
+}
+
+.invoice-billing-sales-table {
+  width: 100%; /* Ensures the table takes full available width */
+  min-width: 1600px; /* Adjust this value according to your table's width */
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+.invoice-billing-sales-table th,
+.invoice-billing-sales-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.invoice-billing-sales-table th {
+  background-color: #f2f2f2;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.invoice-billing-no-rows {
+  text-align: center;
+  background-color: #ffffc0;
+}
+
+/*  */
+.invoice-billing-favorite-btn,
+.invoice-billing-reset-btn {
+  background-color: #f0f0f0; /* Light gray background */
+  border: none; /* Remove border */
+  color: #333; /* Text color */
+  font-size: 18px; /* Adjust text size */
+  width: 30px; /* Button width */
+  height: 30px; /* Button height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer; /* Add pointer cursor on hover */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional box shadow */
+}
+
+.invoice-billing-from-to {
+  display: flex;
+  justify-content: space-between; /* Puts one div on the left and the other on the right */
+  align-items: center; /* Aligns items vertically in the center */
+  padding: 10px;
+}
+
+.invoice-billing-filters-container,
+.sales-invoice-number {
+  display: flex;
+  align-items: center; /* Vertically center elements inside each div */
+}
+
+.invoice-billing-filters-container label,
+.sales-invoice-number label {
+  margin-right: 10px;
+}
+
+.invoice-billing-filters-container input,
+.sales-invoice-number input {
+  margin-right: 10px;
+}
+
+.invoice-billing-filters-container button,
+.sales-invoice-number button {
+  margin-left: 10px;
+}
+
+.sales-invoice-number {
+  justify-content: flex-end; /* Align items to the right inside this div */
+}
+
+.invoice-billing-show-report-button {
+  margin-left: 10px;
+}
+
+/* Mobile View Responsive */
+@media (max-width: 768px) {
+
+  .invoice-billing-report-container {
+    padding: 10px;
+    height: auto;
+  }
+
+  .invoice-billing-filters-container {
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .invoice-billing-show-report-button {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .invoice-billing-search-export-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .invoice-billing-search-bar {
+    width: 100%;
+  }
+
+  .invoice-billing-export-print-buttons {
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  
+
+  .invoice-billing-pagination-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .invoice-billing-filters-container,
+  .sales-invoice-number {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .sales-invoice-number input {
+    width: 100%;
+  }
+
+  .invoice-billing-sales-table {
+    min-width: unset;
+    overflow-x: auto;
+  }
+
+  .invoice-billing-sales-table th,
+  .invoice-billing-sales-table td {
+    padding: 5px;
+  }
+
+  .invoice-billing-from-to {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .invoice-billing-favorite-btn,
+  .invoice-billing-reset-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Mohini_InvoiceBilling_WholePage_14/sep/2024 */

@@ -1,0 +1,147 @@
+.kitreturnrecord-container {
+    margin: 20px;
+    background-color: var(--background-color);
+    padding: 20px;
+}
+
+.kitreturnrecord-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.kitreturnrecord-container {
+  margin: 20px;
+  background-color: var(--background-color);
+  padding: 20px;
+}
+
+.kitreturnrecord-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 20px;
+}
+.kitreturnrecord-search-div{
+margin: 20px;
+}
+.kitreturnrecord-search {
+padding: 5px;
+font-size: 14px;
+border-radius: 5px;
+}
+
+.tableinput-cssdretirn {
+padding: 5px;
+font-size: 14px;
+border-radius: 5px;
+width: 90%;
+}
+
+
+
+
+.kitreturnrecord-form {
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+margin-bottom: 20px;
+}
+
+.kitreturnrecord-form input {
+padding: 5px;
+font-size: 14px;
+border-radius: 5px;
+}
+
+.kitreturnrecord-submit {
+padding: 5px;
+  background-color: var(--button-bg-color);
+  color: var(--button-color);
+  border: 1px solid var(--button-bg-color);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  color: white;
+  margin-left: 20px;
+}
+
+.kitreturnaddbtn, .kitreturndelbtn {
+padding: 5px;
+  background-color: var(--button-bg-color);
+  color: var(--button-color);
+  border: 1px solid var(--button-bg-color);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  color: white;
+  margin-left: 20px;
+}
+
+.kitreturnaddbtn:hover{
+background-color: white;
+color: var(--button-color);
+border: 1px solid var(--button-hover-border-color);
+}
+
+.kitreturnrecord-search-div{
+  margin: 20px;
+}
+.kitreturnrecord-search {
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.tableinput-cssdretirn {
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px;
+  width: 90%;
+}
+
+
+
+
+.kitreturnrecord-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.kitreturnrecord-form input {
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.kitreturnrecord-submit {
+  padding: 5px;
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+    border: 1px solid var(--button-bg-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    color: white;
+    margin-left: 20px;
+}
+
+.kitreturnrecord-add-row button {
+  padding: 5px;
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+    border: 1px solid var(--button-bg-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    color: white;
+    margin-left: 20px;
+}
+
+.kitreturnrecord-add-row button:hover{
+  background-color: white;
+  color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+}

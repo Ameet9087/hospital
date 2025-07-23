@@ -1,0 +1,42 @@
+.ambulance-details-com-module {
+  padding: 20px;
+}
+
+.ambulance-details-com-module__heading {
+  font-size: var(--heading-font);
+  margin-bottom: 10px;
+}
+
+.ambulance-details-com-module__text {
+  font-size: var(--font-size);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .ambulance-details-com-module {
+    padding: 15px; /* Reduced padding for mobile */
+  }
+
+  .ambulance-details-com-module__heading {
+    font-size: 1.5rem; /* Adjust heading size for better readability */
+    margin-bottom: 8px; /* Reduce margin below heading */
+  }
+
+  .ambulance-details-com-module__text {
+    font-size: 14px; /* Adjust text size for better readability */
+  }
+}
+
+@media (max-width: 480px) {
+  .ambulance-details-com-module {
+    padding: 10px; /* Further reduce padding for small screens */
+  }
+
+  .ambulance-details-com-module__heading {
+    font-size: 1.2rem; /* Further reduce heading size */
+  }
+
+  .ambulance-details-com-module__text {
+    font-size: 12px; /* Further adjust text size */
+  }
+}

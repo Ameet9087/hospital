@@ -1,0 +1,62 @@
+/* Dhanashree_DetailsSalesReport_19/09 */
+
+
+.DetailsSalesReport-details-sales-report {
+  font-family: Arial, sans-serif;
+  background-color: #e6f7ff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.DetailsSalesReport-report-header {
+  margin-bottom: 20px;
+}
+
+.DetailsSalesReport-report-header p {
+  margin: 5px 0;
+}
+
+.DetailsSalesReport-sales-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.DetailsSalesReport-sales-table th,
+.DetailsSalesReport-sales-table td {
+  border: 1px solid #000;
+  padding: 8px;
+  text-align: left;
+}
+
+.DetailsSalesReport-sales-table th {
+  background-color: #f2f2f2;
+}
+
+.DetailsSalesReport-total-row {
+  font-weight: bold;
+}
+
+.DetailsSalesReport-print-button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #7986cb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.DetailsSalesReport-print-button::before {
+  content: "⎙";
+  margin-right: 5px;
+}
+
+/* Dhanashree_DetailsSalesReport_19/09 */

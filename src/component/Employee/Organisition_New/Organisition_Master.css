@@ -1,0 +1,283 @@
+.Organisition_Master-event {
+    font-family: Arial, sans-serif;
+    background-color:var(--background-color);
+    padding: 4px;
+    font-size: 12px;
+  }
+  
+  .Organisition_Master-event-bar {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 8px;
+    margin-bottom: 4px;
+  }
+  .Organisition_Master-header-contact{
+    background-color: var(--button-bg-color);
+    text-align: start;
+    color: white;
+    padding-left: 5px;
+  }
+  .Organisition_Master-event-header {
+    font-size: var(--heading-font);
+    text-align: start;
+  }
+
+  .Organisition_Master-checkbox-label {
+    font-weight: normal;
+    margin-left: 4px;
+  }
+  
+  .Organisition_Master-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .Organisition_Master-main-section {
+    display: flex;
+    gap: 4px;
+  }
+  
+  .Organisition_Master-panel {
+    flex: 1;
+    background: white;
+    border: 1px solid #ccc;
+  }
+  
+  .Organisition_Master-panel-header {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 4px 8px;
+    font-size: var(--heading-font);
+  }
+  
+  .Organisition_Master-panel-content {
+    padding: 8px;
+  }
+  
+  .Organisition_Master-form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 4px;
+    font-size: var(--font-size);
+  }
+  
+  .Organisition_Master-form-row label {
+    min-width: 140px;
+  }
+  .Organisition_Master-form-row input  {
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 37%;
+  }
+   .Organisition_Master-form-row select
+   {
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 40%;
+  }
+  
+  
+  
+  .Organisition_Master-magnifier-btn {
+    margin-top: 5px;
+    width: 10%;
+    cursor: pointer;
+  }
+  .Organisition_Master-status-controls {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--font-size);
+  }
+  
+  .Organisition_Master-radio-group {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .Organisition_Master-services-section {
+    background: white;
+    border: 1px solid #ccc;
+  }
+  
+  .Organisition_Master-tab-bar {
+    display: flex;
+    gap: 5px;
+    /* background: var(--upperBar-bg-color); */
+    padding: 4px ;
+  }
+  
+  .Organisition_Master-tab {
+    padding: 4px 12px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    color: white;
+    font-size: var(--font-size);
+    background:var(--button-bg-color);
+    cursor: pointer;
+  }
+  .Organisition_Master-tab:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color);
+  }
+  
+  .Organisition_Master-tab.active {
+    background: var(--button-color);
+    color: white;
+    font-weight: bold;
+  }
+  
+  
+  .Organisition_Master-input-with-search-icon{
+    display: flex;
+    justify-content: end;
+  }
+  .Organisition_Master-input-with-search-icon input{
+    width: 100%;
+  }
+  
+  .table-actions {
+    margin-bottom: 4px;
+  }
+  .Organisition_Master-add-button{
+    background-color: var(--button-color);
+    padding: 5px;
+    border-radius: 5px;
+    margin:5px;
+    border:none;
+    color:white;
+
+  }
+  .Organisition_Master-add-btn,
+  .Organisition_Master-del-btn {
+    margin-right: 4px;
+    padding: 2px 8px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: var(--font-size);
+  }
+  .Organisition_Master-add-btn {
+    background-color: green;
+  }
+  .Organisition_Master-del-btn {
+    background-color: red;
+  }
+  
+  
+  
+  .Organisition_Master-action-buttons {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+  
+  .Organisition_Master-action-buttons button {
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+  }
+  .Organisition_Master-action-buttons button:hover,.Organisition_Master-add-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color);
+    border:1px solid var(--button-hover-border-color)
+}
+.Organisition_Master-orgDoctor-table{
+text-align: start;
+max-height: 400px; /* Adjust this to the desired height */
+  overflow-y: auto;  /* Adds vertical scrollbar */
+  width: 100%;
+}
+.resizable-th {
+  position: relative;
+}
+.Organisition_Master-location-table table{
+  width: 100%;
+  border-collapse: collapse;
+}
+.Organisition_Master-orgDoctor-table table{
+  /* width: 100%; */
+  width: auto;
+  border-collapse: collapse;
+}
+.Organisition_Master-table-input{
+  border: none;
+  background-color: var(--background-color);
+  
+}
+.Organisition_Master-table-input:focus {
+  outline: none;
+}
+.Organisition_Master-otherGrid-table table{
+  width: 100%;
+  border-collapse: collapse;
+}
+.Organisition_Master-location-table svg{
+  font-size: var(--font-size);
+  display: flex;
+  justify-self: end;
+  cursor: pointer;
+}
+.Organisition_Master-otherGrid-table select{
+  width: 100%;
+  padding: 5px;
+  border: none;
+}
+.resizable-th {
+  position: relative;
+}
+
+.resizer {
+  width: 5px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: col-resize;
+  user-select: none;
+}
+
+.Organisition_Master-search-bar input{
+  padding: 5px;
+  border-radius: 5px;
+  margin:5px;
+}
+.Organisition_Master-search-N-result{
+  display: flex;
+  justify-content:space-between;
+}
+.Organisition_Master-results-info{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding:10px;
+}
+
+.Organisition_Master-print-button{
+  background-color: var(--button-color);
+  color: var(--button-hover-background-color);
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 5px;
+  margin:5px;
+}
+
+.Organisition_Master-print-button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color);
+  border:1px solid var(--button-hover-border-color)
+}
+

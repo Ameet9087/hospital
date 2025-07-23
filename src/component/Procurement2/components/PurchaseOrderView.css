@@ -1,0 +1,118 @@
+.purchaseOrderViewContainer {
+    font-family: Arial, sans-serif;
+    border: 1px solid #000;
+    /* width: 80%; */
+    margin: 20px auto;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .purchaseOrderViewHeader {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .purchaseOrderViewHeader h2 {
+    margin: 0;
+    font-size: 20px;
+  }
+  
+  .purchaseOrderViewTitle {
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 10px 0;
+  }
+  
+  .purchaseOrderViewDetails {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+  }
+  
+  .purchaseOrderViewDetails p {
+    margin: 4px 0;
+    font-size: 14px;
+  }
+  
+  .purchaseOrderViewDetails span {
+    font-weight: bold;
+  }
+  
+  .purchaseOrderViewTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  
+  .purchaseOrderViewTable th, 
+  .purchaseOrderViewTable td {
+    border: 1px solid #000;
+    text-align: center;
+    padding: 5px;
+    font-size: 14px;
+  }
+  
+  .purchaseOrderViewTotals {
+    margin: 10px 0;
+  }
+  
+  .purchaseOrderViewTotals p {
+    margin: 4px 0;
+    font-size: 14px;
+  }
+  
+  .purchaseOrderViewValueInWords {
+    font-weight: bold;
+    margin: 10px 0;
+    text-align: left;
+  }
+  
+  .purchaseOrderViewTerms {
+    margin: 20px 0;
+  }
+  
+  .purchaseOrderViewSignature {
+    display: flex;
+    justify-content: space-between;
+  }
+  .purchaseOrderView-btn
+  {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .purchaseOrderViewSignature p {
+    margin: 0;
+  }
+  
+  .purchaseOrderViewNote {
+    text-align: center;
+    font-style: italic;
+    margin-top: 20px;
+    font-size: 12px;
+  }
+  .purchaseOrderView-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;/* Adjust as needed */
+  }
+  .purchaseOrderView-print{
+    background-color:var( --button-color);
+    color: white;
+    border: 1px solid var( --button-hover-border-color);
+    margin-right: 10px;
+    padding: 5px 5px;
+    border-radius: 5px;
+   
+    transition: background-color 0.3s ease;
+  }
+  .purchaseOrderView-print:hover{
+    
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }

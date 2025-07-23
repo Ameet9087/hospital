@@ -1,0 +1,62 @@
+ /* prachi parab user interface changed  14/9 */
+
+.address-page-container {
+    display: flex;
+    font-family: Arial, sans-serif;
+  }
+  
+  .address-page-main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #e3fffe;
+  }
+  
+  .address-page-form-row {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  .address-page-form-group {
+    flex: 1;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .address-page-form-group:last-child {
+    margin-right: 0;
+  }
+  
+  .address-page-form-group label {
+    display: inline-block;
+    width: 150px; /* Adjust width as needed */
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .address-page-form-group input[type="text"],
+  .address-page-form-group select {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .address-page-add-address {
+    background-color: #6c63ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .mandatory{
+    color: red;
+    
+  }
+
+  .address-page-form{
+    background-color: white;
+  padding: 20px;
+  }

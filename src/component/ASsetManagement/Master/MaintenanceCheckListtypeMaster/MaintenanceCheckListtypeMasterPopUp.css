@@ -1,0 +1,113 @@
+.maintenanceChecklistPopUp-container {
+    width: 500px;
+    max-width: 1600px;
+    font-family: Arial, sans-serif;
+}
+
+.maintenanceChecklistPopUp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 16px;
+}
+
+.maintenanceChecklistPopUp-header h4 {
+    font-size: var(--heading-font);
+    margin: 0;
+}
+
+.maintenanceChecklistPopUp-form .maintenanceChecklistPopUp-form-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.maintenanceChecklistPopUp-form-group {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-size: var(--font-size);
+    width: 400px;
+}
+
+.maintenanceChecklistPopUp-form-group label {
+    display: block;
+    margin-bottom: 4px;
+    width: 75%;
+}
+
+.maintenanceChecklistPopUp-form-group input,
+.maintenanceChecklistPopUp-form-group select,
+.maintenanceChecklistPopUp-form-group textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.maintenanceChecklistPopUp-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    font-size: var(--font-size);
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.maintenanceChecklistPopUp-add-btn {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    padding: 5px 5px;
+}
+
+.maintenanceChecklistPopUp-add-btn:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+
+/* Common Button Styling */
+.ButtonListsbutton {
+    padding: 5px 12px;
+    font-size: var(--font-size);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Add Button (Red Color) */
+.add-button {
+    background-color: red;
+    color: white;
+}
+
+.add-button:hover {
+    background-color: darkred;
+}
+
+/* Delete Button (Green Color) */
+.delete-button {
+    background-color: green;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: darkgreen;
+}
+
+/* Disabled Button Styling */
+.ButtonListsbutton:disabled {
+    background-color: gray;
+    color: #ddd;
+    cursor: not-allowed;
+}

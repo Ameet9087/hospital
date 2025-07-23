@@ -1,0 +1,67 @@
+/* Container styling */
+.VehicleManagement-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Add button styling */
+.VehicleManagement-add-button {
+  padding: 10px 20px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.VehicleManagement-add-button:hover {
+  background-color: white;
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+
+/* Table styling */
+.VehicleManagement-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.VehicleManagement-table th,
+.VehicleManagement-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.VehicleManagement-table th {
+  background-color: #f2f2f2;
+  color: black;
+}
+
+.VehicleManagement-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.VehicleManagement-table tr:hover {
+  background-color: #ddd;
+}
+
+/* Edit button styling */
+.VehicleManagement-edit-button {
+  padding: 5px 10px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.VehicleManagement-edit-button:hover {
+  background-color: white;
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}

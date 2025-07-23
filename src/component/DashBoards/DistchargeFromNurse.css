@@ -1,0 +1,145 @@
+.dist-container {
+  width: 90%;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dist-distcharge-header {
+  background-color: #d9edf7;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  margin: 20px;
+}
+
+.dist-back-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dist-patient-header {
+  width: 100%;
+}
+
+.dist-patient-header h2 {
+  margin: 0;
+}
+
+.dist-patient-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.dist-patient-details p {
+  margin: 5px 0;
+}
+
+.dist-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #e9ecef;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.dist-form-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.dist-form-group {
+  width: 48%;
+}
+
+.dist-form-group.full-width {
+  width: 100%;
+}
+
+.dist-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.dist-form-group input,
+.dist-form-group select,
+.dist-form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* textarea {
+  resize: vertical;
+} */
+
+.dist-investigations {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dist-investigations label {
+  margin-right: 10px;
+}
+
+.dist-medications {
+  display: flex;
+  align-items: center;
+}
+
+.dist-medications input {
+  flex: 1;
+}
+
+.dist-add-button,
+.dist-remove-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin-left: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dist-remove-button {
+  background-color: #f44336;
+}
+
+.dist-form-actions {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.dist-submit-button,
+.dist-update-button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.dist-submit-button {
+  background-color: #4caf50;
+}

@@ -1,0 +1,212 @@
+  /* Mohini_StockSummaryReport_WholePage_14/sep/2024 */
+  .stock-summary-report-component {
+    background-color: var(--background-color);
+    padding: 20px;
+    height: 90vh;
+    overflow-y: scroll;
+    font-family: Arial, sans-serif;
+  }
+  
+  .stock-summary-report-component h1 {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: left; /* Aligns the text to the left */
+  }
+  
+  .stock-summary-report-report-controls,
+  .stock-summary-report-filters,
+  .stock-summary-report-include-provisional {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .stock-summary-report-date-range {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+  }
+  
+  .stock-summary-input-stock {
+    padding: 5px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .stock-summary-report-star-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  .stock-summary-report-show-report-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  .stock-summary-report-include-provisional {
+    justify-content: flex-end;
+  }
+  
+  .stock-summary-report-search-bar {
+    display: flex;
+    width: 25%;
+    margin-bottom: 10px;
+  }
+  
+  .stock-summary-report-search-bar .stock-summary-input-stock {
+    flex-grow: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px 0 0 3px;
+  }
+  
+  .stock-summary-report-search-bar button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0 3px 3px 0;
+    padding: 5px 10px;
+  }
+  
+  .stock-summary-report-results-info {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+  
+  .stock-summary-report-export-btn,
+  .stock-summary-report-print-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    border-radius: 1px solid var(--button-hover-border-color);
+
+  }
+  .stock-summary-report-export-btn:hover
+  {
+    color: var(--button-color);
+    background-color: white;
+    border-radius: 1px solid var(--button-hover-border-color);
+  }
+  .stock-summary-report-print-btn:hover{
+    color: var(--button-color);
+    background-color: white;
+    border-radius: 1px solid var(--button-hover-border-color);
+  }
+  
+  .stock-summary-report-table-container {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    background-color: white;
+  }
+  
+  .stock-summary-report-stock-table-container {
+    overflow-x: auto;
+    width: 100%;
+  }
+  
+  .stock-summary-report-stock-table {
+    width: 100%;
+    min-width: 1200px;
+    border-collapse: collapse;
+    background-color: #fff;
+  }
+  
+  .stock-summary-report-stock-table th,
+  .stock-summary-report-stock-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .stock-summary-report-stock-table th {
+    background-color: #f2f2f2;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .stock-summary-report-no-rows {
+    text-align: center;
+    background-color: #ffffc0;
+  }
+  
+  .stock-summary-report-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .stock-summary-report-pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  .stock-summary-report-summary {
+    margin-top: 20px;
+    background-color: transparent;
+    padding: 10px;
+    border-radius: 3px;
+    width: 38%;
+  }
+  
+  .stock-summary-report-summary h2 {
+    margin-bottom: 10px;
+    font-size: 16px;
+   justify-content: center;
+align-items: center;
+  }
+  
+  .stock-summary-report-summary-content {
+    display: flex;
+    color: #007bff;
+    /* justify-content: space-between; */
+  }
+  
+  .stock-summary-report-summary-column {
+    width: 45%;
+  }
+  
+  .stock-summary-report-summary-column div {
+    margin-bottom: 5px;
+  }
+  
+  /* Scrollbar styles */
+  .stock-summary-report-table-container::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  .stock-summary-report-table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .stock-summary-report-table-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+    border: 3px solid #f1f1f1;
+  }
+  
+  .stock-summary-report-table-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  /* Mohini_StockSummaryReport_WholePage_14/sep/2024 */

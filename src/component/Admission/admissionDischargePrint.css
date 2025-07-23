@@ -1,0 +1,78 @@
+.PatientDischargeForm-container {
+    width: 70%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+  }
+  
+  .PatientDischargeForm-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .PatientDischargeForm-close-btn
+  {
+    padding: 5px 10px;
+    background-color: var(--button-color);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .PatientDischargeForm-section {
+    margin-bottom: 30px;
+  }
+  
+  .PatientDischargeForm-section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  ul li {
+    margin-bottom: 5px;
+  }
+  
+  .PatientDischargeForm-signature {
+    margin-top: 30px;
+    text-align: right;
+  }
+  
+  .PatientDischargeForm-print-button {
+    display: block;
+    margin: 20px auto;
+    padding: 5px 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: 1px solid var(--button-color);
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .PatientDischargeForm-print-button:hover {
+    background-color: var(--button-hover-color);
+    color: var(--button-color);
+    border: 1px solid var(--button-color);
+  }
+  
+  @media print {
+    .PatientDischargeForm-print-button {
+      display: none; /* Hide print button when printing */
+    }
+  
+    .PatientDischargeForm-container {
+      width: 100%; /* Full width when printing */
+      border: none; /* Remove border */
+    }
+  }
+  

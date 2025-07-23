@@ -1,0 +1,102 @@
+.addemployeeleave__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    z-index: 55555;
+  }
+  
+  .addemployeeleave__popup {
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    width: 80%;
+
+  }
+  
+  .addemployeeleave__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: var(--heading-font);
+    
+  }
+  .addemployeeleave__header h2{
+    color: black;
+  }
+  
+  .addemployeeleave__closeButton {
+    background: none;
+    border: none;
+    padding: 5px 12px;
+    /* font-size: 2rem; */
+    cursor: pointer;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+  }
+  
+  .addemployeeleave__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  
+  .addemployeeleave__formGroup {
+    display: flex;
+    align-items: center;
+  }
+  
+ 
+  .addemployeeleave__formActions {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .addemployeeleave__formActions button {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .addemployeeleave__formActions button:first-child {
+    background-color: #ccc;
+  }
+  
+  .addemployeeleave__formActions button:last-child {
+    background-color: var(--button-color);
+    color: white;
+  }
+
+  .addemployeeleave__formActions button:last-child:hover {
+    background-color: var(--button-bg-color);
+  }
+  
+  .addemployeeleave__note {
+    grid-column: span 2;
+    margin-top: 0px;
+    color: green;
+  }
+  
+  .addemployeeleave__openButton {
+    padding: 10px 20px;
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }

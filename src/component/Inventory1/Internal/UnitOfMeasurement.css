@@ -1,0 +1,57 @@
+.unit-of-measssAddItemSubcategory {
+  width: 400px;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.unit-of-measssAddItemSubcategory h2 {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.unit-of-MeasssFormGroup {
+  margin-bottom: 15px;
+}
+
+
+.unit-of-MeasssRequired {
+  color: red;
+}
+
+.unit-of-create-ledger {
+  display: block;
+  color: #f0a500;
+  margin-top: 5px;
+  font-size: var(--heading-font);
+}
+
+.unit-of-MeasssFormGroup input[type="checkbox"] {
+  margin-top: 10px;
+}
+
+.unit-of-MeasssBtnAdd {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.unit-of-MeasssBtnAdd:hover {
+  background-color: #218838;
+}
+
+.unit-of-error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.unit-of-success-message {
+  color: green;
+  margin-top: 10px;
+}

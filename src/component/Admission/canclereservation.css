@@ -1,0 +1,37 @@
+/* // neha-ADT-canclereservation-19/09/24 */
+.canclereservation{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  margin-right: 10px;
+ 
+}
+.cancelreservation-page{
+  background-color: var(--background-color);
+  padding: 20px
+
+}
+  .cancledatabtn,.canclereservation-print-button{
+    padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--button-color);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  }
+
+  .canclereservation-print-button:hover,.cancledatabtn:hover{
+    background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border:1px solid var(--button-hover-border-color);
+  }
+
+
+
+
+  .cancle-reservation-search-input{
+    border-radius: 5px;
+    height: 30px;
+    width: 300px;
+  }

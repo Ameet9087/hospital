@@ -1,0 +1,83 @@
+/* // neha-ADT-discharge-19/09/24 */
+
+.discharge-container
+{
+  width: 100%;
+  padding: 10px;
+}
+.discharge-search-input{
+  border-radius: 5px;
+  height: 30px;
+}
+.insurance-patient {
+  margin-bottom: 20px;
+}
+
+.insurance-patient label {
+  font-size: 14px;
+}
+
+.insurance-patient input[type="checkbox"] {
+  margin-left: 10px;
+}
+
+
+
+.dischargedbtn{
+  height: 30px;
+  padding:0px 9px;
+  border-radius: 5px;
+
+}
+.discharge-print-button{
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--button-color);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.discharge-print-button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border:1px solid var(--button-hover-border-color);
+}
+
+/* Date range picker styling */
+.date-range {
+  display: flex;
+  justify-content: flex-start; /* Aligns button to the right */
+  align-items: center;
+  gap: 10px;
+}
+.date-utlt{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start; /* Aligns button to the right */
+  margin-bottom: 20px;
+  align-items: center;
+
+}
+.discharge-filter{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+
+/* .dischage-patient{
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  margin: 2px;
+  background-color: #dfebe8;
+  align-items: center;
+
+} */
+
+
+.dischage-insurance{
+  margin-left: 500px;
+}

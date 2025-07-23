@@ -1,0 +1,117 @@
+/* Main container */
+.mkt-patientoutreach-container {
+    padding: 20px;
+    background-color: var(--background-color);
+  }
+  
+  .mkt-patientoutreach-container h2 {
+    margin-bottom: 20px;
+  }
+  
+  /* Add button styling */
+  .mkt-patientoutreach-add-button {
+    padding: 5px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  .mkt-patientoutreach-add-button:hover {
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+
+  
+  .mkt-patientoutreach-edit-button {
+    padding: 5px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  
+  .mkt-patientoutreach-edit-button:hover {
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  /* Modal styling */
+  .mkt-patientoutreach-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .mkt-patientoutreach-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 700px;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mkt-patientoutreach-close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    padding: 5px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+   
+    border-radius: 4px;
+  }
+  
+  .mkt-patientoutreach-close-button:hover {
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .mkt-patientoutreach-submit-button {
+    padding: 5px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-top: 15px;
+  }
+  
+  .mkt-patientoutreach-submit-button:hover {
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  .patinetoutreach-form {
+    display: flex;
+    padding: 5px;
+
+  }
+
+  .patinetoutreach-form label{
+    width: 200px;
+  }
+  .patinetoutreach-form input{
+    width: 400px;
+  }

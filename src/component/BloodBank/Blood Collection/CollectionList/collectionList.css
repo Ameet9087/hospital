@@ -1,0 +1,24 @@
+.collection-list-container {
+    margin: 20px;
+    /* width: 100%; */
+    background-color:#e3fffe ;
+}
+
+.collection-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.collection-table th, .collection-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.collection-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}

@@ -1,0 +1,99 @@
+ /* neha -utilities-org-deposit- 19/09/24*/ 
+
+.organizationmainclass{
+    background-color: #e6f7ff;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+}
+.organization-deposit {
+    background-color: #e6f7ff;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    max-width:90%;
+   
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  .organization-deposit-h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .organization-form-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .organization-deposit-lable {
+    width: 200px;
+    text-align: right;
+    margin-right: 50px;
+    margin-bottom: 10px;
+    
+    color: black;
+    font-size: var(--font-size);
+  }
+  
+  .organization-deposit-input, .organization-deposit-select, .organization-deposit-textarea {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    height: 30px;
+    width: 500px;
+    font-size: 14px;
+  }
+  
+  .organization-info-row {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+  }
+  
+  .info-row .utlt-org-form-group {
+    margin-bottom: 0;
+  }
+  
+  .info-row span {
+    font-weight: bold;
+    color: #0066cc;
+  }
+  
+  .organization-deposit-textarea {
+    height: 60px;
+    resize: vertical;
+  }
+  
+  .utlt-org-button-group {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .orgdeposit-save-btn, .discard-btn {
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .orgdeposit-save-btn {
+    background-color: var(--button-color);
+   
+  }
+  
+  .discard-btn {
+    background-color: var(--button-color);
+  }
+  
+ 
+
+  

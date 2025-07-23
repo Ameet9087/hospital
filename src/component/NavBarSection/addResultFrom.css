@@ -1,0 +1,221 @@
+.lab-addResult-page1 {
+  width: 100%;
+  padding: 10px;
+}
+
+.lab-addResult-header {
+  width: 100%;
+  border: none;
+}
+
+.lab-addResult-back-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.lab-addResult-back-button:hover {
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border:1px solid var(--button-hover-border-color);
+}
+
+.lab-addResult-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px;
+  border: none;
+  text-align: right;
+}
+
+.lab-addResult-ward {
+  font-size: 12px;
+  font-weight: lighter;
+  margin-right: 5px;
+}
+
+.lab-addResult-prescribed-by {
+  margin-left: 8px;
+  margin-right: 10px;
+  font-size: 15px;
+}
+
+.lab-addResult-prescribed-by {
+  color: black;
+  font-size: var(--heading-font);
+  /* font-weight: bold; */
+}
+
+.lab-addResult-load-button,
+.lab-addResult-save-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.lab-addResult-load-button:hover,
+.lab-addResult-save-button:hover {
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border:1px solid var(--button-hover-border-color);
+}
+
+.lab-addResult-load-button {
+  margin-right: 2px;
+}
+
+.lab-addResult-content {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  color: black;
+}
+
+.lab-addResult-bio {
+  padding: 5px;
+  margin-bottom: 0px;
+  background-color: grey;
+  align-items: center;
+  justify-content: center;
+}
+
+.lab-addResult-row1 {
+
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(187, 179, 179);
+}
+
+/* .lab-addResult-component,
+.lab-addResult-requested,
+.lab-addResult-value,
+.lab-addResult-unit,
+.lab-addResult-range,
+.lab-addResult-collected,
+.lab-addResult-completed {
+  flex: 1;
+  text-align: left;
+  color: black;
+  margin: 5px;
+} */
+
+.lab-addResult-row2 {
+  display: flex;
+  background-color: white;
+}
+
+.lab-addResult-testing,
+.lab-addResult-requested,
+.lab-addResult-collected,
+.lab-addResult-tick {
+  flex: 1;
+  color: black;
+  margin: 5px;
+}
+
+.lab-addResult-tick {
+  background-color: white;
+  border: 0.5px solid #ccc;
+  margin-right: 5px;
+  flex: 1;
+  align-items: center;
+  padding: 5px;
+  height: 20px;
+  width: 20px;
+}
+
+.lab-addResult-tick-button {
+  align-items: start;
+  background-color: white;
+  border: 0.5px solid #ccc;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.lab-addResult-form {
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  font-size: var(--font-size);
+}
+.lab-addResult-form h5{
+  font-size: var(--font-size);
+}
+
+.lab-addResult-form-row {
+  display: flex;
+}
+
+
+
+.lab-addResult-row {
+  display: flex;
+  gap: 5px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: white;
+}
+
+
+
+.lab-addResult-remove-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.lab-addResult-remove-btn:hover {
+  background-color: #d32f2f;
+}
+
+.lab-addResult-form-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.lab-addResult-save-btn,
+.lab-addResult-cancel-btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: var(--font-size);
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.lab-addResult-save-btn {
+  background-color: var(--button-color);
+  color: white;
+}
+
+.lab-addResult-save-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.lab-addResult-cancel-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.lab-addResult-cancel-btn:hover {
+  background-color: #d32f2f;
+}
+
+.lab-addResult-add-btn{
+  border: none;
+  background-color: var(--button-color);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 5px;
+}

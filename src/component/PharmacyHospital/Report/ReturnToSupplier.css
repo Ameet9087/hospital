@@ -1,0 +1,133 @@
+/* Mohini_ReturnToSupplier_14/sep/2024 */.return-purchase-order-container {
+    width: 100%;
+    background-color: var(--background-color); /* Light background color for contrast */
+    padding: 10px; /* Added padding for spacing */
+}
+
+/* Header section styling */
+.return-purchase-report-header h2 {
+    margin: 0;
+    color: #007b9e;
+    font-size: 18px;
+    text-align: center;
+}
+
+/* Filters container styling */
+.return-purchase-filters-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+/* Date range filter styling */
+.return-purchase-date-range,
+.return-purchase-status-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.return-purchase-date-range label,
+.return-purchase-status-container label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Button styling */
+.return-purchase-favorite-btn,
+.return-purchase-reset-btn {
+    font-size: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.return-purchase-show-report-btn {
+    background-color: #5468ff;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Search and action buttons container */
+.return-purchase-search-and-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.return-purchase-search-and-actions input {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 1; /* Takes up available space */
+    margin-right: 10px;
+}
+
+/* Export and print button styling */
+.return-purchase-export-btn,
+.return-purchase-print-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #5468ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Table styling */
+.return-purchase-report-table {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.return-purchase-report-table th,
+.return-purchase-report-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+.return-purchase-report-table th {
+    background-color: #e8f4fc;
+    font-weight: bold;
+}
+
+.return-purchase-no-rows td {
+    background-color: #f9e59b;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Pagination container styling */
+.return-purchase-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Pagination controls styling */
+.return-purchase-pagination-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.return-purchase-pagination-controls button {
+    background-color: #5468ff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+/* Mohini_ReturnToSupplier_14/sep/2024 */

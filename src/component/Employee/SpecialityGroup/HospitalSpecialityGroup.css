@@ -1,0 +1,21 @@
+.HospitalSpecialityGroup {
+  width: 100%;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .HospitalSpecialityGroup__create-btn {
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .HospitalSpecialityGroup__create-btn:hover {
+    color: var(--button-color);
+
+  }
+
+  

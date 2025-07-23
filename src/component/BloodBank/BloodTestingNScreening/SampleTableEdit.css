@@ -1,0 +1,84 @@
+/* SampleTestCard Card Styles */
+.SampleTestCard-card {
+  background-color: #fff;
+  border-radius: 8px;
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+  width: 100%;
+  max-width: 600px;
+  /* margin: 20px auto; */
+  padding: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.SampleTestCard-card-header {
+  text-align: center;
+  font-size: var(--heading-font);
+  margin-bottom: 15px;
+}
+
+.SampleTestCard-card-header h2 {
+  font-size: var(--heading-font);
+}
+
+.SampleTestCard-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.SampleTestCard-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.SampleTestCard-field {
+  width: 100%;
+}
+
+.SampleTestCard-field label {
+  font-weight: 500;
+  font-size: var(--font-size);
+  margin-bottom: 5px;
+}
+
+.SampleTestCard-field input {
+  width: 100%;
+  padding: 5px;
+  font-size: var(--font-size);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.SampleTestCard-footer {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.SampleTestCard-update-button {
+  background-color: var(--button-color); 
+  border: 1px solid white; 
+  color: white; 
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+}
+/* 
+.SampleTestCard-update-button:disabled {
+  background-color: #a1c4fd;
+  cursor: not-allowed;
+} */
+
+.SampleTestCard-update-button:hover {
+  background-color: white; 
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+
+.SampleTestCard-error-message {
+  color: #ff4d4d;
+  text-align: center;
+  margin-top: 15px;
+}

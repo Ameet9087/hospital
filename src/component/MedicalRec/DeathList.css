@@ -1,0 +1,421 @@
+.MROut-patientsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.MROut-patientsTable th,
+.report-table td {
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #c1e4f8;
+  background-color: #e4f4ff;
+}
+
+.MROut-patientsTable th {
+  background-color: #f0f2f5;
+}
+
+.MROut-patientsTable tr:nth-child(even) {
+  background-color: #f0faff;
+}
+
+.MROut-patientsTable tr:nth-child(odd) {
+  background-color: #e4f4ff;
+}
+
+/* Overlay for the modal */
+.deathReport .death-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Content area of the modal */
+.deathReport .death-certificate-modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  max-height: 80%;
+  overflow-y: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Header of the modal */
+.death-modal-header-deathlist {
+  display: flex;
+  justify-content: flex-end; /* Ensures the close button is aligned to the right */
+}
+
+/* Close button styles */
+.deathReport .death-close-button {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  float: right;
+}
+
+/* Additional styles for the rest of the modal content */
+.deathReport h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.deathReport .form-container {
+  margin-bottom: 20px;
+}
+
+.deathReport .death-form-group {
+  margin-bottom: 15px;
+}
+
+.deathReport .death-form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.deathReport .death-form-group input[type="text"],
+.deathReport .death-form-group input[type="date"],
+.deathReport .death-form-group input[type="time"] {
+  width: calc(100% - 20px);
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.deathReport {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.deathReport .submit-button,
+.deathReport .cancel-button,
+.submit-button-death {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Optional: Add hover effects for buttons */
+.deathReport .submit-button:hover,
+.submit-button-death:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.deathReport .cancel-button:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.deathReport .mandatory {
+  color: red;
+  font-weight: bold;
+}
+
+.deathReport .select-mother-searchInput {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+.cancel-button-death,
+.submit-button-death {
+  background-color: var(--button-bg-color);
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  color: white;
+  padding: var(--input-box-padding);
+  margin-left: 10px;
+}
+
+.death-certificate-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+.death-modal-header h3{
+  text-align: center;
+}
+
+.death-certificate-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.death-modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.death-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.death-close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  
+}
+.death-close-button:hover{
+  color: red;
+}
+
+.death-certificate-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.death-certificate-title {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.death-inline-input {
+  width: 100px;
+  margin: 0 8px;
+  padding: 2px 5px;
+}
+
+.death-cause-input {
+  width: 200px;
+}
+
+.death-full-width-input {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+}
+
+.signature-input {
+  width: 100%;
+  margin: 8px 0;
+  padding: 8px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.submit-button,
+.cancel-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.certification-section,
+.hospital-section,
+.signature-section {
+  margin: 20px 0;
+}
+
+/* Death Certificate Modal Styles */
+.death-certificate-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
+.death-certificate-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.death-certificate-modal-content {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.death-certificate-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.death-certificate-close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.death-certificate-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+}
+
+.death-certificate-title {
+  text-align: center;
+  margin: 1rem 0;
+  color: #333;
+}
+
+/* Form inputs */
+.death-certificate-inline-input {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  margin: 0 0.5rem;
+  padding: 0.25rem;
+  min-width: 150px;
+}
+
+.death-certificate-full-width-input {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.cause-input {
+  width: 300px;
+}
+
+.death-certificate-signature-input {
+  width: 100%;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+/* Sections */
+.death-certificate-section,
+.death-certificate-hospital-section,
+.death-certificate-signature-section {
+  margin: 1rem 0;
+}
+
+.death-certificate-content {
+  margin: 1rem 0;
+  line-height: 1.5;
+}
+
+/* Footer buttons */
+.death-certificate-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.death-certificate-submit-button,
+.death-certificate-cancel-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.death-certificate-submit-button {
+  background-color:var(--button-bg-color);
+  color: white;
+  border: none;
+}
+
+.death-certificate-submit-button:hover {
+  background-color: white;
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+
+.death-certificate-cancel-button {
+  background-color:var(--button-bg-color);
+  color: white;
+  border: none;
+}
+
+.death-certificate-cancel-button:hover {
+  background-color: white;
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+
+/* Print styles */
+@media print {
+  .death-certificate-container {
+    position: static;
+  }
+
+  .death-certificate-modal-overlay {
+    position: static;
+    background: none;
+  }
+
+  .death-certificate-modal-content {
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .death-certificate-close-button,
+  .death-certificate-modal-footer {
+    display: none;
+  }
+}

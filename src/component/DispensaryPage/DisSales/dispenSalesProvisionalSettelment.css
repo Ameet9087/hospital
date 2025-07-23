@@ -1,0 +1,305 @@
+ /* Ajhar Tamboli dispenSalesProvisionalSettelment.css 19-09-24 */
+
+.dispenSalesProvisionalSettelment-active-imaging-request {
+    font-family: Arial, sans-serif;
+    
+  }
+  
+  .dispenSalesProvisionalSettelment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-bottom: 20px; */
+  }
+
+  .dispenSalesProvisionalSettelment-controls {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+  .dispenSalesProvisionalSettelment-date-range {
+    display: flex;
+    align-items: center;
+    width: 38%;
+    gap: 10px;
+    background-color: #f0f0f0;
+    margin-bottom: 10px;
+    padding: 3px;
+  }
+  .dispenSalesProvisionalSettelment-date-range label{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    font-size: var(--font-size);
+  }
+  
+  .dispenSalesProvisionalSettelment-date-range input[type="date"] {
+    padding: 3px;
+    margin-left: 10px;
+  }
+  
+  
+  /* .dispenSalesProvisionalSettelment-header h4 {
+    color: #3f8fdf;
+    margin: 0;
+  } */
+
+  .dispenSalesProvisionalSettelment-select-filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--font-size);
+    margin-left: 10px;
+    /* border: 1px solid red; */
+    /* width: 300px; */
+  }
+  .dispenSalesProvisionalSettelment-select-filters select{
+    width: 200px;
+  }
+  .dispenSalesProvisionalSettelment-select-filters label{
+  margin-right: 30px;
+  }
+  /* DispenSalesProvisionalSettelment.css */
+
+.dispenSalesProvisionalSettelment-select-filters select,
+.dispenSalesProvisionalSettelment-search-bar input[type="text"] {
+  padding: 3px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: var(--font-size);
+  margin-right: 10px;
+  width: auto; /* Adjust width as needed */
+}
+
+.dispenSalesProvisionalSettelment-search-bar input[type="text"] {
+  width: 200px; /* Adjust width for the search bar */
+  font-size: var(--font-size);
+}
+
+.dispenSalesProvisionalSettelment-select-filters select {
+  width: 150px; /* Adjust width for the select dropdown */
+}
+
+
+.dispenSalesProvisionalSettelment-search-bar i {
+  margin-right: 10px;
+}
+
+
+
+.dispenSalesProvisionalSettelment-pagination button {
+  padding: 5px 10px;
+  margin: 0 2px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+
+.dispenSalesProvisionalSettelment-pagination button:hover {
+  background-color: #e0e0e0;
+}
+
+.dispenSalesProvisionalSettelment-pagination span {
+  margin: 0 10px;
+  font-size: var(--font-size);
+}
+
+  .dispenSalesProvisionalSettelment-CreateRequisition{
+      margin-left: 10px;
+      /* gap: 10px; */
+      background-color: #26C281;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 0px 10px;
+      font-size: var(--font-size);
+      margin-left: 100px;
+      height: 28px;
+      text-align: center;
+    }
+    
+    .dispenSalesProvisionalSettelment-CreateRequisition:hover{
+    background-color: #0011ff ;
+    }
+ 
+  .dispenSalesProvisionalSettelment-checkBox select {
+    padding: 3px 5px 3px 5px;
+    background-color: #f0f0f0;
+    margin-left: 10px;
+    width: 100px;
+  }
+  .dispenSalesProvisionalSettelment-checkBox label {
+font-size: var(--font-size);
+color: green;
+}
+  
+
+  
+  .dispenSalesProvisionalSettelment-search-bar {
+    display: flex;
+    margin-left: -25px;
+  }
+  
+  .dispenSalesProvisionalSettelment-search-bar input {
+    /* flex-grow: 1; */
+    padding: 5px;
+    width: 200px;
+
+
+  }
+  .dispenSalesProvisionalSettelment-search-bar i{
+    position: relative;
+    color:gray;
+    top: 7px;
+  left: 205px;
+  }
+  
+  /* .search-bar button {
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  } */
+  
+  .dispenSalesProvisionalSettelment-results-info {
+    text-align: right;
+    color: black;
+    font-size: var(--font-size);
+}
+.dispenSalesProvisionalSettelment-print-btn{
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 0 5px ;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+.dispenSalesProvisionalSettelment-print-btn:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+  
+  .dispenSalesProvisionalSettelment-table-N-paginat table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.dispenSalesProvisionalSettelment-table-N-paginat th, td {
+    border: 1px solid #ddd;
+    padding: 3px;
+    text-align: center;
+    font-size: var(--font-size);
+    color: black;
+}
+  
+  .dispenSalesProvisionalSettelment-table-N-paginat th {
+    /* background-color: red; */
+    background-color: #F3F3F3;
+    font-size: var(--heading-font);
+  }
+  
+  .dispenSalesProvisionalSettelment-table-N-paginat tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .dispenSalesProvisionalSettelment-action-button {
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    border-radius: 13px;
+  }
+  
+  .dispenSalesProvisionalSettelment-add-report {
+    background-color: #008CBA;
+  }
+  
+  .dispenSalesProvisionalSettelment-scan-done {
+    background-color: #008CBA;
+  }
+  
+  .dispenSalesProvisionalSettelment-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  
+  .dispenSalesProvisionalSettelment-search-N-results{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.dispenSalesProvisionalSettelment-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  }
+  
+  .dispenSalesProvisionalSettelment-pagination button {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 5px;
+  }
+  
+  .dispenSalesProvisionalSettelment-pagination span {
+    margin: 0 10px;
+    color: gray;
+    font-size: var(--heading-font);
+  }
+  .dispenSalesProvisionalSettelment-table-N-paginat{
+    background-color: white ;
+  }
+
+  
+.dispenSalesProvisionalSettelment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal content styling */
+.dispenSalesProvisionalSettelment-modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  max-width: 1300px;
+  width: 100%;
+}
+
+/* Close button styling */
+.dispenSalesProvisionalSettelment-close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}

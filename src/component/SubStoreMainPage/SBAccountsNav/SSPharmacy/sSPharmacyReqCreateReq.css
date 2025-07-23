@@ -1,0 +1,226 @@
+/* Ajhar tamboli sSPharmacyReqCreateReq.css 19-09-24 */
+
+
+.sSPharmacyReqCreateReq-form {
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+  }
+  
+  .sSPharmacyReqCreateReq-form-title {
+    font-size: var(--heading-font);
+    margin-bottom: 20px;
+    /* color: #333; */
+  }
+  
+  .sSPharmacyReqCreateReq-form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .sSPharmacyReqCreateReq-form-group {
+    display: flex;
+    align-items: center;
+    /* flex-direction: column; */
+    margin-bottom: 15px;
+  }
+  .SSPharmacy-input
+  {
+    width: 100%;
+  }
+  
+  .sSPharmacyReqCreateReq-form-group label {
+    margin-bottom: 5px;
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+  }
+  
+  .sSPharmacyReqCreateReq-form-group input,
+  .sSPharmacyReqCreateReq-form-group textarea {
+    padding: 5px;
+    font-size: var(--font-size);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .sSPharmacyReqCreateReq-date-input {
+    position: relative;
+  }
+  
+  .sSPharmacyReqCreateReq-calendar-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    /* color: #666; */
+  }
+  
+  .sSPharmacyReqCreateReq-inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .sSPharmacyReqCreateReq-inventory-table th,
+  .sSPharmacyReqCreateReq-inventory-table td {
+    border: 1px solid #ccc;
+    padding: 3px;
+    text-align: center;
+  }
+  
+  .sSPharmacyReqCreateReq-inventory-table th {
+    background-color: #f0f0f0;
+    /* font-weight: bold; */
+  }
+  .sSPharmacyReqCreateReq-inventory-table button{
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    padding: var(--input-box-padding);
+    border-radius: 5px;
+  }
+  .sSPharmacyReqCreateReq-inventory-table button:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color);
+  }
+  .sSPharmacyReqCreateReq-table-category {
+    background-color: #e0e0e0;
+    /* font-weight: bold; */
+  }
+  
+  .sSPharmacyReqCreateReq-checkbox-group {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .sSPharmacyReqCreateReq-checkbox-group input {
+    margin-right: 5px;
+  }
+  .sSPharmacyReqCreateReq-nedd-N-textarea{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .sSPharmacyReqCreateReq-checked-by {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .sSPharmacyReqCreateReq-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    /* font-weight: bold; */
+  }
+  
+  .sSPharmacyReqCreateReq-btn-remove {
+    background-color: #ff4d4d;
+    color: white;
+    font-size: var(--heading-font);
+    padding: 2px 10px;
+  }
+  
+  .sSPharmacyReqCreateReq-btn-checked {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    /* margin: 1px; */
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .sSPharmacyReqCreateReq-btn-checked:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+  .sSPharmacyReqCreateReq-btn-add {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    /* margin: 1px; */
+    transition: background-color 0.3s ease;
+    padding: 2px 10px;
+  }
+  .sSPharmacyReqCreateReq-btn-add:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .sSPharmacyReqCreateReq-submit-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    /* margin: 1px; */
+    transition: background-color 0.3s ease;
+    padding: 2px 10px;
+  }
+  .sSPharmacyReqCreateReq-submit-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .sSPharmacyReqCreateReq-cancel-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    /* margin: 1px; */
+    transition: background-color 0.3s ease;
+    padding: 2px 10px;
+  }
+  .sSPharmacyReqCreateReq-cancel-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+
+  .sSPharmacyReqCreateReq-close-button{
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 2px 8px;
+    border-radius: 18px;
+    float: right;
+
+  }
+  .sSPharmacyReqCreateReq-btn-request {
+    background-color: #2D68EA;
+    color: white;
+  }
+  
+  .sSPharmacyReqCreateReq-btn-discard {
+    background-color: #f44336;
+    color: white;
+    margin-left: 10px;
+  }
+  
+  .sSPharmacyReqCreateReq-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }

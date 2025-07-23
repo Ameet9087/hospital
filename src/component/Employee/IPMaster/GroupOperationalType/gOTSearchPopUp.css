@@ -1,0 +1,179 @@
+.gOTSearchPopUp-main-container {
+    /* width: 90%; */
+    /* max-width: 800px; */
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: var(--upperBar-bg-color);
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Search Section Styles */
+  .gOTSearchPopUp-search-section {
+    background-color: var(--upperBar-bg-color);
+    font-size: var(--heading-font);
+    color: white;
+    padding: 10px;
+    border-bottom: 1px solid gray;
+  }
+  
+  .gOTSearchPopUp-search-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .gOTSearchPopUp-search-box {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .gOTSearchPopUp-search-box label {
+    font-size: var(--font-size);
+    /* color: #333; */
+    white-space: nowrap;
+  }
+  
+  .gOTSearchPopUp-search-box input {
+    flex: 1;
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    font-size: var(--font-size);
+  }
+  
+  .gOTSearchPopUp-search-with {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .gOTSearchPopUp-search-with label {
+    font-size: var(--font-size);
+    white-space: nowrap;
+  }
+  
+  .gOTSearchPopUp-search-with select {
+    flex: 1;
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    background-color: #fff;
+    font-size: var(--font-size);
+  }
+  
+  .gOTSearchPopUp-search-btn {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 6px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .gOTSearchPopUp-search-icon {
+    font-size: var(--heading-font);
+  }
+  
+  /* Operation Header Styles */
+  .gOTSearchPopUp-operation-header {
+    background-color: var(--button-color);
+    color: white;
+    font-size: var(--font-size);
+    padding: 8px 12px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: center;
+  }
+  
+  .gOTSearchPopUp-operation-header span {
+    font-size: var(--font-size);
+  }
+  
+  /* Departments List Styles */
+  .gOTSearchPopUp-departments-container {
+    background-color: #fff;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  .gOTSearchPopUp-department-row {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .gOTSearchPopUp-department-row:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .gOTSearchPopUp-department-row.selected {
+    background-color: #e8f0fe;
+  }
+  
+  .gOTSearchPopUp-department-row span {
+    font-size: var(--font-size);
+  }
+  
+  /* Footer Styles */
+  .gOTSearchPopUp-departments-footer {
+    background-color: var(--button-color);
+    padding: 8px 12px;
+    border-top: 1px solid #e0e0e0;
+    color: white;
+  }
+  
+  .gOTSearchPopUp-departments-footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--font-size);
+    /* color: #666; */
+  }
+  
+  .gOTSearchPopUp-departments-pagination-info span,
+  .gOTSearchPopUp-view-info span {
+    /* font-weight: 500; */
+  }
+  .gOTSearchPopUp-departments-pagination-info-span1{
+    border: 1px solid gray;
+    background-color: white;
+    padding: 2px 20px;
+    color: black;
+  }
+  
+  /* Scrollbar Styles */
+  .gOTSearchPopUp-departments-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .gOTSearchPopUp-departments-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .gOTSearchPopUp-departments-container::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 5px;
+  }
+  
+  .gOTSearchPopUp-departments-container::-webkit-scrollbar-thumb:hover {
+    background: #999;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .gOTSearchPopUp-search-wrapper {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .gOTSearchPopUp-search-box,
+    .gOTSearchPopUp-search-with {
+      width: 100%;
+    }
+  }

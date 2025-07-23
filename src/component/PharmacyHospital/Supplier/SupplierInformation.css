@@ -1,0 +1,127 @@
+/* Mohini_HospitalHeader_WholePage_14/sep/2024 */
+.supplier-info-list-container {
+  background-color:var( --background-color);
+  padding: 20px;
+  height: 90vh;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+.supplier-info-search-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.supplier-infosearch-input {
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  /* width: 200px; */
+}
+
+.supplier-info-search-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.supplier-info-supplier-info-com {
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.supplier-info-supplier-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.supplier-info-supplier-table th,
+.supplier-info-supplier-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.supplier-info-supplier-table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+/* Button styling for export and print */
+.supplier-info-export-button,
+.supplier-info-print-button {
+  background-color: #42a5f5;
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  /* margin: 10px 5px; */
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.supplier-info-export-button:hover,
+.supplier-info-print-button:hover {
+  background-color: #1e88e5;
+}
+
+/* Pagination container centered */
+.supplier-info-pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.supplier-info-pagination-button {
+  font-size: 16px;
+  background-color: #42a5f5;
+  color: white;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.supplier-info-pagination-button:hover {
+  background-color: #1e88e5;
+}
+
+.supplier-info-pagination-container span {
+  font-size: 16px;
+  margin: 0 10px;
+}
+.supplier-info-sale {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.supplier-info-sale div {
+  margin-right: 20px;
+}
+
+.supplier-info-export-button,
+.supplier-info-print-button {
+  background-color:var( --button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.supplier-info-export-button:hover,
+.supplier-info-print-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+/* Mohini_HospitalHeader_WholePage_14/sep/2024 */

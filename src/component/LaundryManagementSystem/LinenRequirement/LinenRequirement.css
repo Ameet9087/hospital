@@ -1,0 +1,256 @@
+.LinenRLinenType-type {
+    background-color: var(--background-color);
+    margin-top: 10px;
+  }
+  .LinenRLinenType-header {
+    margin: 0;
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    font-size: var(--heading-font);
+    line-height: 20px;
+    
+  }
+  .RefLinenRequirement-search-icon-row{
+    cursor: pointer;
+  }
+  .LinenRLinenType-headingName{
+    font-size: var(--heading-font);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px 0;
+  }
+  .LinenRLinenType-form-section {
+    margin-top: 60px;
+    margin-left: 25%;
+    padding: 10px 20px;
+    width: 50%;
+    font-size: var(--font-size);
+    background: white;
+    border: 1px solid #ccc;
+    margin-bottom: 50px;
+  }
+  .LinenRLinenType-form-group {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .LinenRLinenType-form-group label{
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  .line-requirement-in{
+    width: 85%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius:4px;
+  }
+  .LinenRLinenType-form-group input,
+  .LinenRLinenType-form-group textarea {
+    width: 40%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .LinenRLinenType-form-group select{
+    width: 42%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .LinenRLinenType-form-group-search{
+    width: 90%;
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: end;
+    cursor: pointer;
+   }
+    .LinenRLinenType-form-group-search svg{
+        margin-top: 5px;
+    }
+  .LinenRLinenType-action-buttons {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+    justify-content: center;
+  }
+  .LinenRLinenType-action-buttons button,
+  .LinenRLinenType-Add-button  {
+    margin-right: 5px;
+    background-color: var(--button-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+  }
+  .LinenRLinenType-action-buttons button:hover,
+  .LinenRLinenType-Add-button:hover,
+  .LinenRLinenType-Del-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-color);
+}
+.LinenRLinenType-Del-button  {
+  margin-right: 5px;
+  background-color: red;
+  color: var(--button-hover-background-color);
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid red;
+  border-radius: 5px;
+}
+.RefLinenRequirement-section {
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  margin-bottom: 10px;
+  overflow: hidden;
+  margin-top: 10px;
+
+}
+.RefLinenRequirement-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 10px;
+  
+}
+.RefLinenRequirement-floating-field {
+  position: relative;
+}
+.RefLinenRequirement-floating-input,
+.RefLinenRequirement-floating-select {
+  padding: 5px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: var(--font-size);
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.RefLinenRequirement-form-floating-field {
+  position: relative;
+}
+.RefLinenRequirement-search-field {
+  position: relative;
+}
+
+.RefLinenRequirement-search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.RefLinenRequirement-floating-input:focus,
+.RefLinenRequirement-floating-select:focus {
+  outline: none;
+  border-color: #00897b;
+  box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+}
+.RefLinenRequirement-services-section {
+  background: white;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+}
+
+.RefLinenRequirement-form-floating-input,
+.RefLinenRequirement-form-floating-select {
+  padding: 5px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+  transition: all 0.2s ease;
+}
+.RefLinenRequirement-form-floating-input{
+  width: 92%;
+}
+.RefLinenRequirement-form-floating-select {
+  width: 100%;
+}
+.RefLinenRequirement-form-floating-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 4px;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-size: var(--font-size);
+}
+.RefLinenRequirement-form-floating-field.active .RefLinenRequirement-form-floating-label {
+  top: 0;
+  font-size: 12px;
+  color: #00897b;
+}
+.RefLinenRequirement-form-floating-field.active .RefLinenRequirement-form-floating-input,
+.RefLinenRequirement-form-floating-field.active .RefLinenRequirement-form-floating-select {
+  border-color: #00897b;
+}
+.RefLinenRequirement-action-buttons {
+  display: flex;
+  gap: 5px;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+.RefLinenRequirement-action-buttons button {
+  background-color: var(--button-bg-color);
+  color: var(--button-hover-background-color);
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 5px;
+}
+.RefLinenRequirement-action-buttons button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color);
+}
+.RefLinenRequirement-container-table{
+  margin-top: 20px;
+}
+.RefLinenRequirement-container-table table{
+  width: 100%;
+  border-collapse: collapse;
+}
+@media (max-width: 1024px) {
+  .RefLinenRequirement-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .RefLinenRequirement-full-width {
+    grid-column: span 2;
+  }
+}
+@media (max-width: 768px) {
+  .RefLinenRequirement-bottom-container {
+    grid-template-columns: 1fr;
+  }
+  .RefLinenRequirement-tabs {
+    flex-direction: column;
+  }
+}
+@media (max-width: 480px) {
+  .RefLinenRequirement-grid {
+    grid-template-columns: 1fr;
+  }
+  .RefLinenRequirement-grid.two-columns {
+    grid-template-columns: 1fr;
+  }
+  .RefLinenRequirement-full-width {
+    grid-column:span1;
+}
+}

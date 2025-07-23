@@ -1,0 +1,149 @@
+/* BloodDonationReportModule.css */
+.blood-donation-report-module-container {
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    height: 90vh;
+   overflow-y: scroll;
+    margin: 0 auto;
+}
+
+.blood-donation-report-module-title {
+    font-size: var(--heading-font);
+    color: #333;
+    margin-bottom: 20px;
+}
+.blood-donation-module {
+    display: flex; /* Use Flexbox for layout */
+    align-items: center; /* Center items vertically */
+    gap: 16px; /* Space between elements */
+    margin-bottom: 20px;
+}
+
+
+.blood-donation-report-module-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.blood-donation-report-module-date-filter, 
+.blood-donation-report-module-search-filter {
+    display: flex;
+    align-items: center;
+}
+
+.blood-donation-report-module-input-date {
+    padding: 5px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.blood-donation-report-module-icon-button {
+    background-color: #fff;
+    border: none;
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: var( --font-size);
+}
+
+.blood-donation-report-module-search-input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    /* width: 300px; */
+    font-size: var( --font-size);
+    margin-right: 5px;
+}
+
+.blood-donation-report-module-search-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: var( --font-size);
+}
+
+.blood-donation-report-module-form {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.blood-donation-report-module-form-group {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    font-size: var( --font-size);
+
+}
+.blood-donation-report-module-form-group input[type="text"] {
+    padding: 5px; /* Padding inside the input */
+    border: 1px solid #ccc; /* Border styling */
+    border-radius: 5px; /* Rounded corners */
+    font-size: var( --font-size); /* Font size */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+.blood-donation-report-module-form-group label {
+    margin-right: 5px;
+    font-size: var( --font-size);
+}
+.blood-donation-report-module-date-filter label {
+    font-size: var( --font-size);
+}
+
+.blood-donation-report-module-date-filter input[type="date"] {
+    /* Apply styles to the input elements indirectly */
+    padding: 5px; /* Example padding */
+    border: 1px solid #ccc; /* Example border */
+    border-radius: 5px; /* Example border radius */
+    font-size: var( --font-size); /* Example font size */
+}
+.blood-donation-report-module-form-group select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: var( --font-size);
+}
+
+.blood-donation-report-module-show-report-button {
+    background-color:var(--button-color);
+    color: #fff;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var( --font-size);
+    /* margin-bottom: 20px; */
+}
+
+.blood-donation-report-module-show-report-button i {
+    margin-right: 5px;
+}
+
+.blood-donation-report-module-show-report-button:hover {
+    background-color: white;
+    color: var(--button-color);
+    border-bottom: 1px solid var(--button-hover-border-color);
+}
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .blood-donation-report-module-title {
+        font-size: var( --font-size); /* Adjust title size */
+    }
+    .blood-donation-report-module-filters,
+    .blood-donation-report-module-form {
+        flex-direction: column; /* Stack items vertically */
+        align-items: flex-start; /* Align items to the start */
+    }
+    .blood-donation-report-module-form-group {
+        width: 100%; /* Full width for each form group */
+        margin-right: 0; /* Reset margin */
+    }
+    .blood-donation-report-module-show-report-button {
+        margin-top: 10px; /* Add spacing above button */
+    }
+}

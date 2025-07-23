@@ -1,0 +1,108 @@
+/* Page container styling */
+.CaptureConsumptionValue-page-container {
+  width: 90%;
+ /* max-width: 900px; */
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+ 
+  }
+  
+  /* Title and description styling */
+  .CaptureConsumptionValue-page-title {
+    font-size: 20px;
+    color: #0bd4ef;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .CaptureConsumptionValue-page-description {
+    font-size: 16px;
+    color: black;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  /* Cards container */
+  .CaptureConsumptionValue-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+  }
+  
+  /* Individual card styling */
+  .CaptureConsumptionValue-info-card {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    max-width: 250px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+  }
+  
+  .CaptureConsumptionValue-info-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  /* Icon for each card */
+  .CaptureConsumptionValue-card-icon {
+    
+    color: #3498db;
+    margin-bottom: 20px;
+  }
+  
+  /* Card title */
+  .CaptureConsumptionValue-card-title {
+    font-size:16px;
+    font-weight: bold;
+    color: #34495e;
+    margin-bottom: 15px;
+  }
+  
+  /* Card description */
+  .CaptureConsumptionValue-card-description {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  
+  /* Card details */
+  .CaptureConsumptionValue-card-details {
+    list-style-type: none;
+    padding: 0;
+    font-size: 14px;
+    color: #2c3e50;
+  }
+  
+  .CaptureConsumptionValue-card-details li {
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+  
+  /* Back button styling */
+  .CaptureConsumptionValue-back-button {
+    margin-top: 20px;
+    padding: 5px;
+    background-color: var(--button-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    font-size: 14px;
+  }
+  
+  .CaptureConsumptionValue-back-button:hover {
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+  }
+  

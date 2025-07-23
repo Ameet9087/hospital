@@ -1,0 +1,111 @@
+/* Dhanashree_HIMSSampleDataTable_24/09 */
+
+.HIMSSampleDataTable-container {
+  padding: 20px;
+  color: black;
+  background-color: var(--background-color);
+  height: 100vh;
+}
+
+.HIMSSampleDataTable-title {
+  text-align: left;
+  margin-bottom: 15px;
+  font-size: var(--heaading-font);
+}
+
+.HIMSSampleDataTable-table-wrapper {
+  overflow-x: auto;
+}
+
+.HIMSSampleDataTable-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f2f2f2; 
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.HIMSSampleDataTable-table th,
+.HIMSSampleDataTable-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid black;
+}
+
+.HIMSSampleDataTable-table th {
+  background-color: #f2f2f2; 
+}
+
+.HIMSSampleDataTable-table td {
+  background-color: #f2f2f2; 
+}
+
+.HIMSSampleDataTable-table tr:nth-child(even) {
+  background-color: #444;
+}
+
+
+.edit-button {
+  background-color: var(--button-color); 
+  border: 1px solid white; 
+  color: white; 
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-button:hover {
+  background-color: white; 
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .HIMSSampleDataTable-table th,
+  .HIMSSampleDataTable-table td {
+      padding: 8px;
+      font-size: 14px;
+  }
+
+  .HIMSSampleDataTable-table {
+      font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .HIMSSampleDataTable-title {
+      font-size: 18px;
+  }
+
+  .HIMSSampleDataTable-table th,
+  .HIMSSampleDataTable-table td {
+      padding: 6px;
+      font-size: 12px;
+  }
+
+  .HIMSSampleDataTable-table {
+      font-size: 10px;
+  }
+}
+
+/* Dhanashree_HIMSSampleDataTable_24/09 */

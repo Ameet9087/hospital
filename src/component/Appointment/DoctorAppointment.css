@@ -1,0 +1,86 @@
+.DoctorAppointments-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.DoctorAppointments-heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.DoctorAppointments-row {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.DoctorAppointments-field {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 150px;
+}
+
+.DoctorAppointments-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.DoctorAppointments-input {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.DoctorAppointments-input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+.DoctorAppointments-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+.DoctorAppointments-btn
+{
+  padding: 5px 10px;
+  color: white;
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+}
+.DoctorAppointments-button-field
+{
+  display: contents;
+  align-items: center;
+}
+.DoctorAppointments-heading {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.DoctorAppointments-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.DoctorAppointments-table th, .DoctorAppointments-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.DoctorAppointments-table tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}

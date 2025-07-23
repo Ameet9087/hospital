@@ -1,0 +1,100 @@
+ /* Ajhar Tamboli incentiveTranHospitalIncome.css 18-09-2024 */
+
+
+.incentiveTranHospitalIncome-container {
+    background-color: var(--background-color);
+    /* padding: 10px; */
+    width: 100%;
+    margin: 0;
+    height: 75vh;
+    /* font-family: Arial, sans-serif; */
+}
+.incentiveTranHospitalIncome-container h3{
+    /* font-weight: normal; */
+    margin: 10px;
+    font-size: var(--heading-font);
+    
+}
+.incentiveTranHospitalIncome-container h3 i{
+  /* color: #0F63AF; */
+  font-size: var(--heading-font);
+}
+  
+  .incentiveTranHospitalIncome-tabs {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #dad7d7;
+    margin-bottom: 20px;
+  }
+  
+  .incentiveTranHospitalIncome-tab {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  /* .incentiveTranHospitalIncome-selected {
+    color: #039be5;
+    border-bottom: 4px solid #2D68EA;
+  } */
+  
+  .incentiveTranHospitalIncome-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .incentiveTranHospitalIncome-date-range {
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+    padding: 5px 30px;
+  }
+  
+  .incentiveTranHospitalIncome-icon-button {
+    background-color: #e0e0e0;
+    border: none;
+    cursor: pointer;
+    font-size: var(--heading-font);
+  }
+  
+  .incentiveTranHospitalIncome-Select-Doctor{
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+  }
+  .incentiveTranHospitalIncome-Select-Doctor label{
+    margin-right: 10px;
+}
+.incentiveTranHospitalIncome-load-button {
+      margin-right: 100px;
+      background-color:var( --button-color);
+      border: 1px solid var( --button-hover-border-color);
+      color: white;
+      /* border: none; */
+      /* margin-right: 10px; */
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: var(--font-size);
+      /* margin: 1px; */
+      transition: background-color 0.3s ease;
+      padding: 5px 5px;
+    }
+    .incentiveTranHospitalIncome-load-button:hover {
+      border: 1px solid var( --button-hover-border-color);
+      color: var(--button-hover-text-color);
+      background-color: var(--button-hover-background-color);
+    }
+  .incentiveTranHospitalIncome-search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .incentiveTranHospitalIncome-info-text {
+    color: #666;
+  }
+  

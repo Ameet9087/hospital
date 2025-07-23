@@ -1,0 +1,48 @@
+/* Style for the header */
+.provision_cl_main_header {
+    border-bottom: 1px solid #ddd; /* Light border at the bottom of the header */
+    background-color: #f8f9fa; /* Light background color */
+    padding: 10px 20px; /* Padding around the content */
+  }
+  
+  /* Style for the navigation container */
+  .provision_cl_main_nav {
+    display: flex; /* Use flexbox to align items horizontally */
+    justify-content: center; /* Center the items horizontally */
+  }
+  
+  /* Style for the unordered list */
+  .provision_cl_main_ul {
+    list-style-type: none; /* Remove default list styling */
+    margin: 0;
+    padding: 0;
+    display: flex; /* Display list items in a row */
+  }
+  
+  /* Style for each list item */
+  .provisinal_clearence_links {
+    margin: 0 10px; /* Space between navigation links */
+  }
+  
+  /* Style for each navigation link */
+  .provisinal_clearence_links a {
+    text-decoration: none; /* Remove underline from links */
+    color: #007bff; /* Default link color */
+    font-size: 16px; /* Font size */
+    padding: 10px 15px; /* Padding around the text */
+    display: inline-block; /* Ensure padding and margins are applied correctly */
+  }
+  
+  /* Style for active links */
+  .provisinal_clearence_links a.provisinal_clearence_links-active {
+    color: #0056b3; /* Change color for active link */
+    font-weight: bold; /* Make active link text bold */
+    border-bottom: 2px solid #0056b3; /* Underline active link with a border */
+  }
+  
+  /* Additional style for links */
+  .doto {
+    margin: 0;
+    padding: 0;
+  }
+  

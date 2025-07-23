@@ -1,0 +1,173 @@
+/* General Styles */
+
+/* Ajhar Tamboli sSPRequisition.css 19-09-24 */
+
+.sSPRequisition-container {
+  /* width: 98%; */
+  /* border-radius: 5px; */
+  margin: 0 auto;
+  background-color:var(--background-color);
+  height: 75vh;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.sSPRequisition-create-requisition {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  /* margin: 1px; */
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+.sSPRequisition-create-requisition:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.sSPRequisition-search-N-results{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.sSPRequisition-search-bar {
+  display: flex;
+  margin-left: -15px;
+}
+
+.sSPRequisition-search-bar input {
+  flex-grow: 1;
+  padding: 3px;
+  width: 200px;
+
+}
+
+.sSPRequisition-results-info {
+  text-align: right;
+  font-size: var(--font-size);
+  margin-left: 10px;
+  /* color: #0011ff; */
+  /* font-weight: bold; */
+}
+.sSPRequisition-print-btn{
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+.sSPRequisition-print-btn:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+/* Table Styles */
+.sSPRequisition-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.sSPRequisition-table th, .sSPRequisition-table td {
+  border: 1px solid #ddd;
+  padding: 3px;
+  text-align: center;
+  font-size: var(--font-size);
+}
+
+.sSPRequisition-table th {
+  font-size: var(--heading-font);
+  background-color: #f2f2f2;
+}
+
+.sSPRequisition-btn-view, .sSPRequisition-btn-receive {
+  background-color:var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+  border: 1px solid var(--button-hover-border-color);
+}
+.sSPRequisition-btn-view:hover{
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  
+}
+
+/* Pagination Styles */
+.sSPRequisition-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sSPRequisition-pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.sSPRequisition-pagination button.sSPRequisition-active {
+  background-color: #79C879;
+  color: white;
+}
+
+.sSPRequisition-pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Modal Styles */
+.sSPRequisition-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.sSPRequisition-modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+  width: 80%;
+}
+
+.sSPRequisition-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 2px 8px;
+  border-radius: 18px;
+  /* float: right; */
+  /* background: none; */
+  /* border: none; */
+  font-size: var(--font-size);
+  cursor: pointer;
+}

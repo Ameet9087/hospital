@@ -1,0 +1,95 @@
+/* CreateLedgerPopup.css */
+
+.uc-popup-overlay {
+  position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 150;
+}
+
+.uc-popup-content {
+  position: relative;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  /* overflow-y: auto; */
+  width: 600px;
+  height: 250px;
+}
+
+.uc-popup-content h2 {
+  color: black;
+  font-size: var(--heading-font);
+  margin-bottom: 20px;
+}
+
+.uc-form-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.uc-form-group {
+  flex: 1;
+  display: flex;
+  margin-right: 10px;
+}
+
+.uc-form-group label {
+  white-space: nowrap;
+  margin-bottom: 5px;
+  font-size: var(--font-size);
+  width: 250px;
+}
+
+.uc-button-row {
+  text-align: right;
+}
+
+.uc-save-btn {
+  background-color: var(--button-color);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: var(--font-size);
+  cursor: pointer;
+  margin: 10px;
+  float: left;
+}
+.uc-save-btn:hover {
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.uc-close-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 5px 12px;
+  font-size: 16px;
+}
+.uc-form-group input,.uc-form-group select{
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 30px !important;
+}
+/* .uc-ledger-input{
+  border: none;
+  background-color: transparent;
+  outline: none;
+} */

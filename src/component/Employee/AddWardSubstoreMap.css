@@ -1,0 +1,79 @@
+.AddWardSubstoreMap {
+  width: 900px;
+  font-family: Arial, sans-serif;
+}
+
+.AddWardSubstoreMap h2 {
+  text-align: center;
+}
+
+.AddWardSubstoreMap-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.AddWardSubstoreMap-formGroup {
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+}
+
+.AddWardSubstoreMap-formGroup label {
+  margin-bottom: 5px;
+}
+
+.AddWardSubstoreMap-formGroup input[type="text"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.AddWardSubstoreMap-formGroup input[type="checkbox"] {
+  margin-left: 10px;
+}
+
+.required {
+  color: red;
+}
+
+.AddWardSubstoreMap-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.AddWardSubstoreMap-addButton,
+.AddWardSubstoreMap-discardButton,
+.AddWardSubstoreMap-saveButton {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.AddWardSubstoreMap-addButton {
+  background-color: #28a745;
+  color: white;
+}
+
+.AddWardSubstoreMap-discardButton {
+  background-color: #dc3545;
+  color: white;
+}
+
+.AddWardSubstoreMap-saveButton {
+  background-color: var(--button-color);
+  color: white;
+  margin-top: 20px;
+  display: block;
+}
+
+.AddWardSubstoreMap-deleteButton {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #dc3545;
+  color: white;
+  cursor: pointer;
+}

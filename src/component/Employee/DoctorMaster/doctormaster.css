@@ -1,0 +1,309 @@
+/* DoctorMaster.css */
+
+.doctormaster-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    width: 100%;
+  }
+  
+  .doctormaster-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .doctormaster-header-left h1 {
+    margin: 0;
+    color: #333;
+  }
+  
+  .doctormaster-header-right {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+  .doctormaster-service-button{
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+  }
+  .doctormaster-service-button.active{
+  background-color: transparent;
+    color: black;
+    margin: 10px;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 3px solid var(--button-bg-color);
+  }
+
+  .doctormaster-button,.add-doctor-btn {
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+ 
+  }
+  
+  .doctormaster-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color); 
+  }
+
+  .doctormasterspanheader {
+    grid-column: 1 / -1; /* Makes it span all columns */
+    width: 100%; /* Ensures full width */
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 0px;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+  
+  
+  .doctormaster-main {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 15px;
+    background: white;
+    border: 1px solid #ccc;
+  }
+  
+  .doctormaster-popup-con{
+    height: 600px;
+    /* width: 800px; */
+    width:1200px;
+    overflow-y: scroll;
+  }
+
+
+  .doctormaster-doctor-details,
+  .doctormaster-residence-details,
+  .doctormaster-clinic-details {
+    width: 100%;
+    background: var(--background-color);
+    padding: 0px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr);
+    align-items: center;
+    overflow: hidden;
+  }
+  .docmasterformdata{
+    /* height: 35px; */
+    padding: 0 4px;
+  }
+  .doctormaster-residence-details{
+    gap: 12px;
+    padding: 4px 0;
+  }
+  .doctor-hidden-form-fields{
+    opacity: 0;
+    cursor: none;
+  }
+  /* .doctormaster-label {
+    width: 150px;
+    margin-bottom: 5px;
+    display: block;
+  }
+   */
+  
+  /* .doctormaster-select {
+    width: 60%;
+    padding: 5px;
+    margin-bottom: 15px;  
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }*/
+  
+  .doctormaster-upload {
+    margin-top: 20px;
+  }
+  
+  .doctormaster-upload-input {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  
+  .doctormaster-fee-table {
+    margin-top: 30px;
+  }
+  
+  .doctormaster-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .doctormaster-table th,
+  .doctormaster-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+  
+  .doctormaster-table th {
+    background-color: #3598dc;
+    color: white;
+  }
+  
+  /* .doctormaster-table td input {
+    width: 80%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  } */
+  
+  .doctormaster-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  .services-table{
+    overflow-x: scroll;
+  }
+  .services-table table{
+  table-layout: auto;  
+}
+
+
+.doctormaster-edit-btn, .doctormaster-delete-btn {
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.doctormaster-edit-btn {
+  background-color: var(--button-bg-color);
+  color: white;
+}
+
+.doctormaster-delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.doctormaster-edit-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-color);
+}
+
+.doctormaster-delete-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: #da190b;
+}
+
+
+
+
+
+
+/* Style for the search icon */
+.DoctorMastericon {
+  position: absolute;
+  right: 10px; /* Adjust position inside the input box */
+  top: 50%;
+  transform: translateY(-50%);
+  color: black; /* Ensure the icon color is black */
+  cursor: pointer;
+}
+
+.iccon-container {
+  width: 200%;
+  padding: 8px 35px 8px 10px; /* Space for the icon on the right */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: white;
+}
+
+
+.DoctorMaster-add-btn,
+.DoctorMaster-delete-btn {
+  margin-right: 4px;
+  padding: 2px 8px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+.DoctorMaster-add-btn {
+  background-color: green;
+}
+.DoctorMaster-delete-btn {
+  background-color: red;
+}
+
+
+
+
+
+/* Wrapper for input and icon */
+.input-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+
+
+.DoctorMaster-add-btn {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.DoctorMaster-delete-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.services-table input {
+  width: 100%;
+  padding: 8px;
+  padding-right: 35px; /* Space for the icon */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.services-table {
+  position: relative;
+}
+
+.services-table .DoctorMastericon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: black; /* Set the icon color to black */
+  cursor: pointer;
+}

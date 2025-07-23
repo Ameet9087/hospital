@@ -1,0 +1,50 @@
+.AddActive-add-active-problem {
+    background-color: var(--background-color);
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .AddActive-form-group {
+    margin-bottom: 10px;
+  }
+  
+  .AddActive-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .AddActive-form-group input[type="text"],
+  .AddActive-form-group input[type="date"],
+  .AddActive-form-group textarea {
+    width: 100%;
+    padding: 5px;
+    margin-top: 2px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .AddActive-form-group input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  .AddActive-form-group textarea {
+    height: 60px;
+  }
+  
+  .AddActive-add-problem-button {
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .AddActive-add-problem-button:hover {
+    background-color: var(--button-color);
+  }
+  

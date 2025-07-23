@@ -1,0 +1,297 @@
+.MaintenanceChecklistPopUp-surgery-Events {
+    background-color: var(--background-color);
+    max-width: 1400px;
+    padding: 4px;
+    font-size: 12px;
+    height: auto;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-title-bar {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 8px;
+    margin-bottom: 4px;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-header {
+    font-size: var(--heading-font);
+}
+
+
+
+.MaintenanceChecklistPopUp-surgeryEvents-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-main-section {
+    display: flex;
+    gap: 4px;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-panel {
+    flex: 1;
+    background: white;
+    border: 1px solid #ccc;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-panel-header {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 5px 10px;
+    font-size: var(--heading-font);
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-panel-content {
+    padding: 8px;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 4px;
+    font-size: var(--font-size);
+}
+
+
+
+.MaintenanceChecklistPopUp-surgeryEvents-magnifier-btn {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 2px 6px;
+    cursor: pointer;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-status-controls {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--font-size);
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-radio-group {
+    display: flex;
+    gap: 12px;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-services-section {
+    background: white;
+    border: 1px solid #ccc;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-tab-bars {
+    display: flex;
+    gap: 5px;
+    padding: 4px;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-tab {
+    padding: 4px 12px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    color: var(--button-color);
+    font-size: var(--font-size);
+    background: var(--button-hover-background-color);
+    cursor: pointer;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-tab.active {
+    background: var(--button-color);
+    color: var(--button-hover-background-color);
+    font-weight: bold;
+}
+
+.MaintenanceChecklistPopUp-services-table {
+    padding: 8px;
+}
+
+.MaintenanceChecklistPopUp-table-actions {
+    margin-bottom: 4px;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-add-btn,
+.MaintenanceChecklistPopUp-surgeryEvents-del-btn {
+    margin-right: 4px;
+    padding: 2px 8px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: var(--font-size);
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-add-btn {
+    background-color: green;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-del-btn {
+    background-color: red;
+}
+
+.MaintenanceChecklistPopUp-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.MaintenanceChecklistPopUp-th,
+.MaintenanceChecklistPopUp-td {
+    border: 1px solid #ccc;
+    padding: 4px 8px;
+    text-align: left;
+}
+
+.MaintenanceChecklistPopUp-th {
+    background: #f5f5f5;
+    font-weight: normal;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-action-buttons {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+    margin-top: 4px;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-action-buttons button {
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+}
+
+.MaintenanceChecklistPopUp-surgeryEvents-action-buttons button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color);
+}
+
+.MaintenanceChecklistPopUp-surgery-events-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+.MaintenanceChecklistPopUp-surgery-events-popup button {
+    margin-top: 10px;
+}
+
+.MaintenanceChecklistPopUp-SurgeryEventsPanels {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.MaintenanceChecklistPopUp-SurgeryEventsPanels .text-input {
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.MaintenanceChecklistPopUp-SurgeryEventsPanels .file-input {
+    padding: 5px;
+}
+
+.MaintenanceChecklistPopUp-SurgeryEventsPanels .upload-button {
+    padding: 5px 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: 1px solid var(--button-hover-border-color);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.MaintenanceChecklistPopUp-SurgeryEventsPanels {
+    flex: 1;
+    padding: 5px 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: var(--font-size);
+    transition: border-color 0.2s;
+    width: 100px;
+  }
+  
+  .MaintenanceChecklistPopUp-SurgeryEventsPanels:focus {
+    outline: none;
+    border-color: #16a085;
+    box-shadow: 0 0 0 2px rgba(22, 160, 133, 0.1);
+  }
+  
+.MaintenanceChecklistPopUp-SurgeryEventsPanels .upload-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+}
+
+.MaintenanceChecklistPopUp-requiredtext {
+    color: red;
+}
+
+
+
+.complaint-entry-system-search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: black;
+    font-size: var(--heading-font);
+    cursor: pointer;
+    outline: none;
+  }
+
+
+
+
+
+
+/* ===================================================== */
+
+.MaintenanceChecklistPopUp-surgeryEvents-form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 4px;
+    font-size: var(--font-size);
+}
+
+
+
+.GatePassSecurityCheckPopUp-required{
+    color: red;
+}
+
+
+
+
+/* ======================================================================== */
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-with-icon input {
+    width: 100%;
+    padding-right: 30px; /* Add space for the icon */
+  }
+  
+  .input-with-icon .input-icon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #666;
+}

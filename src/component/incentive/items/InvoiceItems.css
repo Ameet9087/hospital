@@ -1,0 +1,86 @@
+/* .invoice-items {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f0f8ff;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .date-picker {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  
+  .date-picker label {
+    margin-right: 5px;
+  }
+  
+  .date-picker input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  
+  .favorite {
+    color: #888;
+  }
+  
+  .favorite.active {
+    color: gold;
+  }
+  
+  .load {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+  }
+  
+  .search-input-container {
+    margin-bottom: 20px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .results-count {
+    margin-top: 10px;
+    text-align: right;
+    color: #666;
+  } */

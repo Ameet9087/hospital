@@ -1,0 +1,24 @@
+/* UserManagement.css */
+
+.UserManagement {
+    width: 100%;
+  }
+  
+  .UserManagement-nav {
+    padding: 10px;
+    background: #f0f0f0;
+  }
+  
+  .UserManagement-link {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .UserManagement-link.active {
+    color: white;
+    background-color: var(--sideBar-bg-color) ;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  

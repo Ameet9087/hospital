@@ -1,0 +1,105 @@
+/* Akash Pawar Vaccination 14/24 */
+.UpdateVaccinationRegister__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    padding: 50px;
+    z-index: 150;
+  }
+  
+  .UpdateVaccinationRegister__popup {
+    background-color: white;
+    padding: 20px;
+    /* border-radius: 5px; */
+    /* width: 100%; */
+    position: relative;
+  }
+  
+  .UpdateVaccinationRegister__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: var(--heading-font);
+  }
+  
+  .UpdateVaccinationRegister__header h2{
+    font-size: var(--heading-font);
+    color: black;
+  }
+  
+  .UpdateVaccinationRegister__closeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 50%;
+  }
+  
+  .UpdateVaccinationRegister__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  
+  .UpdateVaccinationRegister__formGroup {
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  
+  .UpdateVaccinationRegister__formActions {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .UpdateVaccinationRegister__formActions button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .UpdateVaccinationRegister__formActions button:first-child {
+    background-color: #ccc;
+  }
+  
+  .UpdateVaccinationRegister__formActions button:last-child {
+    background-color: var(--button-color);
+    color: white;
+  }
+  .UpdateVaccinationRegister__formActions button:last-child:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+     border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .UpdateVaccinationRegister__note {
+    grid-column: span 2;
+    margin-top: 0px;
+    color: green;
+  }
+  
+  .UpdateVaccinationRegister__openButton {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }

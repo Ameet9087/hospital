@@ -1,0 +1,104 @@
+ /* Ajhar Tamboli IncentiveTransationPayment.css 18-09-2024 */
+
+
+.incentiveTransationPayment-container {
+    background-color: var(--background-color);
+    /* padding: 10px; */
+    width: 100%;
+    margin: 0;
+    height: 75vh;
+    /* font-family: Arial, sans-serif; */
+}
+.incentiveTransationPayment-container h3{
+    font-weight: normal;
+    margin: 10px;
+    font-size: var(--heading-font);
+    
+  }
+  .incentiveTransationPayment-container h3 i{
+    color: var(--button-bg-color);
+    font-size: var(--heading-font);
+}
+  
+  .incentiveTransationPayment-tabs {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #dad7d7;
+    margin-bottom: 20px;
+  }
+  
+  .incentiveTransationPayment-tab {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .incentiveTransationPayment-selected {
+    color: #039be5;
+    border-bottom: 4px solid #2D68EA;
+  }
+  
+  .incentiveTransationPayment-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .incentiveTransationPayment-date-range {
+    background-color: #EBF7FF;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+    padding: 5px 30px;
+  }
+  .incentiveTransationPayment-date-range label{
+    font-size: var(--font-size);
+  }
+  
+  .incentiveTransationPayment-icon-button {
+    background-color: #e0e0e0;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+
+  .incentiveTransationPayment-Select-Doctor{
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+  }
+  .incentiveTransationPayment-Select-Doctor label{
+    margin-right: 10px;
+}
+.incentiveTransationPayment-load-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  margin-right: 100px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  /* margin: 1px; */
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.incentiveTransationPayment-load-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+  .incentiveTransationPayment-search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .incentiveTransationPayment-info-text {
+    color: #666;
+  }
+  

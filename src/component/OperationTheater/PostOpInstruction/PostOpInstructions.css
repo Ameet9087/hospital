@@ -1,0 +1,70 @@
+.oppostinstruction_container {
+    width: 100%;
+    margin: 20px auto;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .oppostinstruction_panel {
+    width: 50%;
+    max-width: 100%;
+    padding: 25px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+} /* Optionally add border-radius for rounded corners */
+  
+  .oppostinstruction_panel_title {
+    font-size: var(--font-size);
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .oppostinstruction_field {
+    display: flex;
+    justify-content: space-between;
+    
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .oppostinstruction_field label {
+    width: 45%; /* Set label width to 45% */
+    font-size: var(--font-size);
+    margin-bottom: 0;
+  }
+  
+  .oppostinstruction_field input,
+  .oppostinstruction_field select {
+    width: 50%; /* Input fields will take 50% of the width */
+    padding: var(--input-box-padding);
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+  
+  .oppostinstruction-header {
+    text-align: center;
+    font-size: var(--heading-font);
+    color: #fff;
+    background-color: var(--sideBar-bg-color);
+    padding: 10px 0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  .oppostinstruction-submit-button{
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    padding: var(--input-box-padding);
+    font-size: var(--font-size);
+    border-radius: 5px;
+  }
+  .oppostinstruction-submit-button:hover{
+    background-color: white;
+    color: var(--button-color);
+  }

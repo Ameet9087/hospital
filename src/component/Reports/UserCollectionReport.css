@@ -1,0 +1,576 @@
+.user-collection-report {
+  background-color: #dff3f8;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.user-collection-report-header {
+  /* display: flex; */
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.user-collection-report-title {
+  margin-bottom: 60px;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+.user-collection-report-counter{
+   display: flex;
+}
+
+.user-collection-report-filters {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-collection-report-date-filter,
+.user-collection-report-counter-filter,
+.user-collection-report-user-filter {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.user-collection-report-show-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.user-collection-report-show-btn:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+
+}
+.user-collection-report-tab{
+  background-color: white;
+}
+.user-collection-report-table {
+  width: 100%;
+  background-color: white;
+  margin-top: 10px;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.user-collection-page-results-info{
+  font-size: 14px;
+  color: #2ca0de;
+}
+
+.user-collection-report-controls {
+  display: flex;
+  justify-content: space-between; /* Align items on left and right */
+  align-items: center; /* Center items vertically */
+  margin-bottom: 10px; /* Add some spacing below */
+}
+
+.user-collection-report-search {
+  padding: 5px;
+  margin-top: 10px;
+  font-size: 14px;
+  margin-right: auto; /* Ensures search bar stays on the left side */
+}
+
+.user-collection-report-print-btn,
+.user-collection-report-export-btn {
+  background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.user-collection-report-print-btn:hover,
+.user-collection-report-export-btn:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+
+.user-collection-report-table th,
+.user-collection-report-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+
+
+
+.net-cash-collection-header{
+  font-size: 16px;
+}
+
+
+/*  */
+
+
+.net-cash-collection-header {
+  border-radius: 8px; /* Rounded corners for the border */
+}
+
+.user-collection-report-net-collection {
+  font-size: 16px; /* Font size for the net cash collection header */
+  margin-bottom: 20px; /* Space below the header */
+  color: #333; /* Darker text color for contrast */
+}
+
+
+.user-collection-report-summary-table {
+  width: 40%; /* Full width of the container */
+  border-collapse: collapse; /* Collapse borders for a clean look */
+}
+
+.user-collection-report-summary-table td,
+.user-collection-report-summary-table th {
+  border: 1px solid #ddd; /* Light border for table cells */
+  text-align: left; /* Align text to the right */
+}
+
+
+.user-collection-report-summary-table tr:last-child td {
+  font-weight: bold; /* Bold text for the last row (Total Collection) */
+}
+
+
+
+/*  */
+
+.user-collection-report-page-no {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the pagination controls */
+  gap: 10px; /* Space between elements */
+  margin: 10px 0; /* Space around the pagination */
+}
+
+.user-collection-report-pagination-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.user-collection-report-pagination-btn:hover {
+  border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+.user-collection-report-page-no span {
+  font-size: 14px; /* Font size for the page indicator */
+  color: #333; /* Dark text color */
+}
+/*  */
+
+
+.user-collection-report-fav-btn {
+  color: #0056b3; /* Text color */
+  border: none;
+  background-color: white;
+  padding: 5px 5px; /* Adjust padding for a rounded rectangle */
+  margin: 0 5px;
+  cursor: pointer;
+  font-size: 16px; /* Adjust font size */
+  display: inline-block;
+  text-align: center;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+.user-collection-report-date-filter{
+  background-color: white;
+}
+
+/*  */
+.user-collection-popup {
+  position: absolute;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  
+  /* Centering the popup */
+  top: 72%;
+  left: 65%;
+  transform: translate(-50%, -50%);
+}
+
+.user-collection-popup-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: center; /* Center text inside the popup */
+}
+
+.user-collection-popup-list li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+.user-collection-popup-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.user-collection-popup-list li:last-child {
+  border-bottom: none;
+}
+.table-scroll-container {
+  overflow-x: auto; /* Enables horizontal scrolling */
+  max-width: 100%; /* Adjusts the container to fit the parent width */
+  white-space: nowrap; /* Prevents wrapping of table content */
+}
+.user-collection-repor-advance-filter {
+  display: flex;             /* Use Flexbox layout */
+  justify-content: flex-end;   /* Center the buttons horizontally */
+  gap: 40px;    
+  margin-right: 20%;             /* Add a gap between the buttons */
+  padding: 10px 0;           /* Optional: Add padding for better spacing */
+}
+
+.user-collection-report-show-btn {
+  padding: 5px 8px;         /* Optional: Adjust padding for button size */
+  cursor: pointer;           /* Add pointer cursor on hover */
+  margin-bottom: 5px;
+}
+
+.income-segragation-tab{
+  overflow-x: auto; /* Enable horizontal scrolling */
+  width: 100%; /* Make the container take full width of the parent */
+  margin-bottom: 1rem; /* Optional: space below the container */
+}
+.user-collection-report-table {
+  width: 100%; /* Full width */
+  border-collapse: collapse; /* Collapse table borders */
+}
+
+.user-collection-report-table th,
+.user-collection-report-table td {
+  border: 1px solid #ddd; /* Border around table cells */
+  padding: 8px; /* Padding inside cells */
+  text-align: left; /* Left-align text */
+}
+
+.user-collection-report-table th {
+  background-color: #f4f4f4; /* Background color for header cells */
+  font-weight: bold; /* Make header text bold */
+}
+
+.user-collection-report-table tr:nth-child(even) {
+  background-color: #f9f9f9; /* Zebra striping for rows */
+}
+
+
+/*  */
+
+.patient-census-collection-dep {
+  display: flex;
+  margin-top: 10px;
+  align-items: center; /* Align items vertically centered */
+  gap: 70px; /* Space between the Doctor and Department sections */
+}
+
+.user-collection-report-doctor-filter,
+.user-collection-report-department-filter {
+  display: flex;
+  align-items: center; /* Center label and select vertically */
+  gap: 5px; /* Space between label and select */
+}
+
+.user-collection-report-doctor-filter label,
+.user-collection-report-department-filter label {
+  font-size: 16px; /* Consistent font size */
+  margin-right: 5px; /* Optional: Additional spacing between label and select */
+}
+
+.user-collection-report-doctor-filter select,
+.user-collection-report-department-filter select {
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 150px; /* Optional: Adjust width as needed */
+}
+
+@media (max-width: 600px) {
+  .patient-census-collection-dep {
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+    gap: 10px; /* Adjust gap for smaller screens */
+  }
+}
+
+.user-collection-report-counter .user-collection-report-counter-filter select,
+.user-collection-report-counter .user-collection-report-user-filter select {
+  width: 150px; /* Adjust width as needed */
+  height: 35px; /* Adjust height as needed */
+  padding: 5px; /* Adds some padding inside the select */
+  border: 1px solid #ccc; /* Adds a border with light gray color */
+  border-radius: 4px; /* Rounds the corners */
+  font-size: 14px; /* Sets font size */
+  background-color: #fff; /* Background color of the dropdown */
+  color: #333; /* Text color */
+  /* margin-right: 10px; */
+}
+
+/*  */
+/* Ensure that the table has a consistent layout */
+.user-collection-report-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Style the no rows message row */
+.user-name-no-row {
+  text-align: center; /* Center the text horizontally */
+  font-style: italic; /* Italicize the text for emphasis */
+  color: #888; /* Light gray color for the text */
+  font-size: 14px; /* Match the font size to the rest of the table */
+  background-color: #ffe6a0; /* Light background color for better visibility */
+  height: 30px; /* Adjust height as needed for visual spacing */
+}
+
+/* Optional: Style the table rows and cells for consistency */
+.user-collection-report-table th, 
+.user-collection-report-table td {
+  border: 1px solid #ddd; /* Light border for the table cells */
+  padding: 8px; /* Space around the text in cells */
+}
+
+.user-collection-report-table th {
+  background-color: #f4f4f4; /* Slightly different background color for headers */
+}
+
+.user-collection-report-counter-filter{
+margin-top: 10px;
+}
+
+/*  */
+
+
+.discharge-display-com {
+  display: flex;
+  justify-content: flex-end; /* Aligns items to the right side */
+  align-items: center; /* Vertically centers items within the container */
+}
+
+.user-collection-report-discharged-only {
+  display: flex;
+  align-items: center; /* Vertically centers the checkbox and label */
+  gap: 10px; /* Adjust gap as needed */
+}
+
+.user-collection-report-discharged-only input[type="checkbox"] {
+  margin: 0; /* Removes default margin */
+}
+
+.user-collection-report-discharged-only label {
+  margin: 0; /* Removes default margin */
+  font-size: 14px;
+}
+
+
+.user-collection-report-gender-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between the label and the checkbox options */
+}
+
+.user-collection-report-gender-filter label {
+  font-size: 16px; /* Adjust font size as needed */
+}
+
+.gender-options {
+  display: flex;
+  gap: 15px; /* Space between checkboxes */
+  align-items: center;
+}
+
+.gender-options label {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Space between checkbox and text */
+}
+
+.gender-options input[type="checkbox"] {
+  margin: 0; /* Remove default margin */
+}
+/*  */
+
+
+.user-collection-report-counter {
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap onto multiple lines if they don't fit */
+  gap: 20px; /* Space between each filter section */
+}
+
+.user-collection-report-counter > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Space between label and select/gender options */
+  flex: 1; /* Ensures all sections take equal width */
+}
+
+.user-collection-report-counter label {
+  font-size: 16px; /* Adjust font size as needed */
+}
+
+.user-collection-report-counter select {
+  padding: 5px;
+  font-size: 16px;
+}
+
+.user-collection-report-gender-filter {
+  display: flex;
+  flex-direction: column;
+}
+
+.gender-options {
+  display: flex;
+  gap: 15px; /* Space between checkboxes */
+  align-items: center;
+}
+
+.gender-options label {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Space between checkbox and text */
+}
+
+.gender-options input[type="checkbox"] {
+  margin: 0; /* Remove default margin */
+}
+
+
+.order-status-checkboxes label {
+  margin-bottom: 8px; /* Adjust spacing as needed */
+  margin-left: 10px;
+}
+
+.order-status-filter {
+  margin-top: 10px; /* Adds a top margin to the filter container */
+}
+
+
+.in-patient-ta{
+  overflow-x: auto; /* Enables horizontal scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+.user-collection-report-doctor-filter{
+  margin-top: 20px;
+}
+
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .user-collection-report-tab, .user-collection-report-tab * {
+    visibility: visible;
+  }
+  .user-collection-report-tab {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+  }
+}
+.credit-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Slightly darker overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.credit-popup-container {
+  background: white;
+  padding: 20px; /* Slightly increased padding for better spacing */
+  width: 70%; /* Reduced width to avoid being too large */
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 12px; /* Slightly rounder corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Darker shadow for contrast */
+  font-size: 14px; /* Slightly increased font size for readability */
+  position: relative; /* For close button positioning */
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px; /* Slightly larger close button */
+  cursor: pointer;
+  position: absolute;
+  top: 5px; /* Closer to the top */
+  right: 10px; /* Closer to the right edge */
+  color: #333; /* Darker color for visibility */
+}
+
+.popup-title {
+  font-size: 18px; /* Larger title for prominence */
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #333; /* Dark color for title */
+}
+
+.patient-info p {
+  margin: 8px 0; /* Increased space between lines */
+  font-size: 14px; /* Slightly larger text for better readability */
+}
+
+.credit-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size: 14px; /* Slightly increased font size for readability */
+}
+
+.credit-table th, .credit-table td {
+  border: 1px solid #ccc;
+  padding: 8px; /* Increased padding for better spacing */
+  text-align: left;
+}
+
+.credit-table th {
+  background: #f1f1f1; /* Slightly darker background for table headers */
+  font-weight: bold;
+}
+
+.summary-box {
+  background: #f9f9f9;
+  padding: 15px; /* Increased padding for comfort */
+  border-radius: 6px;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #333; /* Darker text color for summary */
+}

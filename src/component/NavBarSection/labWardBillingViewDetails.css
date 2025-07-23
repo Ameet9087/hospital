@@ -1,0 +1,109 @@
+.labWardBilling-container {
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 70%;
+    margin: 20px auto;
+    position: relative;
+}
+
+.labWardBilling-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e5e5e5;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.labWardBilling-header h2 {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+}
+
+.close-btn {
+    background-color: red;
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.labWardBilling-patient-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.labWardBilling-no-test {
+    color: #555;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.labWardBilling-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.labWardBilling-table th, 
+.labWardBilling-table td {
+    border: 1px solid #e5e5e5;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.labWardBilling-table th {
+    background-color: #f5f5f5;
+}
+
+.labWardBilling-table input {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.delete-btn, .add-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+
+.delete-btn {
+    background-color: red;
+}
+
+.labWardBilling-request {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.request-btn {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.request-btn:hover {
+    background-color: #45a049;
+}

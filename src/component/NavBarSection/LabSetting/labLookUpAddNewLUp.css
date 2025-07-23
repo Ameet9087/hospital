@@ -1,0 +1,196 @@
+.labLookUpAddNewLUp-container {
+  width: 100%;
+  margin: auto;
+  border: 1px solid #ddd;
+  padding: 14px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.labLookUpAddNewLUp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 16px;
+}
+
+.labLookUpAddNewLUp-header h3 {
+  margin: 0;
+  font-size: var(--heading-font);
+}
+
+.labLookUpAddNewLUp-close-btn {
+  background-color: #E31D2D;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  padding: 1px 8px;
+}
+
+.labLookUpAddNewLUp-form .labLookUpAddNewLUp-labLookUpAddNewLUp-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.labLookUpAddNewLUp-full-width{
+border: 1px solid #e7e8e9;
+padding: 10px;
+display: flex;
+justify-content: left;
+gap: 20px;
+}
+.labLookUpAddNewLUp-full-width:hover{
+
+background-color: #F5F7F9;
+}
+
+.labLookUpAddNewLUp-form-group {
+  /* flex: 1; */
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+  /* text-align: center; */
+  /* align-items: left; */
+  font-size: var(--font-size);
+  /* width: 220px; */
+  /* border: 1px solid red; */
+}
+
+
+
+.labLookUpAddNewLUp-select-components-section {
+  margin-top: 24px;
+  border-top: 1px solid #ddd;
+  padding-top: 16px;
+}
+
+.labLookUpAddNewLUp-select-components-section h4 {
+  margin-bottom: 8px;
+}
+
+.labLookUpAddNewLUp-select-components-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8px;
+}
+
+.labLookUpAddNewLUp-select-components-section table th,
+.labLookUpAddNewLUp-select-components-section table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.labLookUpAddNewLUp-add-component-btn {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  /* margin: 1px; */
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.labLookUpAddNewLUp-add-component-btn:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.labLookUpAddNewLUp-create-new-component {
+  display: block;
+  margin-top: 8px;
+  color: black;
+  font-size: var(--font-size);
+  /* font-weight: bold; */
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.labLookUpAddDataContainer{
+  height: 280px;
+  overflow: auto;
+  margin-bottom: 10px;
+}
+
+.labLookUpAddNewLUp-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  font-size: var(--font-size);
+  gap: 8px;
+  margin-top: 16px;
+  border-top: 1px solid #ddd;
+  /* margin-bottom: 10px; */
+}
+
+.labLookUpAddNewLUp-add-btn {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  /* margin: 1px; */
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.labLookUpAddNewLUp-add-btn:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.labLookUpAddNewLUp-plus-btn {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-top: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  /* margin: 1px; */
+  transition: background-color 0.3s ease;
+  padding: 5px 8px;
+}
+
+.labLookUpAddNewLUp-plus-btn:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.labLookUpAddNewLUp-form-group-1row{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap:30px;
+
+}
+.labLookUpAddNewLUp-form-group-sub{
+  display: flex;
+  justify-content: space-between;
+  /* width: 600px; */
+  /* border: 1px solid red; */
+}
+
+.labLookUpAddNewLUp-AddNew{
+  display: flex;
+  justify-content: center;
+}
+.labLookUpAddNewLUp-AddNew a{
+  
+  color: #0F63AF;
+  font-size: var(--font-size);
+  /* font-weight: bold; */
+  text-decoration: none;
+}

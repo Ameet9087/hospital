@@ -1,0 +1,70 @@
+/* General styles for the form container */
+.addnewaptmtpatient {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Styles for left and right sections */
+.addnewaptmtpatient-left,
+.addnewaptmtpatient-right {
+    width: 48%;
+}
+
+.addnewaptmtpatient-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 20px; /* Adds space between label and input */
+}
+
+/* Adjust label and input alignment */
+.addnewaptmtpatient-group label {
+    width: 30%; /* Adjust width of labels to create space */
+    font-size: var(--font-size);
+}
+
+.addnewaptmtpatient-group input[type="text"],
+.addnewaptmtpatient-group input[type="number"],
+.addnewaptmtpatient-group input[type="date"],
+.addnewaptmtpatient-group input[type="time"],
+.addnewaptmtpatient-group select {
+    width: 65%; /* Adjust input width for consistency */
+    padding: 5px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.addnewaptmtpatient-gender-options,
+.addnewaptmtpatient-age-options {
+    display: flex;
+    gap: 10px;
+}
+
+.addnewaptmtpatient-gender-options label,
+.addnewaptmtpatient-age-options label {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.addnewaptmtpatient-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.addnewaptmtpatient-btn:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+.appointment-error-message{
+    color: red;
+}

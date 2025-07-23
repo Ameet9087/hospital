@@ -1,0 +1,505 @@
+.ServiceList {
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  padding: 4px;
+  font-size: 12px;
+  position: relative;
+}
+.roomtypeaddbtn {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+.ServiceList-title-bar {
+  background-color: var(--upper-bar-bg-color);
+  color: white;
+  padding: 8px;
+  margin-bottom: 4px;
+}
+
+.ServiceList-header {
+  font-size: var(--heading-font-size);
+}
+
+.ServiceList-checkbox-label {
+  font-weight: normal;
+  margin-left: 0px;
+}
+
+.ServiceList-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 900px;
+}
+
+.ServiceList-main-section {
+  display: flex;
+  gap: 4px;
+}
+
+.ServiceList-panel {
+  flex: 1;
+  background: white;
+  border: 1px solid #ccc;
+}
+
+.ServiceList-panel-header {
+  background-color: var(--upper-bar-bg-color);
+  color: white;
+  padding: 4px 8px;
+  font-size: var(--heading-font-size);
+}
+
+.ServiceList-panel-content {
+  padding: 8px;
+}
+
+.ServiceList-form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  gap: 4px;
+  font-size: var(--font-size);
+}
+
+.ServiceList-form-row label {
+  min-width: 140px;
+}
+
+.ServiceList-form-row input,
+.ServiceList-form-row select {
+  padding: var(--input-box-padding);
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 47%;
+}
+
+.ServiceList-input-with-search {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.ServiceList-input-with-search input {
+  padding: var(--input-box-padding);
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.ServiceList-magnifier-btn {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+
+.ServiceList-status-controls {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size);
+}
+
+.ServiceList-radio-group {
+  display: flex;
+  gap: 12px;
+}
+
+.ServiceList-services-section {
+  background: white;
+  border: 1px solid #ccc;
+}
+
+.ServiceList-tab-bar {
+  display: flex;
+  gap: 5px;
+  background: var(--upper-bar-bg-color);
+  padding: 4px;
+}
+.room-add-btn {
+  padding: 4px 12px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  color: white;
+  font-size: var(--font-size);
+  background: var(--button-bg-color);
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.ServiceList-tab {
+  padding: 4px 12px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  color: var(--button-color);
+  font-size: var(--font-size);
+  background: var(--button-hover-bg-color);
+  cursor: pointer;
+}
+
+.ServiceList-tab.active {
+  background: var(--button-color);
+  color: var(--button-hover-bg-color);
+  font-weight: bold;
+}
+
+.services-table {
+  padding: 8px;
+}
+
+.table-actions {
+  margin-bottom: 4px;
+}
+
+.ServiceList-add-btn,
+.ServiceList-del-btn {
+  margin-right: 4px;
+  padding: 2px 8px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+
+.ServiceList-add-btn {
+  background-color: green; /* Add Button Background Color */
+}
+
+.ServiceList-del-btn {
+  background-color: red; /* Delete Button Background Color */
+}
+
+.ServiceList-button-section {
+  margin-top: 20px;
+  display: flex;
+  gap: 1px;
+}
+
+.ServiceList-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+.service-charge-btn {
+  background-color: var(--button-bg-color); /* Green */
+  color: var(--button-color);
+}
+
+.auto-service-charge-btn {
+  background-color: var(--button-bg-color); /* Blue */
+  color: var(--button-color);
+}
+
+.ServiceList-btn:hover {
+  background-color: var(--button-hover-bg-color);
+  color: var(--button-hover-text-color);
+}
+
+.ServiceList-action-buttons {
+  position: fixed; /* Fixed positioning to stay on the right side */
+  right: 20px;
+  top: 100px;
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  gap: 10px; /* Space between buttons */
+  z-index: 1000;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+.ServiceList-action-buttons button {
+  padding: 10px 15px;
+  font-size: var(--font-size);
+  font-weight: bold;
+  background-color: var(--button-bg-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.ServiceList-action-buttons button:hover {
+  background-color: var(--button-hover-bg-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+  transform: translateY(-2px);
+}
+.ServiceList-table-container {
+  width: 100%;
+  max-height: 60vh;
+  overflow-x: auto; /* Allow horizontal scrolling */
+  overflow-y: auto; /* Allow vertical scrolling */
+  scrollbar-width: none;
+}
+
+.ServiceList-table {
+  width: 100%;
+  background-color: #f2f2f2; /* Light grey background */
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.ServiceList-thead {
+  background-color: #4caf50; /* Green header */
+  z-index: 15;
+  position: sticky;
+  top: -0.5px;
+}
+
+.ServiceList-table th,
+.ServiceList-table td {
+  background-color: #f2f2f2; /* Light grey for table cells */
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+  font-size: var(--font-size);
+  white-space: nowrap; /* Prevent wrapping */
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.ServiceList-table th {
+  background-color: var(
+    --upper-bar-bg-color
+  ); /* Green background for table headers */
+  color: white; /* White text on header */
+  font-weight: bold;
+}
+
+.ServiceList-table th .ServiceList-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-overflow: ellipsis;
+}
+
+.ServiceList-table th:last-child,
+.ServiceList-table td:last-child {
+  width: 250px;
+  text-align: center;
+}
+
+.ServiceList-table td {
+  color: #333; /* Darker text color for content */
+}
+
+.ServiceList-table td:last-child {
+  color: #333; /* Darker text color for content */
+  /* Green text for last column */
+}
+
+/* Resizable Columns */
+.ServiceList-resizable-th {
+  position: relative;
+}
+
+.ServiceList-resizer {
+  width: 5px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: col-resize;
+  z-index: 1;
+}
+
+.ServiceList-table th .ServiceList-resizer:hover {
+  background-color: #aaa; /* Light gray resizer on hover */
+}
+
+/* Action Buttons */
+.ServiceList-action-buttons button {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ServiceList-add-btn {
+  background-color: var(--button-bg-color); /* Green for Add buttons */
+  color: white;
+}
+
+.ServiceList-delete-btn {
+  background-color: #f44336; /* Red for Delete buttons */
+  color: white;
+}
+
+.ServiceList-room-add-btn {
+  background-color: #2196f3; /* Blue for Add buttons */
+  color: white;
+}
+
+.ServiceList-ServiceList-del-btn {
+  background-color: #ff9800; /* Orange for Delete buttons */
+  color: white;
+}
+
+/* Other button styles */
+.ServiceList-btn {
+  padding: 10px 15px;
+  margin: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.ServiceList-service-charge-btn {
+  background-color: var(--button-bg-color); /* Green */
+  color: white;
+}
+
+.ServiceList-auto-service-charge-btn {
+  background-color: var(--button-color); /* Orange */
+  color: white;
+}
+
+.ServiceList-btn:hover {
+  opacity: 0.8; /* Hover effect for buttons */
+}
+
+/* Modal Styles */
+.ServiceList-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.ServiceList-modal {
+  background-color: var(--background-color);
+  padding: 20px;
+  width: 50%;
+  max-width: 770px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.ServiceList-modal h4 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.ServiceList-modal .ServiceList-modal-search-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.ServiceList-modal .ServiceList-modal-search-container label {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.ServiceList-modal-search-container {
+  display: flex;
+  align-items: center; /* Aligns items vertically */
+  gap: 10px; /* Adds spacing between the input and select elements */
+}
+
+.ServiceList-modal-search-container input[type="text"],
+.ServiceList-modal-search-container select {
+  width: 500px; /* Sets width for both elements */
+  padding: 3px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+.ServiceList-modal .ServiceList-modal-search-container input[type="button"] {
+  padding: 3px 15px;
+  font-size: 1rem;
+  background-color: #007973;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 200px;
+}
+
+.ServiceList-modal
+  .ServiceList-modal-search-container
+  input[type="button"]:hover {
+  background-color: #004d40;
+}
+
+.ServiceList-modal .ServiceList-modal-results {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.ServiceList-modal .ServiceList-modal-results ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ServiceList-modal .ServiceList-modal-results li {
+  padding: 2px;
+  font-size: 14px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ServiceList-modal .ServiceList-modal-results li:hover {
+  background-color: #e0f7fa;
+}
+
+.ServiceList-modal .ServiceList-modal-pagination {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.ServiceList-modal .ServiceList-modal-pagination span {
+  color: #007973;
+}
+
+.ServiceList-modal .ServiceList-modal-pagination button {
+  padding: 5px 10px;
+  background-color: #007973;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ServiceList-modal .ServiceList-modal-pagination button:hover {
+  background-color: #004d40;
+}
+
+.ServiceList-modal .ServiceList-modal-close-btn {
+  padding: 5px 15px;
+  background-color: #007973;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.ServiceList-modal .ServiceList-modal-close-btn:hover {
+  background-color: #004d40;
+}

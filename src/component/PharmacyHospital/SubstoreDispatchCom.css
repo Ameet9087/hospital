@@ -1,0 +1,147 @@
+/* Mohini_StoreDetailsListCom_WholePage_14/sep/2024 */
+.sub-store-purchase-order-container {
+    background-color: #e0f7fa;
+    padding: 20px;
+}
+
+.sub-store-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: #b3e5fc; */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sub-store-add-purchase-order-button {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sub-store-status-filters {
+    display: flex;
+    align-items: center;
+}
+
+.sub-store-status-filters label {
+    margin-right: 10px;
+}
+
+.sub-store-filters {
+    display: flex;
+    align-items: center;
+}
+
+.sub-store-date-range {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.sub-store-date-range label {
+    margin: 0 5px;
+}
+
+.sub-store-date-range input {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.sub-store-date-range-button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sub-store-search-box {
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.sub-store-supplier-filter,
+.sub-store-aging-filter {
+    margin-right: 20px;
+}
+
+.sub-store-show-details-button {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sub-store-table-container {
+    margin-top: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sub-store-dispatch {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.sub-store-dispatch thead th {
+    /* background-color: #ffcc80; */
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.sub-store-dispatch tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.sub-store-no-rows {
+    text-align: center;
+    background-color: #fff3e0;
+    color:black;
+    font-weight: bold;
+}
+
+.sub-store-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sub-store-pagination button {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sub-dis-print-button {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}
+
+/* .purchase-order-add-purchase-order-button{
+    margin-right: 10px;
+} */
+/* Mohini_StoreDetailsListCom_WholePage_14/sep/2024 */

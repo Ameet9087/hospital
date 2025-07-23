@@ -1,0 +1,195 @@
+/* Style for the stock-filters container */
+
+/* Swapnil ROkade adding className And Applying colors 14/09 */
+.stock-filters {
+   display: flex;
+   gap: 10px;
+   align-items: center;
+   padding: 5px 0px;
+}
+.stock-filters label{
+    width: 19%;
+}
+.stock-filters select{
+    width: 20%;
+}
+
+/* Style for each label within stock-filters */
+/* Style for select element inside stock-filters */
+/* .stock-filters select {
+    width: 30%;
+    max-width: 200px;
+} */
+.Stock-search-input-container
+{
+    width: 20%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+/* .Stock-search-input
+{
+    padding: 5px;
+} */
+
+/* Style for checkboxes */
+.stock-filters input[type="checkbox"] { 
+    height: 15px; /* Set the height of the checkbox */
+    width: 15px;  /* Set the width of the checkbox for consistent size */
+}
+
+
+/* Style for the stock-legends container */
+.stock-legends {
+    display: flex; /* Use flexbox to align items in a row */
+    align-items: center; /* Vertically center align items */
+    gap: 20px; /* Space between legend items */
+    margin-top: 20px;
+    color: #333; /* Color for the legend text */
+}
+
+/* Style for the individual legend items */
+.stock-legends .stock-zero-quantity {
+    color: black; /* Color for zero quantity legend */
+}
+
+.stock-legends .stock-below-min-stock {
+    color: #b6a3a3; /* Color for below min stock legend */
+}
+
+/* Additional Styles */
+.stock-stock-list {
+    width: 100%;
+    height: 75vh;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+}
+
+.stock-stock-table {
+    width: 100%;
+    height: 40%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.stock-stock-table th,
+.stock-stock-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.stock-stock-table th {
+    background-color: #f2f2f2;
+    color: black;
+    font-size: var(--heading-font);
+    position: sticky;
+    top: 0;
+}
+
+.stock-view-button,
+.stock-manage-button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    white-space: nowrap;
+}
+.stock-manage-button:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.stock-pagination {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.stock-pagination button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    background-color:var(--button-color);
+    color: #fff;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+
+.stock-search-export {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.stock-search-export > div {
+    display: flex;
+    align-items: center;
+}
+
+ .stock-export {
+    padding: 2px 10px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    background-color: var(--button-color);
+    color: white;
+}
+.stock-export:hover
+{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+.stock-print
+{
+    padding: 2px 10px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    background-color: var(--button-color);
+    color: white;
+}
+.stock-button-list 
+{
+    width: 50%;
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+    align-items: center;
+}
+
+.stock-button-list span {
+    font-size: var(--font-size); /* Font size for the result count */
+    color: black;
+}
+.stock-legends {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 250px;
+}
+
+.stock-legends .stock-zero-quantity {
+    color: red;
+    /* font-weight: bold; */
+}
+
+.stock-legends .stock-below-min-stock {
+    color: #b6a3a3;
+    /* font-weight: bold; */
+}
+/*  */
+

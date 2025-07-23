@@ -1,0 +1,113 @@
+.StockManage-container {
+    background-color: var(--background-color);
+    height: 90vh;
+    padding: 10px;
+    /* border-radius: 10px; */
+    /* width: 100%; */
+    /* margin: auto; */
+  }
+  .StockManage-input
+  {
+    width: 100%;
+  }
+  .StockManage-title {
+    font-size: var(--heading-font);
+    margin-left: 10px;
+    margin-bottom: 10px;
+    /* font-weight: bold; */
+  }
+  
+  .StockManage-item-name {
+    font-size: var(--heading-font);
+    margin-left: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .StockManage-table {
+    /* width: 100%; */
+    margin-left: 10px;
+    border-collapse: collapse;
+  }
+  
+  .StockManage-table th, .StockManage-table td {
+    border: 1px solid #ccc;
+    background-color: #f2f2f2f2;
+
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .StockManage-table th {
+    background-color: #f2f2f2f2;
+  }
+  
+  .StockManage-totals {
+    margin-top: 20px;
+  }
+  
+  .StockManage-totals div {
+    margin-bottom: 10px;
+  }
+  
+  .StockManage-totals label {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  .StockManage-totals input {
+    width: 50px;
+    text-align: right;
+  }
+  
+  .StockManage-buttons {
+    display: flex;           /* Enable flexbox layout */
+    justify-content: flex-end; /* Align buttons to the right side */
+    margin-top: 20px; 
+    margin-right: 10px;       /* Add margin to the top of the container */
+  }
+  
+  .StockManage-update-button,.StockManage-back-button {
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 10px;
+    margin-left: 10px;       /* Space between buttons */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .StockManage-cancel-button {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;       /* Space between buttons */
+  }
+  
+  .StockManage-update-button:hover { 
+     background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .StockManage-cancel-button:hover {
+    background-color: #c82333;
+  }
+  
+  /*  */
+  .StockManage-totals {
+    display: flex;           /* Enable flexbox layout */
+    flex-direction: column;  /* Stack items vertically */
+    align-items: flex-end;   /* Align items to the right side */
+    gap: 10px;    
+    margin-right: 10px;           /* Adjust gap between the divs if necessary */
+  }
+  
+  .StockManage-item {
+    display: flex;           /* Enable flexbox layout within items */
+    align-items: center;    /* Center align label and input vertically */
+    gap: 10px;              /* Adjust spacing between label and input */
+  }
+  

@@ -1,0 +1,325 @@
+/* Modal Overlay */
+.ItemList-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ItemList-item-list-container
+{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.ItemList-results-info
+{
+  display: flex;
+  gap: 5px;
+}
+
+/* Modal Container */
+.ItemList-aadddContainer {
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Close Button */
+.ItemList-aadddCloseButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #dc3545;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ItemList-aadddCloseButton:hover {
+  background: #c82333;
+}
+
+/* Heading */
+.ItemList-aadddHeading {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+}
+
+.ItemList-aadddInput {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ItemList-aadddInput.select {
+  background-color: #fff;
+}
+
+.ItemList-aadddInputWrapper {
+  position: relative;
+}
+
+.ItemList-aadddQuestionMark {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #333;
+}
+
+.ItemList-aadddError {
+  color: red;
+  font-size: 12px;
+}
+
+/* Form Container */
+.ItemList-aadddFormContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Form Columns */
+.ItemList-aadddColumn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.ItemList-aadddColumn-part {
+  width: 47%;
+}
+.ItemList-aadddSelect {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ItemList-aadddSelect-span {
+  width: 10%;
+  padding: 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: blue;
+  color: white;
+  border-radius: 5px;
+}
+/* Form Row */
+.ItemList-aadddFormRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Form Label */
+.ItemList-aadddLabel {
+  flex: 0 0 30%; /* Fixed width of 30% */
+  color: #333;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* Input and Textarea */
+.ItemList-aadddInput,
+.ItemList-aadddTextarea {
+  flex: 1 1 60%; /* Flex to take remaining space, but default width to 60% */
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.ItemList-aadddTextarea {
+  resize: none;
+  height: 60px;
+}
+
+/* Colon (Optional) */
+.ItemList-aadddColon {
+  margin-right: 10px;
+  flex: 0 0 10%; /* Adjust or remove if unnecessary */
+}
+
+/* Required Field Indicator */
+.ItemList-aadddRequired {
+  color: #dc3545;
+}
+
+/* Submit Button */
+.ItemList-aadddAddButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.ItemList-aadddAddButton:hover {
+  background-color: #218838;
+}
+
+/* Error Message */
+.ItemList-aadddError {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Responsive Styles */
+
+/* Tablets */
+@media (max-width: 768px) {
+  .ItemList-aadddFormContainer {
+    flex-direction: column;
+  }
+
+  .ItemList-aadddColumn {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+  .ItemList-aadddHeading {
+    font-size: 20px;
+  }
+
+  .ItemList-aadddFormRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ItemList-aadddLabel {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .ItemList-aadddInput,
+  .ItemList-aadddTextarea {
+    width: 100%;
+  }
+
+  .ItemList-aadddAddButton {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+  }
+
+  .ItemList-aadddCloseButton {
+    top: 5px;
+    right: 5px;
+    width: 25px;
+    height: 25px;
+    font-size: 20px;
+  }
+}
+.ItemList-header
+{
+  width: 100%;
+  display:flex ;
+  align-items:start ;
+  flex-direction: column;
+  gap: 5px;
+}
+.ItemList-sub-div
+{
+  width: 100%;
+  display:flex ;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Question Mark */
+.ItemList-aadddInputWrapper {
+  position: relative;
+}
+
+.ItemList-aadddInput.withQuestionMark {
+  padding-right: 30px; /* Space for the question mark */
+}
+
+.ItemList-aadddQuestionMark {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background-color: #444;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 16px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.ItemList-Modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  outline: none;
+}
+
+.ItemList-Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.ItemList-close-modal-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.ItemList-Emergencyedit-button,.ItemList-Emergencyprint-button,.ItemList-export-button,.ItemList-add-button {
+  padding: 5px 10px;
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  color: white;
+}

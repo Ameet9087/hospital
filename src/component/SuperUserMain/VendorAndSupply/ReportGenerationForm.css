@@ -1,0 +1,122 @@
+.report-generation-form-com {
+  margin: 0 auto; /* Center the form on the page */
+  padding: 20px;
+  border-radius: 8px; /* Optional: Rounded corners */
+  background-color: var(--background-color);
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.report-generation-form-header {
+  text-align: left; /* Center the header */
+  margin-bottom: 20px;
+  font-size: var(--heading-font);
+}
+
+.report-generation-form-first-half,
+.report-generation-form-second-half,
+.report-generation-form-third-half {
+  display: flex; /* Enable flexbox layout */
+  justify-content: space-between; /* Space out the elements */
+  margin-bottom: 15px; /* Space between sections */
+}
+
+.report-generation-form-group {
+  flex: 1; /* Equal space for each group */
+  display: flex; /* Flex for horizontal alignment */
+  align-items: center; /* Align items vertically center */
+  margin-right: 10px; /* Space between groups */
+}
+
+.report-generation-form-group:last-child {
+  margin-right: 0; /* Remove margin for the last group */
+}
+
+.report-generation-form-input,
+.report-generation-form-group select {
+  padding: 5px; /* Padding for better aesthetics */
+  border: 1px solid #ccc; /* Border for inputs and select */
+  border-radius: 5px; /* Rounded corners for inputs and select */
+  font-size: var(--font-size);
+  background-color: #fff; /* Background color for inputs and select */
+  appearance: none; /* Remove default styles (for cross-browser compatibility) */
+  margin-left: 20px; /* Gap between label and input/select */
+}
+
+.report-generation-form-group label {
+  margin-bottom: 0; /* Remove bottom margin for labels */
+  white-space: nowrap; /* Prevent label text wrapping */
+}
+
+.report-generation-form-button {
+  display: flex; /* Flex for the button container */
+  justify-content: flex-end; /* Align button to the right */
+}
+
+.report-generation-form-submit-btn {
+  padding: 5px 5px; /* Padding for the button */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  background-color: var(--button-color); /* Button color */
+  color: white; /* Text color */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.report-generation-form-submit-btn:hover {
+  background-color: white; /* Change background on hover */
+  color: var(--button-color); /* Change text color on hover */
+}
+
+.report-generation-form-input-form {
+  width: 20%;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .report-generation-form-input-form {
+    width: 30%; /* Adjust width for larger screens */
+  }
+}
+
+@media (max-width: 992px) {
+  .report-generation-form-first-half,
+  .report-generation-form-second-half,
+  .report-generation-form-third-half {
+    flex-direction: column; /* Stack sections vertically */
+  }
+
+  .report-generation-form-group {
+    margin-right: 0; /* Remove margin between groups */
+    margin-bottom: 10px; /* Add space below each group */
+  }
+
+  .report-generation-form-input-form {
+    width: 100%; /* Full width for input form */
+  }
+}
+
+@media (max-width: 768px) {
+  .report-generation-form-header {
+    font-size: 1.5rem; /* Adjust header font size */
+  }
+
+  .report-generation-form-input,
+  .report-generation-form-group select {
+    padding: 8px; /* Increase padding for better touch targets */
+    font-size: 0.9rem; /* Decrease font size */
+  }
+
+  .report-generation-form-submit-btn {
+    padding: 10px; /* Increase padding for better touch target */
+  }
+}
+
+@media (max-width: 576px) {
+  .report-generation-form-header {
+    font-size: 1.2rem; /* Further adjust header font size */
+  }
+
+  .report-generation-form-input-form {
+    width: 100%; /* Full width for small screens */
+  }
+}

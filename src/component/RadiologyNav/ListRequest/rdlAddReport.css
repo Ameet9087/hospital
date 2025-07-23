@@ -1,0 +1,194 @@
+.rDLListRequest-add-report-form {
+  width: 1000px;
+  height: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  overflow-y: scroll;
+}
+
+.rdlAddReport-prescrider-name {
+  display: flex;
+  align-items: center;
+}
+
+.rDLListRequest-add-report-form h2 {
+  color: black;
+  font-size: var(--heading-font);
+  padding: 10px;
+  margin: -20px -20px 20px -20px;
+}
+
+.rDLListRequest-add-report-info-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.rDLListRequest-add-report-info-row span {
+  flex: 1;
+}
+
+.rDLListRequest-add-report-info-row input[type="text"] {
+  width: 100%;
+  padding: var(--input-box-padding);
+}
+
+.rDLListRequest-add-report-link {
+  color: #0066cc;
+  text-decoration: none;
+  font-size: var(--font-size);
+}
+
+.rDLListRequest-add-report-text-editor {
+  margin-top: 20px;
+}
+
+
+.rDLListRequest-add-report-toolbar {
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.rDLListRequest-add-report-textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+.rDLListRequest-add-report-signature-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.rDLListRequest-add-report-signature-box {
+  /* flex: 1; */
+  padding: 10px;
+  margin: 0 5px;
+  text-align: center;
+}
+
+.rDLListRequest-add-report-signature-box.active {
+  background-color: #e6f3ff;
+}
+
+.rDLListRequest-add-report-form-actions {
+  margin-top: 20px;
+}
+
+.rDLListRequest-add-report-select-signatories,
+.rDLListRequest-add-report-upload-images {
+  margin-bottom: 10px;
+}
+
+.rDLListRequest-add-report select,
+.rDLListRequest-add-report-file-upload-btn {
+  padding: var(--input-box-padding);
+  margin-left: 10px;
+}
+
+.rDLListRequest-add-report-file-upload-btn {
+  background-color: var(--button-bg-color);
+  border: 1px solid #ccc;
+  cursor: pointer;
+  color: white;
+}
+
+.rDLListRequest-add-report-save-btn,
+.rDLListRequest-add-report-submit-print-btn {
+  padding: var(--input-box-padding);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  margin: 5px;
+  background-color: var(--button-bg-color);
+}
+.rDLListRequest-add-report-print-btn{
+  padding: var(--input-box-padding);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  margin: 5px;
+  background-color: var(--button-bg-color);
+}
+
+.rDLListRequest-add-report-print-btn:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+.rDLListRequest-add-report-save-btn:hover,
+.rDLListRequest-add-report-submit-print-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.rDLListRequest-add-report-cancel-btn {
+  padding: var(--input-box-padding);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  margin: 5px;
+  background-color: red;
+}
+
+.rDLListRequest-add-report-cancel-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: red;
+  border: 1px solid red;
+}
+
+.rDLListRequest-add-report-image-preview {
+  margin-top: 10px;
+}
+
+.rDLListRequest-form-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.rDLListRequest-form-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rDLListRequest-form-field label {
+  flex: 0 0 150px;
+  margin-right: 10px;
+  text-align: right;
+}
+
+.rDLListRequest-form-field input {
+  flex: 1;
+  padding: var(--input-box-padding);
+  border: 1px solid #ccc;
+}
+
+.rDLListRequest-add-report-details {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.rDLListRequest-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.rDLListRequest-form-field span {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+.rDLListRequest-add-report-footer{
+  
+}

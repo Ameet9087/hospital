@@ -1,0 +1,35 @@
+.AppointmentRescheduleContainer
+{
+    width: 450px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.Appointment-Reschedule-Sub
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.Appointment-Reschedule-btn
+{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Appointment-Reschedule-dropdown
+{
+    width: 100%;
+    padding: 5px;
+}
+.Appointment-Reschedule-button
+{
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--button-color);
+    background-color: var(--button-color);
+    color:  white;
+}

@@ -1,0 +1,281 @@
+.bank-reconciliation {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .bank-reconciliation__nav {
+    position: relative;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  
+  .bank-reconciliation__nav ul {
+    display: flex;
+    color: black;
+    font-size: 14px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .bank-reconciliation__nav ul li {
+    position: relative;
+    color: black;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .bank-reconciliation__nav ul li a {
+    text-decoration: none;
+    color: black;
+  }
+  
+  .bank-reconciliation__nav ul li .active {
+    color: black;
+  }
+  
+  .bank-reconciliation__form {
+    /* background-color: white; */
+    padding: 20px;
+    white-space: nowrap;
+    border-radius: 5px;
+    /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
+  }
+  
+  .bank-reconciliation__row {
+    display: flex;
+    font-size: 14px;
+    /* justify-content: space-between; */
+    margin-bottom: 20px;
+  }
+  
+  .bank-reconciliation__field {
+    display: flex;
+    /* align-items: center; */
+    /* flex-direction: column; */
+    margin-right: 10px;
+  }
+  .bank-reconciliation__field label{
+    margin-right: 10px;
+    font-size: 14px;
+  }
+  .bank-reconciliation__field input[type="date"]{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    /* width: 100%; */
+    font-size: 14px;
+  }
+  .bank-reconciliation__field select{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    /* width: 100%; */
+    font-size: 14px;
+  }
+  
+  .bank-reconciliation__field input[type="text"]{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 100%;
+    font-size: 14px;
+  }
+  .bank-reconciliation__field input[type="number"]{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 100%;
+    font-size: var(--font-size);
+  }
+  .bank-reconciliation-star-btn{
+    background-color: transparent;
+    color: var(--button-color);
+    font-size: var(--heading-font);
+    border: none;
+  }
+  
+  .bank-reconciliation__date-range,
+  .bank-reconciliation__status {
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size);
+  }
+  
+  .bank-reconciliation__show-btn,
+  .bank-reconciliation__reconcile-btn,
+  .bank-reconciliation__cancel-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .bank-reconciliation__show-btn,
+  .bank-reconciliation__reconcile-btn {
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  .bank-reconciliation__show-btn:hover,
+  .bank-reconciliation__reconcile-btn:hover {
+    color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .bank-reconciliation__cancel-btn {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .bank-reconciliation__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #FFFFFF;
+  }
+  
+  .bank-reconciliation__table th,
+  .bank-reconciliation__table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 14px;
+    text-align: left;
+  }
+  .bank-reconciliation__table select{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 100%;
+    font-size: 14px;
+    -webkit-appearance: none;
+  }
+  .bank-reconciliation__table  input{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 100%;
+    font-size: 14px;
+  }
+  
+  .bank-reconciliation__add-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .bank-reconciliation__add-btn:hover {
+    color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .bank-reconciliation__narration {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
+  
+  
+  .bank-reconciliation__totals {
+    /* text-align: right; */
+    width: 20%;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #fafafa;
+  }
+  .bank-reconciliation__totals p:first-child {
+    color: green;
+  }
+  .bank-reconciliation__totals p:nth-child(2) {
+    color: red;
+  }
+  
+  .bank-reconciliation__actions {
+    display: flex;
+    /* justify-content: flex-end; */
+  }
+  
+  .bank-reconciliation__actions button {
+    margin-left: 10px;
+  }
+
+
+
+  .bank-reconciliation__nav .underline {
+    position: absolute;
+    bottom: 0;
+    height: 4px;
+    background-color: var(--button-bg-color);
+    transition: left 0.3s ease, width 0.3s ease;
+  }
+  .bank-reconciliation__nav ul li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 4px;
+    background-color: var(--button-bg-color);
+    transform: scaleX(1); /* Expands the underline width */
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .bank-reconciliation__nav ul li::after {
+    content: "";
+    position: absolute;
+    bottom: 0; /* Position the underline at the bottom of the list item */
+    left: 0; /* Start from the left */
+    height: 4px; /* Thickness of the underline */
+    width: 0; /* Initially, the underline is collapsed */
+    background-color: var(--button-bg-color); /* Color of the underline */
+    transition: width 0.3s ease-in-out; /* Smooth transition for width */
+  }
+  
+  .bank-reconciliation__nav ul li:hover::after {
+    width: 100%; /* Expand the underline to full width on hover */
+  }
+
+
+  .bank-suspensereconciliation__field {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+  }
+
+  .bank-suspensereconciliation__field label{
+    margin-right: 10px;
+    font-size: 14px;
+  }
+  .bank-suspensereconciliation__field input[type="date"]{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    /* width: 100%; */
+    font-size: 14px;
+  }
+  .bank-suspensereconciliation__field select{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    /* width: 100%; */
+    font-size: 14px;
+  }
+  
+  .bank-suspensereconciliation__field input[type="text"]{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 100%;
+    font-size: 14px;
+  }
+  .bank-suspensereconciliation__field input[type="number"]{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 100%;
+    font-size: 14px;
+  }

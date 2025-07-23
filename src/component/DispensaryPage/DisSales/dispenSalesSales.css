@@ -1,0 +1,404 @@
+.dispenSalesSales-sales-container {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    padding: 10px;
+    height: 90vh;
+    overflow-y: scroll;
+
+  }
+  
+  .dispenSalesSales-header .dispenSalesSales-tabs {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    font-size: 16px;
+    background-color: #FAFAFA;
+  }
+ 
+  
+  .dispenSalesSales-tab {
+    padding: 5px 20px;
+    cursor: pointer;
+    /* border-right: 1px solid #ccc; */
+  }
+  
+  .dispenSalesSales-tab-active {
+    /* background-color: #007bff; */
+    border-bottom:5px solid  var(--sideBar-bg-color);
+    color: black;
+    font-weight: bold;
+  }
+  .dispenSalesSales-invoice-summary{
+    background-color:white;
+    margin-bottom: 20px;
+    width: 100%;
+
+  }
+  
+  .dispenSalesSales-patient-info {
+    margin-bottom: 20px;
+  }
+  .dispenSalesSales-hospital-info{
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* align-items: center; */
+    background-color: #F3F0F0;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .dispenSalesSales-hospital-info-subDiv{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  .dispenSalesSales-hospital-info-subDiv div{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+    gap: 10px;
+  }
+  .dispenSalesSales-hospital-info select{
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    /* border: 1px solid #e40f0f; */
+    /* flex-grow: 1; */
+    width: 200px;
+  }
+  /* .dispenSalesSales-hospital-info-subDiv div option{
+    width: 10px;
+    font-size: 14px;
+  } */
+
+  
+  .dispenSalesSales-medicine-info {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 14px;
+    color: gray;
+  }
+  .dispenSalesSales-Expiry input{
+width: 30px;
+  }
+  .dispenSalesSales-Batch input{
+    width: 30px;
+  }
+  .dispenSalesSales-Avl-Qty input{
+    width: 40px;
+  }
+  .dispenSalesSales-Qty input{
+    width: 40px;
+  }
+  .dispenSalesSales-QSalePricety input{
+    width: 40px;
+  }
+  .dispenSalesSales-SubTotal input{
+    width: 40px;
+  }
+  
+  .dispenSalesSales-patient-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: #f0f8ff; */
+    /* padding: 10px; */
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  .dispenSalesSales-patient-info label{
+    margin-right: 10px;
+    font-size: 14px;
+
+  }
+  
+  /* .dispenSalesSales-hospital-info div{
+    font-weight: bold;
+    margin-right: 10px;
+    display: flex;
+    justify-content: space-between; 
+  } */
+  
+  .dispenSalesSales-medicine-info label {
+    margin-right: 10px;
+    font-size: 14px;
+  }
+  
+  .dispenSalesSales-patient-info input,
+  .dispenSalesSales-hospital-info input,
+  .dispenSalesSales-medicine-info input,
+  .dispenSalesSales-medicine-info select {
+    padding: 2px;
+    border-radius: 3px;
+    border: 1px solid gray;
+    font-size: 14px;
+  }
+  .dispenSalesSales-patient-dropdown {
+    padding: 3px;
+  }
+
+  
+  .dispenSalesSales-add-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    margin-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .dispenSalesSales-add-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+
+  }
+  
+  .dispenSalesSales-invoice-summary table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .dispenSalesSales-invoice-summary th,
+  .dispenSalesSales-invoice-summary td {
+    padding: 5px;
+    /* border: 1px solid #ccc; */
+    text-align: center;
+    background-color: #EEEEEE;
+    font-size: 16px;
+    color: black;
+  }
+  
+  .dispenSalesSales-payment-section {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    /* border: 1px solid green; */
+    width: 23%;
+    font-size: 14px;
+    color: gray;
+  }
+  
+ 
+  .dispenSalesSales-payment-actions {
+    /* flex-grow: 1; */
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 10px;
+  }
+ .dispenSalesSales-payment-summary{
+   flex-grow: 1;
+   /* padding: 10px; */
+   width: 100%;
+  }
+  
+  .dispenSalesSales-payment-summary-subDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  /* .dispenSalesSales-payment-summary-subDiv input{
+    width: 120px;
+  } */
+  
+  
+  .dispenSalesSales-print-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    margin-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+    transition: background-color 0.3s ease;
+    padding: var(--input-box-padding);
+  }
+  .dispenSalesSales-print-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+
+  }
+  .dispenSalesSales-discard-button {
+    background-color: red;
+    border: 1px solid red;
+    color: #fff;
+    padding: var(--input-box-padding);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .dispenSalesSales-discard-button:hover{
+    background-color: white;
+    color:red;
+  }
+  .dispenSalesSales-remove-button {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .dispenSalesSales-history-section {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: flex-start;
+    margin-bottom: 20px;
+    /* width: 30%; */
+    /* border: 1px solid red; */
+  }
+  
+  .dispenSalesSales-invoice-history,
+  .dispenSalesSales-credit-limits {
+    margin-right: 15px;
+    /* border: 1px solid red; */
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+    width: 15%;
+    font-size: 14px;
+  }
+  
+  .dispenSalesSales-invoice-history h4,
+  .dispenSalesSales-credit-limits h4 {
+    margin-bottom: 10px;
+    /* font-weight: bold; */
+    font-size: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid gray;
+  }
+  .dispenSalesSales-invoice-history div,
+  .dispenSalesSales-credit-limits div{
+    padding: 5px;
+
+  } 
+  /* .dispenSalesSales-register-patient{
+  } */
+   .dispenSalesSales-doctor-info input{
+margin-left: 10px;
+   }
+  .dispenSalesSales-register-patient span {
+    padding-right: 10px;
+    color: #007bff;
+    font-size: 14px;
+  }
+  .dispenSalesSales-medicineInfo-N-paymentSection{
+    display: flex;
+    justify-content: space-between;
+    /* border: 1px solid red; */
+    /* width: 30px; */
+  }
+  .dispenSalesSales-medicineInfo-N-invoiceSummary{
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+  }
+
+.salesStockDetails-popup-overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80%;
+  /* height: 200px; */
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  z-index: 1000;
+}
+ 
+
+.suggestions-dropdown {
+   position: absolute; 
+  background-color: white;
+  border: 1px solid #ccc;
+  list-style: none;
+  margin: 5px;
+  padding: 0;
+  width: 100%; /* Matches the input width */
+  z-index: 1000; /* Ensures it appears above other elements */
+  max-height: 200px; /* Limits the height if there are many suggestions */
+  overflow-y: auto; /* Adds a scroll for overflow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+}
+
+.suggestion-item {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+
+
+.dispenSalesSales-dropdown {
+  position: absolute;
+  margin-left: 105px;
+  width: 175px;
+  max-height: 200px; 
+  overflow-y: auto; 
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+.dispenSalesSales-dropdown::-webkit-scrollbar {
+  display: none; 
+}
+
+
+.dispenSalesSales-dropdown-option {
+  padding: 5px 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  color: #333;
+  transition: background 0.2s ease-in-out;
+  border-bottom: 1px solid #eee;
+}
+
+.dispenSalesSales-dropdown-option:last-child {
+  border-bottom: none; 
+}
+
+/* .dispenSalesSales-dropdown-option:hover {
+  background: #f4f4f4;
+} */
+
+@media (max-width: 768px) {
+  .dispenSalesSales-dropdown {
+    max-height: 200px;
+    font-size: 14px;
+  }
+
+  .dispenSalesSales-dropdown-option {
+    padding: 10px;
+  }
+}

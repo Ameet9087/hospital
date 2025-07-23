@@ -1,0 +1,77 @@
+.activeDispensary-btn{
+    background-color: #0056b3;
+    color: white;
+    height: 25px;
+    font-weight: bold;
+    font-size: 14px;
+    border: none;
+  }
+  .dispensary-Navigation-bar {
+      background-color: white;
+      /* padding: 10px; */
+      /* border: 1px solid #007bff; */
+      display: flex;
+      justify-content: space-between;
+      border: 1px solid red;
+  
+    }
+    
+    .dispensary-Navigation-bar ul {
+      list-style-type: none;
+      margin: 0;
+      gap: 15px;
+      padding: 10px 0px 10px 0px;
+      display: flex;
+      justify-content: space-between;
+  
+    }
+
+    .pharmacy-Inventory-div{
+        list-style-type: none;
+        margin: 0;
+        gap: 15px;
+        padding: 10px 0px 10px 0px;
+        display: flex;
+        justify-content: space-between;
+    
+      }
+    .pharmacyAnd-Active{
+       display: flex;
+       justify-content: space-between; 
+        /* border: 1px solid red; */
+      }
+    
+    .dispensary-Navigation-bar li {
+      margin: 0 0px;
+      
+    }
+    
+    .dispensary-Navigation-bar a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 12px;
+      padding: 5px 5px;
+      border-radius: 5px;
+  
+    }
+    
+    .dispensary-Navigation-bar a:hover {
+      background-color: #0056b3;
+      color: white;
+      border: 1px solid gray;
+  
+      
+    }
+    
+    .dispensary-Navigation-bar .active {
+      background-color: #0056b3;
+      color: white;
+  
+    }
+    .active-Store-div{
+        display: flex;
+        align-items: center;
+        /* justify-content: space-between; */
+    }
+    

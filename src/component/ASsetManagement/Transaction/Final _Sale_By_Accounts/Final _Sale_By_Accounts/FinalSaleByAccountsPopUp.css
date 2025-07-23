@@ -1,0 +1,133 @@
+.FinalSaleByAccountsPopUp-container {
+    width: 100%;
+    font-family: Arial, sans-serif;
+  }
+  
+  .FinalSaleByAccountsPopUp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 16px;
+  }
+  
+  .FinalSaleByAccountsPopUp-header h4 {
+    font-size: var(--heading-font);
+    margin: 0;
+  }
+  
+  .FinalSaleByAccountsPopUp-close-btn {
+    background-color: #E52F3E;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  
+  .FinalSaleByAccountsPopUp-form .FinalSaleByAccountsPopUp-FinalSaleByAccountsPopUp-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .FinalSaleByAccountsPopUp-form-group {
+    /* flex: 1; */
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-size: var(--font-size);
+    width: 400px;
+    padding: 5px;
+    /* border: 1px solid red; */
+  }
+  
+  .FinalSaleByAccountsPopUp-form-group label {
+    display: block;
+    margin-bottom: 4px;
+    /* font-weight: bold; */
+    width: 75%;
+  }
+  .FinalSaleByAccountsPopUp-form-group-checkbox{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    white-space: nowrap;
+  }
+  
+  .FinalSaleByAccountsPopUp-form-group input,
+  .FinalSaleByAccountsPopUp-form-group select,
+  .FinalSaleByAccountsPopUp-form-group textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.FinalSaleByAccountsPopUp-form-group-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.FinalSaleByAccountsPopUp-form-group-options label {
+  margin-right: 20px;
+  font-size: var(--font-size);
+  display: flex;
+  align-items: center;
+}
+
+.FinalSaleByAccountsPopUp-form-group-options input {
+  margin-right: 5px;
+}
+
+  .FinalSaleByAccountsPopUp-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    font-size: var(--font-size);
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .EquipmentGetPassOut-tab-bar {
+    display: flex;
+    gap: 5px;
+    padding: 4px ;
+  }
+  
+  .EquipmentGetPassOut-tab {
+    padding: 4px 12px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    color: white;
+    font-size: var(--font-size);
+    background:var(--button-bg-color);
+    cursor: pointer;
+  }
+  .EquipmentGetPassOut-tab:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color);
+  }
+  .FinalSaleByAccountsPopUp-add-btn {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .FinalSaleByAccountsPopUp-add-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .FinalSaleByAccountsPopUp-form-group-1row{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  

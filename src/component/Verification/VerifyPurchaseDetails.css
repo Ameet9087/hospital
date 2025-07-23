@@ -1,0 +1,105 @@
+.verify-purchase-container {
+    background-color: var(--background-color);
+    padding: 20px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    height: 80vh;
+  }
+  
+  .verify-purchase-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* margin-bottom: 20px; */
+  }
+  
+  .verify-purchase-logo img,
+  .verify-purchase-qr-code img {
+    width: 100px;
+    height: auto;
+  }
+  
+  .verify-purchase-hospital-info {
+    text-align: center;
+  }
+  
+  .verify-purchase-hospital-info h1 {
+    font-size: 18px;
+    /* margin-bottom: 5px; */
+  }
+  
+  .verify-purchase-hospital-info p {
+    margin: 2px 0;
+  }
+  
+  /* .verify-purchase-details {
+  
+  } */
+  
+  .verify-purchase-row {
+    display: flex;
+    justify-content: space-between;
+    /* margin-bottom: 5px; */
+  }
+  
+  .verify-purchase-title {
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .verify-purchase-update-container
+  {
+    /* width: 100%; */
+    margin-top: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+ 
+  
+  .verify-purchase-table {
+    width: 100%;
+    border-collapse: collapse;
+    /* margin-bottom: 20px; */
+  }
+  
+  .verify-purchase-table th,
+  .verify-purchase-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .verify-purchase-table th {
+    background-color: #f0f0f0;
+  }
+  
+  .verify-purchase-icon {
+    cursor: pointer;
+  }
+
+
+  .verify-purchase-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .verify-purchase-approve,
+  .verify-purchase-reject {
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .verify-purchase-approve {
+    background-color: var(--button-color);
+  }
+  
+  .verify-purchase-reject {
+    background-color: #ff4757;
+  }

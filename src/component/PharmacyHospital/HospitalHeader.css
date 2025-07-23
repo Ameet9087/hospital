@@ -1,0 +1,70 @@
+/* HospitalHeader.css */
+
+.hospital-header-container-module {
+  width: 100% !important;
+  margin: 0 auto;
+}
+
+.hospital-nav-module {
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  height: 10%;
+}
+
+.hospital-nav-item-module {
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 10px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hospital-nav-item-module:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.hospital-nav-item-module.active {
+  border: 1px solid var(--button-bg-color);
+  color: white;
+  background-color: var(--button-bg-color);
+}
+ .pharmacy-sub-nav-module {
+  display: flex; /* Use flexbox for horizontal layout */
+  margin: 10px;
+  flex-direction: column; /* Stack sub-navigation items vertically */
+}
+
+.pharmacy-sub-nav-item-module {
+  display: inline-block; /* Make items inline for horizontal layout */
+  margin-right: 20px; /* Space between items */
+  position: relative; /* Positioning for the active line */
+  cursor: pointer; /* Change cursor on hover */
+}
+
+.pharmacy-sub-nav-item-module.active::after {
+  content: ''; /* Empty content for the line */
+  position: absolute;
+  bottom: -5px; /* Position below the item */
+  left: 0; /* Align to the left */
+  width: 100%; /* Full width of the item */
+  height: 3px; /* Height of the active line */
+  background-color: var(--button-bg-color); /* Color of the active line */
+  transition: background-color 0.3s; /* Smooth transition for the line color */
+}
+
+
+
+/* Optional: Style for NavLink to avoid text decoration */
+.pharmacy-sub-nav-item-module a {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit color from the parent */
+}
+

@@ -1,0 +1,184 @@
+/* Ajhar Tamboli sSIPatientConsumNewPCbtn.css 19-09-24 */
+
+
+.sSIPatientConsumNewPCbtn-entry {
+  background-color: var(--background-color);
+  padding: 20px;
+  width: 60%;
+  margin: 20px auto;
+  border-radius: 8px;
+  /* align-items: left; */
+  float: left;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sSIPatientConsumNewPCbtn-title {
+  font-size: var(--heading-font);
+  margin-bottom: 20px;
+  /* color: #333333; */
+  /* font-weight: bold; */
+}
+
+.sSIPatientConsumNewPCbtn-form-section {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+
+
+
+.sSIPatientConsumNewPCbtn-back-btn {
+  margin-left: auto;
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  /* margin-bottom: 10px; */
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+.sSIPatientConsumNewPCbtn-back-btn:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.sSIPatientConsumNewPCbtn-table-section {
+  margin-top: 20px;
+  border: 1px solid #006688;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.sSIPatientConsumNewPCbtn-table-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  background-color: #006688;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.sSIPatientConsumNewPCbtn-table-row {
+  display: grid;
+  grid-template-columns: 40px 2fr 1fr 1fr 1fr 40px;
+  align-items: center;
+  padding: 5px;
+  gap: 5px;
+  background-color: white;
+}
+
+.sSIPatientConsumNewPCbtn-delete-btn, .sSIPatientConsumNewPCbtn-add-btn {
+  background-color: #6666ff;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.sSIPatientConsumNewPCbtn-remark{
+  display: flex;
+  justify-content: right;
+  float: right;
+}
+.sSIPatientConsumNewPCbtn-remark-section {
+  margin-top: 15px;
+  background-color: #F5F5F5;
+  width: 15%;
+}
+.sSIPatientConsumNewPCbtn-remark-section textarea{
+  height: 40px;
+}
+.sSIPatientConsumNewPCbtn-form-section{
+  width: 35%;
+  display: flex;
+}
+.sSIPatientConsumConsumEntry-table-buttons-add{
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  color: white;
+  padding: var(--input-box-padding);
+  border-radius: 5px;
+  margin-right: 5px;
+}
+.sSIPatientConsumConsumEntry-table-buttons-add:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-color);
+}
+.sSIPatientConsumConsumEntry-table-buttons-del{
+  background-color: red;
+  border: 1px solid red;
+  color: white;
+  padding: var(--input-box-padding);
+  border-radius: 5px;
+  margin-right: 5px;
+}
+.sSIPatientConsumConsumEntry-table-buttons-del:hover{
+  background-color: white;
+  color: red;
+}
+.sSIPatientConsumNewPCbtn-remark-section label {
+  margin-right: 10px;
+}
+
+/* textarea {
+  flex-grow: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+} */
+
+.sSIPatientConsumNewPCbtn-button-section {
+  margin-top: 20px;
+  display: flex;
+  float: right;
+  gap: 10px;
+}
+
+.sSIPatientConsumNewPCbtn-save-btn {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+.sSIPatientConsumNewPCbtn-save-btn:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.sSIPatientConsumNewPCbtn-discard-btn {
+  background-color: red;
+  color: white;
+  padding: 8px 15px;
+  border: 1px solid red;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+
+.sSIPatientConsumNewPCbtn-form-section select {
+
+  padding: 5px;
+  font-size: var(--font-size);
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}

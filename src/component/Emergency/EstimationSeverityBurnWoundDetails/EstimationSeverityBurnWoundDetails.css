@@ -1,0 +1,122 @@
+.EstimationSeverityBurnWoundDetails-container {
+  margin: 0 auto;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+}
+.EstimationSeverityBurnWoundDetails-section {
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.EstimationSeverityBurnWoundDetails-header {
+  background-color: var(--upperBar-bg-color);
+  color: white;
+  padding: 7px 20px;
+  font-size: var(--heading-font);
+  font-weight: 500;
+}
+.EstimationSeverityBurnWoundDetails-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+.EstimationSeverityBurnWoundDetails-search-field {
+  position: relative;
+}
+.EstimationSeverityBurnWoundDetails-search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.EstimationSeverityBurnWoundDetails-floating-field {
+  position: relative;
+}
+.EstimationSeverityBurnWoundDetails-floating-input {
+  padding: 5px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: var(--font-size);
+  background: white;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.EstimationSeverityBurnWoundDetails-floating-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 4px;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-size: var(--font-size);
+}
+.EstimationSeverityBurnWoundDetails-floating-field.active
+  .EstimationSeverityBurnWoundDetails-floating-label {
+  top: 0;
+  font-size: 12px;
+  color: var(--button-color);
+}
+.EstimationSeverityBurnWoundDetails-floating-field.active
+  .EstimationSeverityBurnWoundDetails-floating-input,
+.EstimationSeverityBurnWoundDetails-floating-field.active
+  .EstimationSeverityBurnWoundDetails-floating-select {
+  border-color: var(--button-hover-border-color);
+}
+
+.EstimationSeverityBurnWoundDetails-section {
+  margin-bottom: 0;
+}
+.EstimationSeverityBurnWoundDetails-floating-input:focus,
+.EstimationSeverityBurnWoundDetails-floating-select:focus {
+  outline: none;
+  border-color: var(--button-hover-border-color);
+  box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+}
+.EstimationSeverityBurnWoundDetails-buttons {
+  margin-left: 10px;
+  font-size: var(--font-size);
+}
+.EstimationSeverityBurnWoundDetails-buttons button {
+  background-color: var(--button-color);
+  margin-top: 10px;
+  font-size: var(--font-size);
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid var(--button-hover-background-color);
+  color: white;
+  cursor: pointer;
+}
+.EstimationSeverityBurnWoundDetails-buttons button:hover {
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+
+@media (max-width: 1024px) {
+  .EstimationSeverityBurnWoundDetails-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .EstimationSeverityBurnWoundDetails-grid {
+    grid-template-columns: 1fr;
+  }
+}

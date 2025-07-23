@@ -1,0 +1,162 @@
+ /* Dhanashree_MaterializedSalesView_19/09 */
+
+.MaterializedSalesView-materialized-sales-view {
+  background-color: var(--background-color);
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+}
+
+.MaterializedSalesView-header {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.MaterializedSalesView-date-range {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.MaterializedSalesView-date-input {
+  margin-right: 10px;
+}
+
+.MaterializedSalesView-date-input label {
+  margin-right: 5px;
+}
+
+.MaterializedSalesView-date-input input {
+  padding: 5px;
+}
+
+.MaterializedSalesView-star-button, .MaterializedSalesView-minus-button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  margin-right: 5px;
+}
+
+.MaterializedSalesView-show-report-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.MaterializedSalesView-show-report-button:hover{
+  background-color: white;
+  color: var(--button-hover-text-color);  
+  
+}
+
+
+.MaterializedSalesView-search-bar {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.MaterializedSalesView-search-bar input {
+  flex-grow: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.MaterializedSalesView-search-bar .MaterializedSalesView-search-button {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-left: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.MaterializedSalesView-results-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.MaterializedSalesView-results-info button {
+  background-color: #90caf9;
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Make the table responsive */
+.MaterializedSalesView-sales-table-container {
+  overflow-x: auto;
+}
+
+.MaterializedSalesView-sales-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  table-layout: fixed; /* Fixed table layout */
+}
+
+.MaterializedSalesView-sales-table th, .MaterializedSalesView-sales-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  font-size: 14px;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowed text */
+  text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+}
+
+.MaterializedSalesView-sales-table th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}
+
+.MaterializedSalesView-sales-table .MaterializedSalesView-no-rows {
+  background-color: #fff9c4;
+  text-align: center;
+  padding: 10px;
+}
+
+.MaterializedSalesView-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.MaterializedSalesView-pagination .MaterializedSalesView-page-btn {
+  background-color: #90caf9;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.MaterializedSalesView-pagination span {
+  margin: 0 10px;
+}
+
+
+
+.MaterializedSalesView-results-info button {
+  background-color: #00c9c0; /* Change button background color */
+  border: none;
+  color: white; /* Initial text color */
+  padding: 5px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Add hover effect */
+.MaterializedSalesView-results-info button:hover {
+  background-color: white; /* Change background on hover */
+  color: var(--button-hover-text-color); /* Change text color on hover */
+}
+
+ /* Dhanashree_MaterializedSalesView_19/09 */

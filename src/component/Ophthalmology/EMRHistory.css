@@ -1,0 +1,29 @@
+.EMRHistory-container
+{
+    width: 100%;
+    height: 90vh;
+    padding: 10px;
+}
+.EMRHistory-header
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.EMRHistory-header-subdiv
+{
+    width: 20%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 10px;
+}
+.EMRHistory-button
+{
+    padding: 5px 10px;
+    border-radius: 5px ;
+    border: 1px solid var(--button-color);
+    background-color: var(--button-color);
+    color: white;
+    margin: 1px;
+}

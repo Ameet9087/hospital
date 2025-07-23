@@ -1,0 +1,84 @@
+/* Ajhar Tamboli sSPharmacyNInven.jsx 19-09-24 */
+
+.sSPharmacyNInven-active-Accounts-button{
+    background-color: var(--button-color);
+    color: white;
+    /* font-weight: bold; */
+    font-size: var(--heading-font);
+    border: none;
+    margin-right: 10px;
+  padding:  5px;
+  }
+  .sSPharmacyNInven-active-Accounts-Logout-button{
+    /* grid-area: 10px; */
+    margin:0 10px 0 10px;
+    font-size: var(--heading-font);
+    border: none;
+  }
+  .sSPharmacyNInven-Acc-N-Log{
+    display: flex;
+    /* float: right; */
+  }
+  .sSPharmacyNInven-ul{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .sSPharmacyNInven-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+      background-color: white;
+      /* padding: 10px; */
+      /* border: 1px solid #007bff; */
+    }
+    .sSPharmacyNInven-pha-N-inven{
+        display: flex;
+        /* border: 1px solid red; */
+        
+    }
+    .sSPharmacyNInven-pha-N-inven li{
+        margin: none;
+        padding:10px;
+        /* color: red; */
+    }
+    
+    
+    .sSPharmacyNInven-bar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 10px 0px 10px 0px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  
+    }
+    
+    .sSPharmacyNInven-bar li {
+      margin: 0 0px;
+    }
+    
+    .sSPharmacyNInven-bar a {
+      color: black;
+      text-decoration: none;
+      /* font-weight: bold; */
+      font-size: var(--heading-font);
+      padding: 7px 5px;
+      border-radius: 5px;
+  
+    }
+    
+    .sSPharmacyNInven-bar a:hover {
+      background-color: white;
+      color: var(--button-color);
+      border: 1px solid var(--button-color);
+      /* border: 1px solid gray; */    
+    }
+    
+    .sSPharmacyNInven-bar .active {
+      background-color: var(--button-bg-color);
+      color: white;
+  
+    }
+    

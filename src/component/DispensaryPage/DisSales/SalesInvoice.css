@@ -1,0 +1,179 @@
+.dropdown-container {
+    position: relative;
+    width: 220px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+  
+  .dropdown-list {
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .dropdown-item:active {
+    background-color: #e0e0e0;
+  }
+  
+  .dropdown-item:last-child {
+    border-bottom: none;
+  }
+
+  /* print invoice button */
+
+  /* General Styles */
+.dispensaryprint-invoice-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  width: 90%;
+  z-index: 1000;
+}
+
+.dispensaryprint-invoice-form h3,
+.dispensaryprint-invoice-form h4 {
+  text-align: center;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.dispensaryprint-invoice-form h4 {
+  font-size: 18px;
+  margin-top: -10px;
+}
+
+.dispensaryprint-invoice-header,
+.dispensaryprint-invoice-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.dispensaryprint-invoice-header div,
+.dispensaryprint-invoice-footer div {
+  width: 48%;
+}
+
+.dispensaryprint-invoice-header div p,
+.dispensaryprint-invoice-footer div p {
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+
+
+/* Amount Section */
+.dispensaryprint-invoice-amount {
+  margin: 20px 0;
+  font-size: 14px;
+  text-align: right;
+}
+
+.dispensaryprint-invoice-amount p {
+  margin: 5px 0;
+}
+
+.dispensaryprint-invoice-amount strong {
+  font-weight: bold;
+}
+
+/* Footer Section */
+.dispensaryprint-invoice-footer .select-printer {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15%;
+}
+
+.select-printer select {
+  padding: 5px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.select-printer button {
+  padding: 5px ;
+  background-color:var( --button-color);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dispensaryprint-invoice-print-button {
+  display: block;
+  margin: 0 auto;
+  padding: 5px;
+  background-color:var( --button-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  
+}
+
+/* Additional Styles */
+.dispensaryprint-invoice-remarks {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.dispensaryprint-invoice-remarks p {
+  margin: 5px 0;
+}
+
+.dispensaryprint-invoice-copy {
+  text-align: right;
+  font-size: 14px;
+  font-style: italic;
+  color: #333333;
+}
+
+.dispensaryprint-invoice-close-button {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.dispensaryprint-invoice-close-button button {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ff0000;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.dispensaryprint-invoice-close-button button:hover {
+  color:#cc0000;
+}
+

@@ -1,0 +1,247 @@
+.billing_home {
+    width: 100%;
+    height: 100%;
+    background-color: #E8F0F9;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .billing_home__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+  }
+  
+  .billing_home__header__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc(100% / 3 - 20px);
+    padding: 10px;
+    margin: 0 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .billing_home__header__item__icon {
+    font-size: 24px;
+    color: #007BFF;
+  }
+  
+  .billing_home__header__item__text {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .billing_home__header__item__stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #6C757D;
+  }
+  
+  .billing_home__body {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .billing_home__body__item {
+    width: calc(50% - 10px);
+    padding: 10px;
+    margin: 0 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #FFFFFF;
+  }
+  
+  .billing_home__body__item__title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .billing_home__body__item__chart {
+    width: 100%;
+    height: 300px;
+    border-radius: 10px;
+  }
+
+  .billing_home {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: #f0f8ff;
+  padding: 20px;
+}
+
+.billing_home__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.billing_home__card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 30%;
+}
+
+.billing_home__card__icon {
+  font-size: 30px;
+  color: #007bff;
+}
+
+.billing_home__card__title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.billing_home__card__data {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.billing_home__card__data__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.billing_home__card__data__item__title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.billing_home__card__data__item__value {
+  font-size: 16px;
+}
+
+.billing_home__filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.billing_home__filter__item {
+  display: flex;
+  align-items: center;
+}
+
+.billing_home__filter__item__button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.billing_home__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.billing_home__content__item {
+  width: 48%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.billing_home__content__item__title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.billing_home__content__item__chart {
+  height: 300px;
+  background-color: #d4e1ec;
+  border-radius: 10px;
+}
+
+.ward-table{
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #E8F0F9;
+}
+
+.ward-table-data{
+    border: 1px solid black;
+    align-items: center;
+}
+
+.ward-table-head{
+    border: 1px solid black;
+}
+
+.ward-table-input{
+    border: none;
+    align-items: center;
+}
+
+.billing-home-totals{
+    display: flex;
+    padding-left: 20px;
+   gap: 40px;
+   margin-bottom: 20px;
+}
+
+/* date css */
+
+.billing_home_date {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-direction: row;
+  }
+  
+  .date-range-billing-home-input[type="date"] {
+    padding: 5px;
+    font-size: 14px;
+  }
+  
+  .date-range-billing-home-span {
+    font-size: 14px;
+  }
+  
+  .date-range-billing-home-button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .date-range-billing-home .star-button {
+    background: gold;
+  }
+  
+  .date-range-billing-home .plus-button {
+    background: #28a745;
+  }
+  
+  .date-range-billing-home .ok-button {
+    background: #17a2b8;
+  }

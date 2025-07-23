@@ -1,0 +1,44 @@
+.STOCKB-reports-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
+  padding: 5px;
+  background-color: var(--background-color);
+}
+
+.STOCKB-report-box {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.STOCKB-report-box:hover {
+  transform: translateY(-5px);
+}
+
+.STOCKB-report-icon {
+  font-size: 24px;
+  color: var(--upperBar-bg-color);
+  margin-right: 5px;
+}
+
+.STOCKB-report-content {
+  flex-grow: 1;
+}
+
+.STOCKB-report-content h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.STOCKB-report-content p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #777;
+}

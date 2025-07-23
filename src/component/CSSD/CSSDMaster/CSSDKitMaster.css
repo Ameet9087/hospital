@@ -1,0 +1,176 @@
+.kit-master {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: var(--background-color);
+  border-radius: 5px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.kit-master-header {
+  font-size: var(--heading-font);
+  color: var(--upperBar-bg-color);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.kit-master-form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.kit-master-item-details {
+  margin-top: 20px;
+}
+
+.kit-master-item-details h3 {
+  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.kit-master-item-details table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size);
+}
+
+.kit-master-item-details th,
+.kit-master-item-details td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.kit-master-item-details th {
+  background-color: var(--upperBar-bg-color);
+  color: white;
+}
+
+/* .kit-master-item-details input {
+  width: 90%;
+  padding: var(--input-box-padding);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: var(--font-size);
+} */
+
+.kit-master-item-details button {
+  background-color: var(--button-bg-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: var(--font-size);
+}
+
+.kit-master-item-details button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.AddAllItems {
+  text-align: right;
+}
+
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding-right: 30px;
+  /* Adjust padding to make space for the icon */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: var(--input-box-padding);
+  font-size: var(--font-size);
+}
+
+.input-with-icon .search-icon {
+  position: absolute;
+  right: 10px;
+  /* Adjust to align the icon properly */
+  color: #aaa;
+  cursor: pointer;
+}
+.modal-overlay-for-items {
+  position: fixed;
+  /* Ensures the modal overlays the entire screen */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensures it's above other elements */
+}
+
+.modal-content-for-items {
+  background-color: white;
+  padding: 20px;
+  width: 90%; /* Width of the modal */
+  max-width: 600px; /* Maximum width of the modal */
+  max-height: 70%; /* Restrict the height of the modal */
+  overflow-y: auto; /* Add vertical scroll if content exceeds height */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative; /* Ensure the modal is properly positioned */
+}
+
+.modal-content-for-items h2 {
+  margin-top: 0;
+}
+
+.modal-content-for-items table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.modal-content-for-items th,
+.modal-content-for-items td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.modal-content-for-items th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.modal-content-for-items input[type="text"] {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.modal-content-for-items button {
+  background-color: var(--button-bg-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: var(--font-size);
+}
+
+.modal-content-for-items button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+
+
+

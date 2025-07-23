@@ -1,0 +1,68 @@
+/* // neha HI-nhif-19/09/24 */
+.nhif-container {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header styles */
+.nhif-header {
+    background-color: white; /* Primary blue color */
+    padding: 10px 20px;
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation bar styles */
+.nhif-header-nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+
+
+.nhif-header-nav a {
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 5px ;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    margin-left: 20px;
+    border:1px solid transparent;
+}
+
+.nhif-header-nav a:hover {
+    background-color: var(--button-hover-background-color) ;/* Darker blue on hover */
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+/* Active link styling */
+.nhif-header-nav a.active {
+    background-color:var(--button-bg-color); /* Active state color */
+    color:white
+}
+
+/* Content area below the navigation bar */
+.nhif-content {
+    padding: 20px;
+}
+
+/* Responsive styling for mobile devices */
+@media (max-width: 768px) {
+    .nhif-header-nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nhif-header-nav li {
+        margin: 10px 0;
+    }
+}

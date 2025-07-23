@@ -1,0 +1,65 @@
+.fixedAssets-component {
+    background-color: #CAF2FF;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .fixedAssets-component-header {
+    padding: 20px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .fixedAssets-component-header ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+  
+  .fixedAssets-component-header ul li {
+    color: #1890ff;
+    /* margin-right: 20px; */
+    cursor: pointer;
+    font-size: 14px;
+    padding:0 15px;
+  }
+  .fixedAssets-component-header a{
+    text-decoration: none;
+    color: #1890ff;
+  }
+  
+  .fixedAssets-component-header ul li .active {
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    padding: 5px 10px;
+    background-color: #2D68EA;
+  }
+  
+  .fixedAssets-component-header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* .fixedAssets-component-refresh-btn {
+    background-color: #1890ff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  .fixedAssets-component-active-account {
+    background-color: #52c41a;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+  } */

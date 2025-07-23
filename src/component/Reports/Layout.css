@@ -1,0 +1,11 @@
+/* src/styles/Layout.css */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.layout-main {
+    flex: 1;
+    overflow-y: auto;
+}

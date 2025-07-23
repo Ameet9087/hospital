@@ -1,0 +1,168 @@
+.labLIS-page {
+  background-color: var(--background-color);
+  padding: 1px 1px  1px 20px;
+  height: 75vh;
+  /* font-family: Arial, sans-serif; */
+}
+.labLIS-N-imu-btn{
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid #cfcdcd;
+    height: 37px;
+    /* justify-content:space-between; */
+  }
+    
+    .labLIS-tabs {
+      margin-bottom: 20px;
+    }
+    
+    .labLIS-tab {
+      background-color: var(--background-color);
+      padding: 5px 20px;
+      border: none;
+      /* background-color: #f0f0f0; */
+      cursor: pointer;
+    }
+    
+    .labLIS-tab.labLIS-active {
+      /* background-color: #007bff; */
+      color: black;
+      font-weight: bold;
+      border-bottom: 5px solid var(--button-bg-color);
+    }
+    
+    .labLIS-filters {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0px 10px 0 1px;
+      margin-bottom: 20px;
+    }
+   
+   
+    .labLIS-show-data-btn {
+      background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .labLIS-show-data-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+   
+
+    .labLIS-show-data-btn i{
+      font-size: 14px;
+    }
+    
+    
+    
+    .labLIS-data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      background-color: white;
+    }
+    
+    .labLIS-data-table th, .labLIS-data-table td {
+      border: 1px solid #ddd;
+      padding: 3px;
+      text-align: center;
+      /* color:rgb(66, 66, 66); */
+      font-size: var(--font-size);
+    }
+    
+    .labLIS-data-table th {
+      background-color: #f2f2f2;
+      font-size: var(--heading-font);
+    }
+    
+    .labLIS-pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .labLIS-pagination button {
+      background-color: #008CBA;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin: 0 5px;
+      border-radius: 5px;
+      font-size: var(--font-size);
+    }
+    
+    .labLIS-pagination span {
+      margin: 0 10px;
+      /* color: gray; */
+      font-size: var(--font-size);
+    }
+   
+    .labLIS-table-N-paginationDiv{
+      background-color: white;
+    }
+    
+    .labLIS-note-search-n-filter{
+      display: flex;
+      justify-content: space-between;
+    }
+    .labLIS-Not-search-bar input {
+      padding: 5px;
+      width: 200px;
+      border: 1px solid black;
+      border-radius: 2px;
+    }
+  .labLIS-Not-search-bar{
+    position: relative;
+    margin-bottom: 10px;
+    margin-left: -20px;
+    /* opacity: 0; */
+    /* animation: slideIn 1s forwards 0.8s; */
+  }
+  .labLIS-Not-search-bar i{
+    position: absolute;
+    top: 8px;
+    left: 180px;
+    /* display: flex;
+    justify-content: ; */
+    color: gray;
+  }
+  .labLIS-Note-sms-content{
+    margin-top: 15px;
+  }
+  .labLIS-filter-findings span {
+/* color: #2D68EA; */
+font-size: var(--font-size);
+margin-right:10px;
+
+/* font-weight: bold; */
+  }
+  .labLIS-filter-findings-Printbtn{
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .labLIS-filter-findings-Printbtn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }

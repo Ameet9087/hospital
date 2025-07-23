@@ -1,0 +1,109 @@
+.radiation-safety-compliance-container {
+    padding: 20px;
+    background-color: var(--background-color);
+  }
+  
+  .compliance-add-button,
+  .compliance-edit-button {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  .compliance-add-button:hover,
+  .compliance-edit-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .compliance-edit-button {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  .compliance-edit-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+
+  
+  .compliance-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .compliance-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 70%;
+    height: auto;
+  }
+  
+  .compliance-close {
+    position: absolute;
+    top: 1px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .compliance-form-group {
+    margin-bottom: 15px;
+    display: flex;
+   
+  }
+  
+  .compliance-form-group label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    width: 150px;
+  }
+  
+  .compliance-form-group input,
+  .compliance-form-group textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .compliance-submit-button {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  .compliance-submit-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  

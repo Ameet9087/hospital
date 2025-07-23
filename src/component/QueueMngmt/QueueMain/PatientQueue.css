@@ -1,0 +1,417 @@
+/* Ajhar Tamboli 09-10-2024 PatientQueue.css */
+ 
+ 
+ /* PatientQueue_Mohini_4/9/2024/css_startLine_1_to_EndLine_406 */
+ 
+ /* Mohini queue-management ADDED CLASSNAME AND COLOR 14/09 */
+ 
+ .patient-queue-management-container {
+  background-color:var(--background-color);
+  width: 100%;
+  height: 100%;
+  /* padding: 10px; */
+  box-sizing: border-box;
+}
+
+
+.patient-queue-management-header {
+  background-color: white;
+}
+
+.queue-management-header {
+  padding: 10px;
+  font-size: 16px;
+  text-align: left;
+}
+
+.queue-management-header-button {
+  background-color: var(--button-color);
+  color: white;
+  padding: 8px 8px;
+  border: none;
+  font-size: 14px;
+  border-radius: 5px;
+    cursor: pointer;
+    margin: 0px 5px;
+  }
+  
+  .queue-management-content {
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+  
+  .queue-management-title {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #004080;
+    font-weight: bold;
+  }
+  
+  .queue-management-form-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .queue-management-form-group {
+    margin-right: 20px;
+    width: 200px;
+    margin-left: 10px;
+    
+  }
+  
+  .queue-management-select-doctor {
+    padding: 5px;
+    margin-left: 40px;
+    font-size: 14px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    min-width: 200px;
+  }
+  
+  .queue-management-form-group.status-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .queue-management-status-options {
+    display: flex;
+    margin-left: 10px;
+    gap: 10px;
+  }
+  
+
+  .queue-management-load-data-button {
+    background-color: var(--button-color);
+    color: white;
+    font-size: 14px;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .queue-management-load-data-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .queue-management-table-section {
+    margin-top: 20px;
+  }
+  
+  .queue-management-search-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+  }
+/*   
+  .queue-management-search-container input {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 200px;
+  }
+   */
+  .queue-management-search-button {
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    background-color: transparent; /* Remove background */
+    color: #005eb8; /* Icon color (optional) */
+    cursor: pointer;
+    margin-left: -40px;
+  }
+  
+  .queue-management-table-section table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .queue-management-table-section th, 
+  .queue-management-table-section td {
+    padding: 5px;
+    text-align: center; /* Center-align the text in table headers */
+    font-size: 14px;
+    /* text-align: left; */
+    border: 1px solid #ccc;
+  }
+  .queue-managemnt-table{
+    width: 100%;
+    background-color: white;
+  }
+  
+  .queue-mana-table{
+    background-color: white;
+  }
+
+  
+  .queue-management-table-section thead th {
+    background-color: #f5f5f5;
+    font-size: 14px;
+    text-align: center; /* Ensure headers are centered in the thead section */
+    
+  }
+  
+  .queue-management-no-data {
+    text-align: center;
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .queue-management-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .queue-management-pagination span {
+    margin: 0 10px;
+    font-size: 14px;
+  }
+  
+  .queue-management-pagination-button {
+    padding: 5px;
+    margin: 0 5px;
+    font-size: 14px;
+    border: none;
+    background-color: #90caf9;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .queue-management-results-info {
+    color: #0F63AF;
+    font-size: 14px;
+    display: flex;
+    justify-content: flex-end; /* Aligns the text to the left */
+  }
+  
+  
+  .que-complete-button {
+    background-color: var(--button-color); /* Green */
+    color: white;
+    border: none;
+    padding: 5px;
+    margin: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .que-complete-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+.que-skipped-button {
+  background-color: #f44336; /* Red */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.que-attend-button {
+  background-color: blue; /* Red */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.que-skipped-button:hover {
+  background-color: #e53935; /* Darker red on hover */
+}
+
+
+/* Responsive  */
+
+
+/* Responsive  */
+
+/* Responsive adjustments for mobile view */
+@media (max-width: 768px) {
+  .queue-management-form-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .queue-management-form-group {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px; /* Adds space between stacked form groups */
+  }
+  
+  .queue-management-status-options {
+    flex-direction: column; /* Stack checkboxes vertically */
+  }
+  
+  /* .queue-management-search-container {
+    flex-direction: column;
+    align-items: flex-start;
+  } */
+  
+  .queue-management-search-container input {
+    width: 100%; 
+    margin-bottom: 10px; 
+  }
+  
+  /* .queue-management-search-button {
+    margin-left: 0; 
+  } */
+
+  .queue-management-table-section th,
+  .queue-management-table-section td {
+    padding: 8px 5px; /* Adjust padding for smaller screens */
+  }
+
+  /* .queue-management-pagination {
+    flex-direction: column; 
+  } */
+  
+  /* .queue-management-pagination-button {
+    width: 100%; 
+    margin: 5px 0;
+  }
+
+  .queue-management-results-info {
+    font-size: 12px; 
+    justify-content: flex-start; 
+  } */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  /* Adjust pagination to stack vertically on smaller screens */
+  /* .queue-management-pagination {
+      flex-direction: column;
+  } */
+  
+  /* Ensure pagination buttons fit within the available space */
+  /* .queue-management-pagination-button {
+    width: 100%;
+    margin: 5px 0;
+  } */
+  
+  /* Reduce font size for results info */
+  /* .queue-management-results-info {
+    font-size: 12px;
+    justify-content: flex-start;
+  } */
+}
+
+/*  */
+
+
+/* .patient-queue-management-container {
+  background-color: #ccefff;
+  width: 100%;
+  height: 100%; */
+  /* padding: 20px; */
+  /* box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+} */
+
+.patient-queue-management-header {
+  background-color: white;
+}
+
+.queue-management-header {
+  /* padding: 10px; */
+  font-size: 14px;
+  text-align: left;
+}
+
+/* .queue-management-header-button {
+  background-color: #005eb8;
+  color: white;
+  padding: 8px 8px;
+  border: none;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+} */
+
+.queue-management-content {
+  /* padding: 20px; */
+  border-radius: 8px;
+  /* margin-top: 10px; */
+  flex: 1; /* Allow content to grow and take up available space */
+}
+
+.queue-management-title {
+  font-size: 16px;
+  margin-left: 10px;
+  /* margin-bottom: 20px; */
+  color: #004080;
+}
+
+.queue-management-table-section {
+  /* margin-top: 20px; */
+  max-height: 500px; /* Adjust the height as needed */
+  overflow-y: auto; /* Only vertical scrollbar when needed */
+}
+
+.queue-management-table-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.queue-management-table-section th, 
+.queue-management-table-section td {
+  padding: 5px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #ccc;
+  background-color: white; /* Ensure background remains white */
+}
+
+.queue-management-table-section thead th {
+  background-color: #f5f5f5;
+  font-size: 14px;
+}
+
+/* Hide scrollbar when not needed */
+.queue-management-table-section::-webkit-scrollbar {
+  width: 0; /* For Webkit-based browsers like Chrome */
+}
+
+.queue-management-table-section {
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  scrollbar-width: none; /* For Firefox */
+}
+
+
+/*  */
+
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .queue-management-search-container {
+    flex-direction: column;
+    align-items: stretch; /* Stretches children to full width */
+  }
+
+  .queue-management-search-container input,
+  .queue-management-search-button {
+    width: 100%; /* Makes the input and button full width */
+    margin: 5px 0; /* Adds space between stacked elements */
+  }
+
+  .queue-management-search-button {
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
+}
+/* PatientQueue_Mohini_4/9/2024/css_startLine_1_to_EndLine_406 */
+
+/* Ajhar Tamboli 09-10-2024 PatientQueue.css */

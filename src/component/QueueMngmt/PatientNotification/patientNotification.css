@@ -1,0 +1,299 @@
+ /* Ajhar Tamboli patientNotification.css 10-10-24 */
+
+
+ .patientNotification-container {
+  
+  padding: 20px;
+  background-color: #e3fffe;
+
+  }
+
+ /* .resizable-th {
+   position: relative;
+ } */
+
+ /* .resizer {
+   width: 5px;
+   height: 100%;
+   position: absolute;
+   right: 0;
+   top: 0;
+   cursor: col-resize;
+   z-index: 1;
+ }
+
+ table th .resizer:hover {
+   background-color: #aaa;
+ } */
+  .patientNotification-firstRow{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .patientNotification-add-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .patientNotification-add-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .addpatientNotification-controls {
+    display: flex;
+    margin-top: 10px;
+}
+
+.addpatientNotification-date-range {
+    display: flex;
+    align-items: center;
+    /* width: 95%; */
+    gap: 10px;
+    background-color: #f0f0f0;
+    padding: 3px;
+}
+
+.addpatientNotification-date-range label {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    font-size: var(--font-size);
+}
+
+.addpatientNotification-date-range input[type="date"] {
+    padding: 3px;
+    margin-left: 10px;
+}
+
+.addpatientNotification-star-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--button-color);
+    cursor: pointer;
+}
+
+.addpatientNotification-ok-button {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+}
+
+.addpatientNotification-ok-button:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+  .patientNotification-search-bar{
+    margin-left: -15px;
+    /* margin: 0; */
+  }  
+    .patientNotification-search-bar input {
+      /* margin-top: 10px; */
+      padding: 3px;
+      width: 200px;
+    }
+    .patientNotification-search-bar i{
+      position: relative;
+      color:gray;
+      top: 3px;
+    left: 205px;
+    }
+  
+  .patientNotification-search-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .patientNotification-search-box {
+    display: block;
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  
+  .patientNotification-search-N-result{
+    margin-top: 10px;
+    display: flex;
+    margin-left: 15px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+.patientNotification-results-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    /* padding-top: 10px; */
+  }
+  .patientNotification-results-info span {
+    /* display: flex;
+    align-items: center; */
+    /* padding-top: 10px; */
+    /* color: #008CBA; */
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+    margin-right: 10px;
+  }
+  
+  .patientNotification-container table {
+    width: 100%;
+    background-color: #f2f2f2;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  
+  .patientNotification-container th, .patientNotification-container td {
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+    font-size: var(--font-size);
+    white-space: nowrap;
+    /* Prevent wrapping */
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  
+  .patientNotification-container th {
+    background-color: #eaeaea;
+    color: black;
+  }
+  
+  
+  .patientNotification-edit-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 1px 5px;
+  }
+  
+  .patientNotification-edit-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+
+  .patientNotification-print-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .patientNotification-print-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  /* Modal styles */
+  .patientNotification-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .patientNotification-modal-content {
+    /* padding: 20px; */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    /* width: 100%; */
+    position: relative;
+  }
+  
+  .patientNotification-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .patientNotification-pagination button {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: 1var(--font-size)2px;
+  }
+  
+  .patientNotification-pagination span {
+    margin: 0 10px;
+    color: gray;
+    font-size: var(--font-size);
+  }
+  
+  .patientNotification-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    z-index: 1000;
+  }
+  
+  .patientNotification-modal-content {
+    margin: 20px;
+    /* padding: 20px; */
+    /* background-color: red; */
+    /* background-color: #fff; */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 95%;
+    /* width: 100%; */
+    position: relative;
+  }
+  

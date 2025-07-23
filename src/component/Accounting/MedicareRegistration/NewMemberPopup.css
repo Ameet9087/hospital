@@ -1,0 +1,89 @@
+.nmp-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    z-index: 150;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .nmp {
+    background-color: white;
+    border-radius: 5px;
+    position: relative;
+    padding: 10px;
+  }
+  
+  .nmp h2 {
+    margin-top: 0;
+    font-size: var(--heading-font);
+    border-bottom: 1px solid black;
+  }
+  
+  .nmp-row {
+    display: flex;
+    /* justify-content: space-between; */
+    gap: 25px;
+    padding: 10px 50px;
+  }
+  
+  .nmp-row label {
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    white-space: nowrap;
+    gap: 10px;
+  }
+  
+  .nmp-row input[type="text"],
+  .nmp-row select,
+  .nmp-row textarea {
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 100%;
+    font-size: 14px;
+  }
+  
+  
+  .nmp-actions {
+    text-align: right;
+    margin-top: 20px;
+    padding: 10px;
+  }
+  
+  /* .nmp-actions button {
+    
+  } */
+  
+  .nmp-actions button[type="submit"] {
+    background-color: var(--button-color);
+    color: white;
+    /* margin-left: 10px; */
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .nmp-actions button[type="submit"]:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .nmp-close-btn{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #f44336;
+    color: white;
+    border-radius: 50%;
+    border: none;
+    padding: 6px 12px;
+  }

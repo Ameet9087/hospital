@@ -1,0 +1,204 @@
+/* Preventive Maintenance Container */
+.preventive-maintenance-container {
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Header Styles */
+  .preventive-maintenance-header {
+    background-color: #26a69a;
+    color: white;
+    padding: 12px 20px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  
+  .preventive-maintenance-header h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  /* Form Styles */
+  .preventive-maintenance-form {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+  }
+  
+  /* Adjust spacing between rows and columns */
+  .preventive-maintenance-form-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px; /* Added gap between columns */
+    margin-bottom: 24px; /* Adjusted space between rows */
+  }
+  
+  .preventive-maintenance-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; /* Space between label and input */
+  }
+
+  
+  /* Required Field Indicator */
+  .preventive-maintenance-required {
+    color: red;
+    margin-left: 2px;
+  }
+  
+  /* Schedule Section */
+  .preventive-maintenance-schedule {
+    margin-top: 20px;
+  }
+  
+  .preventive-maintenance-schedule-header {
+    background-color: #e0f2f1;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .preventive-maintenance-schedule-header h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  /* Add Row Button */
+  .preventive-maintenance-add-row-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #26a69a;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .preventive-maintenance-add-row-btn:hover {
+    background-color: #1e8b82;
+  }
+  
+  /* Table Styles */
+  .preventive-maintenance-schedule-table-container {
+    margin-top: 12px;
+  }
+  
+  .preventive-maintenance-schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .preventive-maintenance-schedule-table th,
+  .preventive-maintenance-schedule-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .preventive-maintenance-schedule-table th {
+    background-color: #f9f9f9;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .preventive-maintenance-schedule-table td {
+    background-color: #fff;
+  }
+  .preventivemaintainance-add {
+    background-color: var(--button-color);
+    color: #fff;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 4px;
+    width: fit-content;
+    cursor: pointer;
+    margin: 0 auto; /* Centers the button horizontally */
+    display: block; /* Ensures proper centering */
+    text-align: center; /* Aligns text within the button */
+}
+
+.preventivemaintainance-add:hover {
+    background-color: #1e8a7c;
+}
+  .preventive-maintenance-schedule-table td input {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .preventive-maintenance-schedule-table td input:focus {
+    border-color: #26a69a;
+  }
+  
+  /* Action Buttons in Table */
+  .preventive-maintenance-action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
+  
+  .preventive-maintenance-action-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+  }
+  
+  .preventive-maintenance-action-btn.preventive-maintenance-add {
+    color: #26a69a;
+  }
+  
+  .preventive-maintenance-action-btn.preventive-maintenance-add:hover {
+    background-color: #e0f2f1;
+  }
+  
+  .preventive-maintenance-action-btn.preventive-maintenance-delete {
+    color: #f44336;
+  }
+  
+  .preventive-maintenance-action-btn.preventive-maintenance-delete:hover {
+    background-color: #ffebee;
+  }
+  
+  /* Table Hover and Focus Effects */
+  .preventive-maintenance-schedule-table tbody tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .preventive-maintenance-schedule-table tbody tr:focus-within {
+    background-color: #e0f7fa;
+  }
+
+  
+.preventive-maintainance-add {
+    background-color: var(--button-color);
+    color: #fff;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 4px;
+    width: fit-content;
+    cursor: pointer;
+    margin: 0 auto; /* Centers the button horizontally */
+    display: block; /* Ensures proper centering */
+    text-align: center; /* Aligns text within the button */
+}
+
+.preventive-maintainance-add:hover {
+    background-color: #1e8a7c;
+}
+
+  

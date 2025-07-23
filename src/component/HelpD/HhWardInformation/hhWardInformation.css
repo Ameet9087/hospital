@@ -1,0 +1,80 @@
+
+.wardInformation-container {
+    font-family: Arial, sans-serif;
+    /* max-width: 800px; */
+    width: auto;
+    height: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--background-color);
+  }
+  .wardInformation-heading-N-print-btn{
+    display: flex;
+    justify-content: space-between;
+  }
+  .wardInformation-heading h3{
+    /* color: #532c7b; */
+    /* font-weight: 100; */
+    font-size: var(--heading-font);
+    margin: 0;
+  }
+  .wardInformation-print-btn {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .wardInformation-print-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+    
+    
+    .wardInformation-total-row {
+      font-weight: bold;
+    }
+  
+  .wardInformation-wardNameColumn{
+    font-weight: bold;
+    color: #007bff;
+  }
+
+  .wardInformation-container table {
+width: 100%;
+/* padding: 5px; */
+/* border: 1px solid black ; */
+border-collapse: collapse;
+}
+.wardInformation-container th {
+  color: white;
+  background-color: var( --button-bg-color);
+  font-size: var(--heading-font);
+  text-align: center;
+  padding: 3px 5px;
+  border: 1px solid #e4e2e2;
+}
+.wardInformation-container tr {
+  border: 1px solid #e4e2e2;
+font-size: var(--font-size);
+padding: 3px 5px;
+
+}
+.wardInformation-container td {
+  padding: 3px 5px;
+  text-align: center;
+border: 1px solid #e4e2e2;
+}
+.wardInformation-tableActionBTN{
+  background-color: transparent;
+  color: black;
+  border: none;
+}
+ 

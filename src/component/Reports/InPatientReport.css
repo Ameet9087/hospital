@@ -1,0 +1,103 @@
+.inpatient-census-report-range-container {
+    width: 100%;
+    padding: 20px;
+    background-color: #e0f7ff;
+    font-family: Arial, sans-serif;
+  }
+  
+  .inpatient-census-report-range-date-range-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .inpatient-census-report-range-date-range-container label {
+    margin-right: 10px;
+  }
+  
+  .inpatient-census-report-range-date-range-container input[type="date"] {
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .inpatient-census-report-range-show-report-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+    
+  .inpatient-census-report-range-show-report-butto:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+
+
+  .inpatient-census-report-range-totals-container {
+    display: flex;
+    /* justify-content: center; */
+    margin-bottom: 20px;
+  }
+  
+  .inpatient-census-report-range-totals {
+    background-color: #d9d9d9;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .inpatient-census-report-range-total-admitted,
+  .inpatient-census-report-range-total-discharged {
+    background-color: #d9d9d9;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .inpatient-census-report-range-census-header {
+    margin-bottom: 20px;
+  }
+  
+  .inpatient-census-report-range-census-header h3 {
+    margin: 0;
+  }
+  
+  .inpatient-census-report-range-census-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .inpatient-census-report-range-census-table th,
+  .inpatient-census-report-range-census-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  .inpatient-census-report-range-census-table th {
+    background-color: #b3e5fc;
+  }
+  
+  .inpatient-census-report-range-census-table tbody tr:nth-child(odd) {
+    background-color: #e3f2fd;
+  }
+  
+  .inpatient-census-report-range-census-table tbody tr:nth-child(even) {
+    background-color: #ffffff;
+  }
+  
+  .inpatient-census-report-range-totals-row {
+    background-color: #d9d9d9;
+    font-weight: bold;
+  }
+  
+  .inpatient-census-report-range-info-icon {
+    margin-left: 5px;
+    cursor: pointer;
+  }
+  

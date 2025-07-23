@@ -1,0 +1,73 @@
+.OphthalmoPatientDashboard-outerContainer
+{
+    width: 100%;
+}
+.OphthalmoPatientDashboard-header
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid gray;
+}
+.OphthalmoPatientDashboard-header-left
+{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.OphthalmoPatientDashboard-header-left h4{
+    font-size: 16px;
+}
+.OphthalmoPatientDashboard-header-right
+{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}
+.OphthalmoPatientDashboard-header-right h4{
+    font-size: 16px;
+}
+.OphthalmoPatientDashboard-backButton
+{
+    padding: 3px 10px;
+    border: 1px solid var(--button-color);
+    color: white;
+    background: var(--button-color);
+    border-radius: 5px;
+}
+.OphthalmoPatientDashboard-backButton:hover
+{
+    color: var(--button-color);
+    background-color: var(--button-hover-color);
+}
+.OphthalmoPatientDashboard-navSection
+{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.189);
+}
+.OphthalmoPatientDashboard-navBar
+{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    gap: 5px;
+}
+.OphthalmoPatientDashboard-navBar li
+{
+    padding: 5px 10px;
+    color: black;
+    border-radius: 5px;
+}
+.OphthalmoPatientDashboard-navBar li:hover{
+    background-color: var(--button-color);
+    color: white;
+}

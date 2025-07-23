@@ -1,0 +1,10 @@
+/* src/components/ReportList.css */
+.dPC-report-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    /* background-color: #e6f7ff; */
+  }
+  
+ 

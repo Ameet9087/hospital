@@ -1,0 +1,164 @@
+/* AMCRenewalForm.css */
+.amc-form-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .amc-form-header {
+    background-color: #2b9b9b;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+  }
+  
+.amc-proposal-add {
+    background-color: var(--button-color);
+    color: #fff;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 4px;
+    width: fit-content;
+    cursor: pointer;
+    margin: 0 auto; /* Centers the button horizontally */
+    display: block; /* Ensures proper centering */
+    text-align: center; /* Aligns text within the button */
+}
+
+.amc-proposal-add:hover {
+    background-color: #1e8a7c;
+}
+
+  
+  .amc-form-header h2 {
+    color: white;
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .amc-form {
+    background-color: #ffffff;
+    padding: 5px;
+  }
+  
+  .amc-form-content {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .amc-form-column {
+    flex: 1;
+    min-width: 0; /* Prevents flex items from overflowing */
+  }
+  
+  .amc-form-field {
+    margin-bottom: 10px;
+  }
+  
+  .amc-form-field label {
+    display: block;
+    margin-bottom: 1px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .amc-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .amc-input-container input,
+  .amc-input-container select {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+    background-color: #fff;
+  }
+  
+  .amc-input-container input[type="date"] {
+    padding-right: 30px;
+  }
+  
+  .calendar-icon,
+  .search-icon {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #666;
+    pointer-events: none;
+  }
+  
+  .required {
+    color: red;
+    margin-left: 2px;
+  }
+  
+  .equipment-details {
+    background-color: #e6f3f3;
+    padding: 10px;
+  }
+  
+  .equipment-details h3 {
+    margin: 0;
+    font-size: 14px;
+    color: #2b9b9b;
+  }
+  
+  .file-upload-container {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  
+  .file-name-input {
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 12px;
+    background-color: #fff;
+    width: 40px;
+  }
+  
+  .amc-file-input {
+    display: none;
+  }
+  
+  .amc-choose-file-btn {
+    padding: 1px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  .amc-upload-btn {
+    padding: 5px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .amc-upload-btn:hover {
+    background-color: #45a049;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .amc-form-content {
+      flex-direction: column;
+    }
+  
+    .amc-form-column {
+      width: 100%;
+    }
+  }

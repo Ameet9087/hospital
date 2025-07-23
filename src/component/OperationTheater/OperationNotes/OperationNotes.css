@@ -1,0 +1,154 @@
+.operationnotes {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    padding: 10px;
+    font-size: var(--font-size);
+    position: relative;
+}
+  
+.operationnotes-title-bar {
+    background-color: var(--sideBar-bg-color);
+    color: white;
+    padding: 10px;
+ 
+}
+  
+.operationnotes-header {
+    font-size: var(--heading-font);
+    font-weight: bold;
+}
+  
+.operationnotes-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+  
+.operationnotes-main-section {
+    display: flex;
+    flex-wrap: wrap;
+ 
+}
+  
+.operationnotes-panel {
+    flex: 1;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+  
+.operationnotes-panel-header {
+    background-color: var(--sideBar-bg-color);
+    color: white;
+    padding: 8px;
+    font-size: var(--font-size);
+
+}
+  
+.operationnotes-panel-content {
+    padding: 10px;
+}
+  
+.operationnotes-form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+  
+.operationnotes-form-row label {
+    width: 40%;
+}
+.submit-button{
+    background-color: var(--button-color);
+    color: white;
+    border: 1px solid var(--button-hover-border-color);
+}
+.submit-button:hover{
+   background-color: white;
+}
+.operationnotes-detail{
+    background-color:aliceblue;
+    padding:8px;
+    /* font-weight: bold; */
+}
+
+
+.operationnotes-form-row input,
+.operationnotes-form-row select {
+    padding: var(--input-box-padding);
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 55%;
+}
+  
+.operationnotes-radio-buttons {
+    display: flex;
+    gap: 10px;
+}
+  
+.operationnotes-btn {
+    padding: 6px 12px;
+    margin: 5px;
+    background-color: var(--button-bg-color);
+    color:white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+  
+.operationnotes-btn:hover {
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+}
+  
+
+.operationnotes-btn.add {
+    background-color: #28a745; 
+    color: white;
+}
+
+.operationnotes-btn.add:hover {
+    background-color: #218838; 
+}
+
+.operationnotes-btn.delete {
+    background-color: #dc3545; 
+    color: white;
+}
+
+.operationnotes-btn.delete:hover {
+    background-color: #c82333; 
+}
+.operationnotes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+  
+.operationnotes-table th,
+.operationnotes-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+  
+.operationnotes-table th {
+    background-color: var(--sideBar-bg-color);
+    color: white;
+}
+  
+.operationnotes-table-section {
+    margin-top: 20px;
+}
+  
+.operationnotes-table-header {
+    font-size: var(--font-size);
+
+    margin-bottom: 10px;
+}
+
+
+
+

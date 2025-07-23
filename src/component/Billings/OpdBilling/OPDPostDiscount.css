@@ -1,0 +1,267 @@
+.OPDPostDiscount-container {
+    margin: 0 auto;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    background-color:var(--background-color);
+  }
+  .OPDPostDiscount-section {
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .OPDPostDiscount-header {
+    background-color: #00897b;
+    color: white;
+    padding: 7px 20px;
+    font-size: var(--heading-font);
+    font-weight: 500;
+  }
+  .OPDPostDiscount-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+  .OPDPostDiscount-grid.two-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .OPDPostDiscount-floating-field {
+    position: relative;
+  }
+  .OPDPostDiscount-floating-input,
+  .OPDPostDiscount-floating-select {
+    padding: 5px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background: white;
+    transition: all 0.2s ease;
+  }
+  .OPDPostDiscount-floating-input{
+    width: 92%;
+  }
+  .OPDPostDiscount-floating-select {
+    width: 100%;
+  }
+  .OPDPostDiscount-floating-label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    padding: 0 4px;
+    color: #666;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    font-size: var(--font-size);
+  }
+  .OPDPostDiscount-floating-field.active .OPDPostDiscount-floating-label {
+    top: 0;
+    font-size: 12px;
+    color: #00897b;
+  }
+  .OPDPostDiscount-floating-field.active .OPDPostDiscount-floating-input,
+  .OPDPostDiscount-floating-field.active .OPDPostDiscount-floating-select {
+    border-color: #00897b;
+  }
+  .OPDPostDiscount-full-width {
+    grid-column: span 4;
+  }
+  .OPDPostDiscount-search-field {
+    position: relative;
+  }
+  .OPDPostDiscount-search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  .OPDPostDiscount-checkbox-group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding-top: 24px;
+  }
+  .OPDPostDiscount-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  .OPDPostDiscount-checkbox input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+  }
+  .OPDPostDiscount-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .OPDPostDiscount-tab {
+    background-color: #00897b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+  }
+  .OPDPostDiscount-tab:hover {
+    background-color: #00796b;
+  }
+  .OPDPostDiscount-bottom-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 5px;
+  }
+  .OPDPostDiscount-section.half-width {
+    margin-bottom: 0;
+  }
+  .OPDPostDiscount-floating-input:focus,
+  .OPDPostDiscount-floating-select:focus {
+    outline: none;
+    border-color: #00897b;
+    box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+  }
+  .OPDPostDiscount-services-section {
+    background: white;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+  }
+  .OPDPostDiscount-tab-bar {
+    display: flex;
+    gap: 5px;
+    padding: 4px;
+    background: var(--upperBar-bg-color);
+    overflow-x: auto; 
+    scrollbar-width: none;
+    white-space: nowrap; 
+  }
+  .OPDPostDiscount-tab-bar::-webkit-scrollbar {
+    display: none; 
+  }
+  .OPDPostDiscount-tab {
+    padding: 4px 12px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    color: var(--button-color);
+    font-size: var(--font-size);
+    background: var(--button-hover-background-color);
+    cursor: pointer;
+    white-space: nowrap; 
+  }
+  .OPDPostDiscount-tab:hover {
+    background-color:var(--button-color);
+    color: var(--button-hover-background-color);
+  }
+  .OPDPostDiscount-tab.active {
+    background: var(--button-color);
+    color: var(--button-hover-background-color);
+  }
+  .OPDPostDiscount-summary-row {
+    display: flex;
+    flex-wrap: nowrap; 
+    gap: 10px;
+    }
+    .OPDPostDiscount-summary-field {
+      display: flex;
+      align-items: center;
+      gap: 10px; 
+      flex-shrink: 0; 
+      }
+      .OPDPostDiscount-summary-field label {
+      font-size: var(--font-size); 
+      white-space: nowrap; 
+      }
+      .OPDPostDiscount-summary-field input {
+      font-size: var(--font-size); 
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      }
+      .OPDPostDiscount-services-table{
+        padding: 8px;
+        overflow-x: scroll;
+      }
+      .OPDPostDiscount-services-table table{
+        table-layout: auto;
+      }
+      .OPDPostDiscount-summary-section {
+        display: flex;
+        margin-top: 10px;
+        flex-wrap: nowrap; 
+        gap: 10px; 
+        overflow-x: auto; 
+        white-space: nowrap;
+        scrollbar-width: none; 
+        -ms-overflow-style: none; 
+        }
+        .OPDPostDiscount-summary-section::-webkit-scrollbar {
+        display: none; 
+        }
+        .OPDPostDiscount-form-for-file{
+          display: flex;
+          gap: 15px;
+          justify-content: end;
+        }
+        .OPDPostDiscount-buttons {
+          display: flex;
+          justify-content: end;
+          gap: 5px;
+          font-size: var(--font-size);
+        }
+        .OPDPostDiscount-buttons button, .OPDPostDiscount-Upload {
+          background-color: var(--button-color);
+          font-size: var(--font-size);
+          border-radius: 5px;
+          padding: 8px 12px;
+          border: 1px solid var(--button-hover-background-color);
+          color: white;
+          cursor: pointer;
+        }
+        .OPDPostDiscount-buttons button:hover, .OPDPostDiscount-Upload:hover {
+          background-color: var(--button-hover-background-color);
+          border: 1px solid var(--button-hover-border-color);
+          color: var(--button-hover-text-color);
+        }
+  @media (max-width: 1024px) {
+    .OPDPostDiscount-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .OPDPostDiscount-full-width {
+      grid-column: span 2;
+    }
+  }
+  @media (max-width: 768px) {
+    .OPDPostDiscount-bottom-container {
+      grid-template-columns: 1fr;
+    }
+    .OPDPostDiscount-tabs {
+      flex-direction: column;
+    }
+  }
+  @media (max-width: 480px) {
+    .OPDPostDiscount-grid {
+      grid-template-columns: 1fr;
+    }
+    .OPDPostDiscount-grid.two-columns {
+      grid-template-columns: 1fr;
+    }
+    .OPDPostDiscount-full-width {
+      grid-column: span 1;
+    }
+  }

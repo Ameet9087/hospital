@@ -1,0 +1,138 @@
+.purchase-order-form {
+  max-width: 1000px;
+  font-family: Arial, sans-serif;
+  overflow-y: scroll;
+  height: 90vh;
+  -webkit-overflow-scrolling: touch;
+}
+
+.purchase-order-form::-webkit-scrollbar {
+  display: none;
+}
+
+.purchase-order-form {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.purchase-order-header {
+  font-size: var(--heading-font);
+}
+.div-add-good-purchase {
+  text-align: left;
+  font-size: var(--heading-font);
+}
+
+.purchase-order-form-form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.purchase-order-form-form-group {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.purchase-order-form-summary {
+  margin-bottom: 5px;
+}
+
+.purchase-order-form-summary-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.purchase-order-form-summary-buttons {
+  text-align: right;
+}
+
+.purchase-btn-order {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.purchase-btn-order:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.purchase-order-form-summary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.purchase-order-form-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  min-width: 250px;
+  gap: 10px;
+}
+
+.purchase-span {
+  color: red;
+  padding: 5px;
+}
+.purchse-order-in {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.purchase-order-com-tab {
+  height: 150px;
+  width: 100%;
+  overflow-y: scroll;
+  scrollbar-width: none
+}
+
+.order-purchase-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+
+.order-purchase-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--heading-font);
+  text-align: left;
+}
+.order-purchase-table th,
+.order-purchase-table td {
+  width: 150px;
+  border: 1px solid #ddd;
+}
+.order-purchase-table th {
+  background-color: #f4f4f4;
+  color: #333;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .purchase-order-form-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .purchase-order-form-item label {
+    text-align: left;
+    margin-bottom: 8px;
+  }
+}

@@ -1,0 +1,169 @@
+.specialisations {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .specialisations__header {
+    cursor: pointer;
+    color: white;
+    padding: 10px;
+    background-color: var(--button-color);  
+  }
+  
+  .specialisations__header h3 {
+    margin: 0;
+    color: white;
+  }
+  
+  .specialisations__form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .specialisations__form-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+  .specialisations__form-group label {
+    font-weight: bold;
+    min-width: 150px;
+    margin-right: 10px;
+  }
+  
+  .specialisations__form-group input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .specialisations__radio-group {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .specialisations__radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .LocationsTable-container {
+    width: 100%;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+  }
+  
+  .LocationsTable-header {
+    background-color: #d6e9f8;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .LocationsTable-instruction {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .LocationsTable-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+  }
+  
+  .LocationsTable-table th,
+  .LocationsTable-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .LocationsTable-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .LocationsTable-input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .LocationsTable-action {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .LocationsTable-add {
+    color: green;
+  }
+  
+  .LocationsTable-delete {
+    color: red;
+  }
+  
+  /* General Styles for SearchPopup Component */
+.SearchPopup {
+  width: 100%; /* Adjust width to your needs, e.g., 80% or 600px */
+  max-width: 600px; /* Optional: Set a maximum width to make it more responsive */
+  margin: 0 auto; /* Centers the content horizontally */
+  text-align: left; /* Align text to the left */
+  padding: 20px;
+}
+
+/* Search bar styling */
+.SearchPopup-search-bar {
+  margin-bottom: 20px;
+}
+
+.SearchPopup-input {
+  width: 100%; /* Makes the input field take up full width */
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Table styling */
+.SearchPopup-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.SearchPopup-table th,
+.SearchPopup-table td {
+  padding: 8px;
+  text-align: left; /* Align table text to the left */
+  border: 1px solid #ddd;
+}
+
+.SearchPopup-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+/* Styling for loading state */
+.SearchPopup-table td {
+  text-align: center;
+}
+
+/* Optional: Style for table rows when filtered */
+.SearchPopup-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.SearchPopup-table tr:hover {
+  background-color: #f1f1f1;
+}

@@ -1,0 +1,157 @@
+ /* prachi parab user interface changed  14/9 */
+
+.RequisitionList-tableContainer {
+    width: 100%;
+    overflow-x: auto;
+    padding: 20px;
+    background-color: #e3fffe;;
+}
+
+.RequisitionList-Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.RequisitionList-searchInput {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.RequisitionList-actions {
+    display: flex;
+    align-items: center;
+}
+
+.RequisitionList-results {
+    margin-right: 15px;
+    font-size: 14px;
+    color: #333;
+}
+
+.RequisitionList-patientsTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.RequisitionList-patientsTable th, .RequisitionList-patientsTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.RequisitionList-patientsTable th {
+    background-color: #f4f4f4;
+}
+
+
+.RequisitionList-tableRow:hover {
+    background-color: #f1f1f1;
+}
+
+.RequisitionList-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.RequisitionList-btn {
+    padding: 5px 10px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.RequisitionList-consumption {
+    background-color: #4CAF50;
+}
+
+.RequisitionList-wardRequest {
+    background-color: #f44336;
+}
+
+.RequisitionList-transfer {
+    background-color: #2196F3;
+}
+
+.RequisitionList-vitals {
+    background-color: #ff9800;
+}
+
+.RequisitionList-pagination-btn {
+    border: 1px solid #ddd;
+    /* background-color: #0772bc; */
+    cursor: pointer;
+}
+
+.RequisitionList-pagination-btn:disabled {
+    /* background-color: #ccc; */
+    cursor: not-allowed;
+}
+
+.RequisitionList-pagination-info {
+    margin: 0 15px;
+}
+
+.RequisitionList-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.RequisitionList-button{
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.RequisitionList-button:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+
+    
+}
+.RequisitionList-Model{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.RequisitionList-view-table
+{
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    width: 700px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: modalFadeIn 0.3s ease-in-out;
+}
+.RequisitionList-back-btn
+{
+    padding: 5px 10px;
+}
+.RequisitionList-conatiner
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.RequisitionList-h1
+{
+    font-size: 18px;
+}

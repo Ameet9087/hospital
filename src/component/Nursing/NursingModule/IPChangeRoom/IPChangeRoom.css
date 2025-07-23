@@ -1,0 +1,111 @@
+/* AjharTamboli 22-11-24 iPChangeRoom.css */
+
+.iPChangeRoom-master {
+  background-color: var(--background-color);
+  padding: 4px;
+  font-size: 12px;
+}
+
+.iPChangeRoom-title-bar {
+  /* background-color: var(--upperBar-bg-color); */
+  color: white;
+  border-radius: 7px;
+  padding: 8px;
+  margin-bottom: 4px;
+  font-size: 18px;
+  font-weight: 510;
+}
+
+/* .iPChangeRoom-header {
+    font-size: var(--heading-font);
+  } */
+
+.iPChangeRoom-checkbox-label {
+  font-weight: normal;
+  margin-left: 4px;
+}
+
+.iPChangeRoom-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.iPChangeRoom-main-section {
+  display: flex;
+  gap: 10px;
+}
+
+
+.iPChangeRoom-panel {
+  flex: 1;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+}
+
+.iPChangeRoom-panel-header {
+  background-color: var(--upperBar-bg-color);
+  color: white !important;
+  border-radius: 7px;
+  padding: 8px;
+  font-size: 16px !important;
+}
+
+.iPChangeRoom-panel-content {
+  padding: 8px;
+}
+
+.iPChangeRoom-form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  gap: 4px;
+  font-size: var(--font-size);
+  padding: 2px;
+}
+
+.iPChangeRoom-form-row label {
+  min-width: 140px;
+}
+.iPChangeRoom-form-row input {
+  padding: 5px;
+  /* background: none; */
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: var(--font-size);
+  width: 100%;
+}
+
+
+.iPChangeRoom-form-row select {
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 100%;
+}
+
+
+.iPChangeRoom-magnifier-btn {
+  padding: 2px 6px;
+  cursor: pointer;
+}
+
+.iPChangeRoom-action-buttons button,
+.ipchangeroom-btn-blue {
+  background-color: var(--button-bg-color);
+  color: var(--button-hover-background-color);
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 5px;
+  float: right;
+}
+.iPChangeRoom-action-buttons button:hover,
+.ipchangeroom-btn-blue:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color);
+}
+
+/* AjharTamboli 20-11-24 iPChangeRoom.css */

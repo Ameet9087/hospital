@@ -1,0 +1,75 @@
+/* Dhanashree_AddMessagePopup_26/09_Starts */
+
+.addpopup-add-message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.addpopup-h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.addpopup-message-input,
+.addpopup-message-textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.addpopup-message-textarea {
+  height: 150px;
+  resize: none;
+}
+
+.addpopup-department-select {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.addpopup-department-dropdown {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.addpopup-send-message-button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.addpopup-send-message-button:hover {
+  background-color: #218838;
+}
+
+/* Optional: Style the message summary */
+.addpopup-message-summary {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  text-align: left;
+  width: 100%;
+}
+
+/* Dhanashree_AddMessagePopup_26/09_Ends */

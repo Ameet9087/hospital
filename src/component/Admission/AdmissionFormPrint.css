@@ -1,0 +1,183 @@
+.AdmissionFormPrint-Container{
+    height: 600px;
+    overflow: scroll;
+}
+
+.AdmissionFormPrint-subContainer{
+    background-color: white;
+    margin-top: 50px;
+    font-weight: bold;
+}
+.AdmissionFormPrint-Container input[type="text"],.AdmissionFormPrint-Container[type="date"]{
+   border: none;
+}
+.AdmissionPrint-btn{
+    color: white;
+    background-color: var(--button-color);
+    border: 1px solid var(--button-border);
+    padding: var(--input-box-padding);
+    border-radius: 5px;
+    margin-left: 50%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.AdmissionPrint-btn:hover{
+    background-color: var(--button-hover-color);
+    cursor: pointer;
+    border:1px solid var(--button-color);
+}
+.AdmissionFormPrint-section
+{
+    margin-left: 5px;
+    margin-right: 5px; 
+}
+.AdmissionFormPrint-mainSection{
+    border: 1px solid black;
+}
+
+.AdmissionFormPrint-heading{
+    text-align: center;
+}
+.AdmissionFormPrint-subContainer{
+    width: 70%;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    gap: 5px;
+}
+.AdmissionFormPrint-mainSection input{
+   margin-top: 5px;
+}
+.AdmissionFormPrint-section{
+    display: flex;
+    justify-content: space-between;
+    
+}
+.AdmissionFormPrint-mainSection-table{
+   
+    display: flex;
+    justify-content: space-around;
+    border-bottom: none;
+    padding: 5px;
+   
+}
+.AdmissionFormPrint-mainSection-table table{
+  width: 99%;
+  border-collapse: collapse;
+}
+.AdmissionFormPrint-mainSection-subtable input{
+    border: none;
+}
+.AdmissionFormPrint-mainSection-table table tr th{
+    text-align: start;
+    width: 50%;
+} 
+.AdmissionFormPrint-mainSection-subtable{
+    width: 100%;
+}
+.AdmissionFormPrint-mainSection-subtable p{
+    border: none;
+    width: 99%;
+    margin-top: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+.AdmissionFormPrint-mainSection-subtable-input{
+    border: none;
+    width: 99%;
+    margin-top: 5px;
+}
+.AdmissionFormPrint-mainSection-subtable-joint{
+    border: none;
+    padding: 5px;
+}
+.AdmissionFormPrint-mainSection-fiiledByDoctor{
+    display: flex;
+    justify-content: space-between;
+    border: none;
+    margin: 10px;
+}
+.AdmissionFormPrint-mainSection-fiiledByDoctor-section{
+    border: none;
+    width: 80%;
+}
+.AdmissionFormPrint-mainSection-fiiledByDoctor-section-icd{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.AdmissionFormPrint-mainSection-fiiledByDoctor-section-icd p{
+    border-bottom: none;
+}
+.AdmissionFormPrint-mainSection-fiiledByDoctor-a{
+  align-self: center;
+    
+}
+.AdmissionFormPrint-mainSection-fiiledByDoctor-a a{
+    color: black;
+      
+ }
+.AdmissionFormPrint-consent-form-container {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+}
+  
+.AdmissionFormPrint-consent-form-heading {
+    text-align: center;
+    margin-bottom: 20px;
+}
+  
+.AdmissionFormPrint-consent-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border:none;
+    margin: 10px;
+}
+  
+.AdmissionFormPrint-subsection input{
+    font-size: 14px;
+    padding:0 10px;
+}
+  
+  
+.AdmissionFormPrint-form-section label {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+  
+.AdmissionFormPrint-checkbox-group {
+  display: flex;
+  gap: 5px;
+}
+  
+.AdmissionFormPrint-checkbox-group input {
+    margin-right: 5px;
+    font-size: 14px;
+}
+  
+.AdmissionFormPrint-consent-details {
+    margin: 15px 0;
+    display: flex;
+}
+  
+.AdmissionFormPrint-consent-details h3 {
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+  
+.AdmissionFormPrint-consent-details p {
+    font-size: 14px;
+    width: 68%;
+    margin-left: 25px;
+   
+}
+.AdmissionFormPrint-form-section{
+    display: flex;
+}
+.AdmissionFormPrint-consent-form-checkbox{
+    margin-left: 10px;
+}

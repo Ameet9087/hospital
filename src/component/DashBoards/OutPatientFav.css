@@ -1,0 +1,90 @@
+/* Swapnil ROkade OutPatientFav Adding class name and table centralizaion */
+.out-patient-list {
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #e6f3ff;
+}
+
+.out-patient-search-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.out-patient-search-bar input {
+  flex-grow: 1;
+  padding: 5px;
+  margin-right: 5px;
+}
+
+.out-patient-search-bar button {
+  padding: 5px 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.out-patient-results {
+  margin-left: auto;
+  margin-right: 10px;
+  color: #3498db;
+}
+
+.out-patient-print {
+  padding: 5px 10px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.out-patient-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.out-patient-table th, 
+.out-patient-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.out-patient-table th {
+  background-color: #f2f2f2;
+}
+
+.out-patient-no-data {
+  background-color: #fff9e6;
+}
+
+.out-patient-no-data td {
+  text-align: center;
+  padding: 20px;
+  color: #856404;
+}
+
+/* .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.pagination span {
+  margin: 0 10px;
+} */

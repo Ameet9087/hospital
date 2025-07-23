@@ -1,0 +1,50 @@
+.SubCategoryList-container {
+  padding: 10px;
+}
+
+.SubCategoryList-content {
+  width: 100%;
+}
+.SubCategoryList-results-info
+{
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Aligns content to the right */
+
+}
+.SubCategoryList-add-button,.SubCategoryList-print-button {
+  background-color: var(--button-color);
+  color: white;
+  margin-left: 10px;
+  border: 1px solid var(--button-color);
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.SubCategoryList-search-bar input {
+  padding: 5px;
+  margin-top: 10px;
+  font-size: var(--font-size);
+  margin-right: 10px;
+}
+
+.SubCategoryList-search-button {
+  background-color: #008cba;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+
+.SubCategoryList-edit-button {
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}

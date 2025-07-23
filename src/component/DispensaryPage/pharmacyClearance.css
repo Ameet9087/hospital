@@ -1,0 +1,486 @@
+/* Mohini_PurchaseOrder_WholePage_14/sep/2024 */
+.pharmacy-clearance-container {
+    padding: 20px;
+    height: 90vh;
+    overflow-y: scroll;
+    background-color: var(--background-color);
+}
+
+.purchaseOrders-add-btn{
+  background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+}
+
+/* Header */
+.pharmacy-clearance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+.pharmacy-clearance-button{
+    justify-content: end;
+}
+/* Add Purchase Order Button */
+.pharmacy-clearance-add-pharmacy-clearance-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+}
+.pharmacy-clearance-add-pharmacy-clearance-button:hover
+{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+/* Status Filters */
+.pharmacy-clearance-status-filters {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.pharmacy-clearance-status-filters label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.pharmacy-clearance-status-filters input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Filters Container */
+.pharmacy-clearance-filters {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.purchaseOrders-add-btn {
+    background-color:var(--button-color); 
+    color: white;
+    border: none;
+   
+    padding: 5px; 
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+  }
+
+/* Date Range Filter */
+.pharmacy-clearance-date-range {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 30%;
+}
+
+.pharmacy-clearance-date-range label {
+    font-size: 14px;
+}
+
+.pharmacy-clearance-date-range input[type="date"] {
+    padding: 5px;
+    border-radius: 5px;
+    /* width: 30%; */
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.pharmacy-clearance-date-range-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.pharmacy-clearance-date-range-button:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+.pharmacy-clearance-date-range-button:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+/* Favorite and Reset Buttons */
+.pharmacy-clearance-favorite-btn,
+.pharmacy-clearance-reset-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 0 5px;
+    padding: 0;
+    line-height: 1;
+    color: gray;
+}
+
+/* Search Box */
+.pharmacy-clearance-search-box {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+    /* width: 30%; */
+    font-size: 14px;
+}
+.pharmacy-clearance-search{
+    margin-left: 10px;
+}
+
+
+
+/* No Rows */
+.pharmacy-clearance-no-rows {
+    text-align: center;
+    background-color: #fff3e0;
+    color: #ff6f00;
+    font-weight: bold;
+}
+
+/* Pagination */
+.pharmacy-clearance-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px 0;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.pharmacy-clearance-pagination span {
+    margin: 0 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+.pharmacy-clearance-pagination button {
+    background-color: #0069d9;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.pharmacy-clearance-pagination button:hover {
+    background-color: #0056b3;
+}
+
+.pharmacy-clearance-pagination button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* Search Container */
+.pharmacy-clearance-search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Print Button */
+.pharmacy-clearance-print-button {
+    background-color:var( --button-color);
+    color: white;
+    border: 1px solid var( --button-hover-border-color);
+    margin-right: 10px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+    transition: background-color 0.3s ease;
+}
+.pharmacy-clearance-print-button:hover{
+
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+.pharmacy-clearance-button span {
+ /* This pushes the span to the right */
+    font-size: 14px; /* Adjust font size if needed */
+  }
+  
+
+
+/* Data Order */
+.purchase-data-order {
+    display: flex;
+    margin-left: 10px;
+}
+
+/* Supplier Filter */
+.pharmacy-clearance-supplier-filter {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-left: 50px;
+    /* margin-left: 280px; */
+}
+
+.pharmacy-clearance-supplier-filter label {
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.pharmacy-clearance-supplier-filter select{
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.pharmacy-clearance-supplier-filter input {
+    padding: 3px;
+    /* width: 30%; */
+    margin-right: 50%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.pharmacy-clearance-supplier-filter input[type="number"] {
+    width: 100px;
+}
+
+/* Button Container */
+.pharmacy-clearance-button {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 5px;
+}
+
+/* Modal Styles */
+.pharmacy-clearance-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+/* Modal Content */
+.pharmacy-clearance-modal .modal-dialog {
+    max-width: 100%;
+    margin: 0;
+}
+
+.pharmacy-clearance-modal .modal-content {
+    width: 100%;
+    height: auto;
+    max-height: 90vh;
+    overflow: auto;
+    border-radius: 2px;
+    /* background-color: #fff; */
+    /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Modal Header and Footer */
+.pharmacy-clearance-modal .modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.pharmacy-clearance-modal .modal-title {
+    font-size: 16px;
+}
+
+.pharmacy-clearance-modal .modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+.pharmacy-clearance-modal .modal-dialog {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+  
+/* Modal Body for Horizontal Form */
+.pharmacy-clearance-form-horizontal {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    min-width: 100%;
+}
+
+.pharmacy-clearance-form-horizontal > div {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Adjust for Mobile Responsiveness */
+@media (max-width: 768px) {
+    .pharmacy-clearance-form-horizontal {
+        flex-direction: column;
+    }
+
+    .pharmacy-clearance-form-horizontal > div {
+        min-width: 100%;
+    }
+}
+.pharmacy-clearance-modal .modal-content{
+    display: contents!important;
+}
+
+
+/*Table */
+
+.pharmacy-clearance-table-container {
+    margin-top: 5px;
+    /* background-color: white; */
+    border-radius: 5px;
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.pharmacy-clearance-table-container {
+    /* background-color: white; */
+    padding: 10px;
+  }
+  
+  .pharmacy-clearance-tab {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .pharmacy-clearance-tab th, .pharmacy-clearance-tab td {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 5px 0; /* Only top-bottom padding */
+  }
+  
+  .pharmacy-clearance-tab th {
+    background-color: #f1f1f1;
+    white-space: nowrap;
+    font-size: 16px;
+  }
+  
+  .pharmacy-clearance-tab td {
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .pharmacy-clearance-no-rows {
+    background-color: #ffecb3;
+    text-align: center;
+    padding: 15px;
+  }
+  
+  .pharmacy-clearance-pagination {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .pharmacy-clearance-pagination-btn {
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: #90caf9;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .pharmacy-clearance-pagination-btn:hover {
+    background-color: var(--button-color);
+  }
+  .purchase-results-count-span {
+    font-size: 14px;
+    color: black;
+    margin-right: 10px;
+  }
+
+
+  /*  */
+  
+  @media (max-width: 768px) {
+
+    /* Adjustments for flexbox */
+    .pharmacy-clearance-header,
+    .pharmacy-clearance-status-filters,
+    .pharmacy-clearance-filters,
+    .pharmacy-clearance-date-range,
+    .pharmacy-clearance-search-container,
+    .pharmacy-clearance-supplier-filter,
+    .pharmacy-clearance-button {
+      flex-direction: column;
+      gap: 10px; /* Maintain a reasonable gap without adding too much vertical space */
+      align-items: flex-start;
+    }
+  
+    /* Responsive buttons and inputs */
+    .pharmacy-clearance-add-pharmacy-clearance-button,
+    .pharmacy-clearance-date-range input[type="date"],
+    .pharmacy-clearance-search-box,
+    .pharmacy-clearance-print-button {
+      width: 100%; /* Make inputs and buttons take full width */
+      font-size: 14px; /* Ensure font size remains readable */
+    }
+  
+    /* Responsive table container */
+    .pharmacy-clearance-table-container {
+      max-width: 100%;
+      overflow-x: auto; /* Allow horizontal scroll if needed */
+      margin-top: 5px; /* Avoid large vertical spaces */
+    }
+  
+    /* Responsive modal content */
+    .pharmacy-clearance-modal .modal-dialog {
+      margin: 10px;
+      width: 100%; /* Ensure the modal is full width */
+    }
+  
+    /* Responsive form in modal */
+    .pharmacy-clearance-form-horizontal {
+      flex-direction: column; /* Stack form fields vertically */
+      gap: 10px; /* Minimal gap between form fields */
+    }
+  
+    .pharmacy-clearance-form-horizontal > div {
+      width: 100%;
+      min-width: unset;
+    }
+  
+   
+  }
+  
+/* Mohini_PurchaseOrder_WholePage_14/sep/2024 */

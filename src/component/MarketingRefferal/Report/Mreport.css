@@ -1,0 +1,86 @@
+ /* neha mktreffaral-mreport-19/09/24 */
+.mkrtref_report_main {
+    background-color: #e8f6ff;
+    padding: 20px;
+  }
+  
+  .mkrtref_report_title {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .mkrtref_report_filter_bar {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .mkrtref_report_date_range, .mkrtref_report_filters {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
+  
+  .mkrtref_report_date_range label, .mkrtref_report_filters label {
+    margin-right: 10px;
+  }
+  
+  .mkrtref_report_filters input {
+    margin-right: 5px;
+    margin-top: 20px;
+    padding: 2px;
+  }
+  
+  .mkrtref_report_show_button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px ;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .mkrtref_report_table_container {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .mkrtref_report_table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .mkrtref_report_table_head-th {
+    background-color: #f4f4f4;
+    text-align: left;
+    padding: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .mkrtref_report_no_data {
+    text-align: center;
+    padding: 8px;
+    color: #999;
+    border: 1px solid #ddd;
+  }
+  
+  .mkrtref_report_pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .mkrtref_report_export_print_btn{
+    background-color: #2ca4f4;
+    color: white;
+    font-size: 16px;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+
+   
+  }

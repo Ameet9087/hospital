@@ -1,0 +1,103 @@
+.ac {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  .ac-content {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .ac-fiscal-details, .ac-activity {
+    /* background-color: #f2f2f2; */
+   border: 1px solid black;
+    padding: 20px;
+    flex: 1;
+    font-size: 14px;
+  }
+  .ac-fiscal-details{
+    height: max-content;
+  }
+  .ac-activity{
+    height: 500px;
+    background-color: #f2f2f2;
+  }
+  
+  .ac-fiscal-details h2, .ac-activity h2 {
+    background-color: #f2f2f2;
+    padding: 10px;
+    font-size: 1.2em;
+    margin-top: 0;
+  }
+  
+  .ac-form-group {
+    margin-bottom: 10px;
+  }
+  
+  .ac-form-group label {
+    display: inline-block;
+    width: 150px;
+    
+  }
+  
+  .ac-close-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px; 
+    float: right;
+    font-size: var(--font-size);
+  }
+  .ac-close-btn:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .ac-search {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    justify-content: space-between;
+   
+  }
+  .ac-search-container{
+    background-color: white;
+    padding: 0 5px;
+    color: gray;
+  }
+  
+  .ac-search input {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    padding: 5px;
+  }
+  
+  .ac-results {
+    display: block;
+    text-align: right;
+    margin-bottom: 10px;
+  }
+  
+  .ac-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .ac-table th, .ac-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .ac-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  .ac-no-rows {
+    text-align: center;
+    color: #efb005;
+    background-color: #fff9c4;
+  }

@@ -1,0 +1,68 @@
+.Nursing-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .Nursing-modal-content {
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    width: 90%;
+    height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: modalFadeIn 0.3s ease-in-out;
+  }
+  
+  .Nursing-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .Nursing-modal-body {
+    padding: 10px 0;
+  }
+  
+  .Nursing-modal-footer {
+    text-align: right;
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
+  }
+  
+  .Nursing-close-button, .Nursing-modal-close-button {
+    background-color: var(--button-color);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+  }
+  
+  /* .Nursing-close-button {
+    font-size: 1.2rem;
+    background-color: transparent;
+    color: #333;
+  } */
+  
+  @keyframes modalFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

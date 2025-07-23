@@ -1,0 +1,133 @@
+/* General styles */
+.bloodcollection {
+    margin: 10px; 
+    background-color: #e3fffe;
+   
+}
+.bloodcollection h2{
+  font-size: var(--heading-font);
+}
+/* Table Styles */
+.donor-list-container {
+    margin-top: 20px; /* Space above the table */
+    width: 100%;
+}
+
+.donor-table {
+    width: 100%; /* Full width for the table */
+    border-collapse: collapse; /* Collapse borders for a cleaner look */
+}
+
+.donor-table th, .donor-table td {
+    border: 1px solid #ccc; /* Light border for cells */
+    padding: 5px; /* Padding for table cells */
+    text-align: left; /* Align text to the left */
+    white-space: nowrap;
+}
+.donor-table td{
+    background-color: white;
+}
+
+.donor-table th {
+    background-color: #f4f4f4; /* Header background color */
+    color: black; /* Header text color */
+    font-size: 14px;
+}
+
+/* Button Styles */
+.bloodcollection-btn {
+    padding: 5px; /* Padding for buttons */
+    border: none;
+    border-radius: 4px; /* Rounded corners */
+    color: white; /* Text color */
+    background-color: #00c9c0; /* Success color */
+    cursor: pointer; /* Pointer on hover */
+}
+
+.bloodcollection-btn:hover {
+    background-color: white; 
+    color: #00c9c0;
+    border: 1px solid #00c9c0;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* 26/01/25 */
+
+
+  
+  .bloodcollection-modal-content {
+    background-color: white;
+    border-radius: 12px;
+    padding: 5px;
+    /* width: 90%; */
+    max-width: 500px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .bloodcollection-modal h6 {
+    font-size: var(--heading-font);
+    color:black;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  .bloodcollectionform {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .bloodcollectionform-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+  
+  .bloodcollectionform-form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 calc(50% - 1rem); 
+    min-width: 200px;
+  }
+  
+  .bloodcollectionform-form-group label {
+    font-size: var(--font-size);
+    color: black;
+    /* margin-bottom: 0.5rem; */
+  }
+  
+  .bloodcollectionform-form-group input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: var(--font-size);
+  }
+  
+ 
+  
+  .bloodcollection-btn {
+    background-color: var(--button-color);
+        font-size: var(--font-size);
+        border-radius: 5px;
+        padding: 8px 12px;
+        border: 1px solid var(--button-hover-background-color);
+        color: white;
+        cursor: pointer;
+  }
+  
+  .bloodcollection-btn:hover {
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+  }
+  

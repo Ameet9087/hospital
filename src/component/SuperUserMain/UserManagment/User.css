@@ -1,0 +1,50 @@
+.User-container {
+  width: 98%;
+  padding: 5px;
+}
+.User-heading {
+  width: 100%;
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-bottom: 1px solid gray;
+}
+.User-Add-New-In {
+  width: 20%;
+  padding: var(--input-box-padding);
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+.User-Add-New-Btn {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  color: white;
+  padding: var(--input-box-padding);
+  border-radius: 5px;
+}
+.User-Add-New-Btn:hover {
+  background-color: var(--button-hover-color);
+  border: 1px solid var(--button-color);
+  color: var(--button-color);
+}
+.User-table-container {
+  width: 100%;
+  padding-top: 5px;
+}
+.User-edit-btn {
+  background-color: var(--button-color);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.User-delete-btn {
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  margin-left: 10px;
+}

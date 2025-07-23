@@ -1,0 +1,236 @@
+
+.create-return-to-vendor-form-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0 0 0;
+}
+.create-return-to-vendor-table-container::-webkit-scrollbar{
+  display: none;
+}
+.create-return-to-vendor-table-container {
+  width: 100%;
+  max-height: 300px; 
+  margin-bottom: 20px;
+  border: 1px solid #ddd; 
+  border-radius: 5px;
+}
+.create-return-to-vendor-return-btn {
+  background-color: var(--button-color);
+  color: white;
+  padding: 10px 20px;
+  border: 1px solid var(--button-hover-border-color);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.create-return-to-vendor-return-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+}
+.create-return-to-vendor-cancel-btn {
+  background-color: #f44336;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.create-return-to-vendor-cancel-btn:hover {
+  background-color: #e53935;
+}
+@media (max-width: 768px) {
+  .create-return-to-vendor-form-row {
+    flex-direction: column;
+  }
+}
+.create-return-to-vendor-table-container {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.create-render-to-add {
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-size: var(--heading-font);
+}
+.create-render-to-remove{
+  background-color: red;
+  color: white;
+  border: 1px solid red;
+  border-radius: 5px;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-size: var(--heading-font);
+}
+.CreateReturnToVendor-Inv-Return-Input{
+  width: 100%;
+  padding: 1px 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.create-return-to-vendor-form-row-submit-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-hover-border-color);
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+.create-return-to-vendor-form-row-submit-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+}
+.create-return-to-vendor-form-row-cancel {
+  font-size: var(--font-size);
+  background-color: red;
+  color: white;
+  border: 1px solid red;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.create-return-to-vendor-form-row-cancel:hover {
+  background-color: white;
+  color: red;
+}
+.CreateReturnToVendor-Words{
+  font-size: var(--font-size);
+  color: #666;
+}
+/* ******************************************************************************************* */
+.CreateReturnToVendor-btn-div{
+  display: flex;
+  gap: 5px;
+}
+.CreateReturnToVendor-container {
+  margin: 0 auto;
+  width: 1200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+  background-color:var(--background-color);
+}
+.CreateReturnToVendor-header {
+  background-color: #00897b;
+  color: white;
+  padding: 7px 20px;
+  font-size: var(--font-size);
+  font-weight: 500;
+}
+.CreateReturnToVendor-section.half-width {
+  margin-bottom: 0;
+}
+.CreateReturnToVendor-section-div{
+  width: 50%;
+}
+.CreateReturnToVendor-section {
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.CreateReturnToVendor-floating-field {
+  position: relative;
+}
+.CreateReturnToVendor-floating-field.active .CreateReturnToVendor-floating-label {
+  top: 0;
+  font-size: 12px;
+  color: #00897b;
+}
+.CreateReturnToVendor-floating-field.active .CreateReturnToVendor-floating-input,
+.CreateReturnToVendor-floating-field.active .CreateReturnToVendor-floating-select {
+  border-color: #00897b;
+}
+.CreateReturnToVendor-floating-input,
+.CreateReturnToVendor-floating-select {
+  padding: 4px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: var(--font-size);
+  background: white;
+  transition: all 0.2s ease;
+}
+.CreateReturnToVendor-floating-input{
+  width: 100%;
+}
+.CreateReturnToVendor-floating-input:focus,
+.CreateReturnToVendor-floating-select:focus {
+  outline: none;
+  border-color: #00897b;
+  box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+}
+.CreateReturnToVendor-search-field {
+    position: relative;
+  }
+  .CreateReturnToVendor-search-icon {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+.CreateReturnToVendor-floating-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 4px;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-size: 12px;
+}
+.CreateReturnToVendor-floating-select {
+  width: 100%;
+}
+.CreateReturnToVendor-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+.CreateReturnToVendor-grid.two-columns {
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (max-width: 1024px) {
+  .CreateReturnToVendor-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .CreateReturnToVendor-full-width {
+    grid-column: span 2;
+  }
+}
+@media (max-width: 768px) {
+  .CreateReturnToVendor-bottom-container {
+    grid-template-columns: 1fr;
+  }
+  .CreateReturnToVendor-tabs {
+    flex-direction: column;
+  }
+}
+@media (max-width: 480px) {
+  .CreateReturnToVendor-grid {
+    grid-template-columns: 1fr;
+  }
+  .CreateReturnToVendor-grid.two-columns {
+    grid-template-columns: 1fr;
+  }
+  .CreateReturnToVendor-full-width {
+    grid-column: span 1;
+  }
+}

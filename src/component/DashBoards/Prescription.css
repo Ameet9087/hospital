@@ -1,0 +1,126 @@
+.prescription-container {
+    width: 60%;
+    margin: 0 auto;
+    background-color: #ffcccb;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .prescription-header {
+    text-align: center;
+  }
+  .patient-info {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    margin-top: 10px;
+  }
+  
+  .patient-info p {
+    margin: 5px 0;
+  }
+  
+  .prescription-table-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background-color:#ffcccb ;
+  }
+  .prescription-header-title
+  {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+  }
+  
+  .prescription-close-button
+  {
+    padding: 5px 10px;
+    border-radius: 50%;
+    border: 2px solid red;
+    color: red;
+
+  }
+  .prescription-table th, .prescription-table td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .prescription-footer {
+    height: 60px;
+    margin-top: 30px;
+    position: relative;
+  }
+  
+  .rx {
+    font-size: 80px;
+    color: rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: -100px;
+    left: 20px;
+  }
+  
+  .doctor-signature {
+    margin-top: 100px;
+    border-top: 1px solid black;
+    width: 200px;
+    text-align: left;
+  }
+  
+  .prescription-print-btn {
+    margin-top: 20px;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .print-btn:hover {
+    background-color: #45a049;
+  }
+  /* Print styles */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+  }
+
+  .prescription-container {
+    padding: 0;
+    margin: 0;
+  }
+
+  .prescription-close-button,
+  .prescription-print-btn {
+    display: none; /* Hide close and print buttons when printing */
+  }
+
+  .prescription-header-title h2 {
+    font-size: 24px;
+  }
+
+  .prescription-table th, .prescription-table td {
+    border: 1px solid black;
+    padding: 8px;
+  }
+
+  .prescription-footer {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+  }
+
+  .doctor-signature {
+    padding-right: 20px;
+    font-weight: bold;
+  }
+
+  .rx {
+    font-size: 30px;
+    padding-left: 20px;
+  }
+}

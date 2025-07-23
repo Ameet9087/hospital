@@ -1,0 +1,65 @@
+.bookAppointment-container {
+  padding: 20px;
+}
+
+.bookAppointment-new-patient-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.bookAppointment-new-patient-btn:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.bookAppointment-search-bar-container{
+  display: flex;
+  justify-content: space-between;
+  margin:10px 0 20px 0;
+  align-items: center;
+}
+.bookAppointment-search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #f2f2f2;
+  padding: 5px 10px;
+}
+.bookAppointment-search-bar i {
+  color: gray;
+}
+
+
+.bookAppointment-search-bar input {
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.bookAppointment-results-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bookAppointment-print-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.bookAppointment-create-appointment-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Add any additional styles as needed */

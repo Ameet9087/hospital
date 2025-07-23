@@ -1,0 +1,134 @@
+ /* Ajhar Tamboli addNewrecrutier.css 07-10-24 */
+
+
+ .addNewrecrutier-container {
+     width: 100%;
+     /* max-width: 1200px; */
+     margin: auto;
+     border: 1px solid #ddd;
+     padding: 14px;
+     background-color: white;
+     border-radius: 8px;
+     /* font-family: Arial, sans-serif; */
+     /* color: #525151; */
+ }
+
+ .addNewrecrutier-header {
+     display: flex;
+     /* justify-content: space-between; */
+     align-items: center;
+     padding-bottom: 16px;
+     border-bottom: 1px solid #ddd;
+     margin-bottom: 16px;
+ }
+
+ .addNewrecrutier-header h3 {
+     margin: 0;
+     font-size: var(--heading-font);
+ }
+
+ .addNewrecrutier-close-btn {
+     background-color: #E31D2D;
+     color: white;
+     border: none;
+     border-radius: 14px;
+     cursor: pointer;
+     padding: 1px 8px;
+     margin-left: 1100px;
+ }
+
+
+
+ .addNewrecrutier-select-components-section h4 {
+     margin-bottom: 8px;
+ }
+
+ .addNewrecrutier-select-components-section table {
+     width: 100%;
+     border-collapse: collapse;
+     margin-bottom: 8px;
+ }
+
+ .addNewrecrutier-select-components-section table th,
+ .addNewrecrutier-select-components-section table td {
+     border: 1px solid #ddd;
+     padding: 8px;
+     text-align: left;
+ }
+
+ .addNewrecrutier-add-component-btn {
+     background-color: blue;
+     color: white;
+     border: none;
+     border-radius: 4px;
+     cursor: pointer;
+     padding: 4px 8px;
+ }
+
+ .addNewrecrutier-create-new-component {
+     display: block;
+     margin-top: 8px;
+     color: #0F63AF;
+     font-size: var(--font-size);
+     /* font-weight: bold; */
+     text-decoration: none;
+     cursor: pointer;
+ }
+
+ .addNewrecrutier-form-actions {
+     display: flex;
+     justify-content: flex-end;
+     font-size: var(--font-size);
+     gap: 8px;
+     margin-top: 16px;
+     border-top: 1px solid #ddd;
+     /* margin-bottom: 10px; */
+ }
+
+ .addNewrecrutier-add-btn {
+     background-color: var(--button-color);
+     border: 1px solid var(--button-hover-border-color);
+     color: white;
+     /* border: none; */
+     margin-top: 10px;
+     border-radius: 5px;
+     cursor: pointer;
+     font-size: var(--font-size);
+     /* margin: 1px; */
+     transition: background-color 0.3s ease;
+     padding: 5px 5px;
+ }
+
+ .addNewrecrutier-add-btn:hover {
+     border: 1px solid var(--button-hover-border-color);
+     color: var(--button-hover-text-color);
+     background-color: var(--button-hover-background-color);
+ }
+
+ .addNewrecrutier-form-group-1row {
+     display: flex;
+     justify-content: space-between;
+     gap: 30px;
+     padding:10px;
+
+ }
+
+ .addNewrecrutier-form-group-sub {
+     display: flex;
+     justify-content: space-between;
+     /* width: 600px; */
+     /* border: 1px solid red; */
+ }
+
+ .addNewrecrutier-AddNew {
+     display: flex;
+     justify-content: center;
+ }
+
+ .addNewrecrutier-AddNew a {
+
+     color: #0F63AF;
+     font-size: var(--font-size);
+     /* font-weight: bold; */
+     text-decoration: none;
+ }

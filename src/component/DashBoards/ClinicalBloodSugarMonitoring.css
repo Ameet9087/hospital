@@ -1,0 +1,80 @@
+.clinical-blood-sugar-monitoring-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.clinical-blood-sugar-monitoring-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.clinical-blood-sugar-monitoring-header h3{
+  font-size: 18px;
+}
+.clinical-blood-sugar-monitoring-sub-div
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.clinical-blood-sugar-monitoring-add-new {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.clinical-blood-sugar-monitoring-main-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.clinical-blood-sugar-monitoring-left-panel {
+  flex: 2;
+  height: 70vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.clinical-blood-sugar-monitoring-right-panel {
+  padding: 10px;
+  border-radius: 10px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  margin-left: 20px;
+}
+
+.clinical-blood-sugar-monitoring-patient-info div,
+.clinical-blood-sugar-monitoring-entry-fields div {
+  margin-bottom: 15px;
+}
+
+.clinical-blood-sugar-monitoring-form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.clinical-blood-sugar-monitoring-save,
+.clinical-blood-sugar-monitoring-discard {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.clinical-blood-sugar-monitoring-close {
+  color:red;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 50%;
+  padding: 5px 10px;
+}

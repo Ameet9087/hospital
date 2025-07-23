@@ -1,0 +1,116 @@
+
+  .LinenMaster-container {
+    margin: 0 auto;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    background-color:var(--background-color);
+  }
+  .LinenMaster-section {
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    margin-bottom: 10px;
+    overflow: hidden;
+  
+  }
+  .LinenMaster-header {
+    background-color: #00897b;
+    color: white;
+    padding: 7px 20px;
+    font-size: var(--heading-font);
+  }
+  
+  .LinenMaster-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 10px;
+    
+  }
+  .LinenMaster-floating-field {
+    position: relative;
+  }
+  .LinenMaster-floating-input,
+  .LinenMaster-floating-select {
+    padding: 5px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: var(--font-size);
+    background: white;
+    transition: all 0.2s ease;
+  }
+  
+  .LinenMaster-form-floating-field {
+    position: relative;
+  }
+  .LinenMaster-search-field {
+    position: relative;
+  }
+  
+  .LinenMaster-search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  .LinenMaster-services-section {
+    background: white;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+  }
+  
+  .LinenMaster-action-buttons {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+  }
+  .LinenMaster-action-buttons button {
+    background-color: var(--button-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+  }
+  .LinenMaster-action-buttons button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color);
+  }
+  @media (max-width: 1024px) {
+    .LinenMaster-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .LinenMaster-full-width {
+      grid-column: span 2;
+    }
+  }
+  @media (max-width: 768px) {
+    .LinenMaster-bottom-container {
+      grid-template-columns: 1fr;
+    }
+    .LinenMaster-tabs {
+      flex-direction: column;
+    }
+  }
+  @media (max-width: 480px) {
+    .LinenMaster-grid {
+      grid-template-columns: 1fr;
+    }
+    .LinenMaster-grid.two-columns {
+      grid-template-columns: 1fr;
+    }
+    .LinenMaster-full-width {
+      grid-column:span1;
+  }
+  }
+  

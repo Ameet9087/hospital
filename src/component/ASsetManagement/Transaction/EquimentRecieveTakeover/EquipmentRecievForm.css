@@ -1,0 +1,97 @@
+:root {
+    --sideBar-bg-color: #007973;
+    --upperBar-bg-color: #00968f;
+    --button-bg-color: #00968f;
+    --button-color: #00c9c0;
+    --background-color: #e3fffe;
+    --heading-font: 16px;
+    --font-size: 14px;
+    --button-hover-border-color: #00c9c0;
+    --button-hover-text-color: #00c9c0;
+    --button-hover-background-color: white;
+    --input-box-padding: 5px;
+  }
+  
+  .EquipmentRecievForm-container {
+    padding: 20px;
+    background-color: var(--background-color);
+  }
+  
+  .EquipmentRecievForm-addBtn {
+    margin-bottom: 20px;
+  }
+  
+  .EquipmentRecievForm-add-button {
+    background-color: var(--button-bg-color);
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  
+  .EquipmentRecievForm-add-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .EquipmentRecievForm-add-button:focus {
+    outline: 2px solid var(--button-bg-color);
+    outline-offset: 2px;
+  }
+
+  .EquipmentRecievForm-results-info {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+
+  .EquipmentRecievForm-button{
+    display: flex;
+    gap: 10px; /* Space between buttons */
+  }
+  
+  .EquipmentRecievForm-print-button {
+    background-color: var(--button-bg-color);
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  
+  .EquipmentRecievForm-print-button i {
+    margin-right: 5px;
+  }
+  
+  .EquipmentRecievForm-print-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .EquipmentRecievForm-print-button:focus {
+    outline: 2px solid var(--button-bg-color);
+    outline-offset: 2px;
+  }
+  
+  @media (max-width: 768px) {
+
+  
+    .EquipmentRecievForm-add-button,
+    .EquipmentRecievForm-print-button {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+  }
+  
+
+  

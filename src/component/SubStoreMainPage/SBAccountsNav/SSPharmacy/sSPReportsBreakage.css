@@ -1,0 +1,356 @@
+/* Ajhar Tamboli sSPReportsBreakage.css 19-09-24 */
+
+
+.sSPReportsBreakage-active-imaging-request {
+  font-family: Arial, sans-serif;
+  height: 75vh;
+  background-color: var(--background-color);
+  /* max-width: 1200px; */
+  /* margin: 0 auto; */
+  /* padding: 10px; */
+}
+
+.sSPReportsBreakage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 20px; */
+}
+
+/* .sSPReportsBreakage-header h4 {
+  color: #3f8fdf;
+  margin: 0;
+} */
+.sSPReportsBreakage-CreateRequisition{
+  margin-left: 10px;
+    /* gap: 10px; */
+  background-color: #0011ff ;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: var(--font-size);
+}
+.sSPReportsBreakage-status-filters{
+  display: flex;
+  align-items: center;
+}
+.sSPReportsBreakage-status-filters h4{
+  /* color: #474747; */
+  font-size: var(--heading-font);
+  margin: 5px;
+}
+.sSPReportsBreakage-filter {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  margin-right: 20px;
+}
+
+.sSPReportsBreakage-filter label {
+  margin-right: 10px;
+  font-size: var(--font-size);
+  /* font-weight: bold; */
+  margin-left: 20px;
+}
+
+.sSPReportsBreakage-filter select {
+  padding: 5px;
+  /* color: red; */
+  font-size: var(--font-size);
+  margin-left: 20px;
+}
+
+.sSPReportsBreakage-checkBox select {
+  padding: 3px 5px 3px 5px;
+  background-color: #f0f0f0;
+  margin-left: 10px;
+  width: 100px;
+}
+.sSPReportsBreakage-checkBox label {
+font-size: var(--font-size);
+/* font-weight: bold; */
+color: green;
+}
+
+.sSPReportsBreakage-controls {
+  padding: 0 10px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.sSPReportsBreakage-date-range {
+  display: flex;
+  align-items: center;
+  /* width: 95%; */
+  gap: 10px;
+  background-color: #f0f0f0;
+  padding: 1px 10px;
+}
+.sSPReportsBreakage-date-range label{
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  font-size: var(--font-size);
+}
+
+.sSPReportsBreakage-date-range input[type="date"] {
+  padding: 3px;
+  margin-left: 10px;
+}
+.sSPReportsBreakage-star-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color:var(--button-color) ;
+  cursor: pointer;
+}
+.sSPReportsBreakage-ok-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+.sSPReportsBreakage-ok-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+ .sSPReportsBreakage-more-btn {
+  background-color: #B9B9CA;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: white;
+}
+
+.sSPReportsBreakage-search-bar {
+  display: flex;
+}
+
+.sSPReportsBreakage-search-bar input {
+  flex-grow: 1;
+  padding: 3px;
+  width: 200px;
+
+}
+.sSPReportsBreakage-search-bar i{
+  position: relative;
+  color:gray;
+  top: 7px;
+left: 190px;
+}
+
+/* .search-bar button {
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+} */
+
+.sSPReportsBreakage-results-info {
+  text-align: right;
+  /* color: #0011ff; */
+  font-size: var(--font-size);
+  /* font-weight: bold; */
+}
+.sSPReportsBreakage-print-btn{
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  margin-left: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  /* margin: 1px; */
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+.sSPReportsBreakage-print-btn:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.sSPReportsBreakage-table-N-paginat table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.sSPReportsBreakage-table-N-paginat th {
+  border: 1px solid #ddd;
+  padding: 3px;
+  text-align: center;
+  font-size: var(--heading-font);
+  /* color: rg/b(70, 69, 69); */
+  background-color: #f2f2f2;
+}
+.sSPReportsBreakage-table-N-paginat td {
+  border: 1px solid #ddd;
+  padding: 3px;
+  text-align: center;
+  font-size: var(--font-size);
+  /* color: #818181; */
+}
+
+.sSPReportsBreakage-table-N-paginat tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.sSPReportsBreakage-action-button {
+  padding: 5px 10px;
+  color: white;
+  border: none;
+  cursor: pointer;
+
+  border-radius: 13px;
+}
+
+.sSPReportsBreakage-add-report {
+  background-color: #008CBA;
+}
+
+.sSPReportsBreakage-scan-done {
+  background-color: #008CBA;
+}
+
+.sSPReportsBreakage-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+
+.sSPReportsBreakage-search-N-results{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.sSPReportsBreakage-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.sSPReportsBreakage-pagination button {
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 0 5px;
+  border-radius: 5px;
+}
+
+.sSPReportsBreakage-pagination span {
+  margin: 0 10px;
+  /* color: gray; */
+  font-size: var(--font-size);
+}
+.sSPReportsBreakage-table-N-paginat{
+  background-color: white ;
+  padding: 0 10px;
+}
+
+
+.sSPReportsBreakage-modal-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 1000;
+}
+
+/* Modal content styling */
+.sSPReportsBreakage-modal-content {
+background-color: #fff;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+position: relative;
+max-width: 1300px;
+width: 100%;
+}
+
+/* Close button styling */
+.sSPReportsBreakage-close-modal {
+position: absolute;
+top: 10px;
+right: 10px;
+background: transparent;
+border: none;
+font-size: 24px;
+cursor: pointer;
+}
+.sSPReportsBreakage-view-btn button{
+  background-color: #0F63AF;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  margin-left: 10px;
+  padding: 5px 10px;
+  font-size: var(--font-size);
+
+}
+/* prachi parab button hover effect  14/9 */
+.sSPReportsBreakage-view-btn button:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  
+
+}
+/* Popup Overlay */
+.sSPReportsBreakage-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Popup Content */
+.sSPReportsBreakage-popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+}
+
+.sSPReportsBreakage-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+

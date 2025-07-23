@@ -1,0 +1,91 @@
+
+   .labLISAddNewMapping-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    z-index: 1000;
+  }
+  
+  .labLISAddNewMapping-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    width: 500px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .labLISAddNewMapping-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .labLISAddNewMapping-header h2 {
+    margin: 0;
+    font-size: var(--heading-font);
+  }
+  
+  .labLISAddNewMapping-close-btn {
+    background: none;
+    border: none;
+    font-size: var(--heading-font);
+    cursor: pointer;
+    background-color: #eb1e1e;
+    color: white;
+    padding: 0px 5px;
+    border-radius: 15px;
+  }
+  
+  .labLISAddNewMapping-content {
+    margin-top: 20px;
+    /* Add more styles as needed */
+  }
+  
+  .labLISAddNewMapping-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    gap: 10px;
+  }
+  
+  .labLISAddNewMapping-cancel-btn {
+    background-color: #eb1e1e;
+    /* border: 1px solid var( --button-hover-border-color); */
+    color: white;
+    border: none;
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px
+  }
+  
+  .labLISAddNewMapping-save-btn {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .labLISAddNewMapping-save-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  

@@ -1,0 +1,164 @@
+/* Mohini_SettingTerm_WholePage_14/sep/2024 */
+.setting-terms-container {
+  background-color: var(--background-color);
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.setting-terms-add-terms-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+.setting-terms-add-terms-btn:hover{
+  border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+
+}
+
+.setting-terms-search-container {
+  position: relative;
+  margin-bottom: 15px;
+
+}
+.setting-terms-search-container-search-input{
+  width: auto;
+  padding: 5px;
+  font-size: var(--font-size);
+}
+
+.manage-users-search-input{
+  /* width: 200px; */
+  padding: 5px 25px 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* .search-icon {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+} */
+
+.setting-terms-results-print {
+  display: flex;
+  justify-content: flex-end;
+  /* align-items: center; */
+  margin-bottom: 15px;
+}
+
+.setting-terms-print-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.setting-terms-terms-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  margin-bottom: 15px;
+}
+
+.setting-terms-terms-table th, .setting-terms-terms-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.setting-terms-terms-table th {
+  background-color: #f2f2f2;
+}
+
+.setting-terms-no-rows {
+  background-color: #fff3cd;
+  color: #856404;
+  text-align: center;
+  padding: 15px;
+}
+
+.setting-terms-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.setting-terms-page-btn {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.setting-terms-page-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.setting-terms-setting-term-ta {
+  background-color: white;
+}
+/* SettingTerm.css */
+
+/* Overlay to cover the background */
+/* SettingTerm.css */
+
+/* Overlay to cover the entire screen */
+/* Overlay to cover the entire screen */
+.return-form-overlay-model {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8); /* Darker background to emphasize the modal */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it is above other content */
+}
+
+/* Container for the ReturnForm component */
+.return-form-container-com {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  max-width: 90%; /* Adjust to your preferred max-width */
+  max-height: 90vh; /* Adjust to ensure it fits within the viewport height */
+  overflow-y: auto; /* Add scrolling if content exceeds viewport height */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add shadow for better visibility */
+}
+
+/* Button to close the ReturnForm */
+.return-form-com-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 1010; /* Ensure it's above other elements in the modal */
+}
+
+.return-form-com-close-btn {
+  background-color: var(--button-bg-color);
+}
+/* Mohini_SettingTerm_WholePage_14/sep/2024 */

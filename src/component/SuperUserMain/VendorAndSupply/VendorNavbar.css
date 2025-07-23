@@ -1,0 +1,58 @@
+.vendor-navbar {
+  background-color: var(--navbar-bg-color); /* Background color for the navbar */
+}
+
+.vendor-navbar-menu {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+  font-size: var(--heading-font);
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+}
+
+.vendor-navbar-link {
+  padding: 5px 10px; /* Slightly increased horizontal padding */
+  text-decoration: none;
+  background-color: var(--button-color);
+  color: white;
+  font-size: var(--heading-font);
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.vendor-navbar-link:hover {
+  background-color: #f0f0f0;
+  color: var(--button-color);
+  border-bottom: 1px solid var(--button-hover-border-color);
+}
+
+.vendor-navbar-link.active {
+  background-color: var(--button-bg-color);
+  color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .vendor-navbar-menu {
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    align-items: flex-start; /* Align items to the left */
+  }
+
+  .vendor-navbar-link {
+    width: 100%; /* Make links full width */
+    padding: 10px; /* Increase padding for better touch targets */
+    font-size: calc(var(--heading-font) - 2px); /* Slightly decrease font size */
+    text-align: center; /* Center text for full-width links */
+  }
+}
+
+@media (max-width: 480px) {
+  .vendor-navbar-menu {
+    gap: 10px; /* Reduce gap between items for smaller screens */
+  }
+
+  .vendor-navbar-link {
+    font-size: calc(var(--heading-font) - 4px); /* Further decrease font size for smaller devices */
+  }
+}

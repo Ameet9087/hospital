@@ -1,0 +1,128 @@
+/* ReturnBill.css */
+.return_bill-container {
+    background-color: #caf2ff;
+
+    
+  }
+  
+ .return_bill-container_middle{
+    height: 90px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+
+ }
+  
+  .return_bill-form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+  }
+  .returnbill_searchcontent{
+    display: flex;
+    padding: auto;
+  }
+  .returnbill_pinfo{
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .return_bill-label {
+   
+    margin-bottom: 5px;
+    width: auto;
+    white-space: nowrap;
+  }
+  
+  .return_bill-select,
+  .return_bill-input {
+    width: auto;
+    /* height: 30px; */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 0px 20px;
+  }
+  
+  .return_bill-button {
+    
+    width: 10%;
+    padding: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .return_bill-button:hover {
+    background-color: #0056b3;
+  }
+
+.returnbill-tablediv{
+    display: flex ;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+.retable{
+    width: 100%;
+}
+
+.returnbill-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  
+  .returnbill-table th,
+  .returnbill-table td {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+  }
+  
+  .returnbill-table th {
+    background-color: #f2f2f2;
+  }
+  .returnbill-amtstatus{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    background-color: #ccc;
+    padding: 10px;
+  }
+  
+  .returnbill-total {
+    display: flex;
+    align-items: center;
+   
+    font-size: 14px;
+    font-weight: bold;
+    flex-direction: column;
+  }
+  
+  .returnbill-remarks {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .returnbill-submit-btn {
+    display: block;
+    margin-top: 1.5rem;
+    padding: 12px 24px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .returnbill-submit-btn:hover {
+    background-color: #45a049;
+  }
+  

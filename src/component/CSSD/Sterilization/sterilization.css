@@ -1,0 +1,68 @@
+/* Akash Pawar CSSD 14/24 */
+.sterilization-main {
+    padding: 10px 20px;
+   
+  }
+  
+  .sterilization-sub-nav {
+    position: relative;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  
+  .sterilization-sub-nav ul {
+    display: flex;
+    color: black;
+    font-size: 14px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sterilization-sub-nav ul li {
+    position: relative;
+    color: black;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .sterilization-sub-nav ul li a {
+    text-decoration: none;
+    color: black;
+  }
+  
+  .sterilization-sub-nav ul li .active {
+    color: black;
+  }
+  
+  .sterilization-sub-nav .underline {
+    position: absolute;
+    bottom: 0;
+    height: 4px;
+    background-color: var(--button-bg-color);
+    transition: left 0.3s ease, width 0.3s ease;
+  }
+  .sterilization-sub-nav ul li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 4px;
+    background-color: var(--button-bg-color);
+    transform: scaleX(1); /* Expands the underline width */
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .sterilization-sub-nav ul li::after {
+    content: "";
+    position: absolute;
+    bottom: 0; /* Position the underline at the bottom of the list item */
+    left: 0; /* Start from the left */
+    height: 4px; /* Thickness of the underline */
+    width: 0; /* Initially, the underline is collapsed */
+    background-color: var(--button-bg-color); /* Color of the underline */
+    transition: width 0.3s ease-in-out; /* Smooth transition for width */
+  }
+  
+  .sterilization-sub-nav ul li:hover::after {
+    width: 100%; /* Expand the underline to full width on hover */
+  }

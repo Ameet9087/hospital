@@ -1,0 +1,193 @@
+/* Mohini_PharmacyCom_WholePage_14/sep/2024 */
+.pharmacy-home-page-container {
+  /* font-family: Arial, sans-serif; */
+  /* background-color: #e3f2fd; */
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.pharmacy-home-page-com {
+  padding: 20px;
+  background-color: var(--background-color);
+  /* border: 2px solid white; */
+  border-radius: 10px;
+}
+
+.pharmacy-home-page-date-filter {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.pharmacy-home-page-date-filter label {
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.pharmacy-home-page-date-filter input {
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.pharmacy-home-page-ok-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pharmacy-home-page-summary-cards {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.pharmacy-home-page-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  width: 22%;
+  display: flex;
+  align-items: center;
+}
+
+.pharmacy-home-page-card-icon {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+}
+
+.pharmacy-home-page-card-icon.sales-icon {
+  background-color: #f6d7e5;
+  border-radius: 50%;
+}
+
+.pharmacy-home-page-card-icon.goods-receipt-icon {
+  background-color: #d7f6f6;
+  border-radius: 50%;
+}
+
+.pharmacy-home-page-card-icon.dispatch-icon {
+  background-color: #d7d7f6;
+  border-radius: 50%;
+}
+
+.pharmacy-home-page-card-icon.stock-icon {
+  background-color: #f6f6d7;
+  border-radius: 50%;
+}
+
+.pharmacy-home-page-card-details h3 {
+  margin: 0;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.pharmacy-home-page-card-details p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.pharmacy-home-page-substore-dispatch {
+  background-color: var(--background-color);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.pharmacy-home-page-chart {
+  background-color: var(--background-color);
+  height: 450px;
+}
+.pharmacy-home-page-chart h2{
+color: #333;
+font-size: 16px;
+/* padding-top: 10px; */
+}
+.pharmacy-home-page-chart ul {
+  list-style: none;
+  padding-top: 0;
+  margin: 0;
+  color: gray;
+}
+
+.pharmacy-home-page-chart li {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.pharmacy-home-page-chart-pharmacy {
+  
+  max-width: 1000px;
+}
+
+.pharmacy-home-page-membership-sales {
+  gap: 20px;
+  padding: 10px;
+  background-color: var(--background-color);
+  max-width: 400px;
+}
+
+.pharmacy-home-page-membership-sales h2 {
+  font-size: 16px;
+  margin: 0;
+  color: #333;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.pharmacy-home-page-membership-details {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.pharmacy-home-page-membership-details p {
+  margin: 0;
+  font-size: 16px;
+  color: gray;
+}
+
+.pharmacy-home-page-pharmacy-chart-div {
+  display: flex;
+  padding-left: 200px;
+  background-color: var(--background-color);
+  margin-top: -90px;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.pharmacy-home-page-top-medicines {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: var(--background-color);
+  width: 60%;
+  box-sizing: border-box;
+}
+
+.pharmacy-home-page-top-medicines h2 {
+  font-size: 16px;
+  margin: 0;
+  color: #333;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.pharmacy-home-page-top-medicines table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.pharmacy-home-page-top-medicines th,
+.pharmacy-home-page-top-medicines td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  color: gray;
+  text-align: left;
+}
+/* Mohini_PharmacyCom_WholePage_14/sep/2024 */

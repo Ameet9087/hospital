@@ -1,0 +1,84 @@
+.Consultant {
+    padding:0 20px;
+  }
+  
+  .Consultant-form {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .form-group {
+    margin-bottom: 10px;
+  }
+  
+  .form-group label {
+    margin-right: 10px;
+  }
+  
+  .Consultant-search-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    color: gray;
+    padding: 0 10px;
+    background-color: #f2f2f2;
+  }
+  
+  .Consultant-search-group input {
+   background-color: transparent;
+   border: none;
+   outline: none;
+  }
+
+  .checkbox-group label {
+    margin-right: 20px;
+  }
+  
+  .Consultant-table {
+    margin-top: 20px;
+    overflow-x: auto;
+  }
+  
+  .Consultant-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .Consultant-table th, .Consultant-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .Consultant-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .Consultant-table tr.even {
+    background-color: #f9f9f9;
+  }
+  
+  .Consultant-table tr.odd {
+    background-color: #ffffff;
+  }
+  
+  .Consultant-save-button {
+    margin-top: 20px;
+    padding: 5px 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size);
+    border-radius: 5px;
+  }
+  .Consultant-save-button:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }

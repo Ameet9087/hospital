@@ -1,0 +1,55 @@
+ /* neha-OT-OT-otmain-14-9-24 */
+.ot_setting-header {
+    background-color:white; 
+    padding: 5px; 
+    display: flex; 
+    align-items: center; 
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); 
+  }
+  
+  /* Navigation links container */
+  .ot_setting-nav-links {
+    display: flex; 
+    gap: 30px; 
+    
+
+  }
+  
+  /* Individual link button styling */
+  .ot_setting-header-button {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+   
+  /* Active link styling */
+  .ot_setting-header-button.active {
+    background-color:var(--button-bg-color);
+    color: white;
+  }
+  
+
+  /* .ot_setting-header-button:hover {
+    background-color: #007bff;
+    color: white; 
+  }
+   */
+  /* Additional media queries for responsiveness */
+  @media (max-width: 768px) {
+    .ot_setting-nav-links {
+      flex-direction: column; 
+      gap: 10px; 
+    }
+    
+    .ot_setting-header-button {
+      width: 100%; 
+      text-align: center; 
+    }
+  }
+  

@@ -1,0 +1,65 @@
+.DDStaffTransportManagement-form-container {
+  background-color: #f9f9f9;
+  padding: 5px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 5px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.DDStaffTransportManagement-form-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: center;
+  color: #333;
+}
+
+.DDStaffTransportManagement-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.DDStaffTransportManagement-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.DDStaffTransportManagement-form-label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.DDStaffTransportManagement-form-input {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.DDStaffTransportManagement-form-input:focus {
+  border-color: #007BFF;
+}
+
+.DDStaffTransportManagement-form-submit-button {
+  padding: 5px;
+  background-color: var(--button-color);
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.DDStaffTransportManagement-form-submit-button:hover {
+  background-color: white;
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}

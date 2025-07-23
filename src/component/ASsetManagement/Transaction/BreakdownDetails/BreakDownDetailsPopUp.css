@@ -1,0 +1,167 @@
+.BreakDownDetailsPopUp-container {
+  /* width: 1250px; */
+  font-family: Arial, sans-serif;
+  height: 80vh;
+  overflow-x: auto;
+}
+
+.BreakDownDetailsPopUp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 16px;
+}
+
+.BreakDownDetailsPopUp-header h4 {
+  font-size: var(--heading-font);
+  margin: 0;
+}
+
+.BreakDownDetailsPopUp-close-btn {
+  background-color: #E52F3E;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.BreakDownDetailsPopUp-form .BreakDownDetailsPopUp-BreakDownDetailsPopUp-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 2px;
+  margin-bottom: 16px;
+}
+
+.BreakDownDetailsPopUp-form-group {
+  /* flex: 1; */
+  display: flex;
+  text-align: center;
+  align-items: center;
+  font-size: var(--font-size);
+  width: 400px;
+  /* border: 1px solid red; */
+}
+
+/* .BreakDownDetailsPopUp-form-group label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: bold;
+  width: 75%;
+} */
+
+.BreakDownDetailsPopUp-form-group-checkbox {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.BreakDownDetailsPopUp-form-group input,
+.BreakDownDetailsPopUp-form-group select,
+.BreakDownDetailsPopUp-form-group textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.BreakDownDetailsPopUp-form-group-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* .BreakDownDetailsPopUp-form-group-options label {
+  margin-right: 20px;
+  font-size: var(--font-size);
+  display: flex;
+  align-items: center;
+} */
+/* 
+.BreakDownDetailsPopUp-form-group-options input {
+  margin-right: 5px;
+} */
+
+.BreakDownDetailsPopUp-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  font-size: var(--font-size);
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.BreakDownDetailsPopUp-tab-bar {
+  display: flex;
+  gap: 5px;
+  padding: 4px;
+}
+
+.BreakDownDetailsPopUp-tab {
+  padding: 4px 12px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  color: white;
+  font-size: var(--font-size);
+  background: var(--button-bg-color);
+  cursor: pointer;
+}
+
+.BreakDownDetailsPopUp-tab:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color);
+}
+
+.BreakDownDetailsPopUp-add-main-btn,.BreakDownDetailsPopUp-btn-green {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.BreakDownDetailsPopUp-add-btn:hover,.BreakDownDetailsPopUp-btn-green:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.BreakDownDetailsPopUp-form-group-1row {
+  display: flex;
+  justify-content: space-between;
+}
+
+ .BreakDownDetailsPopUp-add-btn {
+  margin-top: 10px;
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 5px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+
+.BreakDownDetailsPopUp-del-btn {
+  background-color: red;
+  margin-top: 10px;
+  margin-left: 5px;
+  color: white;
+  border: none;
+  padding: 5px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.complaint-required {
+  color: red;
+}

@@ -1,0 +1,75 @@
+ /* Ajhar Tamboli IncentiveTransaction.css 18-09-2024 */
+
+  
+  .incentiveTransation-container {
+    background-color: var(--background-color);
+    padding: 10px;
+    width: 100%;
+    height: 75vh;
+    margin: 0;
+    /* font-family: Arial, sans-serif; */
+  }
+  
+  .incentiveTransation-tabs {
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid #dad7d7;
+    margin-bottom: 10px;
+    font-size: var(--heading-font);
+  }
+  
+  .incentiveTransation-tab {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .incentiveTransation-selected {
+    /* color: black; */
+    /* font-weight: bold; */
+    border-bottom: 5px solid var(--button-bg-color);
+  }
+  
+  .incentiveTransation-filters {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.incentiveTransation-date-range {
+      background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+    padding: 5px 30px;
+  }
+  
+  .incentiveTransation-icon-button {
+    background-color: #e0e0e0;
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size);
+  }
+
+  
+
+  .incentiveTransation-search-N-sms{
+    display: flex;
+    text-align: center;
+  }
+  .incentiveTransation-search-input {
+    width: 30%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .incentiveTransation-info-text {
+    /* color: #505050; */
+    font-size: var(--font-size);
+    margin-left: 30px;
+    align-items: center;
+
+  }
+  

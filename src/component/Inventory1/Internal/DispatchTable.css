@@ -1,0 +1,100 @@
+/* Swapnil ROkade dispatch-table adding className And Applying colors 14/09 */
+.dispatch-table-container {
+  padding: 20px;
+}
+
+.dispatch-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dispatch-table-search input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.dispatch-table-actions {
+  display: flex;
+  gap: 10px; /* Space between action buttons */
+}
+
+.dispatch-table-actions .dispatch-print-btn,
+.dispatch-table-actions .dispatch-export-btn {
+  background-color: var(--button-color); /* Blue background color */
+  color: white; /* White text color */
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dispatch-table-actions .dispatch-print-btn:hover,
+.dispatch-table-actions .dispatch-export-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.requisition-dispatch-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.requisition-dispatch-table th, .requisition-dispatch-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.dispatch-table-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Adjust the space between elements */
+  margin-top: 10px;
+}
+
+.dispatch-table-pagination span {
+  font-size: var(--heading-font);
+  color: var(--sideBar-bg-color); /* Blue color for showing result text */
+}
+
+.dispatch-table-pagination button {
+  background-color: #007bff; /* Blue background color */
+  color: white; /* White text color */
+  padding: 5px 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dispatch-table-pagination button:disabled {
+  background-color: #6c757d; /* Grey background for disabled buttons */
+  cursor: not-allowed;
+}
+
+.dispatch-table-pagination button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+.dispatch-table-actions span{
+  color: var(--sideBar-bg-color);
+  margin-top: 10px;
+}
+
+
+/*  */
+
+.dispatch-view-btn {
+  background-color:var(--button-color); /* Blue background color */
+  color: white; /* White text color */
+  padding: 5px; /* Padding for better size */
+  border: none; /* Remove default border */
+  border-radius: 15px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: var(--font-size);  /* Adjust font size if needed */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+

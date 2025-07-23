@@ -1,0 +1,396 @@
+.filters-medical-record {
+    display: flex;
+    justify-content: space-around;
+  
+    padding: 10px;
+    margin: 10px 0;
+  }
+  .outer-medical-record{
+    background-color: #e0f7fa;
+  }
+  
+  .filters-medical-record .filter-group {
+    display: flex; 
+   
+    flex-flow: column wrap; 
+
+  }
+  .filter-group-inner{
+    background-color: #fff; 
+    width: 100px; 
+    margin: 10px; 
+    text-align: center; 
+    line-height: 75px; 
+    font-size: 30px; 
+    padding: 10px;
+  }
+  
+  .filters-medical-record .filter-label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    background-color: #bac3d0;
+    height: 25px; padding-top: 7px;
+    text-shadow: none !important;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 3px 6px;
+    color: #fff;
+  }
+  
+  .filters-medical-record .filter-input, .filter-select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  .diagnosis-filter {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .diagnosis-filter label {
+    margin-right: 15px; /* Adds space between each checkbox */
+  }
+  
+  /* Optional: Remove the margin for the last checkbox */
+  .diagnosis-filter label:last-child {
+    margin-right: 0;
+  }
+  .diagnosis-filter input[type='checkbox']{
+    width: 15px;
+    height: 15px;
+  }
+
+  .MRInPatient-tableContainer{
+    padding: 20px;
+    background-color: #e3fffe;
+  }
+  .MROInPatient-date-filter{
+    display: flex;
+    align-items: flex-start;
+    padding: 10px;
+    margin: 20px 0;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .MROInPatient-date-filter label {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.MROInPatient-date-filter input[type="date"] {
+    margin-left: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.MROInPatient-date-filter button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 3px;
+}
+
+.MROInPatient-date-filter button:hover {
+  border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+/* Search */
+.MRIn-Patient-Header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background-position: right 10px center;
+}
+.MRIn-Patient-searchInput{
+
+  
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+    width: 200px; /* Adjust the width as needed */
+    padding: 5px 30px 8px 10px; /* Adjust padding to make room for the icon */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjNjY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTkgMTljLjg4MSAwIDEuNzA4LS4zNDUgMi4zMzYtLjg5MUwxOS40OTcgMjRsMi41MDMtMi41MDMtNC41MjEtNC41MTRBNS45OTkgNS45OTkgMCAwMDAxNSA5IDUgNSAwIDAwOSA0LjUxN0E1LjAwNSA1LjAwNSAwIDAwOSAxNXpNNSA5YTQgNCAwIDExOCAwIDQgNCAwIDAxLTgtMHoiLz48L3N2Zz4=');
+    background-size: 16px 16px; /* Size of the icon */
+    background-repeat: no-repeat;
+    background-position: right 10px center; /* Position the icon to the right */
+  
+  
+}
+.MRIn-Patient-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.MRIn-Patient-results {
+  margin-right: 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+  
+.MRIn-patientsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.MRIn-patientsTable th, .MRIn-patientsTable td {
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #c1e4f8;
+  background-color: #e4f4ff;
+}
+
+.total-row {
+  background-color: #d3d3d3;
+  font-weight: bold;
+}
+
+.info-icon {
+  font-size: 12px;
+  cursor: pointer;
+}
+
+
+
+.MRIn-patientsTable th {
+  background-color: #f0f2f5;
+}
+
+.MRIn-patientsTable tr:nth-child(even) {
+  background-color: #f0faff;
+}
+
+.MRIn-patientsTable tr:nth-child(odd) {
+  background-color: #e4f4ff;
+}
+
+.edit-final-diaggnosois {
+ 
+  background-color: #007bff;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-bottom: 5px;
+
+}
+
+.edit-final-diaggnosois:hover {
+  background-color: #0056b3;
+}
+
+.MROut-pagination{
+  text-align: center;
+}
+
+.MROut-pagination button{
+  background-color: #007bff;
+border: none;
+border-radius: 4px;
+color: white;
+font-weight: bold;
+cursor: pointer;
+transition: background-color 0.3s;
+margin-left:5px;
+}
+
+.MRIN-diagnosis-filter {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 5%;
+  }
+  
+  .MRIN-diagnosis-filter label {
+    margin-right: 15px; /* Adds space between each checkbox */
+    color: green;
+  }
+  
+  /* Optional: Remove the margin for the last checkbox */
+  .MRIN-diagnosis-filter label:last-child {
+    margin-right: 0;
+  }
+  .MRIN-diagnosis-filter input[type='checkbox']{
+    width: 15px;
+    height: 15px;
+
+  }
+
+  /* Modal overlay */
+.WardTransferModal__overlay {
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index:9999;
+}
+
+/* Modal content */
+.WardTransferModal__content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 1200px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  outline: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+/* Header styling */
+.WardTransferModal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.WardTransferModal__header h2 {
+  margin: 0;
+}
+
+.WardTransferModal__closeButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Body styling */
+.WardTransferModal__body {
+  margin-bottom: 20px;
+}
+
+/* Information section */
+.WardTransferModal__info {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.WardTransferModal__infoItem {
+  flex: 1 1 50%;
+  margin-bottom: 10px;
+}
+
+/* Form styling */
+.WardTransferModal__form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.WardTransferModal__formGroup {
+  flex: 1 1 45%;
+  margin-bottom: 20px;
+}
+
+.WardTransferModal__formGroup label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.WardTransferModal__formGroup select,
+.WardTransferModal__formGroup input,
+.WardTransferModal__formGroup textarea {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.WardTransferModal__textarea {
+  height: 80px;
+}
+
+.WardTransferModal__required {
+  color: red;
+}
+
+.WardTransferModal__investigations {
+  display: flex;
+  flex-direction: column;
+}
+
+.WardTransferModal__investigationButton {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.WardTransferModal__investigationButton:hover {
+  background-color: #e0e0e0;
+}
+
+/* Footer styling */
+.WardTransferModal__footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.WardTransferModal__cancelButton,
+.WardTransferModal__updateButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.WardTransferModal__cancelButton {
+  background-color: #f0f0f0;
+  margin-right: 10px;
+}
+
+.WardTransferModal__cancelButton:hover {
+  background-color: #e0e0e0;
+}
+
+.WardTransferModal__updateButton {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.WardTransferModal__updateButton:hover {
+  background-color: #218838;
+}
+
+/* Button to open modal */
+.WardTransferButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.WardTransferButton:hover {
+  background-color: #0069d9;
+}
+

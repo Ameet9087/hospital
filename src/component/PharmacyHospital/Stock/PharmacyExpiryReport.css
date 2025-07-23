@@ -1,0 +1,234 @@
+  /* Mohini_PharmacyExpiryReport_WholePage_14/sep/2024 */
+  .pharmacy-expiry-report-container {
+    background-color: var(--background-color);
+    padding: 20px;
+    height: 90vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  .pharmacy-expiry-report-container h1 {
+    color: black; /* Set font color to black */
+    font-size: 16px; /* Set font size to 18px */
+    margin-bottom: 20px; /* Space below the heading */
+    text-align: left; /* Align text to the left */
+  }
+  
+  
+  .pharmacy-expiry-report-date-range,
+  .pharmacy-expiry-report-filters,
+  .pharmacy-expiry-report-checkboxes {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .pharmacy-expiry-report-date-range > div,
+  .pharmacy-expiry-report-filters > div {
+    margin-right: 10px;
+    
+  }
+  
+  .pharmacy-expiry-report-input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .pharmacy-expiry-report-star-btn,
+  .pharmacy-expiry-report-dash-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .pharmacy-expiry-report-show-report-btn {
+    background-color:var( --button-color);
+    color: white;
+    border: none;
+    margin-right: 10px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+    transition: background-color 0.3s ease;
+
+  }
+  .pharmacy-expiry-report-show-report-btn:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+
+  }
+  
+  .pharmacy-expiry-report-checkboxes label {
+    margin-right: 20px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px; /* Adds space between the checkbox and label text */
+  }
+  
+  .pharmacy-expiry-report-search-bar {
+    display: flex;
+    width: 20%;
+    margin-bottom: 10px;
+  }
+  
+  .pharmacy-expiry-report-search-input {
+    flex-grow: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px 0 0 3px;
+  }
+  
+  .pharmacy-expiry-report-search-button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0 3px 3px 0;
+    padding: 5px 10px;
+  }
+  
+  .pharmacy-expiry-report-results-info {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+  
+  .pharmacy-expiry-report-export-btn,
+  .pharmacy-expiry-report-print-btn {
+    background-color:var( --button-color);
+    color: white;
+    border: none;
+    border: 1px solid var( --button-hover-border-color);
+    padding: 5px 5px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  .pharmacy-expiry-report-export-btn:hover,
+  .pharmacy-expiry-report-print-btn:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  } 
+  
+  .pharmacy-expiry-report-ta {
+    background-color: white;
+  }
+  
+  .pharmacy-expiry-report-expiry-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+  }
+  
+  .pharmacy-expiry-report-expiry-table th,
+  .pharmacy-expiry-report-expiry-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .pharmacy-expiry-report-expiry-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .pharmacy-expiry-report-no-rows {
+    background-color: #ffffc0;
+    text-align: center;
+  }
+  
+  .pharmacy-expiry-report-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .pharmacy-expiry-report-pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #6495ED;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .pharmacy-expiry-report-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .pharmacy-expiry-report-summary h2 {
+    margin-bottom: 10px;
+    font-size: var(--heading-font);
+  }
+  
+  .pharmacy-expiry-report-summary div {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .pharmacy-expiry-report-summary span {
+    font-size: var(--font-size);
+  }
+  .pharmacy-expiry-report-results-info{
+    color: black;
+    font-size: var(--font-size);
+    margin-top: 10px;
+  }
+  .pharmacy-expiry-report-checkboxes {
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically */
+    gap: 20px; /* Adds space between the checkboxes */
+    margin-bottom: 10px; /* Adds some space below the checkboxes */
+  }
+  .pharmacy-expiry-report-table-container {
+    overflow-x: auto; /* Enables horizontal scrolling */
+    width: 100%; /* Ensures the container takes full available width */
+    background-color: #fff; /* Optional: to match the table background */
+  }
+  
+  .pharmacy-expiry-report-expiry-table {
+    width: 100%; /* Ensures the table takes full available width */
+    min-width: 1200px; /* Set a minimum width larger than the container to enable scrolling */
+    border-collapse: collapse;
+    background-color: #fff;
+  }
+  
+  .pharmacy-expiry-report-expiry-table th,
+  .pharmacy-expiry-report-expiry-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .pharmacy-expiry-report-expiry-table th {
+    background-color: #f2f2f2;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .pharmacy-expiry-report-no-rows {
+    text-align: center;
+    background-color: #ffffc0;
+  }
+
+  .pharmacy-expiry-report-con {
+    display: flex;
+    justify-content: flex-end; /* Aligns the button to the right */
+    margin-right: 10px; /* Optional: Adds spacing from the right edge */
+}
+
+  
+  /* Mohini_PharmacyExpiryReport_WholePage_14/sep/2024 */

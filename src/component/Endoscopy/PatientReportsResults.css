@@ -1,0 +1,23 @@
+  /* Mohini_Endoscopy_ImagingReportsForm_18-10-24 */
+.patient-report-results {
+    padding: 90px;
+   position: fixed;
+   background-color: var(--background-color);
+   height: 90vh;
+   overflow-y: auto; 
+  }
+  
+  .patient-report-results-title {
+    font-size: var(--heading-font);
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
+  
+  .patient-report-empty-cell {
+    text-align: center;
+    padding: 10px;
+    font-style: italic;
+  }
+    /* Mohini_Endoscopy_ImagingReportsForm_18-10-24 */
+  

@@ -1,0 +1,128 @@
+/* Kshitija_Purvat_TransportRequest_24_09_starting_line_2 */
+.dashboard-container {
+  padding: 20px;
+}
+
+.dashboard-heading-text {
+  font-size: 16px;
+  padding-bottom: 10px;
+
+}
+
+.request-transport-header{
+  display:flex;
+  flex-direction: column;
+}
+
+.new-request-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px;
+  font-size: var(--font-size);
+  border-radius: 5px;
+  margin:5px;
+}
+
+.new-request-button :hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.search-filter-section {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.search-filter-section input {
+  padding: 0px;
+}
+
+
+/* CreateRequest.css */
+.create-request-container {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0 10px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* button {
+  padding: 5px;
+  background-color: #007b6f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+
+} */
+
+button:hover {
+  background-color: white;
+  color: #007b6f;
+}
+
+.pagination {
+  text-align: center;
+  padding: 20px;
+
+}
+
+.modal-content {
+  position: relative;
+  width: 400px;
+  margin: 50px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content-heading-text {
+  display: block;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.close-button:hover {
+  color: red;
+}
+
+
+
+
+/* 
+Kshitija_Purvat_TransportRequest_24_09_starting_line_87 */

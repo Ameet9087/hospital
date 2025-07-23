@@ -1,0 +1,105 @@
+.update-setting-department-form-container
+{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.update-setting-department-form {
+    border-radius: 8px;
+  }
+  
+  
+  .update-setting-department-form h2 {
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .update-setting-form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    margin: 15px 0;
+  }
+  
+  /* .update-setting-form-group label {
+    flex: 0 0 180px;
+    color: #555;
+    margin-right: 5px;
+  }
+  
+  .update-setting-form-group span {
+    margin-right: 5px;
+    color: #333;
+  }
+  
+  .update-setting-form-group input,
+  .update-setting-form-group select,
+  .update-setting-form-group textarea {
+    width: 50%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .update-setting-form-group input:disabled {
+    background-color: #f0f0f0;
+  }
+  
+  .update-setting-form-group select {
+    height: 30px;
+  }
+  
+  .update-setting-form-group textarea {
+    resize: none;
+    height: 30px;
+  } */
+  
+  .update-setting-form-group.submit-btn {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .update-setting-form-group.submit-btn button {
+    padding: 5px;
+    background-color: var(--button-color);
+    border: 1px solid var(--button-color);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .update-setting-form-group.submit-btn button:hover {
+    background-color: var(--button-hover-color);
+    color: var(--button-color);
+    border: 1px solid var(--button-color);
+  }
+ .update-setting-department-form-container {
+  position: relative;
+}
+
+.update-setting-form-close-btn {
+    position: absolute; /* Ensure it is positioned relative to the modal */
+    right:0px; /* Adjust as needed */
+    border: none; /* Remove default border */
+    border-radius: 50%; /* Make the button round */
+    font-size: 20px; /* Adjust font size as needed */
+    width: 30px; /* Button width */
+    height: 30px; /* Button height */
+    display: flex;
+    align-items: center; /* Center the text vertically */
+    justify-content: center; /* Center the text horizontally */
+    cursor: pointer; /* Pointer cursor on hover */
+    color: red;
+}
+
+.update-setting-department-form {
+  padding: 20px;
+  border-radius: 8px;
+  margin: 0 5px;
+}

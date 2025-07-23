@@ -1,0 +1,101 @@
+.disPrescription-list-requisition {
+  background-color: var(--background-color);
+  padding: 10px 10px;
+  font-family: Arial, sans-serif;
+  height: 80vh;
+  margin: 0;
+}
+
+.disPrescription-controls {
+  width: 31%;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+.disPrescription-results-info span {
+  /* color: black; */
+  font-size: var(--font-size);
+}
+
+.disPrescription-print-button {
+  background-color: var(--button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.disPrescription-print-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+   
+.disPrescription-table-wrapper {
+  width: 100%;
+  overflow-x: auto; /* Enables horizontal scrolling */
+}
+
+.disPrescription-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.disPrescription-pagination button {
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 0 5px;
+  border-radius: 5px;
+}
+
+.disPrescription-pagination span {
+  margin: 0 10px;
+  /* color: gray; */
+  font-size: var(--font-size);
+}
+
+.disPrescription-search-N-result {
+  /* margin-top: 20px; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.disPrescription-table-N-paginationDiv {
+  background-color: white;
+  margin-top: 10px;
+}
+
+.disPrescription-Availability-button {
+  border: 1px solid gray;
+  border-radius: 5px;
+  background-color: var(--button-color);
+  color: white;
+}
+
+.disPrescription-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  margin-top: 20px;
+}
+.disPrescription-modal-content{
+  max-height: 650px;
+  overflow-y: auto;
+}
+
+/*  */
+

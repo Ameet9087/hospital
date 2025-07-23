@@ -1,0 +1,79 @@
+.operationschedule-modal {
+  width: 600px;
+  background-color: #fff;
+  border-radius: 8px;
+  max-height: 400px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+.operationschedule-form-col-sub-div
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.operationschedule-modal-title {
+  font-size: var(--heading-font);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.operationschedule-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.operationschedule-form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+
+
+.operationschedule-form-col label {
+  display: block;
+  font-size: var(--font-size);
+  margin-bottom: 5px;
+}
+
+.operationschedule-form-col input,
+.operationschedule-form-col select,
+.operationschedule-form-col textarea {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.operationschedule-modal-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.operationschedule-save-btn {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid var(--button-color);
+  background-color:var(--button-color);
+  color: white;
+}
+
+
+.operationschedule-delete-btn {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #f44336;
+  color: white;
+}
+
+
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}

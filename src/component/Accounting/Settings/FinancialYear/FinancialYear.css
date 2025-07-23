@@ -1,0 +1,124 @@
+.FinancialYear{
+    padding: 10px;
+}
+.FinancialYear-create button{
+    border: none;
+    background-color: var(--button-color);
+    opacity: 0.5;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: var(--font-size);
+    cursor: not-allowed;
+}
+
+.FinancialYear-search-container{
+    margin-top: 10px;
+    background-color: white;
+    padding: 5px;
+}
+.FinancialYear-search-container input[type="text"]{
+   background-color: transparent;
+   border: none;
+   outline: none;
+   width: 250px;
+}
+.FinancialYear-search-bar {
+    display: flex;
+    font-size: 14px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .FinancialYear-print-btn{
+    background-color: var(--button-color);
+    color: white;
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+  }
+  .FinancialYear-print-btn:hover{
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  .FinancialYear-results-count{
+    color: black;
+  }
+
+.FinancialYear-table-btn{
+    background-color: var(--button-color);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.FinancialYear-table-btn:hover{
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.financialYear-popup-overlay{
+  position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    z-index: 150;
+    align-items: center;
+}
+.financialYear-popup-container{
+  position: relative;
+  background-color: #f0f0f0;
+  padding: 30px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.financialYear-popup-data{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  align-items: center;
+  /* font-size: 14px; */
+}
+.financialYear-popup-data span{
+  font-weight: bold;
+}
+.financialYear-popup-remark textarea{
+  width: 100%; 
+}
+.financialYear-popup-close{
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 5px 12px;
+  font-size: var(--font-size);
+}
+.financialYear-popup-savebtn{
+  background-color: var(--button-color);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 10px;
+  float: right;
+}
+.financialYear-popup-savebtn:hover{
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+}

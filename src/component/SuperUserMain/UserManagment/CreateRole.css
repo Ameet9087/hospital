@@ -1,0 +1,64 @@
+
+.Create-role-main {
+    width: 400px;
+    position: relative;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.Create-role-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.Create-role-form label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.Create-role-form input[type="text"] {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+}
+
+.Create-role-two {
+    display: flex;
+    align-items: center;
+}
+
+.Create-role-two label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.create-role-submit {
+    width: 30%;
+    padding: 5px 10px;
+    color: white;
+    background-color: var(--button-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create-role-submit:hover {
+    background-color: #0056b3;
+}
+.Close-btn
+{
+position: absolute;
+top: -10px;
+right: -10px;
+padding: 5px 10px;
+background-color: red;
+border: none;
+color: white;
+}

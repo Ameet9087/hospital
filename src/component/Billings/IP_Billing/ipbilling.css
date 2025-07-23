@@ -1,0 +1,397 @@
+.billing-ipBilling-master {
+  font-family: Arial, sans-serif;
+}
+
+.billing-ipBilling-title-bar {
+  background-color: var(--upperBar-bg-color);
+  color: white;
+  padding: 8px;
+  font-size: var(--heading-font);
+  margin-bottom: 4px;
+}
+
+.billing-ipBilling-checkbox-label {
+  font-weight: normal;
+  margin-left: 4px;
+}
+
+.billing-ipBilling-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.billing-ipBilling-main-section {
+  display: flex;
+  gap: 4px;
+}
+.billing-opd-com-summary-row{
+  margin-top: 10px;
+}
+.billing-ipBilling-panel {
+  flex: 1;
+  border: 1px solid #ccc;
+}
+
+.billing-ipBilling-panel-header {
+  color: black;
+  font-weight: bolder;
+  padding: 4px 40px;
+  font-size: var(--heading-font);
+  display: flex;
+}
+.billing-ipBilling-panel-content {
+  padding: 8px;
+  background-color: var(--background-color);
+}
+
+.billing-ipBilling-form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  gap: 4px;
+  font-size: var(--font-size);
+  padding: 2px;
+}
+
+
+.billing-ipBilling-form-row label {
+  min-width: 100px;
+}
+.billing-ipBilling-form-row input,
+.billing-ipBilling-form-row select {
+  padding: 5px;
+  border: none;
+  width: 100%;
+  background: none;
+  /* border: 1px solid #ccc; */
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: var(--font-size);
+  width: 43%;
+}
+
+.billing-ipBilling-input-with-search {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.billing-ipBilling-input-with-search input {
+  padding: 5px;
+  border: none;
+  width: 100%;
+  background: none;
+  border-bottom: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: var(--font-size);
+}
+.billing-ipBilling-table input,
+.billing-ipBilling-table select {
+  padding: 5px;
+  border: none;
+  background: none;
+  /* border: 1px solid #ccc; */
+  border-bottom: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: var(--font-size);
+
+  width: 80%;
+}
+.billing-ipBilling-table input:focus,
+.billing-ipBilling-table select:focus {
+  border-bottom: 1px solid #ccc;
+  background: none;
+  outline: none;
+}
+
+.billing-ipBilling-input-with-search input:focus,
+.billing-ipBilling-input-with-search select:focus {
+  border-bottom: 1px solid #ccc;
+  background: none;
+  outline: none;
+  width: 100%;
+}
+
+.billing-ipBilling-magnifier-btn {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+.billing-ipBilling-status-controls {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size);
+}
+
+.billing-ipBilling-radio-group {
+  display: flex;
+  gap: 12px;
+}
+
+.billing-ipBilling-services-section {
+  background: white;
+  border: 1px solid #ccc;
+}
+
+.billing-ipBilling-tab-bar {
+  display: flex;
+  gap: 5px;
+  background: var(--upperBar-bg-color);
+  padding: 4px;
+}
+
+.billing-ipBilling-tab {
+  padding: 4px 12px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  color: var(--button-color);
+  font-size: var(--font-size);
+  background: var(--button-hover-background-color);
+  cursor: pointer;
+}
+
+.billing-ipBilling-tab.active {
+  background: var(--button-color);
+  color: var(--button-hover-background-color);
+}
+
+.Test-table {
+  padding: 8px;
+}
+
+.table-actions {
+  margin-bottom: 4px;
+}
+
+.billing-ipBilling-add-btn,
+.billing-ipBilling-del-btn {
+  margin-right: 4px;
+  padding: 2px 8px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+.billing-ipBilling-add-btn {
+  background-color: green;
+}
+.billing-ipBilling-del-btn {
+  background-color: red;
+}
+.billing-ipBilling-table {
+  overflow: scroll;
+}
+.billing-ipBilling-table table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.billing-ipBilling-table th,
+td {
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  text-align: left;
+}
+
+.billing-ipBilling-table th {
+  background: #f5f5f5;
+  font-weight: normal;
+}
+
+.billing-ipBilling-action-buttons {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.billing-ipBilling-action-buttons button {
+  background-color: var(--button-bg-color);
+  color: var(--button-hover-background-color);
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 5px;
+}
+.billing-ipBilling-action-buttons button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color);
+}
+
+/* Style the date input */
+.date-input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+/* Focused state */
+.date-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+}
+
+/* Hover effect */
+.date-input:hover {
+  border-color: #007bff;
+}
+
+/* For smaller table cells, ensure it doesn't overflow */
+td .date-input {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.billing-ipBilling-floating-field {
+  position: relative;
+}
+.billing-ipBilling-floating-field.active .billing-ipBilling-floating-label {
+  top: 0;
+  font-size: 12px;
+  color: #00897b;
+}
+.billing-ipBilling-floating-field.active .billing-ipBilling-floating-input,
+.billing-ipBilling-floating-field.active .billing-ipBilling-floating-select {
+  border-color: #00897b;
+}
+.billing-ipBilling-floating-input,
+.billing-ipBilling-floating-select {
+  padding: 5px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+  transition: all 0.2s ease;
+}
+.billing-ipBilling-floating-input{
+  width: 92%;
+}
+.billing-ipBilling-floating-input:focus,
+.billing-ipBilling-floating-select:focus {
+  outline: none;
+  border-color: #00897b;
+  box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+}
+
+.billing-ipBilling-floating-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 4px;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-size: var(--font-size);
+}
+.billing-ipBilling-floating-select {
+  width: 92%;
+}
+.billing-ipBilling-search-field {
+  position: relative;
+}
+.billing-ipBilling-search-icon {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.billing-ipBilling-section {
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.billing-ipBilling-section.half-width {
+  margin-bottom: 0;
+}
+.billing-ipBilling-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+.billing-ipBilling-grid.two-columns {
+  grid-template-columns: repeat(2, 1fr);
+}
+.billing-ipBilling-grid-sec {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+.billing-ipBilling-grid-sec.two-columns {
+  grid-template-columns: repeat(1, 1fr);
+}
+.billing-ipBilling-header {
+  background-color: #00897b;
+  color: white;
+  padding: 7px 20px;
+  font-size: var(--heading-font);
+  font-weight: 500;
+}
+.services-table table{
+  table-layout: auto;
+}
+.btn-blue{
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
+  padding: var(--input-box-padding);
+  border-radius: 5px;
+}
+@media (max-width: 1024px) {
+  .billing-ipBilling-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  }
+  
+    @media (max-width: 480px) {
+      .billing-ipBilling-grid {
+        grid-template-columns: 1fr;
+      }
+      .billing-ipBilling-grid.two-columns {
+        grid-template-columns: 1fr;
+      }
+      }
+
+  @media (max-width: 480px) {
+    .billing-ipBilling-grid-sec {
+      grid-template-columns: 1fr;
+    }
+    .billing-ipBilling-grid-sec.two-columns {
+      grid-template-columns: 1fr;
+    }
+    }
+@media (max-width: 1024px) {
+  .billing-ipBilling-grid-sec {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  }
+

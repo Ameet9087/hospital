@@ -1,0 +1,212 @@
+.dispenPatientConsumption-requisition {
+    background-color: var(--background-color);
+    padding: 0px 10px 0px 10px;
+    font-family: Arial, sans-serif;
+    height: 500px;
+  }
+  
+  .dispenPatientConsumption-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-bottom: 20px; */
+  }
+  
+  .dispenPatientConsumption-collected {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    /* margin-left: 10px; */
+    transition: background-color 0.3s ease;
+    padding: 5px 10px;
+  }
+  .dispenPatientConsumption-collected:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+    
+  
+  .dispenPatientConsumption-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-bottom: 20px; */
+  }
+  
+  .dispenPatientConsumption-controls {
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .dispenPatientConsumption-date-range {
+    display: flex;
+    align-items: center;
+    width: 38%;
+    gap: 10px;
+    background-color: #f0f0f0;
+    padding: 1px 10px;
+  }
+  .dispenPatientConsumption-date-range label{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    font-size: var(--font-size);
+  }
+  
+  .dispenPatientConsumption-date-range input[type="date"] {
+    padding: 3px;
+    margin-left: 10px;
+  }
+   
+  
+ 
+.dispenPatientConsumption-search-bar{
+  margin-left: -15px;
+}  
+  .dispenPatientConsumption-search-bar input {
+    /* margin-top: 10px; */
+    padding: 1px;
+    width: 210px;
+  }
+  .dispenPatientConsumption-search-bar i{
+    position: relative;
+    color:gray;
+    top: 3px;
+  left: 205px;
+  }
+  
+  .dispenPatientConsumption-results-info {
+    display: flex;
+    align-items: center;
+    /* padding-top: 10px; */
+  }
+  .dispenPatientConsumption-results-info span {
+    /* display: flex;
+    align-items: center; */
+    /* padding-top: 10px; */
+    color: black;
+    font-size: var(--font-size);
+  }
+
+  
+  .dispenPatientConsumption-print-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-top: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+    padding: 5px 10px;
+  }
+  .dispenPatientConsumption-print-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+  .dispenPatientConsumption-requisition-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .dispenPatientConsumption-requisition-table th, .dispenPatientConsumption-requisition-table td {
+    border: 1px solid #ddd;
+    padding: 3px;
+    text-align: center;
+  }
+  
+  .dispenPatientConsumption-requisition-table th {
+    background-color: #F3F3F3;
+    font-size: var(--font-size);
+    color:black;
+  }
+  
+  /* .no-data {
+    background-color: #fff9c4;
+    text-align: center;
+  } */
+  
+  .dispenPatientConsumption-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-size);
+  }
+  
+  .dispenPatientConsumption-pagination button {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: var(--font-size);
+  }
+  
+  .dispenPatientConsumption-pagination span {
+    margin: 0 10px;
+    color: gray;
+    font-size: var(--font-size);
+  }
+  .dispenPatientConsumption-search-N-result{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .dispenPatientConsumption-table-N-paginationDiv{
+    background-color: #f8f2f2;
+  }
+
+
+
+  /* Popup Overlay Styles */
+.dispenPatientConsumption-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup Content Styles */
+.dispenPatientConsumption-popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  /* max-width: 600px; */
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Close Button Styles */
+.dispenPatientConsumption-close-popup-button {
+  background-color: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}

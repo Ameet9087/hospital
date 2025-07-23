@@ -1,0 +1,205 @@
+/* Ajhar Tamboli sSIStock.css 19-09-24 */
+
+  
+  .sSIStock-container {
+    /* max-width: 1200px; */
+    /* margin: 0 auto; */
+    /* padding:   20px; */
+    width: auto;
+    font-family: Arial, sans-serif;
+font-size: var(--heading-font);
+background-color: var(--background-color);
+/* background-color: red; */
+  }
+ 
+ .sSIStock-container nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    border-bottom: 1px solid #dbdada;
+  }
+  
+  .sSIStock-container nav li {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+.sSIStock-container-active {
+    /* background-color: ; */
+    border-bottom:5px solid var(--button-bg-color) ;
+    /* color: black; */
+    font-weight: bold;
+  }
+  
+  .sSIStock-content {
+    background-color: var(--background-color);
+    padding: 10px;
+    height: 70vh;
+    border-radius: 0 0 5px 5px;
+  }
+  
+  .sSIStock-filters {
+    display: flex;
+    justify-content: space-between;
+    /* justify-content: space-between; */
+    margin-bottom: 10px;
+  }
+  
+  .sSIStock-filter {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+  }
+  
+  .sSIStock-filter label {
+    margin-right: 10px;
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+    margin-left: 20px;
+  }
+  
+  .sSIStock-filter select {
+    padding: 5px;
+    /* color: red; */
+    font-size: var(--font-size);
+    margin-left: 20px;
+  }
+  
+  .sSIStock-legend {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    margin-right: 100px;
+    font-size: var(--font-size);
+    /* font-weight:900; */
+  }
+  
+  .sSIStock-legend div {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sSIStock-dot {
+    width: 10px;
+    height: 10px;
+    /* padding: 10px; */
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    border: 1px solid black;
+    font-size: var(--font-size);
+    /* margin-bottom: 10px; */
+  }
+  
+  .sSIStock-red { background-color: red; }
+  .sSIStock-gray { background-color: gray; }
+
+  .sSIStock-search-N-result{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+ 
+  
+  .sSIStock-search-bar input {
+    /* flex-grow: 1; */
+    padding: 5px;
+    border: 1px solid #ccc;
+    /* border-right: none; */
+  }
+
+  
+  
+  .sSIStock-search-bar button {
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  .sSIStock-results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* gap: 5px; */
+    /* color: #0772BC; */
+    /* font-weight: bold; */
+    font-size: var(--font-size);
+  }
+  .sSIStock-results-header span{
+    margin-right: 10px;
+  
+  }
+  .sSIStock-btn-blue {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin-left: 5px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .sSIStock-btn-blue:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+  .sSIStock-content table {
+    width: 100%;
+    border-collapse: collapse;
+    /* font-size: 10px; */
+    /* color: #4d4c4c; */
+  }
+  
+  .sSIStock-content th, .sSIStock-content td {
+    border: 1px solid #ddd;
+    /* color:   red; */
+    font-size: var(--font-size);
+    padding: 3px;
+    text-align: center;
+  }
+  
+  .sSIStock-content th {
+    font-size: var(--heading-font);
+    background-color: #f2f2f2;
+  }
+  
+  .sSIStock-no-data {
+    text-align: center;
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .sSIStock-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .sSIStock-pagination button {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 5px;
+  }
+  
+  .sSIStock-pagination span {
+    margin: 0 10px;
+    /* color: gray; */
+    font-size: var(--font-size);
+  }
+  .sSIStock-pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }

@@ -1,0 +1,291 @@
+/* AppointmentBookingList.css */
+.appointment-booking-list-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.appointment-booking-list-nav {
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  height: 10%;
+}
+
+.appointment-booking-list-nav-link {
+  background: none;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.appointment-booking-list-nav-link.active {
+  background-color: #0066cc;
+  color: white;
+  border-radius: 5px;
+}
+
+.appointment-search-form {
+  background-color: #e6f3ff;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.appointment-search-form-group {
+  margin-right: 20px;
+  margin-bottom: 10px;
+  align-items: center;
+  gap: 20px;
+}
+
+.appointment-search-form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.appointment-search-form-input,
+.appointment-search-form-select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.appointment-search-form-button {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.appointment-table-container {
+  background-color: #e6f3ff;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.appointment-table-title {
+  margin-top: 0;
+}
+
+.appointment-table-search {
+  width: 20%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.appointment-table-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.appointment-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.appointment-table-head th,
+.appointment-table-body td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.appointment-table-head th {
+  background-color: #f2f2f2;
+}
+
+.appointment-table-pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.appointment-table-pagination-button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 5px 5px;
+  margin: 0 2px;
+  cursor: pointer;
+}
+
+.appointment-table-pagination-info {
+  margin: 0 10px;
+}
+.appointment-booking-list-nav-link.active {
+  background-color: #007bff; /* Or any color you prefer */
+  color: white;
+}
+
+.appointments__container {
+  background-color: #d7f2f7;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.appointments__filter-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.appointments__filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.appointments__filter-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.appointments__required {
+  color: red;
+}
+
+.appointments__dropdown {
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.appointments__date-picker {
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.appointments__show-patient-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 7px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.appointments__upcoming-appointments {
+  margin-top: 20px;
+}
+
+.appointments__title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.appointments__search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.appointments__search-input {
+  flex: 1;
+  padding: 7px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  font-size: 14px;
+}
+
+.appointments__search-btn {
+  padding: 7px 15px;
+  border: 1px solid #ccc;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0;
+}
+
+.appointments__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.appointments__table th, .appointments__table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+
+.appointments__status--checkedin {
+  color: green;
+}
+
+.appointments__status--initiated {
+  color: blue;
+}
+
+.appointments__action-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.appointments__action-btn  a{
+ 
+  color: #fff;
+
+  text-decoration: none;
+}
+.appointments__pagination-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.appointments__pagination-buttons button {
+  padding: 7px 15px;
+  margin-right: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+}
+
+.appointments__summary-report {
+  background-color: #d7f2f7;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.appointments__summary-title {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.appointments__summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.appointments__summary-table td {
+  padding: 7px;
+  border: 1px solid #ccc;
+  font-weight: bold;
+}
+      

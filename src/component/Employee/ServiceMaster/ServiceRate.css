@@ -1,0 +1,57 @@
+/* ServiceRate.css */
+
+/* Container styles */
+/* .ServiceRate-container {
+padding: 0px;    
+  }
+   */
+/* Header styles */
+.ServiceRate-container h2 {
+  font-size: var(--heading-font);
+  color: #333;
+  /* margin-bottom: 20px;  */
+  text-align: left;
+}
+.Service-rate-input {
+  font-size: 14px;
+  padding: 2px;
+}
+/* Center the buttons in the container */
+.button-container {
+  display: flex;
+  justify-content: center; /* Horizontally centers the buttons */
+  align-items: center; /* Vertically centers the buttons */
+  gap: 10px; /* Adds space between buttons */
+}
+
+/* Styling for the delete button */
+.service-rate-del-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 3px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--heading-font);
+}
+
+.service-rate-del-button:hover {
+  background-color: darkred; /* Slightly darker red on hover */
+  color: white;
+}
+
+/* Styling for the add button */
+.service-rate-add-button {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 3px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--heading-font);
+}
+
+.service-rate-add-button:hover {
+  background-color: darkgreen; /* Slightly darker green on hover */
+  color: white;
+}

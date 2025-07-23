@@ -1,0 +1,162 @@
+.verify-purchase-container {
+  background-color: var(--background-color);
+  height: 90vh;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.verify-purchase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.verify-purchase-title {
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.verify-purchase-title h2 {
+  font-size: 18px;
+  
+}
+
+.verify-purchase-filters button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.verify-purchase-filters button.active {
+  background-color: var(--button-bg-color);
+  color: white;
+  border-radius: 4px;
+}
+
+.verify-purchase-date-range {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.verify-purchase-date-input input
+{
+  padding: 5px;
+}
+.verify-purchase-search-input
+{
+  padding: 5px;
+}
+
+.ok-button {
+  display: flex;
+  align-items: center;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.verify-purchase-search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  position: relative;
+}
+
+.search-input svg {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8c8c8c;
+}
+
+.print-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.po-status {
+  background-color: #ff4d4f;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.view-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* .verify-purchase-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-buttons button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination-buttons span {
+  margin: 0 10px;
+} */
+
+
+.verify-purchase-actions-span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end; 
+  margin-top: 10px;
+}
+
+.verify-purchase-actions-span span {
+  font-size: var(--font-size);
+  color: black;
+}
+.verify-purchase-export-button{
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+.verify-purchase-export-button:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}

@@ -1,0 +1,95 @@
+.ndp-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    z-index: 150;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .ndp {
+    background-color: white;
+    padding: 10px;
+    position: relative;
+  }
+  .ndp h2{
+    color: black;
+    border-bottom: 1px solid black;
+  }
+  
+  .ndp h2, .ndp h3 {
+    font-size: var(--heading-font);
+    margin-top: 0;
+  }
+  
+  .ndp-row {
+    display: flex;
+    /* justify-content: space-between; */
+    margin-bottom: 15px;
+    gap: 25px;
+  }
+  
+  .ndp-row label {
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    white-space: nowrap;
+    gap: 10px;
+  }
+  
+  .ndp-row input[type="text"],
+  .ndp-row select,
+  .ndp-row textarea {
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 100%;
+    font-size: 14px;
+  }
+  
+  .ndp-actions {
+    text-align: right;
+    margin-top: 20px;
+  }
+  
+  /* .ndp-actions button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+   */
+  .ndp-actions button[type="submit"] {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding:5px 10px;
+  }
+  .ndp-actions button[type="submit"]:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .ndp-form{
+    padding: 20px;
+  } 
+  .ndp-close-btn{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #f44336;
+    color: white;
+    border-radius: 50%;
+    border: none;
+    padding: 6px 12px;
+    /* padding: 0;   */
+  }

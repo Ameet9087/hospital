@@ -1,0 +1,241 @@
+/* Ravindra_Sanap_Attendance.css_03_10_2024_Start */
+
+.attendance-container {
+    padding: 20px;
+    background-color: #e3fffe;
+    
+
+}
+
+.attendance-container h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 18px;
+}
+
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.attendance-table th,
+.attendance-table td {
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+    font-size: var(--font-size);
+    white-space: nowrap; /* Prevent wrapping */
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+}
+
+/* Resizable Columns */
+.resizable-th {
+    position: relative;
+  }
+  
+  .resizer {
+    width: 5px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: col-resize;
+    z-index: 1;
+  }
+  
+  table th .resizer:hover {
+    background-color: #aaa;
+  }
+
+.attendance-table th {
+    background-color: #eaeaea;
+    color: black;
+}
+
+.attendance-table tr:hover {
+    background-color: #ddd;
+}
+
+.attendance-table td {
+    color: #555;
+}
+
+@media (max-width: 600px) {
+
+    .attendance-table,
+    .attendance-table th,
+    .attendance-table td {
+        font-size: 12px;
+    }
+}
+
+.HRpagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.HRpagination button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.HRpagination button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.HRpagination button.active {
+    background-color: #333;
+    color: white;
+}
+
+.attendance-btn {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    margin: 2px;
+}
+
+.attendance-btn:disabled {
+    background-color: rgba(194, 194, 61, 0.5);
+    color: rgba(255, 255, 255, 0.7);
+    cursor: not-allowed;
+}
+
+.nodatatoshow {
+    text-align: center;
+    background-color: rgba(212, 194, 29, 0.582);
+    padding: 10px;
+}
+
+
+
+.attendance-searchAndActions {
+
+    margin: 10px;
+    margin-left: 0;
+}
+
+.attendance-search-N-results {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.attendance-search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid gray;
+    background-color: white;
+    padding: 3px;
+}
+
+.attendance-search-bar i {
+    color: gray;
+}
+
+.attendance-search-bar input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.attendance-search-button {
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-left: 5px;
+    /* Adds some spacing between the input and the button */
+    border-radius: 4px;
+    /* Optional: rounds the corners of the button */
+    font-size: var(--font-size);
+    /* Adjusts the font size for consistency */
+}
+
+.attendance-search-button:hover {
+    background-color: #e0e0e0;
+    /* Changes the background color on hover */
+}
+
+
+.attendance-results-info {
+    text-align: right;
+    font-size: var(--font-size);
+    /* color: rgb(88, 87, 87); */
+    /* font-weight: bold; */
+    /* margin-top: 5px; */
+}
+
+
+
+
+.attendance-ex-pri-buttons {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+}
+
+.attendance-ex-pri-buttons:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+.attendance-action-button-add-reports {
+    background-color: var(--button-color);
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+}
+
+.attendance-ex-pri-buttons:hover,
+.attendance-action-button-add-reports:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.attendance-searchInput {
+    /* padding: 5px; */
+    width: 300px;
+    transition: border-color 0.3s;
+    font-size: 14px;
+    margin-left: 0;
+
+}
+
+.attendance-searchInput:focus {
+    border-color: skyblue;
+    outline: none;
+}
+
+/* Ravindra_Sanap_Attendance.css_03_10_2024_End */

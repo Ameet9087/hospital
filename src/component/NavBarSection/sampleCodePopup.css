@@ -1,0 +1,190 @@
+.samplecodepopup-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 150;
+  width: 100%;
+}
+
+.samplecodepopup-container {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 80%;
+  position: relative;
+}
+
+.samplecodepopup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.samplecodepopup-title {
+  font-size: var(--heading-font);
+  /* font-weight: bold; */
+}
+
+.samplecodepopup-divided{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.samplecodepopup-close-button {
+  background: red !important;
+  border: none;
+  cursor: pointer;
+  color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 6px 12px;
+}
+
+.samplecodepopup-close-button:hover {
+  color: #374151;
+}
+
+.samplecodepopup-patient-info {
+  margin-bottom: 1rem;
+}
+
+.samplecodepopup-table {
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+  height: fit-content;
+}
+
+.samplecodepopup-table th {
+  background-color: #f3f4f6;
+  text-align: left;
+  padding: 0.5rem;
+}
+
+.samplecodepopup-table td {
+  padding: 0.5rem;
+  white-space: wrap;
+}
+
+.samplecodepopup-barcode-container {
+  padding: 1rem;
+  width: 35%;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.samplecodepopup-barcode-info{
+  border: 1px dashed black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.samplecodepopup-barcode-info p {
+  margin: 0.25rem 0;
+  font-size: var(--font-size);
+  font-weight: bold;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.samplecodepopup-barcode-placeholder {
+  width: 8rem;
+  height: 4rem;
+  background-color: #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.samplecodepopup-copies {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.samplecodepopup-copies label {
+  margin-right: 0.5rem;
+}
+
+.samplecodepopup-copies input {
+  border: 1px solid #d1d5db;
+  padding: 0.25rem;
+  width: 4rem;
+}
+
+.samplecodepopup-printer-select {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.samplecodepopup-printer-select label {
+  margin-right: 0.5rem;
+}
+
+.samplecodepopup-printer-select select {
+  border: 1px solid #d1d5db;
+  padding: 0.25rem;
+}
+
+.samplecodepopup-ok-button {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 0.25rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.samplecodepopup-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.samplecodepopup-print-button,
+.samplecodepopup-empty-sheet-button{
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.samplecodepopup-print-button svg {
+  margin-left: 0.5rem;
+}
+
+.samplecodepopup-empty-sheet-button {
+  margin-right: 0.5rem;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .samplecodepopup-barcode-container,
+  .samplecodepopup-patient-info {
+    visibility: visible;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}

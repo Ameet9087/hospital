@@ -1,0 +1,108 @@
+  /* Mohini_Endoscopy_ProcedureSchedulingForm_18-10-24 */
+.procedure-scheduling-form {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: var(--background-color);
+    /* height: 90vh; */
+    overflow-y: scroll;
+}
+
+/* Left and Right Sections */
+.procedure-scheduling-form-left,
+.procedure-scheduling-form-right {
+    width: 48%; /* Ensures equal width */
+}
+.procedure-scheduling-form-group select {
+    flex: 1; /* Inputs take remaining space */
+    padding: 5px;
+    font-size: var(--font-size);
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+/* Form Row */
+.procedure-scheduling-form-group {
+    display: flex; /* Horizontal layout */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 15px;
+}
+
+.procedure-scheduling-form-group label {
+    flex: 0 0 120px; /* Fixed width for labels */
+    margin-left: 20px;
+    margin-right: 10px; /* Space between label and input */
+    font-size: var(--heading-font);
+}
+
+/* Input Fields */
+.procedure-scheduling-form-group input[type="text"],
+.procedure-scheduling-form-group input[type="number"],
+.procedure-scheduling-form-group input[type="date"],
+.procedure-scheduling-form-group input[type="email"],
+.procedure-scheduling-form-group textarea {
+    flex: 1; /* Inputs take remaining space */
+    padding: 5px;
+    font-size: var(--font-size);
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+/* Gender Option Group */
+.procedure-scheduling-form-gender-options {
+    display: flex;
+    gap: 10px;
+}
+
+.procedure-scheduling-form-gender-options label {
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size);
+}
+
+/* Checkbox Styling */
+.procedure-scheduling-form-group input[type="checkbox"] {
+    margin-right: 80px; /* Push checkbox to the right */
+}
+
+.procedure-scheduling-form-group label {
+    display: flex; /* Align label and checkbox */
+    align-items: center; /* Center them vertically */
+}
+
+.procedure-scheduling-form-group label .mandatory {
+    color: red; /* Red asterisk for required fields */
+    margin-left: 5px; /* Space between text and asterisk */
+}
+
+/* Buttons */
+.procedure-scheduling-form-actions {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: -50px;
+}
+
+.procedure-scheduling-form-submit-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    margin-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.procedure-scheduling-form-submit-btn:hover {
+    background-color: white;
+    color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+/* Mandatory Field Indicator */
+.mandatory {
+    color: red;
+}
+  /* Mohini_Endoscopy_ProcedureSchedulingForm_18-10-24 */
+

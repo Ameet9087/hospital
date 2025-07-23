@@ -1,0 +1,152 @@
+.MaternityRegisterPopUp-container {
+    width: 1200px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .MaternityRegisterPopUp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 16px;
+  }
+  
+  .MaternityRegisterPopUp-header h4 {
+    font-size: var(--heading-font);
+    margin: 0;
+    color: gray;
+  }
+  
+  .MaternityRegisterPopUp-close-btn {
+    background-color: #E52F3E;
+    color: white;
+    border: 1px solid #E52F3E;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  .MaternityRegisterPopUp-form-group-1row{
+    margin-top: 20px;
+  }
+  .MaternityRegisterPopUp-form .MaternityRegisterPopUp-MaternityRegisterPopUp-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .MaternityRegisterPopUp-form-row-section-1{
+    /* border: 1px solid rgb(211, 208, 208); */
+    padding: 5px;
+    margin: 10px 0 20px 0 ;
+    box-shadow: 1px 1px 1px 1px #e0dfdf;
+  }
+  .MaternityRegisterPopUp-noANCListh4{
+    display: flex;
+    /* justify-content: center; */
+    color: gray;
+    font-size: var(--heading-font);
+    padding: 5px;
+    background-color: rgb(209, 205, 205);
+  }
+  .MaternityRegisterPopUp-NoChildDetailsinListh4{
+    display: flex;
+    justify-content: center;
+    color: gray;
+    font-size: var(--heading-font);
+  }
+  .MaternityRegisterPopUp-form-group {
+    /* flex: 1; */
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-size: var(--font-size);
+    width: 380px;
+    /* border: 1px solid red; */
+  }
+  
+ 
+  .MaternityRegisterPopUp-form-group-checkbox{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    white-space: nowrap;
+  }
+  
+  /* .MaternityRegisterPopUp-form-group input,
+  .MaternityRegisterPopUp-form-group select,
+  .MaternityRegisterPopUp-form-group textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+} */
+.MaternityRegisterPopUp-form-group-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+
+/* .MaternityRegisterPopUp-form-group-options input {
+  margin-right: 5px;
+} */
+
+  .MaternityRegisterPopUp-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    font-size: var(--font-size);
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .EquipmentGetPassOut-tab-bar {
+    display: flex;
+    gap: 5px;
+    padding: 4px ;
+  }
+  
+  .EquipmentGetPassOut-tab {
+    padding: 4px 12px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    color: white;
+    font-size: var(--font-size);
+    background:var(--button-bg-color);
+    cursor: pointer;
+  }
+  .EquipmentGetPassOut-tab:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color);
+  }
+  .MaternityRegisterPopUp-add-btn {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .MaternityRegisterPopUp-add-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .MaternityRegisterPopUp-form-group-1row{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* .MaternityRegisterPopUp-input[type="text"],
+  .MaternityRegisterPopUp-input[type="number"],
+  .MaternityRegisterPopUp-select {
+    width: 100%;
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: var(--font-size);
+  } */

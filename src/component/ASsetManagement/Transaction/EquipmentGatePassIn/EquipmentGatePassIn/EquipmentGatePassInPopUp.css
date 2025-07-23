@@ -1,0 +1,134 @@
+.EquipmentGatePassInPopUp-container {
+    width: 1200px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .EquipmentGatePassInPopUp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 16px;
+  }
+  
+  .EquipmentGatePassInPopUp-header h4 {
+    font-size: var(--heading-font);
+    margin: 0;
+  }
+  
+  .EquipmentGatePassInPopUp-close-btn {
+    background-color: #E52F3E;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  
+  .EquipmentGatePassInPopUp-form .EquipmentGatePassInPopUp-EquipmentGatePassInPopUp-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .EquipmentGatePassInPopUp-form-group {
+    /* flex: 1; */
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-size: var(--font-size);
+    width: 400px;
+    padding: 5px;
+    /* border: 1px solid red; */
+  }
+  
+  .EquipmentGatePassInPopUp-form-group-checkbox{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    white-space: nowrap;
+  }
+  
+ 
+.EquipmentGatePassInPopUp-form-group-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+
+
+
+  .EquipmentGatePassInPopUp-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    font-size: var(--font-size);
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .EquipmentGetPassIn-tab-bar {
+    display: flex;
+    gap: 5px;
+    padding: 4px ;
+  }
+  
+  .EquipmentGetPassIn-tab {
+    padding: 4px 12px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    color: white;
+    font-size: var(--font-size);
+    background:var(--button-bg-color);
+    cursor: pointer;
+  }
+  .EquipmentGetPassIn-tab:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color);
+  }
+  .EquipmentGatePassInPopUp-add-btn {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .EquipmentGatePassInPopUp-add-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .EquipmentGatePassInPopUp-form-group-1row{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+   
+.EquipmentGatePassOutPopUp-add-row-btn {
+  margin-top: 10px;
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.EquipmentGatePassOutPopUp-del-row-btn {
+  background-color: red;
+  margin-top: 10px;
+  margin-left: 5px;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+

@@ -1,0 +1,55 @@
+/* PatientCard.css */
+.patient-card {
+    border: 2px solid black;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px auto;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
+  }
+  
+  .patient-header {
+    text-align: center;
+    font-size: var(--heading-font);
+    margin-bottom: 15px;
+  }
+  
+  .patient-card p {
+    margin: 5px 0;
+  }
+  
+  .patient-card-print-button {
+    background-color: var(--button-color);
+    color: white;
+    border: 1px solid var(--button-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .print-button:hover {
+    background-color: var(--button-hover-color);
+    color: var(--button-color);
+    border: 1px solid var(--button-color);
+  }
+  
+  .printer-info {
+    margin-top: 15px;
+    font-size: var(--font-size);
+  }
+  
+  .change-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  @media print {
+    .patient-card-print-button {
+      display: none;
+    }
+
+    .patient-card {
+      border: none;
+      background-color: white;
+      font-size: 14px;
+    }
+  }

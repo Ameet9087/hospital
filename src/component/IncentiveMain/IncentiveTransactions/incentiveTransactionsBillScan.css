@@ -1,0 +1,91 @@
+ /* Ajhar Tamboli IncentiveTransactionsBillScan.css 18-09-2024 */
+
+  
+  .incentiveTransactionsBillScan-container {
+    background-color: var(--background-color);
+    /* padding: 10px; */
+    width: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  .incentiveTransactionsBillScan-container h3{
+font-weight: normal;
+margin: 10px;
+font-size: var(--heading-font);
+  }
+  
+  .incentiveTransactionsBillScan-tabs {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #dad7d7;
+    margin-bottom: 20px;
+  }
+  
+  .incentiveTransactionsBillScan-tab {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .incentiveTransactionsBillScan-selected {
+    color: #039be5;
+    border-bottom: 4px solid #2D68EA;
+  }
+  
+  .incentiveTransactionsBillScan-filters {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .incentiveTransactionsBillScan-date-range {
+    background-color: #EBF7FF;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+    padding: 5px 30px;
+  }
+  .incentiveTransactionsBillScan-date-range label {
+  font-size: var(--font-size);
+  }
+  .incentiveTransactionsBillScan-icon-button {
+    background-color: #e0e0e0;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+
+  
+  .incentiveTransactionsBillScan-load-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    margin-left: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    /* margin: 1px; */
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .incentiveTransactionsBillScan-load-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+  .incentiveTransactionsBillScan-search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .incentiveTransactionsBillScan-info-text {
+    color: #666;
+  }
+  

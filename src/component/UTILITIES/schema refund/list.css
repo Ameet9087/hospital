@@ -1,0 +1,301 @@
+/* neha -utilities-scheme-refund- 19/09/24*/
+.scheme-refund-list {
+    height: 100vh; 
+    width: 100%;  
+    background-color:var(--background-color); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px; 
+    box-sizing: border-box;
+    
+  }.new-scheme-refund-modal-container {
+   position:absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:auto;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .new-scheme-refund-modal-box {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 70%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+  
+  .new-scheme-refund-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .new-scheme-refund-modal-header h2 {
+    margin: 0;
+  }
+  
+  .new-scheme-refund-modal-header .close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .new-scheme-refund-modal-patient{
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  .new-scheme-refund-modal-patient-info {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+  }
+  
+  .new-scheme-refund-modal-patient-info p {
+    margin: 5px 0;
+  }
+  
+  .new-scheme-refund-modal-form {
+    margin-top: 20px;
+  }
+  
+  .new-scheme-refund-modal-form label {
+    display: inline-block;
+    width: 220px;
+    font-weight: bold;
+  }
+
+  .new-scheme-refund-modal-form-data{
+    display: flex;
+  }
+  
+  .new-scheme-refund-modal-form input,
+  .new-scheme-refund-modal-form select {
+    width: 200px;
+    padding: 2px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .new-scheme-refund-modal-form button {
+    background-color: #00c2ff;
+    color: white;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 400px;
+  }
+  
+  .new-scheme-refund-modal-form button:hover {
+    background-color: #00a6d1;
+  }
+  
+  .new-scheme-refund-modal-table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .new-scheme-refund-modal-table th,
+  .new-scheme-refund-modal-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .new-scheme-refund-modal-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .new-scheme-refund-modal-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .new-scheme-refund-modal-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .modelbtn {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; 
+    margin-bottom: 20px; 
+    
+  }
+
+  .new-entry-btn{
+    background-color:var( --button-color);
+    color: white;
+    border: none;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+    transition: background-color 0.3s ease;
+
+  }
+  
+
+  .date-range-container{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; 
+    margin-bottom: 20px;
+    background-color: #ccc;
+    align-items: center;
+    margin-left: 20px;
+    padding-left: 10px;
+
+  }
+
+  .utltdatemiddle{
+    width: 50%;
+    display: flex;
+    justify-content: center; 
+   margin: 2px;
+    background-color: #dfebe8;
+    align-items: center;
+
+  }
+  
+  .utlt-date-range input {
+    margin: 0 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .star-btn, .dash-btn {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    margin-right: 5px;
+  }
+  
+  .scheme-refund-table{
+    width: 100%;
+    font-size: var(--font-size);
+  }
+  .scheme-refund-search-bar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    padding-left: 20px;
+ 
+
+  }
+  
+  .scheme-refund-search-bar input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 30px;
+    
+  }
+  
+  .utlt-search-bar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .utlt-pagination button:hover {
+    background-color: #0056b3; 
+  }
+  
+  .utlt-pagination button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;      
+  }
+  
+  .admitted-search-input {
+    border-radius: 5px;
+    height: 30px;
+  }
+  
+    /* .utlt-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050; 
+  } */
+
+.scheme-modal {
+  width: 700px !important;
+  background-color: white;
+  margin-left: 200px; 
+  /* padding: 20px;  */
+  border-radius: 8px;
+  /* overflow: hidden;   */
+}
+
+
+.utlt-modal-header,
+.utlt-modal-footer {
+  padding: 2px;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+
+/* .utlt-modal-body {
+  padding: 20px;
+} */
+
+.utlt-modal-title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.utlt-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.utlt-close {
+  font-size: 14px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: auto; 
+}
+
+.utlt-btn {
+  margin-left: 10px;
+}
+
+.utlt-form-group{
+  display: flex;
+  padding: 10px;
+}
+
+
+
+

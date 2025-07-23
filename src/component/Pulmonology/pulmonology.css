@@ -1,0 +1,49 @@
+/* General styling for the navbar */
+.pulmonology-navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    overflow: hidden;
+    display: flex;
+    justify-content: left;
+    padding: 10px;
+    width: 100vw;
+}
+
+
+.pulmonology-nav-link {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+/* Hover effect on links */
+.pulmonology-nav-link:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+
+/* .active {
+    background-color: var(--button-bg-color); 
+} */
+
+@media (max-width: 600px) {
+    .pulmonology-navbar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pulmonology-nav-link {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

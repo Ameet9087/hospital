@@ -1,0 +1,193 @@
+  .doctorFeePaymentVoucher-container {
+    font-family: Arial, sans-serif;
+    padding: 10px;
+    background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+  }
+  
+  .doctorFeePaymentVoucher-header-form {
+    margin-bottom: 20px;
+  }
+  
+  .doctorFeePaymentVoucher-form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+  
+  .doctorFeePaymentVoucher-form-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .doctorFeePaymentVoucher-form-group label {
+    white-space: nowrap;
+  }
+  
+  .doctorFeePaymentVoucher-required {
+    color: red;
+  }
+  
+  .doctorFeePaymentVoucher-search-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .doctorFeePaymentVoucher-search-field input {
+    padding: 15px 25px 15px 5px;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 88%;
+  }
+  
+  .doctorFeePaymentVoucher-search-btn {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--heading-font);
+    color: gray;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .doctorFeePaymentVoucher-form-group select {
+    height: 26px;
+    border: 1px solid #ccc;
+    background-color: white;
+  }
+  
+  .doctorFeePaymentVoucher-collect-data-link {
+    color: blue;
+    text-decoration: none;
+    margin-left: auto;
+  }
+  
+  .doctorFeePaymentVoucher-payroll-section {
+    border: 1px solid #ccc;
+    background-color: white;
+  }
+  
+  .doctorFeePaymentVoucher-payroll-header {
+    display: flex;
+    align-items: center;
+    background-color: #e6e6e6;
+    padding: 5px 10px;
+  }
+  
+  .doctorFeePaymentVoucher-title {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .doctorFeePaymentVoucher-add-row {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  .doctorFeePaymentVoucher-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .doctorFeePaymentVoucher-table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .doctorFeePaymentVoucher-table-wrapper th, .doctorFeePaymentVoucher-table-wrapper td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 12px;
+  }
+  
+  .doctorFeePaymentVoucher-table-wrapper th {
+    background-color: #f5f5f5;
+    text-align: left;
+  }
+  
+  .doctorFeePaymentVoucher-action-buttons {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .doctorFeePaymentVoucher-add-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 2px 8px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  .doctorFeePaymentVoucher-del-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 2px 8px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  .doctorFeePaymentVoucher-footer-section {
+    display: flex;
+    padding: 10px;
+    gap: 20px;
+  }
+  
+  .doctorFeePaymentVoucher-amount-section, 
+  .doctorFeePaymentVoucher-narration-section {
+    flex: 1;
+  }
+  
+  .doctorFeePaymentVoucher-amount-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 5px;
+  }
+  
+  .doctorFeePaymentVoucher-amount-row label {
+    min-width: 120px;
+    font-size: 12px;
+  }
+  
+  .doctorFeePaymentVoucher-amount-row input {
+    flex: 1;
+    height: 20px;
+    border: 1px solid #ccc;
+    padding: 2px 5px;
+  }
+  
+  .doctorFeePaymentVoucher-amount-row textarea {
+    flex: 1;
+    height: 60px;
+    border: 1px solid #ccc;
+    padding: 2px 5px;
+    resize: none;
+  }
+  
+  .doctorFeePaymentVoucher-amount-row input[type="date"] {
+    height: 20px;
+    border: 1px solid #ccc;
+    padding: 2px 5px;
+  }
+  
+  /* Gradient background effect */
+  .doctorFeePaymentVoucher-container::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(230,243,255,0.8) 100%);
+    z-index: -1;
+  }

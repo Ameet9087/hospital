@@ -1,0 +1,179 @@
+/* General Container Styles */
+.ot_nurse_notes-container {
+    width: 100%;
+
+  
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 8px;
+ 
+  }
+  
+  /* Header Styling */
+  .ot_nurse_notes-header {
+    text-align: center;
+    font-size: var(--heading-font);
+    color: #fff;
+    background-color: var(--sideBar-bg-color);
+    padding: 8px 0;
+    border-radius: 5px;
+    
+  }
+  
+  /* Row Layout */
+  .ot_nurse_notes-row {
+    display: flex;
+    gap: 0px;
+  }
+  
+  /* Panel Styling */
+/* Panel Styling */
+.ot_nurse_notes-panel {
+  background-color: #ffffff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+
+  width: 100%; /* Ensures the panel takes up the full width */
+  max-width: 100%; /* Prevents overflow */
+  box-sizing: border-box; /* Ensures padding is included in width calculation */
+
+}
+
+  .ot_nurse_notes-title{
+    background-color: var(--sideBar-bg-color);
+color: white;
+    padding: 8px;
+
+
+  }
+  /* Form Fields */
+  .ot_nurse_notes-field {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .ot_nurse_notes-field label {
+    font-weight: bold;
+    margin-right: 20px;
+    color: #333;
+    width: 150px;
+    font-size: 14px;
+  }
+  
+  .ot_nurse_notes-field input,
+  .ot_nurse_notes-field select {
+    width: 50%; /* Set input field width to 50% */
+    padding: var(--input-box-padding);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: var(--font-size);
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .ot_nurse_notes-field input:focus,
+  .ot_nurse_notes-field select:focus {
+    border-color: var(--sideBar-bg-color);
+  }
+  
+  /* Special styling for blood pressure input fields */
+  .ot_nurse_notes-blood-pressure {
+    display: flex;
+    align-items: center;
+  }
+  
+  .ot_nurse_notes-blood-pressure-input {
+    width: 80px;
+    margin-right: 5px;
+  }
+  
+  /* Separator between systolic and diastolic BP inputs */
+  .ot_nurse_notes-blood-pressure-separator {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  /* Vital signs section header */
+  .ot_nurse_notes-vitals-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Vital sign inputs for temperature, pulse, respiration */
+  .ot_nurse_notes-vital-sign {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  
+  .ot_nurse_notes-vital-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    width: 45%;
+  }
+  
+  .ot_nurse_notes-vital-input {
+    width: 50%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 5px;
+    background: #ddd; /* light gray background */
+    border-radius: 5px;
+    border: 1px solid #aaa; /* light border */
+    outline: none;
+  }
+  
+  .ot_nurse_notes-vital-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #888; /* thumb color */
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid #555; /* border for thumb */
+  }
+  
+  .ot_nurse_notes-vital-input::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: #888;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid #555;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .ot_nurse_notes-row {
+      flex-direction: column;
+    }
+  
+    /* Stack label and input in column layout for small screens */
+    .ot_nurse_notes-field {
+      flex-direction: column;
+    }
+  
+    .ot_nurse_notes-field label {
+      margin-bottom: 5px;
+      margin-right: 0; /* Remove margin for stacked layout */
+    }
+  
+    .ot_nurse_notes-field input,
+    .ot_nurse_notes-field select {
+      width: 100%; /* Make inputs fill the available space on small screens */
+    }
+  }
+  

@@ -1,0 +1,54 @@
+.ipdmservice-container {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+  }
+  
+  .ipdmservice-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .ipdmservice-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .ipdmservice-table th,
+  .ipdmservice-table td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .ipdmservice-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .ipdmservice-input {
+    width: 90%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .ipdmservice-add,
+  .ipdmservice-delete {
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 4px;
+  }
+  
+  .ipdmservice-add {
+    background-color: green;
+    color: white;
+  }
+  
+  .ipdmservice-delete {
+    background-color: red;
+    color: white;
+  }
+  

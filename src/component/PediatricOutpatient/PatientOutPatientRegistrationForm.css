@@ -1,0 +1,169 @@
+.patient-outpatient-register-form-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: var(--background-color);
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.patient-outpatient-register-form-title {
+  text-align: left; /* Align the heading to the left */
+  font-size: var(--heading-font); /* Set the font size */
+  color: #333; /* Set the text color */
+  margin-bottom: 20px; /* Add space below the heading */
+}
+
+.patient-outpatient-register-form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.patient-outpatient-register-form-left,
+.patient-outpatient-register-form-right {
+  width: 48%; /* Each side takes up half the width */
+}
+
+.patient-outpatient-register-form-group {
+  display: flex; /* Change to flex for horizontal layout */
+  align-items: center; /* Center align items vertically */
+  margin-bottom: 15px;
+}
+
+.patient-outpatient-register-form-label {
+  flex: 0 0 180px; /* Set a fixed width for the label */
+  margin-right: 10px; /* Add space between label and input */
+  margin-left: 20px;
+  font-size: var(--heading-font);
+}
+
+.patient-outpatient-register-form-input {
+  padding: 5px; /* Add desired padding */
+  border: 1px solid #ced4da;
+  border-radius: 5px; /* Optional: Rounded corners */
+  font-size: var(--font-size); /* Optional: Font size */
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+.patient-outpatient-register-form-input[type="text"],
+.patient-outpatient-register-form-input[type="number"],
+.patient-outpatient-register-form-input[type="date"],
+.patient-outpatient-register-form-input[type="email"],
+.patient-outpatient-register-form-input[type="textarea"] {
+  flex: 1; /* Allow input to take up the remaining space */
+  padding: 5px;
+  font-size: var(--font-size);
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.patient-outpatient-register-form-input[type="textarea"] {
+  width: 60%;
+}
+
+.patient-outpatient-register-form-submit-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.patient-outpatient-register-form-submit-btn:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-color);
+  background-color: white;
+}
+
+.mandatory {
+  color: red; /* Change the color to red */
+}
+
+.patient-outpatient-register-button {
+  display: flex;
+  gap: 20px; /* Adds a 20px gap between the buttons */
+  justify-content: center; /* Aligns the buttons to the right */
+}
+
+.patient-outpatient-register-form {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allows wrapping of items */
+}
+
+.patient-outpatient-register-form-left,
+.patient-outpatient-register-form-right {
+  width: 48%; /* Each side takes up half the width */
+}
+
+.patient-outpatient-textarea {
+  height: 30px;
+  max-width: 400px; /* Maximum width */
+  padding: 5px; /* Padding inside the textarea */
+  border: 1px solid #ccc; /* Border styling */
+  border-radius: 4px; /* Rounded corners */
+  font-size: var(--font-size); /* Font size */
+  resize: vertical; /* Allow vertical resizing only */
+}
+
+.patient-outpatient-register-form-group {
+  display: flex; /* Change to flex for horizontal layout */
+  align-items: center; /* Center align items vertically */
+  margin-bottom: 15px;
+}
+
+.patient-outpatient-register-form-group {
+  width: 100%; /* Ensure groups take full width */
+}
+
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+  .patient-outpatient-register-form {
+    flex-direction: column; /* Stack the form fields vertically */
+    justify-content: flex-start; /* Align fields to the top */
+  }
+
+  .patient-outpatient-register-form-left,
+  .patient-outpatient-register-form-right {
+    width: 100%; /* Set each side to take full width */
+  }
+
+  .patient-outpatient-register-form-group {
+    flex-direction: column; /* Stack label and input vertically */
+    align-items: flex-start; /* Align items to the left */
+    margin-bottom: 15px;
+    width: 100%; /* Make sure the group takes full width */
+  }
+
+  .patient-outpatient-register-form-label {
+    flex: 0 0 auto; /* Remove fixed width to allow stacking */
+    margin-right: 0;
+    margin-left: 0;
+    font-size: var(--font-size); /* Optional: Adjust font size for mobile */
+    margin-bottom: 5px; /* Add space below label */
+  }
+
+  .patient-outpatient-register-form-input {
+    width: 100%; /* Make input fields take full width */
+    padding: 10px;
+  }
+
+  .patient-outpatient-register-form-input[type="textarea"] {
+    width: 100%; /* Ensure textarea also takes full width */
+  }
+
+  .patient-outpatient-register-form-submit-btn {
+    width: 100%; /* Make the submit button full width on mobile */
+    padding: 10px; /* Add padding for easier interaction */
+  }
+
+  .patient-outpatient-register-button {
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 10px; /* Adjust gap between buttons for mobile */
+    justify-content: center;
+    width: 100%; /* Ensure button container takes full width */
+  }
+}

@@ -1,0 +1,81 @@
+.voucher{
+    padding: 10px;
+}
+.voucher-create button{
+    border: none;
+    background-color: var(--button-color);
+    padding:5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: var(--font-size);
+    cursor: pointer;
+}
+.voucher-create button:hover{
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.voucher-search-container{
+    margin-top: 10px;
+    background-color: white;
+    padding: 5px;
+}
+.voucher-search-container input[type="text"]{
+   background-color: transparent;
+   border: none;
+   outline: none;
+   width: 250px;
+}
+.voucher-search-bar {
+    display: flex;
+    font-size: 14px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .voucher-print-btn{
+    background-color: var(--button-color);
+    color: white;
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+  }
+  .voucher-print-btn:hover{
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+
+  .voucher-results-count{
+    color: black;
+  }
+
+  .no-show-voucher {
+    text-align: center;
+    font-style: italic;
+    color: #999;
+  }
+
+.voucher-table-btn{
+    background-color: var(--button-color);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding:5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.voucher-show-btn{
+    background-color: var(--button-color);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding:5px 10px;
+}
+.voucher-show-btn:hover,.voucher-table-btn:hover{
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+}

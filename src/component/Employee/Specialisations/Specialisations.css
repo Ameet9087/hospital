@@ -1,0 +1,110 @@
+.specialisations {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .specialisations__header {
+    cursor: pointer;
+    color: black;
+    padding: 10px;
+  }
+  
+  .specialisations__header h3 {
+    color: black;
+  }
+  
+  .specialisations__form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .specialisations__form-group {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+
+ 
+  .specialisations__form-group-sub{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .specialisations__div-button{
+    display:flex;
+    gap:10px;
+  
+  }
+  .specialisations__radio-group {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .specialisations__radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .LocationsTable-container {
+    width: 100%;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+  }
+  
+  .LocationsTable-header {
+    background-color: #d6e9f8;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .LocationsTable-instruction {
+    color: red;
+    font-weight: bold;
+  }
+
+  
+.SearchPopup {
+  width: 100%; /* Adjust width to your needs, e.g., 80% or 600px */
+  max-width: 600px; /* Optional: Set a maximum width to make it more responsive */
+  margin: 0 auto; /* Centers the content horizontally */
+  text-align: left; /* Align text to the left */
+  padding: 20px;
+}
+.specialisations__submit-button
+{
+  /* width: 33%; */
+  padding: 5px;
+  border-radius:5px;
+  color: white;
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+}
+
+.specialisations__submit-button:hover{
+  border: 1px solid var(--button-color);
+}
+
+/* Search bar styling */
+.SearchPopup-search-bar {
+  margin-bottom: 20px;
+}
+
+.SearchPopup-input {
+  width: 100%; /* Makes the input field take up full width */
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}

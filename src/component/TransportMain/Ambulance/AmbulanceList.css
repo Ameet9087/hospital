@@ -1,0 +1,89 @@
+.ambulance-list-module-com {
+  padding: 20px;
+  background-color: var(--background-color);
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.ambulance-details-com-module__heading {
+  font-size: var(--heading-font);
+  color: black;
+  margin-bottom: 20px;
+}
+
+.ambulance-details-com-module__buttons {
+  margin-bottom: 20px;
+  display: flex; /* Use Flexbox to arrange buttons */
+  flex-wrap: wrap; /* Allow wrapping of buttons if necessary */
+  gap: 60px; /* Space between buttons */
+}
+
+.ambulance-details-com-module__button {
+  padding: 5px 10px; /* Added horizontal padding */
+  background-color: var(--button-color); /* Example button color */
+  border: none;
+  font-size: var(--font-size);
+  cursor: pointer;
+  color: white; /* Default text color */
+  border-radius: 5px; /* Optional: rounded corners */
+  text-align: center; /* Center the text */
+  transition: background-color 0.3s; /* Smooth transition for hover */
+  border-bottom: 1px solid var(--button-hover-border-color);
+}
+
+.ambulance-details-com-module__button:hover {
+  background-color: white; /* Darker shade on hover */
+  color: var(--button-color);
+  border-bottom: 1px solid var(--button-hover-border-color);
+}
+
+.ambulance-details {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.ambulance-details-com-module__button.active {
+  background-color: var(--button-bg-color); /* Active background color */
+  color: white; /* Active text color */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .ambulance-list-module-com {
+    padding: 10px; /* Reduced padding for mobile */
+    height: auto; /* Allow height to adjust based on content */
+  }
+
+  .ambulance-details-com-module__heading {
+    font-size: 1.5rem; /* Adjust heading size */
+    margin-bottom: 15px; /* Reduce margin below heading */
+  }
+
+  .ambulance-details-com-module__buttons {
+    gap: 20px; /* Reduced gap between buttons */
+    justify-content: center; /* Center buttons on small screens */
+  }
+
+  .ambulance-details-com-module__button {
+    flex: 1 1 45%; /* Allow buttons to grow and wrap */
+    padding: 10px; /* Increased padding for easier clicking */
+    font-size: 14px; /* Adjust font size for better readability */
+  }
+}
+
+@media (max-width: 480px) {
+  .ambulance-details-com-module__heading {
+    font-size: 1.2rem; /* Further reduce heading size */
+  }
+
+  .ambulance-details-com-module__buttons {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center buttons */
+  }
+
+  .ambulance-details-com-module__button {
+    width: 100%; /* Full width for buttons */
+    margin-bottom: 10px; /* Space below each button */
+  }
+}

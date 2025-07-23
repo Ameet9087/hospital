@@ -1,0 +1,63 @@
+/* CounterInfo.css */
+.counter-info {
+    background-color: #e6fff9;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .info-text {
+    display: flex;
+    align-items: center;
+  }
+  
+  .info-icon {
+    color: #00a86b;
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  
+  .activated {
+    color: #00a86b;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  .counter {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  .opd-counter {
+    color: #00a86b;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  .already-activated {
+    font-weight: bold;
+  }
+  
+  .action-area {
+    display: flex;
+    align-items: center;
+  }
+  
+  .change-question {
+    margin-right: 10px;
+  }
+  
+  .deactivate-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  /* Adjust the overall background color */
+ 

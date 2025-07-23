@@ -1,0 +1,92 @@
+/* WriteOffItemsList.css */
+/* Swapnil Rokade WriteOffList adding className 14/09 */
+.writeOffList-inventory-content {
+    width: 100%;
+    height: 90vh;
+    background-color: var(--background-color);
+}
+
+.writeOffList-inventory-search-bar {
+    width: 25%;
+    border-radius: 5px;
+    border: 1px solid rgb(169, 167, 167);
+}
+.writeOffList-inventory-results-search-container
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.writeOffList-inventory-search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+}
+
+.writeOffList-inventory-search-bar  {
+    /* margin-left: -30px; */
+    /* border: none; */
+    padding: 5px;
+    font-size: var(--font-size);
+    background: none; /* Remove any background color */
+    cursor: pointer;
+}
+
+
+.writeOffList-inventory-span {
+    margin-right: 5px;
+    font-size: var(--font-size);
+    color: black;
+}
+
+.writeOffList-inventory-button {
+    padding: var(--input-box-padding);
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    margin-left: 10px;
+    background-color: var(--button-color);
+    color: #fff;
+    cursor: pointer;
+}
+.writeOffList-inventory-button:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+.wite-off-tab{
+    background-color: white;
+}
+
+.writeOffList-inventory-write-off-list-table {
+    width: 100%;
+    margin-left: 10px;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+.writeOffList-inventory-write-off-list-table th,
+.writeOffList-inventory-write-off-list-table td {
+    padding: 5px;
+    font-size: var(--heading-font);
+    background-color: #f2f2f2;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+.writeOffList-inventory-write-off-list-table th{
+    background-color: #f2f2f2;
+}
+.writeOffList-inventory-write-off-list-table tbody tr:hover {
+    background-color: #e0e0e0; /* Adjust the color to your preference */
+}
+.writeOffList-inventory-results
+{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}

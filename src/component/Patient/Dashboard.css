@@ -1,0 +1,123 @@
+ /* prachi parab user interface changed  14/9 */
+
+.patient-dashboard-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #e6f7ff;
+    height: 90vh;
+    overflow-y: scroll;
+}
+
+.patient-navbar {
+    display: flex;
+    justify-content: flex-start;
+    background-color:var( --button-bg-color);
+    padding: 10px;
+}
+
+.patient-nav-button {
+    background-color: white;
+    color: var( --button-bg-color);
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.patient-date-range-picker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.patient-date-range-picker label {
+    margin-right: 10px;
+}
+
+.patient-date-range-picker input {
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var( --button-bg-color);
+}
+
+.patient-date-picker-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.patient-date-picker-button:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+
+}
+
+.patient-stats {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.patient-stat-card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 15px;
+    flex-basis: 100%;
+}
+
+.patient-stat-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.patient-stat-info p {
+    margin: 0;
+}
+
+.patient-charts-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.patient-chart {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* Media Queries for responsiveness */
+@media (min-width: 768px) {
+    .patient-stat-card {
+        flex-basis: 38%;
+    }
+
+    .patient-chart {
+        width: 48%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .patient-stat-card {
+        flex-basis: 22%;
+    }
+
+    .patient-chart {
+        width: 30%;
+    }
+}

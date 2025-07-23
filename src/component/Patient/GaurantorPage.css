@@ -1,0 +1,121 @@
+ /* prachi parab user interface changed  14/9 */
+.guarantor-page {
+  font-family: Arial, sans-serif;
+  background-color:#e3fffe;
+  padding: 20px;
+}
+
+.guarantor-page-form-columns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.guarantor-page-left-column,
+.guarantor-page-right-column {
+  width: 48%;
+}
+
+.guarantor-page-form-group {
+  display: flex;
+  align-items: left!important;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.guarantor-page-form-group label {
+  width: 25%;
+  font-weight: bold;
+  
+}
+
+.guarantor-page-form-group input[type="text"],
+.guarantor-page-form-group input[type="tel"],
+.guarantor-page-form-group input[type="date"],
+.guarantor-page-form-group select {
+  width: calc(100% - 110px); /* Adjusted width for text inputs */
+  padding: 5px 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 3px;
+}
+
+.guarantor-page-radio-group {
+  display: flex;
+  align-items: left;
+  margin-top: 3px;
+  margin-right:20%;
+}
+
+.guarantor-page-radio-group label {
+  display: block;
+  margin-right: 30px; /* Space between gender options */
+  display: flex;
+  
+}
+
+.guarantor-page-radio-group input {
+  margin-right: 5px; /* Space between radio button and text */
+  margin-right: 10px;
+}
+
+.guarantor-page-or-text {
+  margin: 0 10px;
+}
+
+.guarantor-page-self-checkbox {
+  display: inline-block;
+}
+
+.guarantor-page-save-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+.guarantor-page-save-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+.guarantor-page-relationpatient{
+
+ 
+    display: flex;
+    align-items: left!important;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  
+
+}
+
+.guarantor-page-relationpatient label{
+
+font-weight: bold;
+  padding-right: 4%;;
+
+
+}
+
+.guarantor-page-relationpatient input{
+
+ 
+  width: calc(100% - 10px); /* Adjusted width for text inputs */
+  padding: 5px 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 3px;
+  padding-left: 25px;
+
+}
+
+.guarantor-page-form{
+  background-color: white;
+  padding: 20px;
+}
+

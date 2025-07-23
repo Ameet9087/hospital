@@ -1,0 +1,101 @@
+.AmcTracker-container {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0 auto;
+  }
+  
+  .AmcTracker-add-button {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .AmcTracker-add-button:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+  .AmcTracker-search-bar {
+    background-color: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .AmcTracker-search-bar input {
+    padding: 5px;
+    font-size: var(--font-size);
+    width: 200px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  
+  .AmcTracker-search-bar i {
+    color: gray;
+    position: absolute;
+    right: 5px;
+  }
+  
+  .AmcTracker-search-N-result {
+    margin: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .AmcTracker-results-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .AmcTracker-results-info span {
+    font-size: var(--font-size);
+    margin-right: 10px;
+  }
+  
+  .AmcTracker-edit-button,
+  .AmcTracker-deactivate-button {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 1px 5px;
+  }
+  
+  .AmcTracker-edit-button:hover,
+  .AmcTracker-deactivate-button:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+  .AmcTracker-print-button {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .AmcTracker-print-button:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  

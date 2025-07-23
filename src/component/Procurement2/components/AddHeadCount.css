@@ -1,0 +1,54 @@
+.AddAccountHead-model {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  .AddAccountHead-form
+  {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .AddAccountHead-model h2 {
+    font-size: var(--heading-font);
+    text-align: center;
+  }
+ .AddAccountHead-formgroup
+ {
+  /* width: 100%; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+ }
+  .MeasssRequired {
+    color: red;
+  }
+  
+  .MeasssCreateLedger {
+    display: block;
+    color: #f0a500;
+    margin-top: 5px;
+    font-size: 12px;
+  }
+  
+  
+  
+  .MeasssBtnAdd {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .MeasssBtnAdd:hover {
+    background-color: white;
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  

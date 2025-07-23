@@ -1,0 +1,188 @@
+/* Mohini_SettlementSummaryReport_WholePage_14/sep/2024 */
+.user-collection-report-container {
+  background-color: var( --background-color);
+  padding: 20px;
+  height: 90vh;
+  font-family: Arial, sans-serif;
+}
+.user-collection-report-container h2{
+  text-align: left;
+  color: black;
+  font-size: var(--heading-font);
+  margin-bottom: 20px;
+}
+/* .user-collection-header h2 {
+  
+} */
+
+.user-collection-filter-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.user-collection-date-range{
+background-color: #f2f2f2;
+}
+.user-collection-date-range,
+.user-collection-input-group,
+.user-collection-select-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-collection-filter-btn {
+  /* background-color: white; */
+  border: none;
+  padding: 6px 10px;
+  /* color: #f2f2f2; ; */
+  cursor: pointer;
+}
+
+/* .user-collection-input[type="date"],
+.user-collection-input[type="text"],
+select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+} */
+
+.user-collection-show-report-btn {
+  background-color: #5a5dc6;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.user-collection-table-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.user-collection-search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.user-collection-input-group {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+.user-collection-search-btn {
+  background: none;
+  border: none;
+  margin-left: -40px;
+  padding: 5px;
+  /* font-size: 14px; */
+  cursor: pointer;
+}
+.user-collection-search-input{
+  font-size: 14px;
+  padding: 5px;
+}
+.user-collection-input {
+  padding: 7px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-collection-input[type="text"] {
+  padding: 7px;
+  width: 250px;
+}
+
+.user-collection-input[type="date"] {
+  padding: 5px;
+  /* width: 170px; */
+}
+
+.user-collection-export-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.user-collection-export-btn,
+.user-collection-print-btn {
+  background-color: #5a5dc6;
+  border: none;
+  padding: 8px 12px;
+  color: white;
+  cursor: pointer;
+}
+
+.user-collection-report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.user-collection-report-table th,
+.user-collection-report-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.user-collection-no-rows {
+  text-align: center;
+  padding: 15px;
+  background-color: #f5d78e;
+  color: #a37c1e;
+}
+
+.user-collection-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-collection-pagination button {
+  background-color: #a0c6ff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.user-collection-pagination span {
+  color: #555;
+}
+.user-collection-ta{
+  background-color: white;
+}
+.user-collectionno-rows{
+  background-color: #f5d78e;
+  font-size: 16px;
+  color: brown;
+}
+
+/*  */
+.user-collection-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between each element */
+}
+
+.user-collection-input-group,
+.user-collection-select-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-collection-input-group label,
+.user-collection-select-group label {
+    margin-right: 5px; /* Space between label and input */
+}
+
+.user-collection-show-report-btn {
+    margin-left: auto; /* Push the button to the right */
+}
+/* Mohini_SettlementSummaryReport_WholePage_14/sep/2024 */

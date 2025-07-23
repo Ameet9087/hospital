@@ -1,0 +1,158 @@
+
+/*neha HI-visitlist-19/09/24 */
+.visit_list_main {
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* .visit_list_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.visit_list_tablehead {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.visit_list_tabledata {
+    background-color: white;
+    border: 1px solid #ddd;
+} */
+
+
+
+.visit_list_search_bar {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.visit_list_search_bar input[type="text"] {
+    width: 300px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px; /* Space between input and button */
+}
+
+ .visit_list_filter_button  {
+    background-color: var(--button-color);
+    color: white;
+    font-size: 14px;
+    padding: 4px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.visit_list_filter_button:hover {
+    background-color: var(--button-hover-background-color) ;
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+} 
+
+.visit_list_search_bar label {
+    margin-right: 200px; /* Space between label and print button */
+   
+}
+
+.visit_list_search_bar button {
+    background-color: white;
+    color: black;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    
+}
+
+
+
+
+.visit_list_edit_button {
+    background-color: var(--button-color);
+    color: white;
+    font-size: 14px;
+    padding: 4px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.visit_list_edit_button:hover {
+    background-color: var(--button-hover-background-color) ;
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+} 
+
+.visit_list_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.visit_list_new_patient {
+    display: flex;
+    align-items: center;
+}
+
+.visit_list_new_patient_button {
+    background-color: rgb(16, 128, 16);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.visit_list_button_icon {
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+.visit_list_new_patient_button:hover {
+    background-color: rgb(9, 86, 158);
+}
+
+.visit_list_edit_info {
+    display: flex;
+    align-items: center;
+}
+
+.visit_list_label {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.visit_list_input_text {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 250px;
+}
+
+.visit-list-filter-content{
+    display: flex;
+    justify-content: space-between;
+}
+
+.nhif-Admitted_Patient_List{
+    font-size: 16px;
+}

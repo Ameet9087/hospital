@@ -1,0 +1,26 @@
+.report-report-tabs {
+    display: flex;
+    background-color:var(--background-color);
+  }
+  
+  .report-report-tabs button {
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    text-align: center;
+    font-size: var(--heading-font);
+  }
+  
+  .report-report-tabs .active {
+    border-bottom: 2px solid var(--sideBar-bg-color);
+  }
+/*   
+  .report-report-content {
+    width: 100%;
+    height: calc(100vh - 50px); 
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+   */

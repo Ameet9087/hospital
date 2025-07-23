@@ -1,0 +1,32 @@
+ /* prachi parab user interface changed  14/9 */
+ 
+.patient-actions-container {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+
+.patient-actions-container a {
+  text-decoration: none; /* Remove underline from links */
+}
+
+.patient-action-button {
+  background-color: transparent;
+  text-decoration: none; /* Remove any text decoration */
+  color: black; /* Text color */
+  font-size: 16px; /* Font size */
+  padding: 5px; /* Button padding */
+  border-radius: 5px; /* Rounded corners */
+  border: none; /* Remove the border */
+  cursor: pointer; /* Add pointer cursor for interactivity */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions for hover effects */ 
+}
+.patient-action-button:hover, .home-button:hover {
+  background-color: white; /* Background color changes to white on hover */
+  color: var(--button-color); /* Text color changes to button color on hover */
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+.active-btn{
+  background-color: var(--button-bg-color);
+  color: white;
+}

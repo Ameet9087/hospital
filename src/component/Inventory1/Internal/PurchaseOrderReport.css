@@ -1,0 +1,153 @@
+.purchase-order-report {
+    background-color: var(--background-color);
+    height: 80vh;
+    padding: 20px;
+    overflow-y: scroll;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .purchase-order-report-title {
+    font-size: var( --heading-font);
+    margin-bottom: 20px;
+  }
+  
+  .purchase-order-filters,
+  .purchase-order-search-bar,
+  .purchase-order-table-container,
+  .purchase-order-pagination-controls {
+    margin-bottom: 20px;
+  }
+  
+  .purchase-order-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .purchase-order-date-range,
+  .purchase-order-vendor-item-filters,
+  .purchase-order-additional-filters {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .purchase-order-radio-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .purchase-order-report-btn {
+    background-color:var(--button-color);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .purchase-order-search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .purchase-order-search-bar input {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .purchase-order-search-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--heading-font);
+    margin-left: 5px;
+  }
+  
+  .purchase-order-table-container {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  }
+  
+  .purchase-order-report-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--heading-font);
+
+  }
+  
+  .purchase-order-report-table th,
+  .purchase-order-report-table td {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: var(--heading-font);
+  }
+  
+  .purchase-order-no-rows {
+    text-align: center;
+    color: #f1a24d;
+    background-color: #fff3cd;
+  }
+  
+  .purchase-order-pagination {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
+    padding-top: 10px;
+  }
+  
+  .purchase-order-export-btn,
+  .purchase-order-print-btn {
+    background-color: var(--button-color);
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .purchase-order-pagination-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .purchase-order-first-page,
+  .purchase-order-previous-page,
+  .purchase-order-next-page,
+  .purchase-order-last-page {
+    background-color: var(--button-color);
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .purchase-order-ta{
+    background-color: white;
+  }
+  .purchase-order-pagination span{
+    color: var(--button-color);
+  }
+
+
+
+  /*  */
+
+  .purchase-order-vendor-item-filters,
+.purchase-order-additional-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Adds space between each label/input pair */
+  margin-bottom: 20px; /* Adds space below each group of filters */
+}
+
+

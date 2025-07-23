@@ -1,0 +1,83 @@
+
+  
+
+  /* Button Styling */
+  .ProposalForAMCCMCFrom-add-button {
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    color: white;
+    font-size: var(--font-size);
+  }
+  
+  .ProposalForAMCCMCFrom-add-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border-color: var(--button-hover-border-color);
+  }
+  
+  /* Search and Results Section */
+  .ProposalForAMCCMCFrom-search-N-result {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .ProposalForAMCCMCFrom-search-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 5px;
+    width: 300px;
+    border-radius: 4px;
+  }
+  
+  .ProposalForAMCCMCFrom-search-bar input {
+    border: none;
+    outline: none;
+    padding-left: 5px;
+  }
+  
+  .ProposalForAMCCMCFrom-results-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .ProposalForAMCCMCFrom-print-button {
+    background-color: var(--button-bg-color);
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: var(--font-size);
+    margin-left: 10px;
+  }
+  
+  .ProposalForAMCCMCFrom-print-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border-color: var(--button-hover-border-color);
+  }
+  
+  /* Modal Styling */
+  .ProposalForAMCCMCFrom-container {
+    padding: 20px;
+  }
+  
+  .ProposalForAMCCMCFrom-addBtn {
+    margin-bottom: 20px;
+  }
+  
+  /* Custom Modal styles */
+  .ProposalForAMCCMCFrom-popup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+

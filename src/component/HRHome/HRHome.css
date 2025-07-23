@@ -1,0 +1,54 @@
+/* AppointmentBookingList.css */
+.HRHome-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .HRHome-nav {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    height: 10%;
+  }
+  
+  /* .HRHome-nav-link {
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    color: #0066cc;
+    text-decoration: none;
+  } */
+  
+  /* .HRHome-nav-link.active {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  } */
+  
+  .HRHome-navigation-link {
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border:1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 10px;
+  }
+  
+  .HRHome-navigation-link:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .HRHome-navigation-link.active {
+    border: 1px solid var(--button-bg-color);
+    color:white;
+    background-color: var(--button-bg-color);
+  }
+  

@@ -1,0 +1,184 @@
+/* Dhanashree_DatabaseBackup_19/09 */
+
+/* .database-backup-container {
+  background-color: var(--background-color);
+  padding: 20px;
+}
+
+.info-section {
+  background-color: #e6f2ff;
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
+  width: 500px;
+}
+
+.info-section h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+
+.button-section {
+  margin-bottom: 20px;
+}
+
+.export-container {
+  display: flex;
+  align-items: center;
+}
+
+.backup-button {
+  margin-left: 20px;
+  padding: 10px 20px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.export-button {
+  padding: 10px 20px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-menu button {
+  padding: 10px;
+  width: 100%;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dropdown-menu button:hover {
+  background-color: #f1f1f1;
+}
+
+.details-header {
+  margin-top: 30px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.search-bar {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+}
+
+.search-bar .search-button {
+  padding: 10px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+}
+
+.results-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.backup-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.backup-table th, .backup-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.no-rows {
+  text-align: center;
+  font-style: italic;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  background-color: #f1f1f1;
+  cursor: not-allowed;
+}
+
+.pagination .disabled {
+  cursor: not-allowed;
+}
+
+.success-popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--button-bg-color);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.success-icon {
+  margin-right: 10px;
+}
+
+
+.DatabaseBackup-print-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+
+.DatabaseBackupexport-btn {
+  background-color: var(--button-color); 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+} */
+
+/* Dhanashree_DatabaseBackup_19/09 */

@@ -1,0 +1,90 @@
+.rDLListRequest-ScanDone-modal{
+  width: 250px;
+}
+
+.rDLListRequest-ScanDone-modal h2 {
+  display: flex;
+  justify-content: center;
+  color: #565758;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1em;
+}
+
+.rDLListRequest-ScanDone-form-group {
+  display: flex;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 270px; */
+}
+/* 
+.rDLListRequest-ScanDone-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  width: 100px;
+  color: black;
+  font-size: var(--font-size);
+}
+
+.rDLListRequest-ScanDone-form-group input,
+.rDLListRequest-ScanDone-form-group select,
+.rDLListRequest-ScanDone-form-group textarea {
+  width: 170px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+/* .rDLListRequest-ScanDone-form-group input {
+  width: 170px !important;
+}  */
+
+.rDLListRequest-ScanDone-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.rDLListRequest-ScanDone-button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.rDLListRequest-ScanDone-done-btn {
+  gap: 10px;
+  background-color: var(--button-color);
+  color: white;
+  margin-right: 5px;
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+}
+.rDLListRequest-ScanDone-done-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.rDLListRequest-ScanDone-cancel-btn {
+  border: 1px solid red;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: white;
+  color: red;
+}
+
+.rDLListRequest-ScanDone-close-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: red;
+  border: 1px solid red;
+  padding: 5px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+}

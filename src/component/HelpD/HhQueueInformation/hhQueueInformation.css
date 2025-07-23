@@ -1,0 +1,127 @@
+
+
+
+.queueInformation {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
+  }
+  
+  .queueInformation-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .queueInformation-doctor-select {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+.queueInformation-doctor-select span{
+  font-size: var(--font-size);
+}
+
+.queueInformation-doctor-select select {
+  font-size: var(--font-size);
+      padding: 5px;
+      width: 180px;
+    margin: 0 8px;
+  }
+  
+  .queueInformation-proceed-btn {
+      background-color:var( --button-color);
+      border: 1px solid var( --button-hover-border-color);
+      color: white;
+      /* border: none; */
+      /* margin-right: 10px; */
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: var(--font-size);
+      margin: 1px;
+      transition: background-color 0.3s ease;
+      padding: 5px 5px;
+    }
+    .queueInformation-proceed-btn:hover {
+      border: 1px solid var( --button-hover-border-color);
+      color: var(--button-hover-text-color);
+      background-color: var(--button-hover-background-color);
+    }
+  
+ 
+  
+  /* main {
+    flex-grow: 1;
+  }
+   */
+  .queueInformation-banner {
+    background-color: var(--button-bg-color);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    /* font-weight: bold; */
+  }
+  .queueInformation-main-div{
+    padding: 10px;
+    background-color: white;
+    margin:0 10px 10px 10px;
+    border-radius: 5px;
+  }
+  
+  .queueInformation-logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .queueInformation-logo img {
+    margin-right: 10px;
+  }
+
+  .queueInformation-tbl-div{
+    margin: 10px;
+  }
+  
+  .queueInformation-table  {
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+  }
+  
+  .queueInformation-table th {
+    /* margin-top: 10px; */
+    text-align: center;
+    padding: 3px 5px ;
+    border-bottom: 1px solid #ddd;
+  }
+  .queueInformation-tr th{
+    background-color: #F3F3F3;
+    /* color: #5a5858; */
+  }
+  
+  .queueInformation-footer {
+    background-color: #fd6c1e;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    margin: 0 10px 0 10px;
+    gap: 20px;
+    /* font-weight: bold; */
+    /* border: 1px solid red; */
+    /* font-size: 100px; */
+  }
+  
+  .queueInformation-footer-icons {
+    display: flex;
+    gap: 20px;
+  }
+  .queueInformation-footer-icons marquee{
+   color: red;
+    gap: 20px;
+  }

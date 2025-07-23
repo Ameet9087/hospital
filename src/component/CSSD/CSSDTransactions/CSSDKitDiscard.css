@@ -1,0 +1,62 @@
+.cssdkitdiscard-container {
+  margin: 20px;
+  background-color: var(--background-color);
+  padding: 20px;
+  }
+  
+  .cssdkitdiscard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .cssdkitdiscard-header h3 {
+    color: #004085;
+    font-size: 24px;
+    margin: 0;
+  }
+
+  .kitdiscard-search-div{
+    margin: 20px;
+  }
+.kitdiscard-search{
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px;}
+  
+  .cssdkitdiscard-form {
+    display: flex;
+    
+    margin-bottom: 20px;
+    gap: 20px;
+  }
+  
+
+  
+  
+  .cssdkitdiscard-table td input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .cssdkitdiscard-add-button, .cssdkitdiscard-save-button {
+    padding: 5px;
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+    border: 1px solid var(--button-bg-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    color: white;
+    margin-left: 20px;
+  }
+  
+  .cssdkitdiscard-add-button:hover {
+    background-color: white;
+    color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  

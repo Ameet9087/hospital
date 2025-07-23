@@ -1,0 +1,429 @@
+ /* Ajhar Tamboli recrutierMng.css 07-10-24 */
+
+
+ .recrutierMng-container {
+    padding: 20px;
+    background-color: #e3fffe;
+    
+ }
+
+ 
+.recrutierMng-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.recrutierMng-container h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 18px;
+}
+
+
+.recrutierMng-container h2 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-size: 18px;
+}
+
+
+.recrutierMng-button {
+    margin-left: 0; /* Align the button to the start */
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    margin: 2px;
+}
+ .recrutierMng-add-button {
+     background-color: var(--button-color);
+     border: 1px solid var(--button-hover-border-color);
+     color: white;
+     /* border: none; */
+     /* margin-right: 10px; */
+     border-radius: 5px;
+     cursor: pointer;
+     font-size: var(--font-size);
+     margin: 1px;
+     transition: background-color 0.3s ease;
+     padding: 5px 5px;
+ }
+
+ .recrutierMng-add-button:hover {
+     border: 1px solid var(--button-hover-border-color);
+     color: var(--button-hover-text-color);
+     background-color: var(--button-hover-background-color);
+ }
+ .recrutierMng-search-bar {
+     margin-left: -15px;
+     /* margin: 0; */
+ }
+
+ .recrutierMng-search-bar input {
+     /* margin-top: 10px; */
+     padding: 3px;
+     width: 200px;
+ }
+
+ .recrutierMng-search-bar i {
+     position: relative;
+     color: gray;
+     top: 3px;
+     left: 205px;
+ }
+
+ .recrutierMng-search-filters {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 20px;
+ }
+
+ .recrutierMng-search-box {
+     display: block;
+     width: 200px;
+     padding: 10px;
+     border: 1px solid #ccc;
+     border-radius: 5px;
+ }
+
+
+
+ .recrutierMng-search-N-result {
+     margin-top: 10px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+ }
+ .recrutierMng-results-info {
+     display: flex;
+     align-items: center;
+     margin-bottom: 10px;
+     /* padding-top: 10px; */
+ }
+
+ .recrutierMng-results-info span {
+     /* display: flex;
+    align-items: center; */
+     /* padding-top: 10px; */
+     /* color: #008CBA; */
+     font-size: var(--font-size);
+     /* font-weight: bold; */
+     margin-right: 10px;
+ }
+
+ .recrutierMng-container table {
+    width: 100%;
+    background-color: #f2f2f2;
+    border-collapse: collapse;
+    table-layout: fixed;
+ }
+
+ .recrutierMng-container th,
+ .recrutierMng-container td {
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+    font-size: var(--font-size);
+    white-space: nowrap; /* Prevent wrapping */
+    text-overflow: ellipsis;
+    overflow: hidden;
+ }
+
+ .recrutierMng-container th {
+    background-color: #eaeaea;
+    color: black;
+ }
+
+ .recrutierMng-edit-button {
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+ }
+
+ .recrutierMng-edit-button:hover {
+     border: 1px solid var(--button-hover-border-color);
+     color: var(--button-hover-text-color);
+     background-color: var(--button-hover-background-color);
+ }
+
+
+ .recrutierMng-print-button {
+     background-color: var(--button-color);
+     border: 1px solid var(--button-hover-border-color);
+     color: white;
+     /* border: none; */
+     /* margin-right: 10px; */
+     border-radius: 5px;
+     cursor: pointer;
+     font-size: var(--font-size);
+     margin: 1px;
+     transition: background-color 0.3s ease;
+     padding: 5px 5px;
+ }
+
+ .recrutierMng-print-button:hover {
+     border: 1px solid var(--button-hover-border-color);
+     color: var(--button-hover-text-color);
+     background-color: var(--button-hover-background-color);
+ }
+
+ /* Modal styles */
+ .recrutierMng-modal {
+     position: fixed;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     background-color: rgba(0, 0, 0, 0.5);
+     /* Semi-transparent background */
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     z-index: 1000;
+ }
+
+ .recrutierMng-modal-content {
+     /* padding: 20px; */
+     background-color: #fff;
+     border-radius: 8px;
+     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+     width: 90%;
+     /* width: 100%; */
+     /* position: relative; */
+ }
+
+
+ .HRpagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.HRpagination button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.HRpagination button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.HRpagination button.active {
+    background-color: #333;
+    color: white;
+}
+
+/* Resizable Columns */
+.resizable-th {
+    position: relative;
+  }
+  
+  .resizer {
+    width: 5px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: col-resize;
+    z-index: 1;
+  }
+  
+  table th .resizer:hover {
+    background-color: #aaa;
+  }
+
+
+ .recrutierMng-modal {
+     /* position: fixed; */
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     background-color: rgba(0, 0, 0, 0.5);
+     /* Semi-transparent background */
+     display: flex;
+     justify-content: center;
+     align-items: start;
+     z-index: 1000;
+ }
+
+ .recrutierMng-modal-content {
+     margin: 20px;
+     /* padding: 20px; */
+     /* background-color: red; */
+     /* background-color: #fff; */
+     border-radius: 8px;
+     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+     /* width: 95%; */
+     /* width: 100%; */
+     position: relative;
+
+
+ }
+
+ 
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.pagination button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.pagination button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination button.active {
+    background-color: #333;
+    color: white;
+}
+
+
+
+.recrutierMng-searchAndActions {
+
+    margin: 10px;
+    margin-left: 0;
+}
+
+.recrutierMng-search-N-results {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.recrutierMng-search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid gray;
+    background-color: white;
+    padding: 3px;
+}
+
+.recrutierMng-search-bar i {
+    color: gray;
+}
+
+.recrutierMng-search-bar input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.recrutierMng-search-button {
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-left: 5px;
+    /* Adds some spacing between the input and the button */
+    border-radius: 4px;
+    /* Optional: rounds the corners of the button */
+    font-size: var(--font-size);
+    /* Adjusts the font size for consistency */
+}
+
+.recrutierMng-search-button:hover {
+    background-color: #e0e0e0;
+    /* Changes the background color on hover */
+}
+
+
+.recrutierMng-results-info {
+    text-align: right;
+    font-size: var(--font-size);
+    /* color: rgb(88, 87, 87); */
+    /* font-weight: bold; */
+    /* margin-top: 5px; */
+}
+
+
+
+
+.recrutierMng-ex-pri-buttons {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+}
+
+.recrutierMng-ex-pri-buttons:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+.recrutierMng-action-button-add-reports {
+    background-color: var(--button-color);
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+}
+
+.recrutierMng-ex-pri-buttons:hover,
+.recrutierMng-action-button-add-reports:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.recrutierMng-searchInput {
+    /* padding: 5px; */
+    width: 300px;
+    transition: border-color 0.3s;
+    font-size: 14px;
+    margin-left: 0;
+
+}
+
+.recrutierMng-searchInput:focus {
+    border-color: skyblue;
+    outline: none;
+}
+

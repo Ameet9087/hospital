@@ -1,0 +1,185 @@
+/* Manage Department Styles */
+.manage-department-page {
+  background-color: var(--background-color);
+  height: 90vh;
+  width: 100%;
+  /* overflow-y: scroll; */
+  overflow-x: auto; /* Handle horizontal overflow if needed */
+}
+
+.manage-department-table-container {
+  /* background-color: #e3f2fd; */
+  border-radius: 5px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  padding: 15px;
+  overflow-x: auto; /* Add horizontal scrollbar if content overflows */
+}
+.sett-search-bar{
+  width: 180px;
+  margin-bottom: 10px;
+}
+.manage-department-manage-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px; /* Reduced margin */
+}
+
+.manage-add-department-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px; /* Reduced padding */
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.manage-add-department-btn:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.manage-department-search-input {
+  padding: 5px; /* Reduced padding */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.manage-department-table {
+  width: 100%;
+  background-color: white;
+  border-collapse: collapse;
+  overflow-x: auto; /* Add horizontal scrollbar for the table */
+}
+
+
+.manage-department-edit-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 4px 8px; /* Reduced padding */
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px; /* Reduced font size */
+  border-bottom:  1px solid var(--button-color);
+
+}
+.manage-department-edit-btn:hover{
+  color: var(--button-color);
+  background-color: white;
+  border-bottom:  1px solid var(--button-color);
+}
+
+.manage-department-pagination {
+  margin-top: 15px; /* Reduced margin */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.manage-department-pagination-btn {
+  margin: 0 4px; /* Reduced margin */
+  padding: 4px 8px; /* Reduced padding */
+  background-color: #0F63AF;
+  color: white;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 13px; /* Reduced font size */
+}
+
+.manage-add-department-btn {
+  background-color: var(--button-color); /* Button background color */
+  color: white; /* Text color */
+  padding: 5px 5px; /* Padding around the button */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 16px; /* Font size */
+  display: inline-block; /* Keeps the button inline */
+  margin-bottom: 10px; /* Space below the button */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.manage-add-department-btn:hover {
+  background-color: white; /* Change background color on hover */
+  color: var(--button-color); /* Text color on hover */
+}
+
+.manage-department-pagination span {
+  margin: 0 8px; /* Reduced margin */
+  font-size: 13px; /* Reduced font size */
+}
+
+/* Mobile View for Screen Width <= 480px */
+@media (max-width: 480px) {
+  /* Manage Department Page adjustments */
+  .manage-department-page {
+    padding: 10px; /* Reduce padding for mobile */
+    height: auto; /* Allow height to adjust naturally */
+  }
+
+  /* Adjust the manage section to stack elements vertically */
+  .manage-department-manage-section {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 8px; /* Less margin for mobile */
+  }
+
+  /* Button adjustments */
+  .manage-add-department-btn {
+    width: 100%; /* Make the button take full width */
+    text-align: center;
+    padding: 8px; /* Larger touch targets for mobile */
+    margin-bottom: 12px; /* Spacing below button */
+    font-size: 14px; /* Adjusted font size */
+  }
+
+  /* Search input adjustments */
+  .manage-department-search-input {
+    width: 100%; /* Full width on mobile */
+    padding: 8px; /* Slightly larger padding */
+    font-size: 14px; /* Adjust input font size */
+  }
+
+  /* Table adjustments for better readability */
+  .manage-department-table th, .manage-department-table td {
+    font-size: 12px; /* Adjust table font size */
+    padding: 8px; /* Add padding to make touch targets bigger */
+  }
+
+  /* Results info adjustments */
+  .manage-department-results-info {
+    font-size: 12px; /* Smaller font for results info */
+  }
+
+  /* Pagination buttons adjustments */
+  .manage-department-pagination-btn {
+    padding: 6px 10px; /* Larger padding for touch targets */
+    font-size: 12px; /* Adjusted font size */
+  }
+
+ 
+}
+
+/* Modal Styles */
+.update-manage-modal {
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+}
+
+.update-manage-modal-dialog {
+  width: 100%; /* Ensure it takes the full width available */
+  padding: 10px; /* Add some padding */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  background-color: #fff; /* Background color */
+}
+
+
+
+
+
+
+

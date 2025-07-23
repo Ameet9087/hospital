@@ -1,0 +1,60 @@
+.itemmmAddItemSubcategory {
+    width: 400px;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.itemmmAddItemSubcategory h2 {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.itemmmFormGroup {
+    margin-bottom: 15px;
+}
+
+.itemmmFormGroup label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.itemmmFormGroup input[type="text"],
+.itemmmFormGroup select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.itemmmRequired {
+    color: red;
+}
+
+.itemmmCreateLedger {
+    display: block;
+    color: #f0a500;
+    margin-top: 5px;
+    font-size: var(--font-size); 
+}
+
+.itemmmFormGroup input[type="checkbox"] {
+    margin-top: 10px;
+}
+
+.itemmmBtnAdd {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.itemmmBtnAdd:hover {
+    background-color: #218838;
+}

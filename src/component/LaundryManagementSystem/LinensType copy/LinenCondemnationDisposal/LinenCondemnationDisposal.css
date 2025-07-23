@@ -1,0 +1,266 @@
+.LinenCondemnationDisposal-container {
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  padding: 4px;
+  font-size: 12px;
+  height: 650px;
+  /* display: flex; */
+}
+.LinenCondemnationDisposal-header {
+  background-color: var(--upperBar-bg-color);
+  color: white;
+  .LinenCondemnationDisposal-container {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    padding: 4px;
+    font-size: 12px;
+    height: 650px;
+    /* display: flex; */
+  }
+  .LinenCondemnationDisposal-header {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 8px;
+    margin-bottom: 4px;
+    font-size: var(--heading-font);
+  }
+
+  .LinenCondemnationDisposal-middle-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 10px;
+    gap: 20px;
+    font-size: var(--font-size);
+  }
+
+  .LinenCondemnationDisposal-middle-content label {
+    min-width: 150px;
+  }
+
+  .LinenCondemnationDisposal-middle-input {
+    padding: 5px;
+    border: 1px solid red;
+    background-color: lightblue;
+    border-radius: 5px;
+    width: 60%;
+    margin-right: 20px;
+    box-shadow: 1px red;
+    cursor: not-allowed;
+  }
+  .LinenCondemnationDisposal-middle-input:focus {
+    border: 1px solid red;
+  }
+  .LinenCondemnationDisposal-middle-input::placeholder {
+    font-size: 12px;
+    color: #999;
+    text-align: end;
+    color: red;
+  }
+  .LinenCondemnationDisposal-table-header {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 8px;
+    font-size: var(--font-size);
+  }
+  .LinenCondemnationDisposal-Table-button {
+    display: flex;
+    gap: 5px;
+    background: var(--upperBar-bg-color);
+    padding: 4px;
+  }
+  .LinenCondemnationDisposal-Table-button button {
+    padding: 4px 12px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    color: var(--button-color);
+    font-size: var(--font-size);
+    background: var(--button-hover-background-color);
+    cursor: pointer;
+  }
+  .LinenCondemnationDisposal-Table-button button:active {
+    background: var(--button-color);
+    color: var(--button-hover-background-color);
+    font-weight: bold;
+  }
+  .LinenCondemnationDisposal-table select {
+    border: none;
+    background: none;
+    width: 100%;
+  }
+  .LinenCondemnationDisposal-table select:hover {
+    border: none;
+  }
+  .serchIconInput input {
+    border: none;
+    padding: 5px;
+    background: none;
+  }
+  .serchIconInput input:focus {
+    border: none !important; /* Remove border */
+    outline: none !important; /* Remove default focus outline */
+    background: none !important; /* Remove background decoration */
+    box-shadow: none !important; /* Remove any focus shadow */
+    text-decoration: none !important; /* Remove text decoration */
+  }
+
+  .LinenCondemnationDisposal-table-actions button {
+    margin-right: 4px;
+    padding: 2px 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: var(--font-size);
+  }
+  .LinenCondemnationDisposal-add-btn {
+    background-color: green;
+  }
+  .LinenCondemnationDisposal-del-btn {
+    background-color: red;
+  }
+  .LinenCondemnationDisposal-search-icon {
+    cursor: pointer;
+    left: 300px;
+
+    transition: color 0.3s ease;
+  }
+
+  padding: 8px;
+  margin-bottom: 4px;
+  font-size: var(--heading-font);
+}
+
+.LinenCondemnationDisposal-middle-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 10px;
+  gap: 20px;
+  font-size: var(--font-size);
+}
+
+.LinenCondemnationDisposal-middle-content label {
+  min-width: 150px;
+}
+
+.LinenCondemnationDisposal-middle-input {
+  padding: 5px;
+  border: 1px solid red;
+  background-color: lightblue;
+  border-radius: 5px;
+  width: 60%;
+  margin-right: 20px;
+  box-shadow: 1px red;
+  cursor: not-allowed;
+}
+.LinenCondemnationDisposal-middle-input:focus {
+  border: 1px solid red;
+}
+.LinenCondemnationDisposal-middle-input::placeholder {
+  font-size: 12px;
+  color: #999;
+  text-align: end;
+  color: red;
+}
+.LinenCondemnationDisposal-table-header {
+  background-color: var(--upperBar-bg-color);
+  color: white;
+  padding: 8px;
+  font-size: var(--font-size);
+}
+.LinenCondemnationDisposal-Table-button {
+  display: flex;
+  gap: 5px;
+  background: var(--upperBar-bg-color);
+  padding: 4px;
+}
+.LinenCondemnationDisposal-Table-button button {
+  padding: 4px 12px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  color: var(--button-color);
+  font-size: var(--font-size);
+  background: var(--button-hover-background-color);
+  cursor: pointer;
+}
+.LinenCondemnationDisposal-Table-button button:active {
+  background: var(--button-color);
+  color: var(--button-hover-background-color);
+  font-weight: bold;
+}
+.LinenCondemnationDisposal-table select {
+  border: none;
+  background: none;
+  width: 100%;
+}
+.LinenCondemnationDisposal-table select:hover {
+  border: none;
+}
+.serchIconInput input {
+  border: none;
+  padding: 5px;
+  background: none;
+}
+.serchIconInput input:focus {
+  border: none !important; /* Remove border */
+  outline: none !important; /* Remove default focus outline */
+  background: none !important; /* Remove background decoration */
+  box-shadow: none !important; /* Remove any focus shadow */
+  text-decoration: none !important; /* Remove text decoration */
+}
+.serchIconInput svg {
+  color: #555151;
+}
+/* Button Section */
+
+.LinenCondemnationDisposal-navbar-btns{
+  display: flex;
+  justify-content: center;
+}
+.LinenCondemnationDisposal-navbar-btns button {
+  background-color: var(--button-color);
+  color: var(--button-hover-background-color);
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+}
+
+.LinenCondemnationDisposal-navbar-btns button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color);
+}
+.LinenCondemnationDisposal-table-header-print{
+  display: flex;
+ justify-content: end;
+ margin-top: 5px;
+}
+.LinenCondemnationDisposal-table-header-print button{
+  background-color: var(--button-color);
+  color: var(--button-hover-background-color);
+  border: 1px solid var(--button-color);
+  padding: var(--input-box-padding);
+  border-radius: 5px;
+  font-size: var(--font-size);
+}
+.LinenCondemnationDisposal-table-header-print button:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color);
+}
+.LinenCondemnationDisposal-table-actions button {
+  margin-right: 4px;
+  padding: 2px 8px;
+
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+.LinenCondemnationDisposal-add-btn {
+  background-color: green;
+}
+.LinenCondemnationDisposal-del-btn {
+  background-color: red;
+}

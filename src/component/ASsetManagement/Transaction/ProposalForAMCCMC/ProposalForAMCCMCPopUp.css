@@ -1,0 +1,119 @@
+
+
+.ProposalForAMCCMC-form {
+  background-color: var(--background-color);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+}
+
+.ProposalForAMCCMC-header {
+  background-color: var(--upperBar-bg-color);
+  color: white;
+  text-align: center;
+  font-size: var(--heading-font);
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+}
+
+.ProposalForAMCCMC-body {
+  padding: 20px;
+}
+
+.ProposalForAMCCMC-grid,
+.ProposalForAMCCMC-equipment-grid,
+.ProposalForAMCCMC-proposal-details-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.ProposalForAMCCMC-label-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+
+.ProposalForAMCCMC-input {
+  width: 100%;
+  padding: var(--input-box-padding);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.ProposalForAMCCMC-section-header {
+  font-weight: bold;
+  margin: 20px 0 10px;
+}
+
+.ProposalForAMCCMC-upload-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ProposalForAMCCMC-upload-btn {
+  background-color: var(--button-bg-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ProposalForAMCCMC-upload-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.ProposalForAMCCMC-tabs-section {
+  margin: 20px 0;
+}
+
+.ProposalForAMCCMC-tab-btn,.ProposalForAMCCMC-save-btn {
+  background-color: var(--button-bg-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.ProposalForAMCCMC-tab-btn.active {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+}
+
+.ProposalForAMCCMC-approve-table {
+  width: auto; /* Adjust table width */
+  margin: 0 auto; /* Center the table */
+  border-collapse: collapse; /* Remove gaps between table cells */
+}
+
+.ProposalForAMCCMC-approve-table table {
+  font-size: 12px; /* Reduce font size */
+  width: 100%; /* Set width to 100% of the container */
+  border: 1px solid #ccc; /* Add a border around the table */
+}
+
+.ProposalForAMCCMC-approve-table th,
+.ProposalForAMCCMC-approve-table td {
+  border: 1px solid #ccc; /* Add border for cells */
+  padding: 4px 8px; /* Adjust padding for cells */
+  text-align: left; /* Align text to the left */
+}
+
+.ProposalForAMCCMC-approve-table th {
+  background-color: #f9f9f9; /* Add a light background to headers */
+  font-weight: bold; /* Bold headers */
+}
+
+.ProposalForAMCCMC-approve-table select {
+  font-size: 12px; /* Reduce font size in dropdown */
+  padding: 2px; /* Adjust padding in dropdown */
+}

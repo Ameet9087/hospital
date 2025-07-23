@@ -1,0 +1,173 @@
+/* // neha HI-ipd/billing-19/09/24 */
+.ipd_billing_main {
+    background-color: #e3f2fd;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.ipd_billing_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.ipd_billing_tablehead {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.ipd_billing_tabledata {
+    background-color: white;
+    border: 1px solid #ddd;
+}
+
+.ipd_billing_filter_content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #e3f2fd;
+    border-radius: 4px;
+}
+
+.ipd_billing_search_bar {
+    display: flex;
+    align-items: center;
+}
+
+.ipd_billing_search_bar input[type="text"] {
+    width: 300px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px; /* Space between input and button */
+}
+
+.ipd_billing_filter_button {
+    background-color: var(--button-color);
+    color: white;
+    font-size: 14px;
+    padding: 4px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.ipd_billing_filter_button:hover {
+    background-color: var(--button-hover-background-color) ;
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.ipd_billing_search_bar label {
+    margin-right: 200px; /* Space between label and print button */
+}
+
+.ipd_billing_search_bar button {
+    background-color: white;
+    color: black;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.ipd_billing_pagination {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.ipd_billing_pagination button {
+    background-color: #ddd;
+    color: black;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 4px;
+}
+
+.ipd_billing_pagination button:hover {
+    background-color: #ccc;
+}
+
+.ipd_billing_edit_button {
+    background-color:var(--button-color);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.ipd_billing_edit_button:hover{
+    background-color: var(--button-hover-background-color) ;
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.ipd_billing_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #e3f2fd;
+    border-radius: 4px;
+}
+
+.ipd_billing_new_patient {
+    display: flex;
+    align-items: center;
+}
+
+.ipd_billing_new_patient_button {
+    background-color: rgb(16, 128, 16);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.ipd_billing_button_icon {
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+.ipd_billing_new_patient_button:hover {
+    background-color: rgb(9, 86, 158);
+}
+
+.ipd_billing_edit_info {
+    display: flex;
+    align-items: center;
+}
+
+.ipd_billing_label {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.ipd_billing_input_text {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 250px;
+}
+
+.ipd_billing_filter_content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Admitted_Patient_List{
+    font-size: 16px;
+    margin-top: 12px;
+}

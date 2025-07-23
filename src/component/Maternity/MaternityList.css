@@ -1,0 +1,301 @@
+.maternity-component{
+  height: 100vh; /* Full viewport height */
+  width: 100wh;  /* Full viewport width */
+  background-color:var(--background-color); 
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px; /* Optional: Adds some padding around the content */
+  box-sizing: border-box; /* Ensures padding and border are included in total dimensions */
+}
+
+
+.maternity-list {
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.matern-content {
+  background-color: var(--background-color);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.matern-edit-info {
+  display: flex;
+  font-size: 14px;
+  justify-content: space-between; 
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.matern-edit-info input {
+  /* width: 300px; */
+  padding: 5px;
+  font-size: 14px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  margin-right: 20px; 
+  flex-shrink: 0; 
+}
+
+.matern-view-all {
+  margin-left: auto; 
+  color: black;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+/* .view-all {
+  color: #007bff;
+  text-decoration: none;
+} */
+
+.mater-date-range {
+  display: flex;
+  background-color:  #f2f2f2;;
+  font-size: 14px;
+  width: 50%;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.mater-date-range input {
+  margin: 0 10px;
+  font-size: 14px;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.mater-star-btn, .dash-btn {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  margin-right: 5px;
+}
+
+.mater-ok-btn {
+  background-color:var( --button-color);
+  color: white;
+  font-size: 14px;
+  border: 1px solid var( --button-hover-border-color);
+  border: none;
+  padding: 5px 5px;
+  border-radius: 3px;
+}
+.mater-ok-btn:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+
+}
+
+.mater-search-bar{
+  display: flex;
+  width: 30%;
+  margin-bottom: 20px;
+}
+.mater-span {
+  flex-grow: 1; 
+  text-align: right; 
+  margin-right: 20px;
+  font-size: 14px;
+  color: black; 
+}
+
+.mater-search-bar input {
+  flex-grow: 1;
+  padding: 5px;
+
+  font-size: 14px;
+  /* width: 20px; */
+  border: 1px solid #ccc;
+}
+
+.maternity-search-btn {
+  /* width: 50px; */
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mater-results {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+/* .checkbox-label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+
+.checkbox-label input[type="checkbox"] {
+  margin-left: 10px;
+  justify-content: flex-end;
+  margin-right: 5px;
+} */
+
+
+.mater-print-btn {
+  background-color:var( --button-color);
+  color: white;
+  border: none;
+  margin-left: 10px;
+  padding: 5px 5px;
+  border: 1px solid var( --button-hover-border-color);
+  border-radius: 3px;
+}
+.mater-print-btn:hover{
+  border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+
+}
+.maternity-table {
+  overflow-x: auto;
+}
+
+.mater-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  table-layout: fixed;
+}
+
+
+.mater-table td, .mater-table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mater-table th {
+  background-color: #f2f2f2;
+  font-weight: normal;
+}
+
+
+.mater-hosp-col { width: 5%; }
+.mater-name-col { width: 10%; }
+.mater-age-col { width: 5%; }
+.mater-address-col { width: 15%; }
+.mater-phone-col { width: 10%; }
+.mater-husband-col { width: 10%; }
+.mater-h-col { width: 5%; }
+.mater-w-col { width: 5%; }
+.mater-lmp-col { width: 10%; }
+.mater-edd-col { width: 10%; }
+.mater-action-col { width: 15%; }
+
+.mater-no-rows {
+  text-align: center;
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 15px;
+}
+
+.maternity-pagination {
+  display: flex;
+  justify-content: center; /* Center the pagination horizontally */
+  align-items: center;     /* Align items vertically */
+  width: 100%;             /* Ensure the pagination takes the full width of its container */
+  margin-top: 20px;        /* Optional: add top margin for spacing */
+}
+
+.maternity-pagination span {
+  margin: 0 10px;          /* Add horizontal margin for spacing between elements */
+}
+
+.maternity-pagination button {
+  margin: 0 5px;           /* Add margin between buttons */
+  padding: 5px 10px;
+  background-color: #007bff; /* Button background color */
+  color: white;            /* Button text color */
+  border: none;            /* Remove button border */
+  cursor: pointer;         /* Change cursor to pointer on hover */
+  border-radius: 3px;      /* Round button corners */
+  transition: background-color 0.3s; /* Smooth transition on hover */
+}
+
+.maternity-pagination button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.maternity-pagination button:disabled {
+  background-color: #cccccc; /* Disabled button color */
+  cursor: not-allowed;       /* Change cursor for disabled buttons */
+}
+
+.maternity-table{
+  background-color: #f2f2f2;
+}
+.admitted-search-input{
+  border-radius: 5px;
+  height:30px;
+}
+.maternity-checkbox{
+  margin-right: 10000px;
+}
+.mater-popup {
+  position: absolute;
+  margin-top: 200px;
+  margin-left: 400px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Make sure it's above other elements */
+}
+
+
+.mater-popup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mater-popup li {
+  padding: 8px;
+}
+
+.mater-popup button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100%;
+  text-align: left;
+}
+
+.mater-popup button:hover {
+  background-color: #f0f0f0;
+}
+
+
+/* =========================================== */
+
+.mater-action-col .mater-edit-btn,
+.mater-action-col .mater-delete-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-hover-border-color);
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+
+.mater-action-col .mater-edit-btn:hover,
+.mater-action-col .mater-delete-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+
+}

@@ -1,0 +1,61 @@
+.procurment-add-container {
+  width: 100%;
+  color: black;
+}
+
+.CurrencyTable-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f2f2f2;
+  color: white;
+  padding: 10px;
+}
+
+.CurrencyTable-header span {
+  font-size: 12px;
+}
+
+.procurment-add-currency {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.procurment-add-search-bar {
+  display: flex;
+  margin: 10px 0;
+}
+.procurment-add-results-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.procurment-add-print-section
+{
+  display: flex;
+  justify-content: flex-end; /* Aligns content to the right */
+  margin-bottom: 5px;
+  gap: 10px;
+}
+
+.procurment-add-search-bar-input
+{
+padding: 5px;
+border: 1px solid gray;
+outline: none;
+border-radius: 5px;
+}
+.procurment-add-button
+{
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  cursor: pointer;
+}

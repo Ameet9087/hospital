@@ -1,0 +1,46 @@
+
+.helpDeskNav-bar {
+    background-color: white;
+    font-family: Arial, sans-serif;
+    /* border: 1px solid #007bff; */
+
+  }
+  
+  .helpDeskNav-bar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px 0px 10px 0px;
+    display: flex;
+    /* gap: 10px; */
+    justify-content: left;
+
+  }
+  
+  .helpDeskNav-bar li {
+    margin: 0 0px;
+    
+  }
+  
+  .helpDeskNav-bar a {
+    color: black;
+    border: none;
+    padding: 7px 10px;
+    border-radius: 5px;
+    border:1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 10px;
+  }
+  
+  .helpDeskNav-bar a:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color); 
+  }
+  
+  .helpDeskNav-bar a.active {
+    border: 1px solid var(--button-bg-color);
+    color:white;
+    background-color: var(--button-bg-color); 
+  }
+  

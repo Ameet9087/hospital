@@ -1,0 +1,212 @@
+
+
+/* Employee Table Styles */
+.employee-page-table {
+  background-color: #e3f2fd;
+  padding: 20px;
+}
+
+.employee-table-container {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.employee-manage-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.add-employee-role-role-btn {
+  background-color: #6200ea;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.employee-search-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+}
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.employee-table th, .employee-table td {
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.employee-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Hover effect for table rows */
+.employee-table tbody tr:hover {
+  background-color: #f0f0f0; /* Light gray background on hover */
+}
+
+.employee-edit-btn {
+  background-color: #0F63AF;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.employee-pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.employee-pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #0F63AF;
+  color: white;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.employee-pagination span {
+  margin: 0 10px;
+  font-size: 14px;
+}
+
+/* Employee Header Styles */
+.employee-header {
+  background-color: white;
+  color: #3598dc;
+  padding: 0;
+  position: static;
+}
+
+.employee-header-form {
+  list-style-type: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  overflow-x: auto;
+}
+
+.employee-header-form li {
+  color: #3598dc;
+  padding: 10px 15px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 18px;
+}
+
+.employee-header-form li:hover, .employee-header-form li.active {
+  background-color: #3598dc;
+  color: white;
+}
+
+.employee-sub-nav {
+  background-color: #e3f2fd;
+  padding: 0;
+}
+
+.employee-sub-nav ul {
+  list-style-type: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+.employee-sub-nav li {
+  padding: 10px 15px;
+  cursor: pointer;
+  color: black;
+}
+
+.employee-sub-nav li:hover, .employee-sub-nav li.active {
+  background-color: #bbdefb;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .employee-header-form {
+    flex-direction: column;
+  }
+
+  .employee-header-form li {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .employee-search-input {
+    width: 100%;
+  }
+
+  .employee-table th, .employee-table td {
+    font-size: 12px;
+  }
+
+  .employee-manage-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-employee-role-role-btn {
+    margin-bottom: 10px;
+  }
+}
+
+.employee-sub-nav ul {
+  list-style-type: none; /* Remove default list styling */
+  padding: 0;
+  margin: 0;
+}
+
+.employee-sub-nav li {
+  margin-bottom: 10px; /* Space between navigation items */
+  position: relative; /* Position relative for the pseudo-element */
+}
+
+.employee-sub-nav a {
+  text-decoration: none; /* Remove default underline */
+  color: black; /* Set text color to black */
+  font-size: 18px; /* Set font size */
+  display: block; /* Make the entire link area clickable */
+  padding-bottom: 5px; /* Space between text and underline */
+  position: relative; /* Position relative to use pseudo-element */
+}
+
+.employee-sub-nav a::after {
+  content: ''; /* Empty content for pseudo-element */
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background-color: blue; /* Blue underline */
+  transform: scaleX(0); /* Start with 0 width for the animation */
+  transform-origin: bottom right; /* Origin for the animation */
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.employee-sub-nav a:hover::after {
+  transform: scaleX(1); /* Scale to full width on hover */
+  transform-origin: bottom left; /* Change origin for the hover effect */
+}
+

@@ -1,0 +1,112 @@
+.Extra-And-Attender-Diet-Indent-container {
+  width: 100%;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+}
+.Extra-And-Attender-Diet-Indent-header{
+  background-color: var(--upperBar-bg-color);
+  color: white;
+  padding: 8px;
+ 
+  font-size: var(--heading-font);
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.Extra-And-Attender-Diet-Indent-header h4 {
+  font-size: var(--heading-font);
+  margin: 0;
+}
+
+.Extra-And-Attender-Diet-Indent-panels {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.Extra-And-Attender-Diet-Indent-form-panel,
+.Extra-And-Attender-Diet-Indent-table-panel {
+  width: 48%;
+}
+
+.Extra-And-Attender-Diet-Indent-form-panel h3,
+.Extra-And-Attender-Diet-Indent-table-panel h3 {
+  margin-bottom: 10px;
+}
+
+.Extra-And-Attender-Diet-Indent-form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.Extra-And-Attender-Diet-Indent-form-sub
+{
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.Extra-And-Attender-Diet-Indent-form-group {
+  display: flex;
+  /* margin-bottom: 10px; */
+  gap: 5px;
+}
+
+.Extra-And-Attender-Diet-Indent-form-group label {
+  width: 200px;
+  font-size: var(--font-size);
+}
+
+.Extra-And-Attender-Diet-Indent-form-group input[type="text"],
+.Extra-And-Attender-Diet-Indent-form-group input[type="number"],
+.Extra-And-Attender-Diet-Indent-form-group input[type="date"],
+.Extra-And-Attender-Diet-Indent-form-group select,
+.Extra-And-Attender-Diet-Indent-form-group textarea {
+  width: 100%;
+  padding: var(--input-box-padding);
+  font-size: var(--font-size);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.Extra-And-Attender-Diet-Indent-add-btn,
+.Extra-And-Attender-Diet-Indent-del-btn {
+  font-size: 14px;
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  color: white;
+}
+
+.Extra-And-Attender-Diet-Indent-add-btn {
+  background-color: #4caf50;
+}
+
+.Extra-And-Attender-Diet-Indent-del-btn {
+  background-color: #f44336;
+}
+
+.Extra-And-Attender-Diet-Indent-table-container {
+  overflow-x: auto;
+}
+
+.Extra-And-Attender-Diet-Indent-form-group-checkbox{
+  display: flex;
+  gap: 20px;
+}
+.Extra-And-Attender-Diet-Indent-form-group-checkbox label{
+  font-size: var(--font-size);
+}
+
+@media screen and (max-width: 768px) {
+  .Extra-And-Attender-Diet-Indent-panels {
+    flex-direction: column;
+  }
+
+  .Extra-And-Attender-Diet-Indent-form {
+    grid-template-columns: 1fr;
+  }
+}

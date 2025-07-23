@@ -1,0 +1,39 @@
+.currentstocklevel-container {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.currentstocklevel-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+}
+
+.currentstocklevel-title {
+  font-size: 2em;
+  margin: 0;
+}
+
+.currentstocklevel-main {
+  padding: 20px;
+}
+
+.currentstocklevel-description {
+  font-size: 1.2em;
+}
+
+.currentstocklevel-button {
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.currentstocklevel-button:hover {
+  background-color: #4fa3b0;
+}

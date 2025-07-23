@@ -1,0 +1,219 @@
+
+.sSIReturnItem-delete-btn{
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  color: white;
+  padding: var(--input-box-padding);
+  border-radius: 5px;
+  
+}
+.sSIReturnItem-delete-btn:hover{
+  background-color: white;
+  color: var(--button-color);
+}
+.sSIRetunReturnItemBtn-entry {
+  background-color: var(--background-color);
+  padding: 30px;
+  width: 100%;
+  margin: 20px auto;
+  border-radius: 8px;
+  float: left;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sSIRetunReturnItemBtn-title {
+  font-size: var(--heading-font);
+  margin-bottom: 20px;
+}
+
+
+
+.sSIRetunReturnItemBtn-form-section {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 15%;
+}
+
+.sSIRetunReturnItemBtn-form-section label {
+  font-size: var(--font-size);
+  margin-right: 10px;
+}
+
+
+
+
+
+
+.ssi-return-return-input[type="date"],
+.ssi-return-return-input[type="text"] {
+  padding: var(--input-box-padding);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: var(--font-size);
+}
+
+.sSIRetunReturnItemBtn-back-btn {
+  margin-left: auto;
+  background-color: var(--button-color);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sSIRetunReturnItemBtn-table-section {
+  margin-top: 20px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.sSIRetunReturnItemBtn-table-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f5f5f5;
+  padding: 10px 60px;
+  font-size: var(--heading-font);
+}
+
+.sSIRetunReturnItemBtn-table-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  gap: 5px;
+  background-color: white;
+}
+
+.sSIRetunReturnItemBtn-delete-btn {
+  background-color: #e74c3c;
+  border: 1px solid #e74c3c;
+  color: white;
+  margin-left: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.sSIRetunReturnItemBtn-delete-btn:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.sSIRetunReturnItemBtn-add-btn {
+  background-color: var(--button-bg-color);
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+
+.sSIRetunReturnItemBtn-remark {
+  display: flex;
+  justify-content:left;
+  float: right;
+  width: 40%;
+  
+}
+.sSIRetunReturnItemBtn-remark textarea{
+  height: 40px;
+  
+}
+.sSIRetunReturnItemBtn-remark-section {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items:left;
+  background-color: #f5f5f5;
+  padding: 10px;
+  width: 500px;
+}
+
+
+.sSIRetunReturnItemBtn-button-section {
+  margin-top: 20px;
+  display: flex;
+  float: right;
+  gap: 10px;
+}
+
+.sSIRetunReturnItemBtn-save-button {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  margin-left: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.sSIRetunReturnItemBtn-save-button:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.sSIRetunReturnItemBtn-discard-button {
+  background-color: #e74c3c;
+  border: 1px solid #e74c3c;
+  color: white;
+  margin-left: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+
+
+.sSIRetunReturnItemBtn-date-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.table-container {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.sSIReturnItem-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.sSIReturnItem-table th,
+.sSIReturnItem-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+  
+}
+
+.sSIReturnItem-table th {
+  background-color: var(--button-bg-color);
+  color: white;
+}
+.sSIReturnItem-table input{
+  width: 100%;
+}
+
+

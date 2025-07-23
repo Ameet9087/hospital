@@ -1,0 +1,95 @@
+.discountforDoctorServices-schedule {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .discountforDoctorServices-header {
+    background-color: var(--button-hover-border-color);
+    color: white;
+    padding: 10px;
+  }
+  
+  .discountforDoctorServices-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .discountforDoctorServices-controls {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  
+  .discountforDoctorServices-nav-btn, .discountforDoctorServices-action-btn {
+    padding: 4px 8px;
+    background-color: white;
+    color: var( --button-color);
+    border: 1px solid white;
+    border-radius: 5px;
+    /* margin: 1px; */
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+}
+.discountforDoctorServices-nav-btn:hover,.discountforDoctorServices-action-btn:hover{
+      border: 1px solid white;
+    color: white;
+    background-color: var(--button-color);
+  }
+  .discountforDoctorServices-date-range {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .discountforDoctorServices-date-range input {
+    width: 80px;
+    padding: 4px;
+  }
+  
+  .discountforDoctorServices-settings-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .discountforDoctorServices-content {
+    display: flex;
+    flex: 1;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  .discountforDoctorServices-left-panel, .discountforDoctorServices-right-panel {
+    border: 1px solid #ccc;
+    flex: 1;
+  }
+  
+  .discountforDoctorServices-panel-header {
+    background-color: #f0f0f0;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .discountforDoctorServices-panel-title {
+    font-weight: bold;
+  }
+  
+  .discountforDoctorServices-menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .discountforDoctorServices-no-records {
+    padding: 20px;
+    text-align: center;
+    color: red;
+  }

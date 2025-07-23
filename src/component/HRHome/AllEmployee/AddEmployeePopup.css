@@ -1,0 +1,126 @@
+.addemployeepopup__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    z-index: 55555;
+  }
+  
+  .addemployeepopup__popup {
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    width: 80%;
+
+  }
+  
+  .addemployeepopup__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: var(--heading-font);
+    
+  }
+  .addemployeepopup__header h2{
+    color: black;
+  }
+  
+  .addemployeepopup__closeButton {
+    background: none;
+    border: none;
+    padding: 5px 12px;
+    /* font-size: 2rem; */
+    cursor: pointer;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+  }
+  
+  .addemployeepopup__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  
+  .addemployeepopup__formGroup {
+    display: flex;
+    align-items: center;
+  }
+  
+  .addemployeepopup__formGroup label {
+    width: 30%;
+    min-width: 150px; /* Adjust as necessary */
+    margin-bottom: 5px;
+    font-size: 14px;
+    /* font-weight: bold; */
+  }
+  
+  .addemployeepopup__formGroup input,
+  .addemployeepopup__formGroup select {
+    width: 70%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .addemployeepopup__ageInput {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .addemployeepopup__ageInput input {
+    width: 50px;
+  }
+  
+  .addemployeepopup__formActions {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .addemployeepopup__formActions button {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .addemployeepopup__formActions button:first-child {
+    background-color: #ccc;
+  }
+  
+  .addemployeepopup__formActions button:last-child {
+    background-color: var(--button-color);
+    color: white;
+  }
+
+  .addemployeepopup__formActions button:last-child:hover {
+    background-color: var(--button-bg-color);
+  }
+  
+  .addemployeepopup__note {
+    grid-column: span 2;
+    margin-top: 0px;
+    color: green;
+  }
+  
+  .addemployeepopup__openButton {
+    padding: 10px 20px;
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }

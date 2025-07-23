@@ -1,0 +1,207 @@
+ /* Ajhar Tamboli RadiologyReportPopup.css 19-09-24 */
+
+
+/* Akash Pawar Radiology 14/24 */
+.RadiologyReportPopup {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.747);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+  }
+  .radiology-hospital-logo {
+    width: 40px; /* Adjust the size of the logo */
+    height: auto;
+    margin-right: 10px; /* Space between the logo and the text */
+    vertical-align: middle; /* Aligns the logo with the middle of the text */
+  }
+  
+  .radiology-address {
+    display: block;
+    text-align: center; /* Centers the span text */
+    margin-top: 10px; /* Adds space above the span */
+  }
+  .RadiologyReportPopup-container{
+    position: relative;
+    background-color: #f0f0f0;  
+    display: flex;
+    justify-content: center;
+    /* width: 90%; */
+  }
+  .RadiologyReportPopup-popup-content {
+    height: 600px;
+    overflow-y: scroll;
+  }
+  .RadiologyReportPopup-close-btn{
+    position: absolute;
+    background-color: red !important;
+    top: -10px;
+    right: -10px;
+    padding: 5px 12px;
+    border-radius: 50% !important;
+  }
+  .RadiologyReportPopup h2 {
+    margin-top: 0;
+    /* color: black; */
+    font-size: var(--heading-font);
+  }
+  
+  .RadiologyReportPopup-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .RadiologyReportPopup button {
+    padding: 5px 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .RadiologyReportPopup button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+     border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .RadiologyReportPopup-report-content {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .RadiologyReportPopup-patient-info {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .RadiologyReportPopup-patient-info-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .RadiologyReportPopup-patient-info-group span {
+    flex: 1;
+    margin-right: 10px;
+    font-size: var(--font-size);
+  }
+  
+  .RadiologyReportPopup-patient-info-group span:last-child {
+    margin-right: 0;
+  }
+  
+  .RadiologyReportPopup-report-body {
+    text-align: center;
+  }
+  
+  .RadiologyReportPopup-report-body img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .RadiologyReportPopup-footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .RadiologyReportPopup-close {
+    background-color: red !important;
+  }
+  .RadiologyReportPopup-close:hover {
+    background-color: var(--button-hover-background-color) !important;
+    color: red !important;
+     border:1px solid red !important;
+  }
+  .RadiologyReportPopup-image{
+    width: 500px;
+  }
+  .rDLListRequest-add-report-signature-box p{
+    border-top: 1px solid black;
+  }
+  .rDLListRequest-add-report-select-signatories{
+    width: 250px;
+  }
+  
+
+  @media print {
+    .RadiologyReportPopup {
+      background-color: transparent; /* Remove background overlay */
+      position: static; /* Change position for print */
+      height: auto; /* Fit height to content */
+      width: auto; /* Fit width to content */
+      display: block; /* Ensure it's displayed */
+      justify-content: flex-start; /* Align content properly */
+      align-items: flex-start; /* Align content properly */
+    }
+  
+    .RadiologyReportPopup-popup-content {
+      padding: 20px; /* Keep padding consistent */
+      background-color: #fff; /* Set background to white for print */
+      border: 1px solid #ccc; /* Keep border */
+      width: 100%; /* Ensure it fits within page width */
+      box-shadow: none; /* Remove shadows */
+      position: static; /* Change position for print */
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .RadiologyReportPopup-close-btn,
+    .RadiologyReportPopup-actions,
+    .RadiologyReportPopup-footer-actions {
+      display: none; /* Hide buttons and actions */
+    }
+  
+    .RadiologyReportPopup-report-content {
+      background-color: white; /* Ensure report background is white */
+      border: 1px solid #ccc; /* Maintain border */
+      padding: 20px; /* Maintain padding */
+      margin: 0; /* Remove margin for print */
+ 
+    }
+  
+    .RadiologyReportPopup-patient-info {
+      border: none; /* Remove border for print */
+      padding: 10px; /* Keep padding */
+      margin-bottom: 20px; /* Maintain bottom margin */
+    }
+    
+    .RadiologyReportPopup-patient-info-group {
+        display: flex;
+        flex-direction: column;
+      margin-bottom: 10px; /* Maintain margin */
+    }
+  
+    .RadiologyReportPopup-patient-info-group span {
+      display: block; /* Stack spans vertically */
+      margin-bottom: 5px; /* Add margin between spans */
+      font-size: var(--font-size); /* Adjust font size for print */
+    }
+  
+    .RadiologyReportPopup-report-body {
+      text-align: left; /* Align text left */
+    }
+  
+    .RadiologyReportPopup-image {
+      width: 100%; /* Scale image to fit page width */
+      max-width: 100%; /* Ensure it doesn’t exceed page width */
+      height: auto; /* Maintain aspect ratio */
+    }
+  
+    @page {
+      size: A4; /* Set page size to A4 */
+      margin: 20mm; /* Set margins for print */
+    }
+  }
+  

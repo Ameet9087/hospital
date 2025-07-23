@@ -1,0 +1,277 @@
+
+
+
+
+.nurseMainPage-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  gap: 10px;
+  padding: 10px;
+}
+
+.nurseMainPage-subcontainer {
+  height: 340px;
+  border-radius: 8px;
+  background-color: white;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+}
+
+.nurseMainPage-header {
+  background-color: #20b2aa;
+  color: white;
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nurseMainPage-header h1 {
+  font-size: 16px;
+  margin: 0;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.nurseMainPage-boxes {
+  height: calc(100% - 45px);
+  overflow-y: auto;
+  background-color: rgb(255, 255, 255, 0.22);
+  padding: 5px;
+}
+
+.nurseMainPage-box {
+  cursor: pointer;
+  width: 100%;
+  border-radius: 8px;
+  background-color: white;
+  padding: 5px 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+}
+.nurseMainPage-box:nth-child(even) {
+  background-color: #ccc;
+}
+
+.nurseMainPage-box:nth-child(odd) {
+  background-color: rgba(120, 221, 120, 0.3);
+}
+
+/* Patient card specific styles */
+.nurseMainPage-patient-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* gap: 15px; */
+  white-space: nowrap;
+}
+.nurseMainPage-patient-avatar {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nurseMainPage-patient-avatar::before {
+  content: "";
+  position: absolute;
+  top: -4px; /* Adjust to control ring spacing */
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #ffffff 50%, #004255 50%);
+  z-index: 1;
+}
+
+.nurseMainPage-patient-avatar::after {
+  content: "";
+  position: absolute;
+  top: -2px; /* Slightly smaller than before to create ring effect */
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  background: white;
+  z-index: 2;
+}
+
+.nurseMainPage-patient-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  z-index: 3;
+}
+.nurseMainPage-patient-avatar span {
+  font-size: 20px;
+  font-weight: bolder;
+  position: relative;
+  z-index: 3;
+}
+
+.nurseMainPage-patient-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.nurseMainPage-patient-data-img-con {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-right: 1px solid #ccc;
+  margin-right: 10px;
+}
+.nurseMainPage-patient-personal-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.nurseMainPage-info-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+.nurseMainPage-ward-receiving-btns{
+display: flex;
+justify-content: space-evenly;
+padding: 10px;
+align-items: center;
+}
+.nurseMainPage-ward-receiving-btns button{
+  border: none;
+  padding: 3px 8px;
+  border-radius: 7px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.nurseMainPage-ward-receiving-btns button:nth-child(1){
+  background-color: #20b2aa;
+}
+.nurseMainPage-ward-receiving-btns button:nth-child(1):hover{
+  background-color: white;
+}
+.nurse-ward-receiving-confirmBox{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.453);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+.nurse-ward-receiving-con{
+  width: 350px;
+  height: 250px;
+  border-radius: 7px;
+  background-color: rgba(255, 255, 255, 0.89);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.nurse-ward-receiving-con-btns{
+  display: flex;
+  gap: 20px;
+}
+.nurse-ward-receiving-con-btns button{
+  border: none;
+  border-radius: 7px;
+  padding:5px 15px;
+  font-size: 18px;
+}
+.nurse-ward-receiving-con-btns button:nth-child(1){
+  background-color: #20b2aa;
+}
+.nurse-ward-receiving-con-btns button:nth-child(2){
+  background-color: red;
+}
+.nurse-ward-receiving-con-btns button:hover{
+ background-color: white;
+}
+
+/* Scrollbar styling */
+.nurseMainPage-boxes::-webkit-scrollbar {
+  width: 8px;
+}
+
+.nurseMainPage-boxes::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.nurseMainPage-boxes::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.nurseMainPage-boxes::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Fix for Firefox */
+.nurseMainPage-boxes {
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+@keyframes zoomEffect {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.01);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.highlight-box {
+  animation: zoomEffect 1s infinite;
+}
+
+.disabled-box {
+  pointer-events: none;
+  opacity: 0.9;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: not-allowed;
+}
+
+
+.wardNurseDashboard-search-container {
+  display: flex;
+  align-items: center;
+}
+
+.wardNurseDashboard-search-input {
+  width: 120px;
+  color: white;
+  background-color: transparent;
+  height: 18px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid white;
+}
+.wardNurseDashboard-search-input::placeholder {
+  color: white;
+  opacity: 0.6;
+}
+/* .fa-magnifying-glass {
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+} */

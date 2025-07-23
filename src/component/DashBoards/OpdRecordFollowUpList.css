@@ -1,0 +1,111 @@
+/* swapnil Rokade opd-record Adding className And color and table css 18/09 */
+.opd-record-follow-up-list {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.opd-record-follow-up-list th, 
+.opd-record-follow-up-list td {
+  border: 1px solid #ddd;
+  padding: 4px;
+  text-align: left;
+}
+
+.opd-record-follow-up-list th {
+  background-color: #f2f2f2;
+}
+
+.opd-record-follow-up-list td button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 2px;
+}
+
+/* Additional styles for buttons */
+.opd-rec-top-buttons {
+  margin-bottom: 20px;
+}
+
+.opd-rec-top-buttons button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.opd-rec-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.opd-rec-filters select {
+  padding: 5px;
+}
+
+.opd-rec-search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.opd-rec-search-bar input {
+  padding: 5px;
+  margin-right: 5px;
+}
+
+.opd-rec-search-bar button {
+  padding: 5px 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.opd-rec-results {
+  color: var(--button-color);
+}
+
+.opd-rec-print {
+  padding: 5px ;
+  background-color: var(--button-color);
+  color: white;
+  border:1px solid var(--button-color);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.opd-rec-print:hover
+{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.OpdRecordFollowUpList-action
+{
+  border: none;
+}
+
+/* Pagination styles */
+.opd-rec-paginat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.opd-rec-paginat button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

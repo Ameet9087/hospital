@@ -1,0 +1,55 @@
+/* Container styling */
+.mkt_setting-container {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Header styling */
+  .mkt_setting-header {
+    background-color: white; /* Light gray background for the navbar */
+    padding: 5px; /* Padding around the navbar */
+    border-bottom: 2px solid #ddd; /* Border at the bottom */
+  }
+  
+  /* Navigation bar styling */
+  .mkt_setting-nav {
+    display: flex;
+    justify-content: flex-start; /* Align items to the start */
+  }
+  
+  .mkt_setting-nav-list {
+    list-style-type: none; /* Remove bullet points */
+    margin: 0;
+    padding: 0;
+    display: flex; /* Display items in a row */
+  }
+  
+  /* Individual navigation item styling */
+  .mkt_setting-nav-item {
+    margin-right: 15px; /* Space between items */
+  }
+  
+  /* Link styling */
+  .mkt_setting-nav-link {
+    text-decoration: none; /* Remove underline from links */
+    color: black; /* Default link color (blue) */
+    padding: 10px 15px; /* Padding around the links */
+    border-radius: 4px; /* Slightly rounded corners */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+  }
+  
+  /* Highlight active link */
+  .mkt_setting-nav-link.active,
+  .mkt_setting-nav-link:hover {
+    border-bottom: 4px solid #007bff; /* Blue background when active/hover */
+    color: black; /* White text when active/hover */
+  }
+  
+  /* Content area styling */
+  .mkt_setting-content {
+    padding: 20px; /* Padding around the content */
+    background-color: #f4f4f4; /* Light gray background */
+    min-height: 80vh; /* Ensure content area has a minimum height */
+  }
+  
+  
+  

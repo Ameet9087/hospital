@@ -1,0 +1,20 @@
+.HospitalSpecialisation {
+    padding: 10px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .HospitalSpecialisation__create-btn {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .HospitalSpecialisation__create-btn:hover {
+    color: var(--button-color);
+
+  }
+
+  

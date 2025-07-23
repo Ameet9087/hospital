@@ -1,0 +1,118 @@
+.mp {
+    font-family: Arial, sans-serif;
+    background-color: #e6f3ff;
+    padding: 20px;
+  }
+  
+  .mp-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .mp-nav-btn, .mp-tab {
+    background-color: #f2f2f2;
+    border: none;
+    padding: 10px 15px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .mp-nav-btn.active, .mp-tab.active {
+    background-color: var(--button-color);
+    color: white;
+  }
+  
+  .mp-header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .mp-refresh-btn, .mp-active-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: var(--font-size);
+    cursor: pointer;
+  }
+  
+  .mp-fiscal-year {
+    margin-left: 10px;
+    font-size: 0.8em;
+  }
+  
+  .mp-form {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .mp-form-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  .mp-form-group {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    font-size: 14px;
+  }
+  .mp-form-group input{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 100%;
+    font-size: 14px;
+  }
+  .mp-form-group select{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 100%;
+    font-size: 14px;
+  }
+  .mp-load-btn,.mp-print-btn {
+    align-self: flex-end;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: var(--font-size);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .mp-load-btn:hover,.mp-print-btn:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .mp-search-bar {
+    display: flex;
+    font-size: 14px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .mp-results-count{
+    color: black;
+    margin-right: 5px;
+  }
+
+.mp-search-container{
+    background-color: white;
+    padding: 8px;
+}
+.mp-search-container input[type="text"]{
+   background-color: transparent;
+   border: none;
+   outline: none;
+   width: 250px;
+}
+/* .mp-invoice-input{
+    width: 200px;
+} */

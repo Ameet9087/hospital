@@ -1,0 +1,128 @@
+.rfq-modal-container {
+  background-color: #fff;
+  /* border: 2px solid #ddd; */
+  border-radius: 5px;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 800px; 
+  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
+  font-family: Arial, sans-serif;
+}
+.rfq-details-section-container
+{
+  display: flex;
+  justify-content: space-between;
+}
+.rfq-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border-bottom: 2px solid #ddd; */
+  padding-bottom: 10px;
+}
+
+.rfq-modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.rfq-close-btn {
+  background: red;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.rfq-header-section {
+  display: flex;
+  justify-content:center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.rfq-hospital-info {
+  max-width: 70%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.rfq-hospital-info h3 {
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+.rfq-details-section p,
+.rfq-subject-section p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.rfq-details-section strong,
+.rfq-subject-section strong {
+  font-weight: bold;
+}
+
+.rfq-qr-code img {
+  width: 100px;
+  height: 100px;
+}
+
+.rfq-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.rfq-items-table th,
+.rfq-items-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.rfq-items-table th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}
+
+.rfq-footer-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  font-size: 14px;
+}
+
+.rfq-footer-section p {
+  margin: 5px 0;
+}
+
+.rfq-footer-section strong {
+  font-weight: bold;
+}
+
+.rfq-print-button-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.rfq-print-btn {
+  background-color: var(--button-color);
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.rfq-print-btn:hover {
+  color: var(--button-color);
+}

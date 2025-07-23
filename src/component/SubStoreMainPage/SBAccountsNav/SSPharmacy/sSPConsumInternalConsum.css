@@ -1,0 +1,159 @@
+.sSPConsumInternalConsum-container {
+    /* width: 800px; */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    position: relative;
+    padding: 10px;
+  }
+  
+  .sSPConsumInternalConsum-header {
+    background-color: #f5f5f5;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    /* font-weight: bold; */
+    font-size: var(--heading-font);
+  }
+  
+  .sSPConsumInternalConsum-close-button {
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-size: var(--heading-font);
+    cursor: pointer;
+  }
+  .sSPConsumInternalConsum-button{
+    background-color: var(--button-color);
+    color: white;
+    border: 1px solid var(--button-color);
+    padding: var(--input-box-padding);
+    border-radius: 5px;
+  }
+  .sSPConsumInternalConsum-button:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+  }
+  .sSPConsumInternalConsum-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+  }
+  
+  .sSPConsumInternalConsum-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .sSPConsumInternalConsum-content th, .sSPConsumInternalConsum-content td {
+    border: 1px solid #ddd;
+    padding: 3px;
+    text-align: center;
+    font-size: var(--font-size);
+  }
+  
+  .sSPConsumInternalConsum-content th {
+    background-color: #f2f2f2;
+    font-size: var(--heading-font);
+  }
+  
+  .sSPConsumInternalConsum-input
+  {
+    width: 100%;
+    padding: 5px;
+  }
+  .sSPConsumInternalConsum-total-amount
+  {
+    width: 100%;
+  display: flex;
+  gap: 2px;
+  justify-content: space-between;
+  }
+  .sSPConsumInternalConsum-total-span
+  {
+    width: 40%;
+    /* border: 1px solid black; */
+  }
+ 
+  
+  .sSPConsumInternalConsum-delete-button, .sSPConsumInternalConsum-increment-button {
+    margin-right: 5px;
+    background-color: #E31D2D;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .sSPConsumInternalConsum-increment-button {
+    background-color: blue;
+  }
+  
+  .sSPConsumInternalConsum-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    float: right;
+    /* justify-content: right; */
+    margin-bottom: 20px;
+  }
+  
+  /* .sSPConsumInternalConsum-details div {
+    display: flex;
+    align-items: center;
+  } */
+  .sSPConsumInternalConsum-total-input{
+    width: 100%;
+  }
+  
+  .sSPConsumInternalConsum-footer {
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #ddd;
+    /* background-color: #f5f5f5; */
+  }
+  
+  .sSPConsumInternalConsum-save-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-left: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .sSPConsumInternalConsum-save-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+  .sSPConsumInternalConsum-cancel-button {
+    background-color: #E31D2D;
+    border: 1px solid #E31D2D;
+    color: white;
+    /* border: none; */
+    /* margin-left: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .sSPConsumInternalConsum-cancel-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }

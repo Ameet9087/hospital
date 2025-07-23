@@ -1,0 +1,66 @@
+/* Dhanashree_AddMessagePageHIMS_26/09_Starts */
+
+.AddMessagePageHIMS-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--background-color);
+  }
+  
+  .AddMessagePageHIMS-send-button { 
+    padding: 10px 20px;
+    margin: 20px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.25rem;
+  }
+
+  .AddMessagePageHIMS-send-button:hover { 
+    background-color: white;
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+
+  }
+  
+
+
+  .AddMessagePageHIMS-summary {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    text-align: left;
+    width: 80%;
+  }
+  
+ 
+ 
+/* Success popup */
+.AddMessagePageHIMS-success-popup {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tick icon styling */
+.AddMessagePageHIMS-tick {
+  font-size: 1.5rem;
+  color: var(--sideBar-bg-color);
+  margin-right: 10px;
+}
+
+/* Success text styling */
+.AddMessagePageHIMS-success-text {
+  font-size: 1.25rem;
+  color: red;
+}
+
+
+  /* Dhanashree_AddMessagePageHIMS_26/09_Ends */

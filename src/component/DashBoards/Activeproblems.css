@@ -1,0 +1,136 @@
+/* swapnil Rokade activeproblems Adding className And color and table css 18/09 */
+.activeproblems-container {
+  padding: 20px;
+}
+.activeproblems-subdiv
+{
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* .activeproblems-section {
+  margin-bottom: 40px;
+} */
+
+.activeproblems-sectionh5 {
+  font-size: 14px;
+  color: black;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.activeproblems-modal-overlay label{
+  font-size: 12px;
+  color: black;
+  font-weight: bold;
+}
+
+.activeproblems-add-print-btn{
+  display: flex;
+  gap: 5px;
+}
+.activeproblems-add-button {
+  background-color: var(--button-color);
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid var(--button-hover-border-color);
+  font-size: var(--font-size);
+}
+
+.activeproblems-add-button:hover {
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.activeproblems-table {
+  width: 100%;
+  border-collapse: collapse; 
+   margin-top: 10px;
+}
+
+.activeproblems-table th,
+.activeproblems-table td {
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: left;
+}
+
+.activeproblems-table th {
+  background-color: #f3f3f3;
+  color: #333;
+}
+.active-problem-main{
+  display: flex;
+  flex-direction: row;
+}
+.actproblem-table{
+  display: flex;
+  flex-direction: column;
+}
+
+.activeproblems-modal-overlay {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.actproblemtabledata{
+  padding: 0px;
+}
+
+.activeproblems-modal-content input,
+.activeproblems-modal-content  textarea{
+  width: 300px;
+  margin-top: 2px;
+
+}
+.activeproblems-modal-content {
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  width: 400px;
+  position: relative;
+}
+
+.activeproblems-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.activeproblems-form-group {
+  /* margin-bottom: 5px; */
+  display: flex;
+}
+
+
+.activeproblems-add-problem-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20PX;
+}
+
+
+

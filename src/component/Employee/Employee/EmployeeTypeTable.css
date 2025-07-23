@@ -1,0 +1,123 @@
+/* General Page Styles */
+.employee-Type-page {
+    background-color: #e3f2fd;
+    padding: 20px;
+  }
+  
+  .employee-Type-table-container {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px;
+  }
+  
+  .employee-Type-role-manage-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  
+  .add-employee-Type-role-btn {
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .emp-search-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+  }
+  
+  /* Table Styles */
+  .employee-Type-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .employee-Type-table th, .employee-Type-table td {
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+  }
+  
+  .employee-Type-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .employee-Type-table tbody tr:hover {
+    background-color: #f0f0f0; /* Light gray background on hover */
+  }
+  
+  .emp-role-btn {
+    background-color: #0F63AF;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  /* Pagination Styles */
+  .add-employee-pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .add-employee-pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #0F63AF;
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .add-employee-pagination span {
+    margin: 0 10px;
+    font-size: 14px;
+  }
+  /* Modal Styles */
+.epm-modal-dialog {
+  position: fixed;
+  top: 10%; /* Adjust this value to move the modal further up or down */
+  left: 50%;
+ 
+  width: 100%;
+  max-width: 600px; /* Adjust the width as needed */
+  z-index: 1050;
+ 
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.epm-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040; /* Ensure the backdrop is just below the modal */
+}
+
+/* Make sure modal content is scrollable if content overflows */
+.emp-modal-content {
+  overflow-y: auto;
+  max-height: 90vh;
+}
+

@@ -1,0 +1,113 @@
+.ServiceMaster-sh-container {
+  width: 1200px;
+  padding: 10px;
+  /* background-color: var(--background-color); */
+  height: 80vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.ServiceMaster-sh-header {
+  color: black;
+  padding: 10px;
+  text-align: center;
+  font-size: var(--heading-font);
+}
+.ServiceMaster-sh-container h3 {
+  font-size: var(--heading-font);
+}
+.ServiceMaster-sh-btn {
+  grid-auto-flow: row;
+  float: left;
+  gap: 10px;
+}
+.ServiceMaster-sh-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 20px 5px;
+  border-radius: 5px;
+  /* background-color: var(--background-color); */
+}
+
+.ServiceMaster-sh-section {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+/* 
+.ServiceMaster-sh-section label {
+  width: 45%;
+  font-size: 14px;
+}
+
+.ServiceMaster-sh-section input,
+.ServiceMaster-sh-section select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+  width: 50%;
+} */
+
+.ServiceMaster-sh-save-btn {
+  padding: 5px;
+  margin-left: 10px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.ServiceMaster-sh-save-btn:hover {
+  background-color: white;
+  color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.ServiceMaster-sh-sav {
+  padding: 5px;
+  margin-left: 5px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.ServiceMaster-sh-sav:hover {
+  background-color: white;
+  color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.ServiceMaster-sh-checkbox {
+  width: 255px; /* Adjust the width of the checkbox */
+  height: 15px; /* Adjust the height of the checkbox */
+  cursor: pointer; /* Adds a pointer cursor on hover */
+  margin-left: -80px;
+}
+.ServiceMaster-sub-header{
+  background-color: var(--button-bg-color);
+  padding: 3px;
+  color: white;
+  font-size: 16px;
+}
+.ServiceMaster-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.ServiceMaster-buttons-button {
+  background-color: var(--button-color);
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.ServiceMaster-buttons-button:hover {
+  background-color: white;
+  color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+}

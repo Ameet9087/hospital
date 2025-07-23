@@ -1,0 +1,962 @@
+/* swapnil Rokade Patient-Dashboard Adding className And color and table css 18/09 */
+.patient-dashboard {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #e3fffe;
+  z-index: 1000;
+  border: none;
+  overflow: hidden;
+  transition: height 0.3s ease;
+}
+.Patient-Dashboard-render-Com {
+  width: 100%;
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.patient-dashboard.isPatientDetailsInActive {
+  height: 0;
+  visibility: hidden;
+  overflow: hidden;
+}
+
+.patient-dashboard.isPatientDetailsActive {
+  height: 100vh;
+  visibility: visible;
+  overflow: auto;
+}
+
+.Patient-Dashboard-main-section {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #ddd;
+  border: none;
+}
+.Patient-Dashboard-btnAddBack {
+  padding: 2px 5px;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  color: black;
+}
+.Patient-Dashboard-navExitBTN {
+  cursor: pointer;
+}
+.Patient-Dashboard-aside-section {
+  width: 0%;
+  margin: 5px 5px;
+  border: 1px solid black;
+  border: none;
+}
+
+.Patient-Dashboard-betweenSection {
+  width: 100%;
+  margin-top: 5px;
+  height: 90vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.Patient-Dashboard-navLogoOne {
+  /* border: 1px solid white; */
+  color: black;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+}
+.Patient-Dashboard-Opd {
+  background-color: #f7ef0c;
+  font-size: 12px;
+  padding: 3px 6px;
+  border-radius: 7px;
+}
+
+.Patient-Dashboard-navLogoOne-img {
+  height: 30px;
+  width: 30px;
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  border-radius: 50%;
+  z-index: 6;
+}
+
+.Patient-Dashboard-navLogoOne-img::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #007973 50%, #004255 50%);
+  z-index: 1;
+}
+
+.Patient-Dashboard-navLogoOne-img::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  background: white;
+  z-index: 2;
+}
+
+.Patient-Dashboard-navLogoOne-img img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  position: relative;
+  z-index: 6;
+}
+
+.Patient-Dashboard-navLogoOne-img span {
+  font-size: 15px;
+  font-weight: bold;
+  position: relative;
+  z-index: 5;
+}
+
+.Patient-Dashboard-firstBox {
+  padding: 5px;
+  border: 1px solid black;
+  background-color: white;
+  border: none;
+}
+
+.Patient-Dashboard-subNav {
+  border: 1px solid black;
+  display: flex;
+  height: 40px;
+  gap: 10px;
+  padding: 0 5px;
+  justify-content: space-between;
+  /* padding-right: 5px; */
+  /* padding-left: 5px; */
+  border-radius: 7px;
+  align-items: center;
+  color: white;
+  background-color: var(--upperBar-bg-color);
+  border: none;
+}
+
+.Patient-Dashboard-btnAdd {
+  width: 65px;
+  border-radius: 5px;
+  border: 1px solid var(--button-hover-border-color);
+  background-color: var(--button-color);
+  color: white;
+}
+
+.Patient-Dashboard-btnAdd:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.Patient-Dashboard-spanText {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* .Patient-Dashboard-inputSection {
+  padding-top: 15px;
+} */
+
+.Patient-Dashboard-inputOne {
+  height: 40px;
+  width: 100%;
+  background-color: var(--background-color);
+  padding-right: 15px;
+  padding-left: 15px;
+  border: none;
+}
+
+.Patient-Dashboard-left-aside {
+  width: 25%;
+  height: auto;
+  border: 1px solid black;
+  border: none;
+  font-size: var(--font-size);
+}
+
+.Patient-Dashboard-outOutDiv {
+  border: 1px solid black;
+  border: none;
+  position: sticky;
+  top: 5px;
+  background-color: rgb(0, 121, 115, 0.32);
+  overflow: hidden;
+  border-radius: 10px;
+}
+.Patient-Dashboard-QueuePatient {
+  background-color: rgb(0, 121, 115, 0.32);
+  width: 100%;
+  margin-top: 5px;
+  border-radius: 7px;
+  /* height: 200px; */
+}
+.Patient-Dashboard-QueueBtns {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 5px;
+}
+.Patient-Dashboard-QueueBtns button {
+  background-color: #007973;
+  padding: 5px;
+  border-radius: 7px;
+  border: none;
+  color: white;
+}
+.Patient-Dashboard-QueuePatient-Table {
+  padding: 5px;
+}
+.Patient-Dashboard-QueuePatient-Table table {
+  table-layout: auto;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  border-radius: 7px;
+}
+.Patient-Dashboard-QueuePatient-Table th {
+  font-size: 12px;
+}
+
+.Patient-Dashboard-scrollCon {
+  border: 1px solid black;
+  border: none;
+  position: sticky;
+  top: 5px;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.Patient-dashboard-frame1 {
+  position: absolute;
+  width: 109.296px;
+  height: 109.293px;
+  top: -94px;
+  left: 130.005px;
+  z-index: 3;
+  background-color: #00968f;
+  transform: matrix(240.3, -11.83);
+  transform: rotate(-135.08deg);
+}
+.Patient-dashboard-frame2 {
+  position: absolute;
+  width: 67.954px;
+  height: 167.905px;
+  top: -95.81px;
+  left: 220.85px;
+  z-index: 4;
+  background-color: #060042;
+  transform: rotate(-135.08deg);
+  overflow: hidden;
+}
+.Patient-dashboard-frame4 {
+  position: absolute;
+  width: 50px;
+  height: 467.905px;
+  top: -95.81px;
+  left: 67.5px;
+  z-index: 3;
+  background-color: #b8dde7;
+  transform: rotate(44.894deg);
+  overflow: hidden;
+}
+.Patient-dashboard-frame3 {
+  position: absolute;
+  width: 20.563px;
+  height: 165.396px;
+  top: -28.604px;
+  left: 215.9px;
+  z-index: 5;
+  background-color: #00968f;
+  transform: rotate(-135.08deg);
+  overflow: hidden;
+}
+
+.Patient-Dashboard-logoOne {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+.patient-img {
+  height: 100px;
+  width: 100px;
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  border-radius: 50%;
+  z-index: 6;
+}
+
+/* .patient-img::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #ffffff 50%, #004255 50%);
+  z-index: 1;
+  }
+  
+  .patient-img::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  background: white;
+  z-index: 2;
+} */
+
+.patient-img img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+}
+
+.patient-img span {
+  font-size: 60px;
+  font-weight: bold;
+  position: relative;
+  z-index: 2;
+}
+
+.patient-img::before {
+  content: "";
+  position: absolute;
+  top: -2.6px; /* Outer ring spacing */
+  left: -2.6px;
+  right: -2.5px;
+  bottom: -2.5px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #007973 50%, #004255 50%);
+  z-index: 0;
+}
+
+.patient-img::after {
+  content: "";
+  position: absolute;
+  top: 0; /* Align to match .patient-img size */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.944); /* White inner border effect */
+  z-index: 1; /* Between outer ring and content */
+}
+
+.Patient-Dashboard-divOne {
+  padding-left: 15px;
+  display: flex;
+  justify-content: space-between;
+  border: 1ps solid black;
+  padding-top: 15px;
+  padding-right: 10px;
+  border: none;
+}
+
+.Patient-Dashboard-outDiv {
+  padding-bottom: 10px;
+  /* background-color: blue; */
+  border: 1px solid black;
+  border: none;
+}
+.Patient-Dashboard-outDiv hr {
+  position: relative;
+  z-index: 8 !important;
+  margin: 0px !important;
+}
+
+.Patient-Dashboard-btnIpd {
+  background-color: rgb(231, 217, 12);
+  height: 25px;
+  width: 50px;
+  border-radius: 45px;
+  border: none;
+}
+
+.patient-Dashboard-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.Patient-Dashboard-textName {
+  color: white;
+  font-size: var(--heading-font);
+  font-weight: bold;
+  z-index: 6;
+  background-color: #00968f;
+  padding: 5px;
+  border-radius: 7px;
+}
+
+.Patient-Dashboard-ageGen {
+  font-size: var(--font-size);
+  color: white;
+  z-index: 6;
+  /* padding-left: 15px; */
+}
+
+.Patient-Dashboard-right-aside {
+  width: 25%;
+  height: 90vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.Patient-Dashboard-outerSection {
+  width: 100%;
+  height: auto;
+  border: 1px solid black;
+  border: none;
+}
+
+.Patient-Dashboard-navbar {
+  position: sticky;
+  top: 0;
+  margin-bottom: 5px;
+  /* height: 60px; */
+  padding: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.88);
+  border: 1px solid black;
+  border: none;
+  z-index: 12;
+  box-shadow: 0 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.Patient-Dashboard-navBtns {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px;
+  z-index: -1;
+  right: 0;
+  background-color: #007973;
+  width: 600px;
+}
+.Patient-Dashboard-navBtns-vector {
+  width: 0;
+  height: 0;
+  margin: -12px;
+  border-style: solid;
+  border-width: 55px 0 0 100px;
+  border-color: transparent transparent transparent #ffff;
+}
+.Patient-Dashboard-navText {
+  color: white;
+  height: 50px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.Patient-Dasboard-nav-patientData {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-right: 15px;
+  border-right: 1px solid black;
+}
+.Patient-Dasboard-nav-patientDataExtra {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.Patient-Dasboard-nav-patientData p {
+  color: black;
+  margin: -2px;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+@keyframes zupPuk {
+  0% {
+    transform: scale(1); /* Start smaller */
+  }
+  50% {
+    transform: scale(1.05); /* Overshoot for the pop effect */
+    opacity: 1; /* Fully visible */
+  }
+  100% {
+    transform: scale(1); /* Settle at normal size */
+  }
+}
+
+.Patient-Dashboard-nav-complaint {
+  color: red !important;
+  font-weight: bolder;
+  font-size: 13px !important;
+  animation: zupPuk 1s ease-in-out infinite;
+}
+.Patient-Dasboard-nav-patientDataExtra span {
+  margin: -2px;
+  font-weight: 500;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.Patient-Dasboard-nav-patientData span {
+  margin: -2px;
+  font-weight: 500;
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.Patient-Dashboard-btnOne {
+  margin-right: 30px;
+  background-color: rgb(231, 217, 12);
+  height: 30px;
+  width: 90px;
+  border: none;
+  border-radius: 3px;
+}
+
+.Patient-Dashboard-Leftaside {
+  width: 100%;
+  padding-right: 15px;
+  margin-right: 15px;
+  float: right;
+  font-style: italic;
+  border: 1px solid black;
+  border: none;
+}
+
+.Patient-Dashboard-asideFirstBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Patient-Dashboard-textName {
+  font-size: var(--heading-font);
+  font-weight: bold;
+}
+
+.Patient-Dashboard-divTwoDetails {
+  color: white;
+  height: auto;
+  font-size: var(--font-size);
+  border: 1px solid black;
+  border: none;
+  z-index: 6;
+  text-align: center;
+  position: relative;
+  padding: 0 0 10px 0;
+  color: #040028;
+}
+
+.Patient-Dashboard-detailHeading {
+  color: #040028;
+  font-weight: 500;
+}
+
+.Patient-Dashboard-ward {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Patient-Dashboard-attending {
+  padding-bottom: 5px;
+}
+
+.Patient-Dashboard-detailsBox {
+  overflow-y: scroll;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.Patient-Dashboard-boxOne {
+  height: 15px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  gap: 10px;
+  cursor: pointer;
+  border-radius: 7px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.isTabActive {
+  background: rgba(0, 121, 115, 0.473);
+  font-weight: 600;
+}
+
+.Patient-Dashboard-boxOne:hover {
+  background: rgba(0, 121, 115, 0.701);
+  color: white;
+  font-weight: 600;
+}
+
+@keyframes leftToRight {
+  0% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+.Patient-Dashboard-boxOne:hover i {
+  animation: leftToRight 1s ease-in-out forwards;
+}
+.Patient-Dashboard-textAndLogo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.Patient-Dashboard-patient-table {
+  width: 100%;
+  border-collapse: collapse;
+  /* margin: 20px 0;  */
+}
+
+.Patient-Dashboard-th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  background-color: #f2f2f2;
+}
+
+.Patient-Dashboard-td {
+  /* background-color: #f2f2f2; */
+  text-align: center;
+  padding: 8px;
+}
+.Patient-Dashboard-navTextandBtn {
+  padding-right: 0px;
+  border: 1px solid black;
+  border: none;
+}
+
+.Patient-Dashboard-navVitals {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #eee6e6;
+  align-items: center;
+}
+
+.Patient-Dashboard-twoBtns {
+  width: 250px;
+  display: flex;
+  border: 1px solid black;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+}
+
+.Patient-Dashboard-oneBtnNormal {
+  height: 30px;
+  width: 100px;
+  border: 1px solid var(--button-hover-border-color);
+  border-radius: 5px;
+  background-color: white;
+  color: var(--button-hover-text-color);
+}
+
+.Patient-Dashboard-oneBtnNormal:hover {
+  background-color: var(--button-color);
+  color: white;
+}
+
+.Patient-Dashboard-secBtnBlue {
+  height: 30px;
+  width: 100px;
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+}
+
+.Patient-Dashboard-secBtnBlue:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.patient-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.Patient-Dashboard-patient-table {
+  margin: 0;
+}
+.Patient-Dashboard-td {
+  border: none;
+  padding: 8px;
+  text-align: left;
+}
+
+.Patient-Dashboard-cheifComplaints {
+  height: auto;
+  width: 100%;
+  border: 1px solid black;
+  border: none;
+  padding: 5px;
+}
+
+.Patient-Dashboard-navComplaints {
+  border: 1px solid black;
+  width: 100%;
+  border: none;
+}
+
+.Patient-Dashboard-contentNav {
+  display: flex;
+  border: 1px solid black;
+  border: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #eee6e6;
+}
+
+.Patient-Dashboard-btnComplaints {
+  height: 25px;
+  width: 130px;
+  background-color: #00968f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.Patient-Dashboard-btnComplaints:hover {
+  background-color: white;
+  color: #00968f;
+}
+
+.Patient-Dashboard-inputSecTwo {
+  /* padding: 10px; */
+  padding: 10px 0px 10px 0px;
+  border: 1px solid black;
+  border: none;
+}
+
+.Patient-Dashboard-inputTwo {
+  width: 100%;
+  height: 40px;
+  background-color: rgb(198, 238, 198);
+  border: none;
+}
+
+@media (max-width: 1106px) {
+  .Patient-Dashboard-btnIpd {
+    margin-top: 25px;
+  }
+  
+  .Patient-Dashboard-textSurname {
+    padding-left: 5px;
+  }
+}
+
+@media (max-width: 1046px) {
+  .Patient-Dashboard-divTwoDetails {
+    height: auto;
+  }
+}
+
+@media (max-width: 880px) {
+  .Patient-Dashboard-navbar {
+    width: 102%;
+  }
+
+  .Patient-Dashboard-main-section {
+    flex-direction: column;
+    margin-right: 5px;
+  }
+
+  .Patient-Dashboard-left-aside,
+  .Patient-Dashboard-right-aside {
+    /* flex: 1; */
+    margin-bottom: 10px;
+  }
+
+  .Patient-Dashboard-left-aside {
+    width: 100%;
+    /* padding-right: 5px; */
+    /* flex: 1; */
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 8px;
+  }
+  
+  .Patient-Dashboard-right-aside {
+    width: 100%;
+  }
+  
+  .Patient-Dashboard-divOne {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .Patient-Dashboard-navbar {
+    padding: 10px;
+  }
+
+  .Patient-Dashboard-main-section {
+    gap: 5px;
+    margin-right: -5px;
+  }
+}
+
+@media (max-width: 375px) {
+  .Patient-Dashboard-inputSection {
+    padding-right: 15px;
+  }
+}
+
+@media (max-width: 390px) {
+  .Patient-Dashboard-inputSection {
+    padding-right: 15px;
+  }
+}
+
+/* Ajhar Tamboli */
+.Patient-Dashboard-btn {
+  display: flex;
+  justify-content: space-between;
+}
+.Patient-Dashboard-table-header-sub {
+  display: flex;
+  /* justify-content: space-between; */
+  gap: 5px;
+  margin-right: 5px;
+}
+
+.Patient-Dashboard-table-header-sub a {
+  color: white;
+}
+.Patient-Dashboard-textarea {
+  width: 100%;
+  margin: 5px 0;
+  border: 1px solid gray;
+}
+/* Ajhar Tamboli */
+
+.Patient-Dashboard-btnPrint {
+  padding: 2px 10px;
+  background-color: white;
+  border-radius: 5px;
+  color: black;
+  border: none;
+}
+
+.complaint-card {
+  display: flex;
+  align-items: center;
+  background: rgba(246, 239, 11, 0.87);
+  border: 0.5px solid rgba(0, 0, 0, 0.17);
+  padding: 3px 50px;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  color: black;
+  max-width: fit-content;
+}
+
+.complaint-label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.complaint-text {
+  font-weight: 500;
+}
+
+.Patient-Dashboard-navVitals {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: var(--upperBar-bg-color);
+  align-items: center;
+  color: white;
+}
+
+.Patient-Dashboard-btn-delbtn
+{
+  display: flex;
+  gap: 5px;
+}
+.Patient-Dashboard-btn-del {
+  width: 65px;
+  border-radius: 5px;
+  border: 1px solid #da0303;
+  background-color: #da0303;
+  color: white;
+}
+
+.Patient-Dashboard-btn-del:hover {
+  color: #da0303;
+  background-color: var(--button-hover-background-color);
+}
+  .Patient-Dashboard-btn-print {
+    width: 65px;
+    border-radius: 5px;
+    padding: 3px 5px;
+    border: 1px solid var(--button-hover-border-color);
+    background-color: var(--button-color);
+    color: white;
+    margin-left: 5px;
+  }
+  
+  .Patient-Dashboard-btn-print:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }

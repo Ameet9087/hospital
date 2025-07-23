@@ -1,0 +1,233 @@
+ /* Ajhar Tamboli drDailySalesReport.css 19-09-24 */
+
+ .drDailySalesReport-report {
+   font-family: Arial, sans-serif;
+   /* max-width: 1200px; */
+   /* margin: 0 auto; */
+   padding: 10px;
+   height: 460px;
+   background-color: var(--background-color);
+ }
+
+ .drDailySalesReport-report h4 {
+   margin-top: 0;
+   font-size: var(--heading-font);
+   /* color: rgb(66, 66, 66); */
+   /* font-weight: 200; */
+ }
+
+ /* .drDailySalesReport-report i {
+    color: #0F63AF
+  } */
+
+ .drDailySalesReport-filters {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 10px;
+   margin-bottom: 20px;
+ }
+
+ .drDailySalesReport-filters-second {
+   display: flex;
+   justify-content: left;
+   /* flex-wrap: wrap; */
+   gap: 10px;
+   margin-bottom: 20px;
+ }
+
+ .drDailySalesReport-date-range {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   font-size: var(--font-size);
+   background-color: #f0f0f0;
+   margin-left: 30px;
+   padding: 2px 30px;
+ }
+
+ .drDailySalesReport-date-range input {
+   margin-left: 10px;
+   padding: 1px 10px;
+ }
+
+ .drDailySalesReport-select-filters {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   gap: 10px;
+   font-size: var(--font-size);
+   margin-left: 10px;
+   /* border: 1px solid red; */
+   /* width: 300px; */
+ }
+
+ .drDailySalesReport-select-filters select {
+   width: 200px;
+ }
+
+ .drDailySalesReport-select-filters label {
+   margin-right: 30px;
+ }
+
+ .drDailySalesReport-select-filters input[type="date"],
+ .drDailySalesReport-select-filters input[type="text"],
+ .drDailySalesReport-select-filters select {
+   padding: 1px 10px;
+   border: 1px solid #ccc;
+   border-radius: 3px;
+   margin-left: 20px;
+ }
+
+ .drDailySalesReport-show-report-button {
+   background-color: var(--button-color);
+   border: 1px solid var(--button-hover-border-color);
+   color: white;
+   /* margin-right: 10px; */
+   border-radius: 5px;
+   cursor: pointer;
+   font-size: var(--font-size);
+   margin-right: 100px;
+   transition: background-color 0.3s ease;
+   padding: 5px 5px;
+ }
+
+ .drDailySalesReport-show-report-button:hover {
+   border: 1px solid var(--button-hover-border-color);
+   color: var(--button-hover-text-color);
+   background-color: var(--button-hover-background-color);
+
+ }
+
+ .drDailySalesReport-search-N-result {
+   margin-top: 10px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+ }
+
+ .drDailySalesReport-search-bar {
+   margin-left: -15px;
+   /* margin: 0; */
+ }
+
+ .drDailySalesReport-search-bar input {
+   /* margin-top: 10px; */
+   /* padding: 5px; */
+   width: 200px;
+   margin: 0;
+ }
+
+ .drDailySalesReport-search-bar i {
+   position: relative;
+   color: gray;
+   top: 3px;
+   left: 190px;
+ }
+
+ .drDailySalesReport-results-info {
+   display: flex;
+   align-items: center;
+   /* padding-top: 10px; */
+ }
+
+ .drDailySalesReport-results-info span {
+   /* display: flex;
+    align-items: center; */
+   /* padding-top: 10px; */
+   /* color: #659BE0; */
+   font-size: var(--font-size);
+ }
+
+
+ /* .drDailySalesReport-print-button {
+    background-color: #659BE0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+  } */
+
+ .drDailySalesReport-results-info {
+   display: flex;
+   justify-content: space-between;
+   margin-bottom: 10px;
+ }
+
+ .drDailySalesReport-export-button,
+ .drDailySalesReport-print-button {
+   background-color: var(--button-color);
+   border: 1px solid var(--button-hover-border-color);
+   color: white;
+   /* margin-right: 10px; */
+   border-radius: 5px;
+   cursor: pointer;
+   font-size: var(--font-size);
+   margin-left: 10px;
+   transition: background-color 0.3s ease;
+   padding: 5px 5px;
+ }
+
+ .drDailySalesReport-export-button:hover,
+ .drDailySalesReport-print-button:hover {
+   border: 1px solid var(--button-hover-border-color);
+   color: var(--button-hover-text-color);
+   background-color: var(--button-hover-background-color);
+
+
+ }
+
+ .drDailySalesReport-report table {
+   margin-top: 10px;
+   width: 100%;
+   border-collapse: collapse;
+   background-color: white;
+ }
+
+ .drDailySalesReport-report th,
+ .drDailySalesReport-report td {
+   border: 1px solid #ddd;
+   padding: 3px;
+   text-align: center;
+   font-size: var(--font-size);
+ }
+
+ .drDailySalesReport-report th {
+   background-color: #F3F3F3;
+   color: #333333;
+ }
+
+ /* .no-data {
+    text-align: center;
+    padding: 20px;
+    background-color: #fffbe6;
+  } */
+
+ .drDailySalesReport-pagination {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 30px;
+ }
+
+ .drDailySalesReport-pagination button {
+   background-color: #008CBA;
+   color: white;
+   border: none;
+   padding: 5px 10px;
+   cursor: pointer;
+   margin: 0 5px;
+   border-radius: 5px;
+   font-size: var(--font-size);
+ }
+
+ .drDailySalesReport-pagination span {
+   margin: 0 10px;
+   /* color: gray; */
+   font-size: var(--font-size);
+ }
+
+ .drDailySalesReport-table-N-paginationDiv {
+   background-color: #FFFFFF;
+ }

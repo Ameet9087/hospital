@@ -1,0 +1,71 @@
+.defaultSignature-container {
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 5px;
+    /* width: 100%; */
+    /* max-width: 800px; */
+    height: 75vh;
+    margin: 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .defaultSignature-section {
+    margin-bottom: 20px;
+  }
+  
+  .defaultSignature-section h3 {
+    margin-bottom: 10px;
+    font-size: var(--heading-font);
+    /* color: #3b3b3b; */
+    font-weight: 100;
+    padding-bottom: 10px;
+    border-bottom:  1px solid #cacaca;
+  }
+  
+  .defaultSignature-signatories {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 10px 0px;
+  }
+  
+  .defaultSignature-signatories label {
+    display: flex;
+    justify-content: left;
+    /* justify-content: center; */
+    /* flex-wrap: nowrap; */
+    align-items: center;
+    /* font-weight: bold; */
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    /* color: #474747; */
+    /* border: 1px solid red; */
+    /* width: 200px; */
+  }
+  
+  .defaultSignature-signatories input {
+    margin-right: 5px;
+  }
+  
+  .defaultSignature-update-button {
+    display: block;
+    margin: 0 auto;
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    /* margin: 1px; */
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .defaultSignature-update-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  

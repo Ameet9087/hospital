@@ -1,0 +1,101 @@
+.BlockIPEntries-container{
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    padding: 4px;
+    font-size: var(--font-size);
+    height:600px;
+    width: 800px;
+    
+
+}
+.BlockIPEntries-header{
+   
+    background-color: var(--upperBar-bg-color);
+      color: white;
+      padding: 8px;
+      margin-bottom: 4px;
+      font-size: var(--heading-font);
+}
+.BlockIPEntries-content{
+    display: flex;
+    gap: 10px;
+    /* justify-content: center; */
+}
+.BlockIPEntries-section{
+    width: 50%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    background-color: white;
+    margin-bottom: 5px;
+}
+.BlockIPEntries-section-header{
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 4px 8px;
+    font-size: var(--heading-font);
+    margin: 0px 0px;
+    margin-bottom: 10px; 
+}
+.BlockIPEntries-data{
+    display: flex;
+    margin-bottom: 10px;
+    /* gap: 10px; */
+}
+
+.BlockIPEntries-upload {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between elements */
+    margin-top: 15px; /* Add spacing from other sections */
+  }
+  
+
+/*   
+  .BlockIPEntries-upload label:hover {
+   
+  } */
+  
+  .BlockIPEntries-upload button {
+    padding: 5px 12px;
+    background-color: #28a745; /* Green color */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .BlockIPEntries-upload button:hover  {
+    background-color: #1e7e34; /* Darker green on hover */
+  }
+  .BlockIPEntries-navbar-btns{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow-y: auto;
+}
+.BlockIPEntries-navbar-btns button {
+    /* width: 100%; */
+    /* padding: 10px;
+    font-size: var(--font-size);
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center; */
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+
+  }
+  
+  .BlockIPEntries-navbar-btns button:hover, .BlockIPEntries-upload label:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color); 
+    border-bottom: 1px solid var(--button-bg-color);
+  }

@@ -1,0 +1,203 @@
+.fixedAssetMovement-container {
+    padding: 0 20px;
+    font-family: Arial, sans-serif;
+  }
+  .fixedAssetMovement-container h1{
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .fixedAssetMovement-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  
+  .fixedAssetMovement-year-select {
+    margin-right: 10px;
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 150px;
+    margin: 0 5px;
+    font-size: 14px;
+  }
+  
+  .fixedAssetMovement-date-range {
+    display: flex;
+    align-items: center;
+  }
+  
+  .fixedAssetMovement-date-input {
+    margin: 0 10px;
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 150px;
+    margin: 0 5px;
+    font-size: 14px;
+  }
+  
+  .fixedAssetMovement-star-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 0 10px;
+  }
+  
+  .fixedAssetMovement-show-report {
+    margin-left: auto;
+    background-color: #6495ed;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .fixedAssetMovement-filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .fixedAssetMovement-filter {
+    display: flex;
+    font-size: 14px;
+  }
+  .fixedAssetMovement-filter label{
+    display: flex;
+    flex: 0.5;
+    font-weight: bold;
+    /* flex: 1 1 50px; */
+  }
+  
+  .fixedAssetMovement-select,
+  .fixedAssetMovement-input {
+    flex: 1;
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    /* width: 150px; */
+    margin: 0 5px;
+    font-size: 14px;
+  }
+  
+  .fixedAssetMovement-select {
+    background-color: white;
+  }
+
+
+  .fixedAssetMovement-search-container{
+    background-color: white;
+    padding: 8px;
+}
+.fixedAssetMovement-search-container input[type="text"]{
+   background-color: transparent;
+   border: none;
+   outline: none;
+   width: 250px;
+}
+.fixedAssetMovement-search-bar {
+    display: flex;
+    font-size: 14px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .fixedAssetMovement-print-btn{
+    background-color: #007bff;
+    color: white;
+    margin-left: 10px;
+    padding: 6px 15px;
+    border: none;
+    border-radius: 5px;
+  }
+  .fixedAssetMovement-results-count{
+    color: #007bff;
+  }
+  
+  .fixedAssetMovement-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+  }
+  
+  .fixedAssetMovement-paginationButton {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .fixedAssetMovement-paginationInfo {
+    align-self: center;
+  }
+  .fixedAssetMovement-cancelButton{
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+    /* MedicareTable.css */
+    .fixedAssetMovement-table {
+      width: 100%;
+      background-color: #f2f2f2;
+      border-collapse: collapse;
+    }
+    
+    .fixedAssetMovement-table th,
+    .fixedAssetMovement-table td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      font-size: 14px;
+    }
+    .fixedAssetMovement-table td{
+      background-color: white;
+    }
+    
+    .fixedAssetMovement-table th {
+        text-align: left;
+      position: relative;
+      user-select: none; /* Disable text selection in header */
+      white-space: nowrap; /* Prevent text from wrapping */
+      font-size: 16px;
+    }
+    
+    .fixedAssetMovement-table th .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .resizable-th {
+      position: relative;
+    }
+    
+    .resizer {
+      width: 5px;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: col-resize;
+      z-index: 1;
+    }
+    
+    .fixedAssetMovement-table th .resizer:hover {
+      background-color: #aaa;
+    }
+    
+    .no-show-fixedAssetMovement {
+        text-align: center;
+        background-color: #fff9c4;
+        color: #efb005;
+        text-align: center;
+    }

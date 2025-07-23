@@ -1,0 +1,209 @@
+/* Container */
+.DynamicReport-container {
+    background-color: var(--background-color);
+    padding: 5px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Page Title */
+.DynamicReport-container h2 {
+    color:black;
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+/* Text Area */
+.DynamicReport-container textarea {
+    resize: none;
+    font-family: 'Courier New', Courier, monospace;
+    border: 1px solid #006064;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.DynamicSQL-textarea button{
+
+    background-color: var(--button-color);
+    color: #ffffff;
+    border: none;
+    padding: 5px 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+}
+.Dynamic-Load-Report-Outer{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.Dynamic-Load-Report-Outer button{
+    background-color: var(--button-color);
+    color: #ffffff;
+    border: none;
+    padding: 10px 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+
+
+}
+
+/* Buttons */
+.DynamicReport-container .DynamicReport-button-group button {
+    background-color: var(--button-color);
+    color: #ffffff;
+    border: none;
+    padding: 5px 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    /* margin-bottom: 10px; */
+    float: right;
+}
+
+
+/* Search Input */
+.DynamicReport-container .DynamicReport-search-group input {
+    
+    /* border: 1px solid #006064; */
+    border-radius: 5px;
+    padding: 5px;
+    /* padding: 10px; */
+    box-sizing: border-box;
+}
+
+/* Search Icon */
+.DynamicReport-container .DynamicReport-search-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.DynamicReport-container .DynamicReport-search-group .DynamicReport-search-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #006064;
+}
+
+/* Table */
+.dynamic-report-table{
+    overflow: scroll;
+    height: 60%;
+    width: 80%;
+}
+.dynamic-report-table table {
+    width: 100%;
+    margin-top: 20px;
+    table-layout: auto;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid black ;
+}
+
+.dynamic-report-table th, 
+.dynamic-report-table td {
+    text-align: center;
+}
+
+.dynamic-report-table tr:nth-child(even) {
+    background-color: #e0f7fa;
+}
+
+/* No Rows Message */
+.DynamicReport-container .DynamicReport-text-center {
+    font-style: italic;
+    background-color:#ffe6a0;
+    color: #be6b03;
+    text-align: center;
+}
+
+/* Pagination */
+.DynamicReport-container .DynamicReport-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.DynamicReport-container .DynamicReport-pagination button {
+    background-color: var(--button-color);
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+
+.DynamicReport-container .DynamicReport-pagination span {
+    margin: 0 5px;
+}
+
+.Admitted-Patient-tableContainer{
+    width: 100%;
+    overflow-x: auto;
+    padding: 20px;
+    background-color: #e6f7ff;
+
+  }
+  .Admitted-Patient-Header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background-position: right 10px center;
+  }
+  .Admitted-Patient-searchInput{
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+      width: 200px; /* Adjust the width as needed */
+      padding: 5px 30px 8px 10px; /* Adjust padding to make room for the icon */
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjNjY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTkgMTljLjg4MSAwIDEuNzA4LS4zNDUgMi4zMzYtLjg5MUwxOS40OTcgMjRsMi41MDMtMi41MDMtNC41MjEtNC41MTRBNS45OTkgNS45OTkgMCAwMDAxNSA5IDUgNSAwIDAwOSA0LjUxN0E1LjAwNSA1LjAwNSAwIDAwOSAxNXpNNSA5YTQgNCAwIDExOCAwIDQgNCAwIDAxLTgtMHoiLz48L3N2Zz4=');
+      background-size: 16px 16px; /* Size of the icon */
+      background-repeat: no-repeat;
+      background-position: right 10px center; /* Position the icon to the right */
+  }
+  .Admitted-Patient-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+/*   
+  .Admitted-Patient-results {
+    margin-right: 15px;
+    font-size: 14px;
+    vertical-align: center;
+
+  transform: translateY(-50%);
+} */
+.DynamicReport-button-group {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    justify-content: flex-start; /* Align items horizontally */
+    gap: 10px; /* Add some space between the items */
+    margin-bottom: 10px;
+}
+
+    
+  
+  .DynamicReport-button-group span{
+    vertical-align: -webkit-baseline-middle;
+  }

@@ -1,0 +1,212 @@
+.linensTypeMain-page {
+  background-color: var(--background-color);
+  /* padding: 1px 1px 1px 10px; */
+  font-family: Arial, sans-serif;
+  height: 80vh;
+
+}
+.LinenType-header-arrowCircle{
+  font-size: 40px;
+}
+.linensTypeMain-N-imu-btn {
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid #cfcdcd;
+  height: 37px;
+  /* background-color: #FAFAFA; */
+  /* justify-content:space-between; */
+}
+
+.linensTypeMain-tab {
+  /* border: 1px solid red; */
+  padding: 10px 20px;
+  border: none;
+  
+  background-color: var(--background-color);
+  cursor: pointer;
+}
+/* .linensTypeMain-tab  */
+.linensTypeMain-active{
+  /* background-color: #007bff; */
+  /* color: black; */
+  border-bottom: 5px solid var(--sideBar-bg-color);
+  padding: 10px 20px;
+}
+.filter-options label button {
+  margin-left: 10px;
+  font-size: var(--font-size);
+  
+}
+.LinenType-type {
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  margin-top: 10px;
+}
+.LinenType-header {
+
+  margin: 0;
+  background-color: var(--upperBar-bg-color);
+  color: white;
+  font-size: var(--heading-font);
+  line-height: 20px;
+}
+.LinenType-headingName {
+  /* margin-left: 45%; */
+  font-size: var(--heading-font);
+  /* font-weight: bolder; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px 0;
+}
+.LinenType-form-section {
+  margin-top: 60px;
+  margin-left: 25%;
+  padding: 10px 20px;
+  width: 50%;
+  font-size: var(--font-size);
+  background: white;
+  border: 1px solid #ccc;
+}
+.LinenType-form-group {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+.LinenType-form-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+.LinenType-form-group input,
+.LinenType-form-group textarea {
+  width: 40%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.LinenType-form-group select {
+  width: 42%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.LinenType-form-group-search {
+  width: 90%;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: end;
+  cursor: pointer;
+}
+.LinenType-form-group-search svg {
+  margin-top: 5px;
+}
+.LinenType-action-buttons {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 10px;
+}
+.LinenType-action-buttons button {
+  background-color: var(--button-color);
+  color: var(--button-hover-background-color);
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 5px;
+}
+.LinenType-action-buttons button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color);
+}
+.linensType-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 10px;
+  background-color: white;
+  /* margin-top: 10px; */
+}
+.linensType-section{
+  margin-top: 10px;
+}
+
+
+
+.linensType-search-field {
+  position: relative;
+}
+
+.linensType-search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.linensType-services-section {
+  background: white;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+}
+
+
+
+
+.linensType-action-buttons {
+  display: flex;
+  gap: 5px;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+.linensType-action-buttons button {
+  background-color: var(--button-bg-color);
+  color: var(--button-hover-background-color);
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 5px;
+}
+.linensType-action-buttons button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color);
+}
+@media (max-width: 1024px) {
+  .linensType-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .linensType-full-width {
+    grid-column: span 2;
+  }
+}
+@media (max-width: 768px) {
+  .linensType-bottom-container {
+    grid-template-columns: 1fr;
+  }
+  .linensType-tabs {
+    flex-direction: column;
+  }
+}
+@media (max-width: 480px) {
+  .linensType-grid {
+    grid-template-columns: 1fr;
+  }
+  .linensType-grid.two-columns {
+    grid-template-columns: 1fr;
+  }
+  .linensType-full-width {
+    grid-column:span1;
+}
+}

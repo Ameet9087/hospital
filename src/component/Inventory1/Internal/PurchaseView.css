@@ -1,0 +1,74 @@
+  .PurchaseRequest-container {
+    width: 100%;
+    border: 1px solid #ccc;
+    background-color: var(--background-color);
+    padding: 10px;
+  }
+  
+  .PurchaseRequest-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .PurchaseRequest-logo h2 {
+    color: var(--button-color);
+    font-size: 1.5rem;
+  }
+  
+  .PurchaseRequest-hospital-info {
+    text-align: center;
+  }
+  
+  .PurchaseRequest-hospital-info h3 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  
+  .PurchaseRequest-barcode {
+    text-align: right;
+  }
+  
+  .PurchaseRequest-prf-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .PurchaseRequest-purchase-details h3 {
+    font-size: 20px;
+    text-align: center;
+  }  
+  .PurchaseRequest-prf-details-div strong
+  {
+    font-size: 14px;
+  }
+  .PurchaseRequest-footer {
+    text-align: center;
+  }
+  
+  .PurchaseRequest-signatures {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .PurchaseRequest-footer p {
+    margin: 5px 0;
+  }
+  .PurchaseRequest-signatures-print{
+    background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
+  padding: var(--input-box-padding);
+  border-radius: 4px;
+  cursor: pointer;
+  }
+  .PurchaseRequest-signatures-print:hover{
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+  }

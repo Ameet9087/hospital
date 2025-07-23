@@ -1,0 +1,230 @@
+.maternity-patient-list {
+  width: 100%;
+  height: auto;
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  /* padding: 20px; */
+  float: left; /* Aligns the main container to the left */
+}
+
+.patient-mat {
+  margin-top: -10x;
+  margin-bottom: 50px;
+}
+
+.maternity-payment-form,
+.maternity-payment-history {
+  background-color: white;
+  border-radius: 5px;
+  width: 60%;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  float: left; /* Aligns the forms to the left */
+}
+
+.mternity-patient-info {
+  display: flex; /* Use flexbox for horizontal alignment */
+  flex-wrap: wrap; /* Allow wrapping to the next line if needed */
+  gap: 20px; /* Add space between items */
+  margin-bottom: 1px; /* Add space below the patient info */
+  font-size: 16px;
+}
+
+.mternity-patient-info span {
+  white-space: nowrap; /* Prevent text from wrapping */
+  font-size: 16px;
+
+}
+
+.maternity-title {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.maternity-payment-details {
+  display: grid;
+  gap: 10px;
+}
+
+.maternity-form-label {
+  display: block;
+  gap: 10px;
+  font-size: 14px;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.maternity-form-labels {
+  display: block;
+  margin-left: 100px;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.maternity-form-input,
+.maternity-form-select {
+  /* width: 20%; */
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.maternity-form-textarea {
+  width: 20%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical; /* Allows vertical resizing */
+}
+
+.maternity-form-actions {
+  margin-top: 15px;
+}
+
+.maternity-button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.maternity-button-proceed {
+  background-color: #4CAF50;
+  height:  30px;
+  color: white;
+  margin-right: 10px;
+}
+
+.maternity-button-discard {
+  background-color: #f44336;
+  color: white;
+  height: 30px;
+}
+
+.mat-search-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.mat-search-input {
+  width: 200px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.maternity-table {
+  width: 100%;
+  border-collapse: collapse;
+  float: left; /* Aligns the table to the left */
+}
+
+.maternity-table-header,
+.maternity-table-cell {
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: left;
+}
+
+.maternity-table-header {
+  background-color: #f2f2f2;
+}
+
+.mat-pagination {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mat-pagination-button {
+  background-color: #4CAF50;
+  color: white;
+  margin-left: 5px;
+}
+.pay-span{
+  font-size: 14px;
+  color: black;
+}
+
+.maternity-checkbox {
+  margin-right: 5px;
+}
+
+.maternity-title {
+  /* background-color: ; */
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  width: 100%;
+  border-radius: 4px;
+  border-bottom: 1px solid white;
+  position: relative; /* Required for positioning the pseudo-element */
+  display: inline-block; /* Adjust width to fit content */
+}
+.maternity-titles{
+  font-size: 16px;
+}
+
+.maternity-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0; /* Start with 0 width */
+  height: 4px; /* Thickness of the border */
+  background-color: var(--button-bg-color); /* Color of the animated border */
+  transition: width 0.3s ease, background-color 0.3s ease; /* Animation properties */
+}
+
+.maternity-title:hover::after {
+  width: 10%; /* Expand width to full container on hover */
+  background-color: var(--button-bg-color); /* Color of the animated border */
+}
+
+.maternity-title h3 {
+  margin: 0;
+  font-size: 18px; /* Ensure text size is consistent */
+  color: #333;
+}
+.mat-pagination {
+  display: flex;
+  justify-content: space-between; /* Aligns the span and buttons in a single line */
+  align-items: center; /* Aligns items vertically in the center */
+  width: 100%; /* Ensures the pagination occupies full width */
+  margin-top: 15px;
+}
+
+.pagination-info {
+  flex-grow: 1; /* Takes up remaining space on the left */
+  text-align: left; /* Aligns text to the left */
+}
+
+.mat-pagination-buttons {
+  display: flex;
+  margin-left: 10px;
+  align-items: center; /* Vertically center the buttons and text */
+  gap: 10px; /* Space between buttons */
+}
+
+.pagination-button {
+  background-color: #007BFF; /* Blue background */
+  color: white; /* White text */
+  padding: 8px 12px; /* Padding for the button */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.pagination-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.pagination-page-info {
+  text-align: center; /* Aligns page info in the center */
+  margin: 0 10px; /* Adds some space around the page info text */
+}

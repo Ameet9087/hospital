@@ -1,0 +1,59 @@
+/* styles/styles.css */
+
+/* Global container */
+.StaffTransportManagement-app-container {
+    font-family: Arial, sans-serif;
+}
+
+/* Navigation bar styling */
+.StaffTransportManagement-nav {
+    background-color: var(--background-color);
+    padding: 10px;
+}
+
+/* Navigation list */
+.StaffTransportManagement-nav-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+/* NavLink list items */
+.StaffTransportManagement-nav-list li {
+    display: inline-block;
+    margin-right: 15px; /* Add some spacing between items */
+}
+
+/* Headings for navigation links */
+.StaffTransportManagement-nav-link {
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    background-color: var(--button-color); /* Set background color to yellow */
+    padding: 10px; /* Add some padding to the button */
+    border-radius: 5px; /* Optional: adds rounded corners to the button */
+}
+
+/* Hover effects for nav links */
+.StaffTransportManagement-nav-link:hover {
+    color: var(--button-hover-text-color); /* Change this to the desired hover color */
+background-color: white;
+border: 1px solid var(--button-hover-border-color);
+}
+
+/* Active link style */
+.StaffTransportManagement-active {
+    color: red; /* Change this to the desired active color */
+    text-decoration: underline; /* You can keep or remove this based on preference */
+}
+
+/* Main content styling */
+.StaffTransportManagement-main {
+    padding: 20px;
+    background-color: var(--background-color);
+    height: 100vh;
+}

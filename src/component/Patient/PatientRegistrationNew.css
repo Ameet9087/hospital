@@ -1,0 +1,230 @@
+.css-b62m3t-container{
+  width: 100%;
+  padding: 9px;
+}
+
+.patient-registration-component-container {
+    width: 100%;
+    font-family: Arial, sans-serif;
+    overflow-y: scroll;
+    height: 90vh;
+  }
+  
+  .patient-registration-component-container::-webkit-scrollbar {
+    width: 0;
+  }
+  
+  .patient-registration-component-container {
+    scrollbar-width: none;
+    -ms-overflow-style: none; 
+  }
+  
+  
+  .patient-registration-component-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 16px;
+  }
+  
+  .patient-registration-component-header h4 {
+    font-size: var(--heading-font);
+    margin: 0;
+  }
+  
+  .patient-registration-component-close-btn {
+    background-color: #E52F3E;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  
+  .patient-registration-component-form .patient-registration-component-patient-registration-component-form-row {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    /* flex-wrap: wrap;
+    gap: 16px; */
+    margin-bottom: 16px;
+  }
+  
+  .patient-registration-component-form-group {
+    /* flex: 1; */
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    margin: 5px 0px;
+    text-align: left;
+    align-items: center;
+    font-size: var(--font-size);
+    /* width: 33.33%; */
+    /* border: 1px solid red; */
+  }
+  
+  /* .patient-registration-component-form-group label {
+    display: block;
+    text-transform: capitalize;
+    width: 80%;
+  } */
+  .patient-registration-component-form-group-checkbox{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    white-space: nowrap;
+  }
+  
+  /* .patient-registration-component-form-group input,
+  .patient-registration-component-form-group select,
+  .patient-registration-component-form-group textarea {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+} */
+.patient-registration-component-form-group-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+/* .patient-registration-component-form-group-options label {
+  margin-right: 20px;
+  font-size: var(--font-size);
+  display: flex;
+  align-items: center;
+}
+
+.patient-registration-component-form-group-options input {
+  margin-right: 5px;
+} */
+
+  .patient-registration-component-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    font-size: var(--font-size);
+    gap: 8px;
+    margin-top: 16px;
+  }
+  
+  .patient-registration-component-add-btn {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .patient-registration-component-add-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .patient-registration-component-form-group-1row{
+    display: flex;
+    gap: 10px;
+  }
+  
+  .patient-registration-component-star{
+    color: red;
+    font-size: var(--font-size);
+  }
+  .patient-registration-h4
+  {
+    background-color: var(--sideBar-bg-color);
+    color: white;
+    padding: 5px 7px;
+    width: 300px;
+    border-radius: 7px 7px 7px 7px;
+    font-size:var(--heading-font);
+  }
+
+  .patient-registration-sub-input
+  {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: space-between;
+  }
+  .patient-registration-component-raadio {
+    display: flex;
+    align-items: start;
+  }
+  
+  .patient-registration-component-raadio label {
+    display: flex;
+    text-transform: capitalize;
+    font-size: var(--font-size);
+  }
+  
+  .patient-registration-component-raadio input[type="radio"] {
+    margin-right: 5px;
+  }
+.patient-registration-component-raadio-com{
+    display: flex;
+    align-items: start;
+}
+.patient-registration-component-raadio-com input[type="radio"] {
+    margin-right: 5px;
+  }
+
+.patient-registration-component-span{
+  color: #E52F3E;
+  font-size: var(--heading-font);
+}
+  
+  .patient-registration-component-file-input{
+    padding: 8px; 
+    font-size: var(--font-size); 
+    border: 1px solid #ccc;
+    border-radius: 4px; 
+    
+  }
+  .patient-registration-component-textarea{
+    width: 100%;
+    padding: 10px; 
+    font-size: var(--font-size); 
+    border: 1px solid #ccc;
+    border-radius: 4px; 
+    height: 15px;
+  }
+
+ 
+
+  .patient-re-add {
+    background-color: #4caf50;
+    color: white; 
+    border: none; 
+    border-radius: 5px;
+    padding: 5px; 
+    font-size: var(--font-size);
+    margin-right: 10px; 
+  }
+  
+  .patient-re-add:hover {
+    background-color: #45a049; 
+  }
+  
+  .patient-re-delete {
+    background-color: #f44336; 
+    color: white;
+    border: none; 
+    border-radius: 5px; 
+    padding:  5px; 
+    font-size: var(--font-size);
+    cursor: pointer;
+  }
+  
+  .patient-registration-component{
+    width: 80%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius:4px;
+  }

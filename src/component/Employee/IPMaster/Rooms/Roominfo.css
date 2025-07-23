@@ -1,0 +1,199 @@
+.room-info {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    padding: 4px;
+    font-size: 12px;
+}
+
+.room-info-title-bar {
+    background-color: var(--upper-bar-bg-color);
+    color: white;
+    padding: 8px;
+    margin-bottom: 4px;
+}
+
+.room-info-header {
+    font-size: var(--heading-font-size);
+}
+
+.room-info-checkbox-label {
+    font-weight: normal;
+    margin-left: 0px;
+}
+
+.room-info-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.room-info-main-section {
+    display: flex;
+    gap: 4px;
+}
+
+.room-info-panel {
+    flex: 1;
+    background: white;
+    border: 1px solid #ccc;
+}
+
+.room-info-panel-header {
+    background-color: var(--upper-bar-bg-color);
+    color: white;
+    padding: 4px 8px;
+    font-size: var(--heading-font-size);
+}
+
+.room-info-panel-content {
+    width: 500px;
+    padding: 8px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.room-info-form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 4px;
+    font-size: var(--font-size);
+}
+.room-info-magnifier-btn {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 2px 6px;
+    cursor: pointer;
+}
+.room-add-btn{
+  padding: 4px 12px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  color: white;
+  font-size: var(--font-size);
+  background: var(--button-bg-color);
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.room-del-btn{
+    padding: 4px 12px;
+    border: 1px solid red;
+    border-radius: 5px;
+    color: white;
+    background-color: red;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+.room-info-status-controls {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--font-size);
+}
+
+.room-info-radio-group {
+    display: flex;
+    gap: 12px;
+}
+
+.room-info-services-section {
+    background: white;
+    border: 1px solid #ccc;
+}
+
+.room-info-tab-bar {
+    display: flex;
+    gap: 5px;
+    background: var(--upper-bar-bg-color);
+    padding: 4px;
+}
+
+.room-info-tab {
+    padding: 4px 12px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    color: var(--button-color);
+    font-size: var(--font-size);
+    background: var(--button-hover-bg-color);
+    cursor: pointer;
+}
+
+.room-info-tab.active {
+    background: var(--button-color);
+    color: var(--button-hover-bg-color);
+    font-weight: bold;
+}
+
+.services-table {
+    padding: 8px;
+}
+
+.table-actions {
+    margin-bottom: 4px;
+}
+
+.room-info-add-btn,
+.room-info-del-btn {
+    margin-right: 4px;
+    padding: 2px 8px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: var(--font-size);
+}
+
+.room-info-button-section {
+    margin-top: 20px;
+    display: flex;
+    gap: 1px;
+}
+
+.room-info-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+.service-charge-btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.auto-service-charge-btn {
+    background-color: #008CBA; /* Blue */
+    color: white;
+}
+
+.room-info-btn:hover {
+    opacity: 0.8;
+}
+
+.room-info-action-buttons {
+    display: flex;
+    gap: 1px;
+    justify-content: flex-end;
+    margin-top: 4px;
+}
+
+.room-info-action-buttons button {
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-bg-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+}
+
+.room-info-action-buttons button:hover {
+    background-color: var(--button-hover-bg-color);
+    color: var(--button-bg-color);
+}

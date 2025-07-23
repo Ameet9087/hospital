@@ -1,0 +1,52 @@
+.inventory-substore-container {
+    background-color: #e1f5fe;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.inventory-substore-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.inventory-substore-header label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.inventory-substore-header input[type="text"] {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+.inventory-substore-header select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+ .inventory-substore-tab .has-code {
+    background-color: #fff;
+}
+
+.inventory-substore-tab .no-code {
+    background-color: #fff;
+}
+
+.inventory-substore-tab-save-btn {
+    background-color: #2196f3;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.inventory-substore-tab-save-btn:hover  :hover {
+    background-color: #1976d2;
+}

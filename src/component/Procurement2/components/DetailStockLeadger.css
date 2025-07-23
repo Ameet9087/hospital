@@ -1,0 +1,96 @@
+.DetailStockLeadger-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.DetailStockLeadger-report-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.DetailStockLeadger-date-range,
+.DetailStockLeadger-substore-selection,
+.DetailStockLeadger-subcategory-selection,
+.DetailStockLeadger-item-selection {
+  display: flex;
+  align-items: center;
+}
+
+.DetailStockLeadger-date-range label,
+.DetailStockLeadger-substore-selection label,
+.DetailStockLeadger-subcategory-selection label,
+.DetailStockLeadger-item-selection label {
+  margin-right: 10px;
+}
+
+.DetailStockLeadger-date-range input,
+.DetailStockLeadger-substore-selection select,
+.DetailStockLeadger-subcategory-selection select,
+.DetailStockLeadger-item-selection select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.DetailStockLeadger-show-report-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.DetailStockLeadger-report-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.DetailStockLeadger-report-table th,
+.DetailStockLeadger-report-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.DetailStockLeadger-report-table th {
+  background-color: #f2f2f2;
+}
+
+.DetailStockLeadger-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.DetailStockLeadger-pagination-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.DetailStockLeadger-report-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.DetailStockLeadger-export-btn,
+.DetailStockLeadger-print-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}

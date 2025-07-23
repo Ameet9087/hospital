@@ -1,0 +1,82 @@
+/* swapnil Rokade InPatient Adding className And color and table css 18/09 */
+.InPatient-PatientContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Align items horizontally */
+  margin-bottom: 5px;
+  background-color: var(--background-color);
+  padding: 5px;
+}
+
+.InPatient-PatientLeftSection,
+.InPatient-PatientRightSection {
+  display: flex;
+  align-items: center;
+}
+
+.InPatient-PatientLeftSection {
+  width: 50%;
+}
+
+.InPatient-PatientRightSection {
+  width: 50%;
+}
+
+.InPatient-PatientFilterSection {
+  display: flex;
+  align-items: center;
+  margin-right: 20px; /* Add space between the filter and search */
+}
+
+.InPatient-PatientFilterSection h2 {
+  font-size: var(--heading-font);
+  margin-right: 20px; /* Add space between "Department Filter" and filter items */
+}
+
+.InPatient-PatientFilterItem {
+  display: flex;
+  align-items: center;
+  margin-right: 20px; /* Add space between each filter item */
+}
+
+.InPatient-PatientFilterItem .PatientIcon {
+  margin-right: 10px;
+  color: var(--button-color);
+  font-size: 18px;
+}
+.in-patient-button
+{
+  border: none;
+  padding: 2px;
+}
+.patientList-table-container
+{
+  height: 75vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.InPatient-PatientSearchBar {
+  display: flex;
+  justify-content: space-around;
+  gap: 2px;
+  align-items: center;
+  width: 100%;
+  background-color: var(--background-color);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.InPatient-PatientSearchBar input select {
+  flex-grow: 1;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+.InPatient-PatientSearchIcon {
+  color: var(--button-color);
+  font-size: 20px;
+  margin-left: 10px;
+}

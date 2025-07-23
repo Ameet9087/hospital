@@ -1,0 +1,213 @@
+ /* Ajhar Tamboli drSettlementSummaryReport.css 19-09-24 */
+
+
+.drSettlementSummaryReport-report {
+    font-family: Arial, sans-serif;
+    /* max-width: 1200px; */
+    /* margin: 0 auto; */
+    padding: 10px;
+    height: 460px;
+    background-color:var(--background-color);
+  }
+  
+ .drSettlementSummaryReport-report h4 {
+    margin-top: 0;
+    font-size: var(--heading-font);
+  }
+  /* .drSettlementSummaryReport-report i {
+    color: #0F63AF
+  } */
+  
+  .drSettlementSummaryReport-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .drSettlementSummaryReport-filters-second {
+    display: flex;
+    justify-content: left;
+    /* flex-wrap: wrap; */
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .drSettlementSummaryReport-date-range{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--font-size);
+    background-color: #f0f0f0;
+    margin-left: 30px;
+    padding: 2px 30px;
+  }
+  .drSettlementSummaryReport-date-range input{
+  padding: 1px 10px;
+  margin-left: 10px;
+  }
+  .drSettlementSummaryReport-select-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--font-size);
+    margin-left: 10px;
+    /* border: 1px solid red; */
+    /* width: 300px; */
+  }
+  .drSettlementSummaryReport-select-filters select{
+    width: 200px;
+  }
+  .drSettlementSummaryReport-select-filters label{
+  margin-right: 30px;
+  }
+  .drSettlementSummaryReport-select-filters input[type="date"], 
+  .drSettlementSummaryReport-select-filters input[type="text"], 
+  .drSettlementSummaryReport-select-filters  select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-left: 20px;
+  }
+    
+  .drSettlementSummaryReport-show-report-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin-right: 100px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .drSettlementSummaryReport-show-report-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  
+  }
+  
+  .drSettlementSummaryReport-search-N-result{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+.drSettlementSummaryReport-search-bar{
+  margin-left: -15px;
+}  
+  .drSettlementSummaryReport-search-bar input {
+    /* margin-top: 10px; */
+    /* padding: 5px; */
+    width: 200px;
+    margin: 0;
+  }
+  .drSettlementSummaryReport-search-bar i{
+    position: relative;
+    color:gray;
+    top: 3px;
+  left: 190px;
+  }
+  
+  .drSettlementSummaryReport-results-info {
+    display: flex;
+    align-items: center;
+    /* padding-top: 10px; */
+  }
+  .drSettlementSummaryReport-results-info span {
+   
+    font-size: var(--font-size);
+  }
+
+  
+  /* .drSettlementSummaryReport-print-button {
+    background-color: #659BE0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+  } */
+  
+  .results-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .drSettlementSummaryReport-export-button, .drSettlementSummaryReport-print-button {
+      background-color:var( --button-color);
+      border: 1px solid var( --button-hover-border-color);
+      color: white;
+      /* margin-right: 10px; */
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: var(--font-size);
+      margin-left: 10px;
+      transition: background-color 0.3s ease;
+      padding: 5px 5px;
+    }
+    .drSettlementSummaryReport-export-button:hover,
+    .drSettlementSummaryReport-print-button:hover {
+      border: 1px solid var( --button-hover-border-color);
+      color: var(--button-hover-text-color);
+      background-color: var(--button-hover-background-color);
+    
+    
+    }
+  
+  .drSettlementSummaryReport-report table {
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+  }
+  
+  .drSettlementSummaryReport-report th, .drSettlementSummaryReport-report td {
+    border: 1px solid #ddd;
+    padding: 3px;
+    text-align: center;
+    font-size: var(--font-size);
+  }
+  
+  .drSettlementSummaryReport-report th {
+    background-color: #F3F3F3;
+    color: #333333;
+  }
+  
+  /* .no-data {
+    text-align: center;
+    padding: 20px;
+    background-color: #fffbe6;
+  } */
+  
+  .drSettlementSummaryReport-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+  
+  .drSettlementSummaryReport-pagination button {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: var(--font-size);
+  }
+  
+  .drSettlementSummaryReport-pagination span {
+    margin: 0 10px;
+    color: gray;
+    font-size: var(--font-size);
+  }
+ 
+  .drSettlementSummaryReport-table-N-paginationDiv{
+    background-color: #FFFFFF;
+  }

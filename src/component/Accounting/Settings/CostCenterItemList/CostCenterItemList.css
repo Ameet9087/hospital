@@ -1,0 +1,114 @@
+.CostCenterManager {
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+  }
+  .CostCenterManager-addCostCenter, .CostCenterManager-costCenterList {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .CostCenterManager-sectionTitle {
+    margin-top: 0;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .CostCenterManager-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  .CostCenterManager-form label{
+    font-weight: 600;
+  }
+  
+  .CostCenterManager-input, .CostCenterManager-select {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .CostCenterManager-checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .CostCenterManager-addButton {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .CostCenterManager-addButton:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .CostCenterManager-search-container{
+    /* margin-top: 10px; */
+    background-color: white;
+    padding: 8px;
+}
+.CostCenterManager-search-container input[type="text"]{
+   background-color: transparent;
+   border: none;
+   outline: none;
+   width: 250px;
+}
+.CostCenterManager-search-bar {
+    display: flex;
+    font-size: 14px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .CostCenterManager-print-btn{
+    background-color: var(--button-color);
+    color: white;
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+  }
+  .CostCenterManager-print-btn:hover{
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  .CostCenterManager-results-count{
+    color: black;
+  }
+
+
+  .CostCenterManager-editButton, .CostCenterManager-deactivateButton {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .CostCenterManager-editButton:hover, .CostCenterManager-deactivateButton:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+
+  .CostCenterManager-cancelButton{
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }

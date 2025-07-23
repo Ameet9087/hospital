@@ -1,0 +1,190 @@
+.PurchaseOrder-container {
+  background-color: var(--background-color);
+  padding: 20px;
+}
+
+.PurchaseOrder-top-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.PurchaseOrder-buttons
+{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.PurchaseOrder-view-button
+{
+  padding: 2px 5px;
+  border-radius: 5px;
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
+}
+
+.PurchaseOrder-print-button{
+background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-right: 0; /* Make sure buttons stay right-aligned */
+  white-space: nowrap;}
+
+.PurchaseOrder-create-po-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.PurchaseOrder-start-draft-button,
+.PurchaseOrder-view-draft-button {
+  background: none;
+  border: none;
+  color: var(--button-color);
+  cursor: pointer;
+}
+
+.PurchaseOrder-status-filters {
+  display: flex;
+  gap: 1px;
+}
+
+.PurchaseOrder-date-range {
+  background-color: #f8f9fa;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.PurchaseOrder-star-button,
+.PurchaseOrder-dash-button {
+  background-color: #e9ecef;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.PurchaseOrder-ok-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Updated search bar styles */
+.PurchaseOrder-search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.PurchaseOrder-search-bar input {
+  padding: 5px;
+  width: 200px;
+  flex-grow: 1; /* Allow the search input to take available space */
+}
+
+.PurchaseOrder-results {
+  margin-left: 20px;
+  color: #6c757d;
+}
+
+.PurchaseOrder-search-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.PurchaseOrder-export-button,
+.PurchaseOrder-Emergencyprint-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-right: 0; /* Make sure buttons stay right-aligned */
+  white-space: nowrap;
+}
+
+/* Adjust the position of export and print buttons */
+.PurchaseOrder-search-bar .PurchaseOrder-export-button,
+.PurchaseOrder-search-bar .PurchaseOrder-Emergencyprint-button {
+  margin-left: 10px;
+}
+
+.PurchaseOrder-po-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.PurchaseOrder-po-table th,
+.PurchaseOrder-po-table td {
+  border: 1px solid #dee2e6;
+  padding: 8px;
+  text-align: left;
+}
+
+.PurchaseOrder-po-table th {
+  background-color: #f8f9fa;
+}
+
+.PurchaseOrder-no-data {
+  background-color: #fff3cd;
+  text-align: center;
+  padding: 20px;
+}
+
+.PurchaseOrder-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.PurchaseOrder-pagination button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Emergency print button hover and active states */
+.PurchaseOrder-Emergencyprint-button {
+  background-color: var(--button-color);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.PurchaseOrder-Emergencyprint-button:hover {
+  background-color: white;
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+
+.PurchaseOrder-Emergencyprint-button:active {
+  background-color: var(--button-color);
+}
+
+.PurchaseOrder-Emergencyprint-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}

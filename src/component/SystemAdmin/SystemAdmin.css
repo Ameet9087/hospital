@@ -1,0 +1,30 @@
+/* Dhanashree_ButtonPanel_19/09 */
+
+.ButtonPanel-button-panel {
+  display: flex;
+  gap: 10px;
+  background-color: white;
+  padding: 10px;
+}
+
+.ButtonPanel-button {
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ButtonPanel-button.ButtonPanel-active {
+  background-color: var(--button-bg-color); /* Set the background color to blue for the active button */
+  color: white;
+}
+
+.ButtonPanel-button:hover {
+  background-color: white; /* Optional: Add hover effect for buttons */
+  color: var(--button-hover-text-color);
+}
+
+/* Dhanashree_ButtonPanel_19/09 */

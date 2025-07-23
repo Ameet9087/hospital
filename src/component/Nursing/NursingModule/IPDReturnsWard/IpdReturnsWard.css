@@ -1,0 +1,141 @@
+/* General Container */
+.ipdreturnsward-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+  }
+  
+  /* Header Styles */
+  .ipdreturnsward-header {
+    text-align: center;
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Subheader */
+  .ipdreturnsward-subheader {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px 0 10px;
+    color: #333;
+  }
+  
+  /* Form Styles */
+  .ipdreturnsward-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 15px;
+  }
+  .ipdreturnsward-section{
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .ipdreturnsward-table input {
+    width: 90%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .resizable-th .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  
+  
+  /* Button Styles */
+  .ipdreturnwardadd-btn,
+  .ipdreturnwardremove-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+    
+    color: white;
+    background-color:var(--button-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-btn:hover,
+  .remove-btn:hover {
+    background-color: #2c82ba;
+  }
+  
+  .remove-btn {
+    background-color: #dc3545;
+  }
+  
+  .remove-btn:hover {
+    background-color: #b02a37;
+  }
+  
+  /* Financial Details Section */
+  .ipdreturnsward-financials {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+  
+  .ipdreturnsward-financials label {
+    font-size: 14px;
+    
+    color: #ccc;
+  }
+  
+  .ipdreturnsward-financials input {
+    width: 100%;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+
+  .ipd-return-indent-table {
+    width: 100%;
+    overflow: scroll;
+  }
+  .ipd-return-indent-table table{
+    width: 100%;
+    table-layout: auto;
+  }
+  
+  .ipd-return-indent-table th, 
+  .ipd-return-indent-table td {
+    min-width: 100px;
+  }
+  .table-actions{
+    display: flex;
+    gap: 10px;
+  }
+  .final-bill-add-btn{
+    border: none;
+    background-color: green;
+    color: white;
+    border-radius: 7px;
+    padding:3px 5px;
+  }
+  .final-bill-del-btn{
+    border: none;
+    background-color: red;
+    color: white;
+    border-radius: 7px;
+    padding:3px 5px;
+  }
+  
+    @media (max-width: 768px) {
+    .ipdreturnsward-form {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .ipdreturnsward-financials {
+      grid-template-columns: 1fr;
+    }
+  }

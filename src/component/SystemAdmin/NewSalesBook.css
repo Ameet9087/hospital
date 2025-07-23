@@ -1,0 +1,70 @@
+/* Dhanashree_NewSalesBook_19/09 */
+.NewSalesBookDetails-sales-book-details {
+  background-color: var(--background-color);
+  height: 100vh;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  
+}
+
+.NewSalesBookDetails-header {
+  color: #0056b3;
+  font-size: 16px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.NewSalesBookDetails-date-range {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.NewSalesBookDetails-date-input {
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.NewSalesBookDetails-date-input label {
+  margin-right: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.NewSalesBookDetails-date-input input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.NewSalesBookDetails-star-button,
+.NewSalesBookDetails-minus-button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.NewSalesBookDetails-show-report-button {
+  background-color: #7986cb;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-left: auto;
+}
+
+.NewSalesBookDetails-show-report-button::before {
+  content: "Q";
+  margin-right: 5px;
+}
+
+/* Dhanashree_NewSalesBook_19/09 */

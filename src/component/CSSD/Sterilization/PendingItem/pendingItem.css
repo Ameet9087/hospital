@@ -1,0 +1,184 @@
+/* Akash Pawar CSSD 14/24 */
+.pendingItem {
+    font-size: 14px;
+}
+.pendingItem-ok-btn {
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--button-color);
+    color: white;
+    cursor: pointer;
+}
+.pendingItem-ok-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+   border: 1px solid var(--button-hover-border-color);
+}
+.pendingItem-main {
+    border-radius: 5px;
+  }
+  
+  /* .pendingItem-title {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  } */
+  
+  .pendingItem-form {
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .pendingItem-star-btn{
+    background-color: transparent;
+    color: #007bff;
+    font-size: 18px;
+    border: none;
+  }
+  .pendingItem-dash-btn{
+    background-color: #007bff5b;
+    /* background-color: transparent; */
+    color: #007bff;
+    font-size: 18px;
+    border: none;
+    padding: 0 10px;
+    /* position: relative; */
+  }
+  .pendingItem-form-input-group input,.pendingItem-form-input-group select{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 150px;
+    margin: 0 5px;
+    font-size: 14px;
+  }
+
+  .pendingItem-search{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  }
+  .pendingItem-search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    color: gray;
+    background-color: #f2f2f2;
+    padding: 2px 8px;
+  }
+  
+  .pendingItem-search-bar input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding: 5px;
+  }
+  
+  .pendingItem-results {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+    gap: 10px;
+  }
+  
+  .pendingItem-export-btn, .pendingItem-print-btn,.pendingItem-action-btn {
+    padding: 5px 15px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .pendingItem-export-btn:hover, .pendingItem-print-btn:hover,.pendingItem-action-btn:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+     border: 1px solid var(--button-hover-border-color);
+  }
+
+  
+.pendingItem-table-btn{
+    background-color: #007bff;
+    color: white;
+    border-radius: 15px;
+    border: none;
+    padding: 2px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+  
+  .pendingItem-no-rows {
+    text-align: center;
+    background-color: #fff9c4;
+    color: #efb005;
+  }
+  .pendingItem-dropdown {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 5px; /* Adjust to position below dash button */
+    z-index: 1000;
+    width: 150px; /* Match the width of the dash button */
+  }
+  
+  .pendingItem-dropdown div {
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .pendingItem-dropdown div:hover {
+    background-color: #f2f2f2;
+  }
+
+  /* Overlay for Modal */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal Content Box */
+.custom-modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px; /* Width of the modal */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center align text */
+}
+
+/* Modal Buttons */
+.custom-modal-buttons {
+  display: flex;
+  justify-content: space-around; /* Space between buttons */
+  margin-top: 20px;
+}
+
+.custom-modal-close-btn,
+.custom-modal-confirm-btn {
+  background-color: #3598dc; /* Button color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;   
+}
+
+.custom-modal-close-btn:hover,
+.custom-modal-confirm-btn:hover {
+  background-color: #2a7ab6; /* Hover color */
+}
+
+  

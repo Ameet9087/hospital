@@ -1,0 +1,87 @@
+.WardTransfer-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .WardTransfer-header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .WardTransfer-scheme-info {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .WardTransfer-form-section {
+    display: flex;
+    margin-top: 20px;
+  }
+  
+  .WardTransfer-left-column, .WardTransfer-right-column {
+    width: 50%;
+    padding: 10px;
+  }
+  
+  .WardTransfer-left-column {
+    border-right: 1px solid #ccc;
+  }
+  
+  .WardTransfer-form-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 2px;
+  }
+
+  
+  .WardTransfer-form-group-label
+  {
+    width: 30%;
+  }
+  .WardTransfer-form-group-input
+  {
+    width: 50%;
+    padding: 4px;
+  }
+  .WardTransfer-form-group-two-input
+  {
+    width: 50%;
+    display: flex;
+    gap: 1px;
+    
+  }
+  .WardTransfer-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .WardTransfer-table th, .WardTransfer-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .WardTransfer-table th {
+    background-color: #f2f2f2;
+  }
+  
+  button.WardTransfer-transfer-btn {
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 10px;
+    border: 1px solid var(--button-color);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button.WardTransfer-transfer-btn:hover {
+    background-color: var(--button-hover-color);
+    color: var(--button-color);
+    border: 1px solid var(--button-color);
+  }
+
+  

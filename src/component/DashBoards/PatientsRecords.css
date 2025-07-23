@@ -1,0 +1,117 @@
+
+/* swapnil Rokade patient-record Adding className And color and table css 18/09 */
+.patient-record-date-range{
+  width: 100%;
+  display: flex;
+  justify-content: start;
+}
+.patient-date-ranges
+{
+  width: 400px;
+  display: flex;
+  justify-content: space-around;
+}
+.patient-record-favorites
+{
+  padding: 5px;
+  margin-right: 2px;
+  border-radius: 5px;
+  border: 1px solid var(--button-color);
+  background-color: var(--button-color);
+  color: white;
+  font-size: var(--font-size);
+}
+.patient-record-favorites:hover
+{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.patient-record-pending
+{
+  padding: 5px;
+  margin-right: 2px;
+  border-radius: 5px;
+  border: 1px solid var(--button-color);
+  background-color: var(--button-color);
+  color: white;
+  font-size: var(--font-size);
+}
+.patient-record-pending:hover
+{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.patient-record-department-filter
+{
+  width: 40%;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.patient-record-select
+{
+  width: 30%;
+  padding: var(--input-box-padding);
+}
+.patient-record-actions
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.patient-record-actions-subdiv{
+  width: 40%;
+  padding: 5px;
+}
+.patient-record-date-range
+{
+  width: 50%;
+  padding: var(--input-box-padding);
+  display: flex;
+  justify-content:start;
+  gap: 5px;
+}
+.patient-record-search-bar
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.patient-record-sub-div
+{
+  width: 40%;
+  padding: 5px;
+  display: flex;
+}
+.patient-record-print
+{
+  padding: 5px;
+  margin-right: 2px;
+  border-radius: 5px;
+  border: 1px solid var(--button-color);
+  background-color: var(--button-color);
+  color: white;
+  font-size: var(--font-size);
+}
+.patient-record-action
+{
+  border: none;
+}
+.patient-record-star,.patient-record-reset
+{
+  border: none;
+}
+.patient-record-ok
+{
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  color: white;
+}
+.patient-record-button{
+  background: none;
+  border: none;
+}

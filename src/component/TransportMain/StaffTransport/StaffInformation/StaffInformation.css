@@ -1,0 +1,62 @@
+.SSStaffTransportManagement-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.SSStaffTransportManagement-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.SSStaffTransportManagement-table th, .SSStaffTransportManagement-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.SSStaffTransportManagement-table th {
+  background-color: #f2f2f2;
+  color: black;
+}
+
+.SSStaffTransportManagement-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.SSStaffTransportManagement-table tr:hover {
+  background-color: #ddd;
+}
+
+.SSStaffTransportManagement-table button {
+  padding: 5px 10px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.SSStaffTransportManagement-table button:hover {
+  background-color: white;
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+/* Add button styling */
+.SSStaffTransportManagement-add-button {
+  padding: 10px 20px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.SSStaffTransportManagement-add-button:hover {
+  background-color: white;
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}

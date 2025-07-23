@@ -1,0 +1,358 @@
+.ProposalforAMCMultiplePopUp-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5px;
+    background-color: var(--background-color);
+  }
+  
+  .ProposalforAMCMultiplePopUp-header {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 5px;
+    font-size: var(--heading-font);
+    border-radius: 5px 5px 0 0;
+  }
+  
+  .ProposalforAMCMultiplePopUp-form-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    background-color: white;
+    padding: 5px;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .ProposalforAMCMultiplePopUp-form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .ProposalforAMCMultiplePopUp-form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 32px;
+  }
+  
+  .ProposalforAMCMultiplePopUp-label {
+    width: 130px;
+    font-size: var(--font-size);
+    color: black;
+  }
+  
+  .ProposalforAMCMultiplePopUp-separator {
+    color: #718096;
+  }
+  
+  .ProposalforAMCMultiplePopUp-input-field {
+    flex: 1;
+    padding: 5px 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: var(--font-size);
+    transition: border-color 0.2s;
+  }
+  
+  .ProposalforAMCMultiplePopUp-input-field:focus {
+    outline: none;
+    border-color: #16a085;
+    box-shadow: 0 0 0 2px rgba(22, 160, 133, 0.1);
+  }
+  
+  .ProposalforAMCMultiplePopUp-date-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+  }
+  
+  .ProposalforAMCMultiplePopUp-calendar-icon {
+    width: 20px;
+    height: 20px;
+    color: black;
+    cursor: pointer;
+  }
+  
+  .ProposalforAMCMultiplePopUp-calendar-icon:hover {
+    color: #16a085;
+  }
+  
+
+  .ProposalforAMCMultiplePopUp-section-header {
+    background-color: var(--upperBar-bg-color);
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    color: white;
+    border-radius: 5px;
+  }
+  
+  .ProposalforAMCMultiplePopUp-format-section {
+    margin-top: 10px;
+    padding: 5px;
+    background-color: white;
+    border-radius: 5px;
+  }
+  
+  .ProposalforAMCMultiplePopUp-file-upload {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+  }
+  
+  .ProposalforAMCMultiplePopUp-btn-secondary {
+    padding: 5px 10px;
+    background-color: #e2e8f0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    transition: background-color 0.2s;
+  }
+  
+  .ProposalforAMCMultiplePopUp-btn-secondary:hover {
+    background-color: #cbd5e0;
+  }
+  
+  .ProposalforAMCMultiplePopUp-tabs-section {
+    margin-top: 10px;
+  }
+  
+  .ProposalforAMCMultiplePopUp-tab-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .ProposalforAMCMultiplePopUp-tab-btn {
+    padding: 5px 10px;
+    background-color: #e2e8f0;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 5px 5px 0 0;
+  }
+  
+  .ProposalforAMCMultiplePopUp-tab-btn:hover {
+    background-color: #cbd5e0;
+  }
+  
+  .ProposalforAMCMultiplePopUp-tab-btn.active {
+    background-color: #16a085;
+    color: white;
+  }
+  
+  .ProposalforAMCMultiplePopUp-table-container {
+    background-color: white;
+    padding: 10px;
+    border-radius: 0 5px 5px 5px;
+  }
+  
+  .ProposalforAMCMultiplePopUp-table-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: var(--font-size);
+    color: black;
+  }
+  
+  .ProposalforAMCMultiplePopUp-btn-add {
+    color: #16a085;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: color 0.2s;
+  }
+  
+  .ProposalforAMCMultiplePopUp-btn-add:hover {
+    color: #13896f;
+    text-decoration: underline;
+  }
+  
+  .ProposalforAMCMultiplePopUp-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .ProposalforAMCMultiplePopUp-data-table th,
+  .ProposalforAMCMultiplePopUp-data-table td {
+    border: 1px solid gray;
+    padding: 5px;
+    text-align: left;
+  }
+  
+  .ProposalforAMCMultiplePopUp-data-table th {
+    background-color: #f7fafc;
+    color: black;
+    font-size: var(--font-size);
+  }
+  
+  .ProposalforAMCMultiplePopUp-data-table tr:hover {
+    background-color: #f7fafc;
+  }
+  
+  .ProposalforAMCMultiplePopUp-data-table input,
+  .ProposalforAMCMultiplePopUp-data-table select {
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: var(--font-size);
+  }
+  
+  .ProposalforAMCMultiplePopUp-data-table input:focus,
+  .ProposalforAMCMultiplePopUp-data-table select:focus {
+    outline: none;
+    border-color: #16a085;
+    box-shadow: 0 0 0 2px rgba(22, 160, 133, 0.1);
+  }
+  
+  .ProposalforAMCMultiplePopUp-btn-delete {
+    color: red;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  
+  .ProposalforAMCMultiplePopUp-btn-delete:hover {
+    color: #c53030;
+    text-decoration: underline;
+  }
+  
+  /* Required field indicator */
+  .ProposalforAMCMultiplePopUp-label:has(+ .ProposalforAMCMultiplePopUp-separator + .ProposalforAMCMultiplePopUp-input-field[required])::after {
+    content: "*";
+    color: #e53e3e;
+    margin-left: 5px;
+  }
+
+
+
+  .ProposalforAMCMultiplePopUp-required{
+    color: red;
+  }
+
+  .input-with-icon-proposal-amc {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-with-icon-proposal-amc input {
+    width: 100%;
+    padding-right: 30px; /* Add space for the icon */
+  }
+  
+  .input-with-icon-proposal-amc .input-icon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #666;
+  }
+  
+  
+  /* Responsive styles */
+  @media (max-width: 1024px) {
+    .ProposalforAMCMultiplePopUp-form-container {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    
+    .ProposalforAMCMultiplePopUp-table-container {
+      overflow-x: auto;
+    }
+    
+    .ProposalforAMCMultiplePopUp-data-table {
+      min-width: 800px;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .ProposalforAMCMultiplePopUp-container {
+      padding: 10px;
+    }
+    
+    .ProposalforAMCMultiplePopUp-form-group {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+    
+    .ProposalforAMCMultiplePopUp-label {
+      width: 100%;
+    }
+    
+    .ProposalforAMCMultiplePopUp-input-field {
+      width: 100%;
+    }
+    
+    .ProposalforAMCMultiplePopUp-file-upload {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .ProposalforAMCMultiplePopUp-tab-buttons {
+      flex-direction: column;
+    }
+    
+    .ProposalforAMCMultiplePopUp-tab-btn {
+      width: 100%;
+      border-radius: 4px;
+    }
+  }
+  
+  /* Print styles */
+  @media print {
+    .ProposalforAMCMultiplePopUp-container {
+      padding: 0;
+      max-width: none;
+    }
+    
+    .ProposalforAMCMultiplePopUp-btn-add,
+    .ProposalforAMCMultiplePopUp-btn-delete,
+    .ProposalforAMCMultiplePopUp-btn-secondary {
+      display: none;
+    }
+    
+    .ProposalforAMCMultiplePopUp-table-container {
+      background-color: white;
+    }
+    
+    .ProposalforAMCMultiplePopUp-data-table {
+      border: 1px solid #000;
+    }
+    
+    .ProposalforAMCMultiplePopUp-data-table th,
+    .ProposalforAMCMultiplePopUp-data-table td {
+      border: 1px solid #000;
+    }
+  }
+
+  .proposalforamcmultiple-add-btn {
+    background-color: var(--button-color);
+    color: #fff;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 4px;
+    width: fit-content;
+    cursor: pointer;
+    margin: 0 auto; /* Centers the button horizontally */
+    display: block; /* Ensures proper centering */
+    text-align: center; /* Aligns text within the button */
+}
+
+.proposalforamcmultiple-add-btn:hover {
+    background-color: #1e8a7c;
+}
+

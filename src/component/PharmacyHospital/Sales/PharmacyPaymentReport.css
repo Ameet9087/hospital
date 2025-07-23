@@ -1,0 +1,95 @@
+/* Mohini_PharmacyPaymentReport_WholePage_14/sep/2024 */
+.pharmacy-payment-report-container {
+  background-color:var( --background-color);
+  padding: 20px;
+  height: 90vh;
+  font-family: Arial, sans-serif;
+}
+
+.pharmacy-payment-report-container h2 {
+  color: black;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.pharmacy-payment-report-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.pharmacy-payment-date-range {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.pharmacy-payment-date-range label {
+  margin-right: 10px;
+}
+
+.pharmacy-payment-date-range input[type="date"] {
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.pharmacy-payment-star-btn, .pharmacy-payment-minus-btn {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  margin-left: 5px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.pharmacy-payment-show-report-btn {
+  background-color:var( --button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid var( --button-hover-border-color);
+
+}
+.pharmacy-payment-show-report-btn:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.pharmacy-payment-filters {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.pharmacy-payment-filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.pharmacy-payment-filter-group label {
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #004d80;
+}
+
+.pharmacy-payment-filter-group select, 
+.pharmacy-payment-filter-group input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 200px;
+}
+
+.pharmacy-payment-filter-group input::placeholder {
+  color: #999;
+}
+/* Mohini_PharmacyPaymentReport_WholePage_14/sep/2024 */
+

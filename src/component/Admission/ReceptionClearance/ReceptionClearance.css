@@ -1,0 +1,112 @@
+.reception-clearance-container{
+    margin: 0 auto;
+    padding: 10px;
+    width: 800px;
+    font-family: Arial, sans-serif;
+    background-color:var(--background-color);
+}
+.reception-clearance-section{
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.reception-clearance-header{
+    background-color: #00897b;
+    color: white;
+    padding: 7px 20px;
+    font-size: var(--heading-font);
+    font-weight: 500;
+}
+.reception-clearance-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+.reception-clearance-grid.two-columns {
+    grid-template-columns: repeat(3, 1fr);
+  }
+.reception-clearance-floating-field{
+    position: relative;
+}
+.reception-clearance-floating-input{
+    padding: 5px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background: white;
+    transition: all 0.2s ease;
+    /* width: 92%; */
+}
+.reception-clearance-floating-label{
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    padding: 0 4px;
+    color: #666;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    font-size: var(--font-size);
+}
+.reception-clearance-floating-field.active
+.reception-clearance-floating-label{
+    top: 0;
+    font-size: 12px;
+    color: #00897b;
+}
+.reception-clearance-floating-field.active 
+.reception-clearance-floating-input {
+    border-color: #00897b;
+}
+.reception-clearance-search-field{
+    position: relative;
+}
+.reception-clearance-search-icon{
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+.reception-clearance-checkboxes{
+    display: flex;
+    white-space: nowrap;
+    gap: 10px;
+    padding: 10px;
+}
+.reception-clearance-checkboxes-label{
+    color: #666;
+    font-size: var(--heading-font);
+}
+.reception-clearance-buttons{
+    margin-top: 20px;
+    display: flex;
+    gap: 5px;
+    font-size: var(--font-size);
+}
+.reception-clearance-buttons button{
+    background-color: var(--button-color);
+    font-size: var(--font-size);
+    border-radius: 5px;
+    padding: 8px 12px;
+    border: 1px solid var(--button-hover-background-color);
+    color: white;
+    cursor: pointer;
+}
+.reception-clearance-buttons button:hover{
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+}

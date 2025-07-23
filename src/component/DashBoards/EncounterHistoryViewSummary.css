@@ -1,0 +1,96 @@
+.EncounterHistoryViewSummary-visit-visit-summary {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f0f2f5;
+}
+
+.EncounterHistoryViewSummary-visit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: white;
+}
+
+.EncounterHistoryViewSummary-visit-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.EncounterHistoryViewSummary-visit-title h1 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.EncounterHistoryViewSummary-visit-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.EncounterHistoryViewSummary-visit-action-button {
+  background-color: #6c5ce7;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.EncounterHistoryViewSummary-visit-close-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.EncounterHistoryViewSummary-visit-nav {
+  display: flex;
+  background-color: #6c5ce7;
+  padding: 10px;
+  overflow-x: auto;
+}
+
+.EncounterHistoryViewSummary-visit-nav button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.EncounterHistoryViewSummary-visit-nav button.EncounterHistoryViewSummary-visit-active {
+  background-color: #5541d7;
+}
+
+.EncounterHistoryViewSummary-visit-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.EncounterHistoryViewSummary-visit-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.EncounterHistoryViewSummary-visit-table th, .EncounterHistoryViewSummary-visit-table td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.EncounterHistoryViewSummary-visit-table th {
+  background-color: #f1f2f6;
+  font-weight: bold;
+}

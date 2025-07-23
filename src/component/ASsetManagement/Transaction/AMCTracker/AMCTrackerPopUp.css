@@ -1,0 +1,186 @@
+.AMCTrackerPopUp-surgery-Events {
+    background-color: var(--background-color);
+    padding: 4px;
+    font-size: 12px;
+    height: auto;
+    max-width: 1400px;
+}
+
+.AMCTrackerPopUp-surgeryEvents-title-bar {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 8px;
+    margin-bottom: 4px;
+}
+
+.AMCTrackerPopUp-surgeryEvents-header {
+    font-size: var(--heading-font);
+}
+
+
+
+.AMCTrackerPopUp-surgeryEvents-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.AMCTrackerPopUp-surgeryEvents-main-section {
+    display: flex;
+    gap: 4px;
+}
+
+.AMCTrackerPopUp-surgeryEvents-panel {
+    flex: 1;
+    background: white;
+    border: 1px solid #ccc;
+}
+
+.AMCTrackerPopUp-surgeryEvents-panel-header {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 5px 10px;
+    font-size: var(--heading-font);
+}
+
+.AMCTrackerPopUp-surgeryEvents-panel-content {
+    padding: 8px;
+}
+
+.AMCTrackerPopUp-surgeryEvents-form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 4px;
+    font-size: var(--font-size);
+}
+
+
+
+
+
+.AMCTrackerPopUp-surgeryEvents-magnifier-btn {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 2px 6px;
+    cursor: pointer;
+}
+
+.AMCTrackerPopUp-surgeryEvents-status-controls {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--font-size);
+}
+
+.AMCTrackerPopUp-surgeryEvents-radio-group {
+    display: flex;
+    gap: 12px;
+}
+
+.AMCTrackerPopUp-surgeryEvents-services-section {
+    background: white;
+    border: 1px solid #ccc;
+}
+
+.AMCTrackerPopUp-surgeryEvents-tab-bars {
+    display: flex;
+    gap: 5px;
+    padding: 4px;
+}
+
+.AMCTrackerPopUp-surgeryEvents-tab {
+    padding: 4px 12px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    color: var(--button-color);
+    font-size: var(--font-size);
+    background: var(--button-hover-background-color);
+    cursor: pointer;
+}
+
+.AMCTrackerPopUp-surgeryEvents-tab.active {
+    background: var(--button-color);
+    color: var(--button-hover-background-color);
+    font-weight: bold;
+}
+
+.AMCTrackerPopUp-surgeryEvents-action-buttons {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+    margin-top: 4px;
+}
+
+.AMCTrackerPopUp-surgeryEvents-action-buttons button {
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+}
+
+.AMCTrackerPopUp-surgeryEvents-action-buttons button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color);
+}
+
+.AMCTrackerPopUp-surgery-events-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+.AMCTrackerPopUp-surgery-events-popup button {
+    margin-top: 10px;
+}
+
+.AMCTrackerPopUp-SurgeryEventsPanels {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.AMCTrackerPopUp-SurgeryEventsPanels .text-input {
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.AMCTrackerPopUp-SurgeryEventsPanels .file-input {
+    padding: 5px;
+}
+
+.AMCTrackerPopUp-SurgeryEventsPanels .upload-button {
+    padding: 5px 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: 1px solid var(--button-hover-border-color);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.AMCTrackerPopUp-SurgeryEventsPanels .upload-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+}
+
+
+
+.AMCTrackerPopUp-surgeryEvents-form-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  

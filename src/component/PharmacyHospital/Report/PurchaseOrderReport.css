@@ -1,0 +1,134 @@
+/* Mohini_PurchaseSummaryReport_14/sep/2024 */
+.summary-purchase-order-container-com {
+  width: 100%;
+  background-color: #f9f9f9; /* Light background color for contrast */
+  padding: 10px; /* Added padding for spacing */
+}
+
+/* Header section styling */
+.summary-purchase-report-header-com h2 {
+  margin: 0;
+  color: #007b9e;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Filters container styling */
+.summary-purchase-filters-container-com {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+/* Date range filter styling */
+.summary-purchase-date-range-com,
+.summary-purchase-status-container-com {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.summary-purchase-date-range-com label,
+.summary-purchase-status-container-com label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Button styling */
+.summary-purchase-favorite-btn-com,
+.summary-purchase-reset-btn-com {
+  font-size: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.summary-purchase-show-report-btn-com {
+  background-color: #5468ff;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Search and action buttons container */
+.summary-purchase-search-and-actions-com {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.summary-purchase-search-and-actions-com input {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  flex: 1; /* Takes up available space */
+  margin-right: 10px;
+}
+
+/* Export and print button styling */
+.summary-purchase-export-btn-com,
+.summary-purchase-print-btn-com {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #5468ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Table styling */
+.summary-purchase-report-table-com {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.summary-purchase-report-table-com th,
+.summary-purchase-report-table-com td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+
+.summary-purchase-report-table-com th {
+  background-color: #e8f4fc;
+  font-weight: bold;
+}
+
+.summary-purchase-no-rows-com td {
+  background-color: #f9e59b;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Pagination container styling */
+.summary-purchase-pagination-com {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Pagination controls styling */
+.summary-purchase-pagination-controls-com {
+  display: flex;
+  gap: 5px;
+}
+
+.summary-purchase-pagination-controls-com button {
+  background-color: #5468ff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+/* Mohini_PurchaseSummaryReport_14/sep/2024 */

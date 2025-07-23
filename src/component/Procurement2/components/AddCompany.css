@@ -1,0 +1,30 @@
+.add-company-model {
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 400px;
+  }
+  
+  .add-company-model h2 {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .add-company-form
+  {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .add-companyFormGroup
+  {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+.add-companyFormGroup{
+  gap: 20px;
+}

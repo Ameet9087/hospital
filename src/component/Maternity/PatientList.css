@@ -1,0 +1,325 @@
+.patient-component{
+  height: 90vh; 
+  overflow-y:scroll ;
+  width: auto;  
+  background-color: var(--background-color); 
+  display: flex;
+  /* justify-content: center; */
+  align-items: flex-start;
+  padding: 20px;   
+  
+  /* float: left; */
+  box-sizing: border-box; 
+}
+
+.patient-list-container {
+    font-family: Arial, sans-serif; 
+    max-width: 1000px;
+
+  }
+  
+  .patient-list-title {
+    /* background-color:; */
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    position: relative; 
+    display: inline-block; 
+    /* float: left; */
+  }
+  
+  .patient-list-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0; 
+    height: 4px; 
+    background-color: #2d68ea; 
+    transition: width 0.3s ease, background-color 0.3s ease; 
+  }
+  
+  .patient-list-title:hover::after {
+    width: 100%; 
+    background-color: #2d68ea; 
+  }
+  
+  .patient-list-title h3 {
+    /* margin: 0; */
+    font-size: 18px; 
+    color: #333;
+  }
+  
+  
+  
+  /* .search-section input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 400px;
+  }
+   */
+  /* .search-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    margin-left: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+   */
+  .patient-view-all {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+  
+  .patient-view-all label {
+    margin-left: 5px;
+  }
+  
+  .patient-table {
+    background-color: #f2f2f2;
+    /* padding: 10px; */
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* .patient-component-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+   */
+  /* .patient-component-table  th,
+  .patient-component-table  td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  } */
+  
+  .patient-no-rows {
+    text-align: center;
+    margin-left: 100px;
+    color: #999;
+    padding: 25px;
+  }
+  
+  .pagination {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .pagination button {
+    padding: 5px 10px;
+    margin: 0 2px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .pagination span {
+    margin-left: 10px;
+  }
+ 
+  
+  .maternity-list {
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* .content {
+    background-color: #e6f3ff;
+    padding: 20px;
+    border-radius: 5px;
+  }
+   */
+  .patient-edit-info {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .patient-edit-info input {
+    /* width: 300px; */
+    padding: 5px;
+    font-size: 14px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    margin-right: 20px; 
+    flex-shrink: 0; 
+  }
+  .patient-edit-check{
+    margin-left: 500px;
+  }
+  .patient-view-all {
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+    cursor: pointer;
+  }
+
+  /* .date-range {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+   */
+  /* .date-range input {
+    margin: 0 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+  }
+   */
+  /* .star-btn, .dash-btn {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    margin-right: 5px;
+  }
+   */
+  /* .ok-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+  }
+   */
+  
+  .patient-span {
+    flex-grow: 1; 
+    text-align: right; 
+    margin-right: 20px;
+    font-size: 14px;
+    color: black; 
+  }
+
+ 
+  .patient-results {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+ 
+  
+  .patient-print-btn{
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+  }
+  .patient-print-btn:hover{
+    background-color:white; /* Darker green on hover */
+  color: var( --button-color); /* Green background */
+  }
+  
+  /* .patient-table {
+    overflow-x: auto;
+  } */
+  
+  /* .patient-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: fixed;
+  }
+   */
+  /* .patient-component-table th, 
+  .patient-component-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } */
+  
+  /* .patient-component-table th {
+    background-color: #f2f2f2;
+    font-weight: normal;
+  } */
+  
+  /* .patient-hosp-col { width: 10%; }
+  .patient-name-col { width: 10%; }
+  .patient-age-col { width: 5%; }
+  .patient-address-col { width: 10%; }
+  .patient-phone-col { width: 10%; }
+  .patient-husband-col { width: 10%; }
+  .patient-h-col { width: 5%; }
+  .patient-w-col { width: 5%; }
+  .patient-lmp-col { width: 10%; }
+  .patient-edd-col { width: 10%; }
+  .patient-action-col { width: 15%; }
+   */
+  .patient-no-rows {
+    text-align: center;
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 25px;
+  }
+  
+  .patient-pagination {
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    width: 100%;            
+    margin-top: 20px;       
+  }
+  
+  .patient-pagination span {
+    margin: 0 10px;         
+  }
+  
+  .patient-pagination button {
+    margin: 0 5px;          
+    padding: 5px 10px;
+    background-color: #007bff; 
+    color: white;           
+    border: none;            
+    cursor: pointer;         
+    border-radius: 3px;      
+    transition: background-color 0.3s; 
+  }
+  
+  .patient-pagination button:hover {
+    background-color: #0056b3;
+  }
+  
+  .patient-pagination button:disabled {
+    background-color: #cccccc; 
+    cursor: not-allowed;      
+  }
+  
+
+  .patient-payment-btn {
+    background-color: var( --button-color); /* Green background */
+    color: white; /* White text */
+    border: none; /* Remove borders */
+    padding: 5px 5px; /* Some padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline block for alignment */
+    font-size: 14px; /* Text size */
+    margin: 4px 2px; /* Margins */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+  }
+  
+  .patient-payment-btn:hover {
+    background-color:white; /* Darker green on hover */
+  color: var( --button-color); /* Green background */
+
+  }
+  
+
+ 
+  

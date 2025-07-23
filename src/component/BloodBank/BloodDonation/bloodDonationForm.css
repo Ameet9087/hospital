@@ -1,0 +1,79 @@
+.blood-donation-patient-form-container {
+  width: auto;
+  margin: 20px;
+}
+.blood-donation-patient-con {
+    max-width: 800px;
+    margin: auto;
+    background: #fff;
+    border-radius: 10px;
+    
+        
+  }
+  
+.blood-donation-submit-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.blood-donation-submit-btn:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-color);
+  background-color: white;
+}
+
+.blood-donation-patient-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.blood-donation-patient-left,
+.blood-donation-patient-right {
+  width: 48%;
+}
+
+.blood-donation-patient-group {
+  margin-bottom: 12px;
+}
+
+.blood-donation-patient-gender-options {
+  display: flex;
+  gap: 10px;
+}
+.header-BloodDonation {
+  font-size: var(--heading-font);
+}
+
+.blood-donation-patient-group {
+    display: flex;
+    align-items: center; 
+    gap: 15px; 
+  }
+  
+  .blood-donation-patient-gender-options {
+    display: flex;
+    gap: 15px; 
+  }
+  
+
+  
+@media (max-width: 768px) {
+  .blood-donation-patient-left,
+  .blood-donation-patient-right {
+    width: 100%;
+  }
+
+  .blood-donation-patient-form {
+    flex-direction: column;
+  }
+}
+
+/* =========================================== */

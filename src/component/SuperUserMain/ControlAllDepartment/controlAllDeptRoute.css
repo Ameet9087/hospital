@@ -1,0 +1,67 @@
+/* Dhanashree_App_27/09_Starts */
+.ControlDepartmentsCD-navbar-container {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--background-color);
+    height: 120vh;
+}
+
+.ControlDepartmentsCD-navbar-heading {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.ControlDepartmentsCD-navbar {
+    background-color: var(--upperBar-bg-color);
+    padding: 10px;
+}
+
+.ControlDepartmentsCD-navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.ControlDepartmentsCD-navbar ul li {
+    margin: 0 15px;
+    position: relative;
+}
+
+.ControlDepartmentsCD-navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding-bottom: 5px;
+    display: inline-block;
+    position: relative;
+}
+
+.ControlDepartmentsCD-navbar ul li a:hover {
+    color: white;
+}
+
+.ControlDepartmentsCD-navbar ul li a::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.ControlDepartmentsCD-navbar ul li a:hover::after {
+    transform: scaleX(1);
+}
+
+.ControlDepartmentsCD-navbar ul li a.active::after {
+    transform: scaleX(1);
+}
+
+/* Dhanashree_App_27/09_Ends */

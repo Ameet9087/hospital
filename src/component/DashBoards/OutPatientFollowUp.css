@@ -1,0 +1,42 @@
+.OutPatientFollowUp-patient-list {
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--background-color);
+}
+
+.OutPatientFollowUp-search-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.OutPatientFollowUp-search-bar input {
+  flex-grow: 1;
+  padding: 5px;
+  margin-right: 5px;
+}
+
+.OutPatientFollowUp-search-bar button {
+  padding: 5px 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.OutPatientFollowUp-results {
+  margin-left: auto;
+  margin-right: 10px;
+  color: var(--button-color);
+}
+
+.OutPatientFollowUp-print {
+  padding: 5px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}

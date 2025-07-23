@@ -1,0 +1,74 @@
+/* Dhanashree_NewSales_19/09 */
+
+.NewSales-sales-book-details {
+    background-color: var(--background-color);
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+  }
+  
+  .NewSales-header {
+    color: #0056b3;
+    font-size: 16px;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .NewSales-date-range {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .NewSales-date-input {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .NewSales-date-input label {
+    margin-right: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .NewSales-date-input input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .NewSales-star-button,
+  .NewSales-minus-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  .NewSales-show-report-button {
+    background-color: var( --button-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-left: auto;
+  }
+  
+  .NewSales-show-report-button::before {
+    content: "Q";
+    margin-right: 5px;
+  }
+  .NewSales-show-report-button:hover {
+    background-color: white;
+    color: var(--button-hover-text-color);
+  }
+
+  /* Dhanashree_NewSales_19/09 */

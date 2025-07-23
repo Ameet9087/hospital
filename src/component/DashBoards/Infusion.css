@@ -1,0 +1,80 @@
+.Infusion-container{
+  width: 100%;
+  max-width: 1250px;
+  margin: 20px auto;
+  padding: 8px;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+.Infusion-container h3{
+font-size: 16px;
+text-align: center;
+margin-bottom: 10px;
+}
+.Infusion-content {
+background-color: white;
+display: flex;
+gap: 30px;
+justify-content: center;
+align-items: center;
+padding: 0px 10px;
+padding-top: 10px;
+margin: 20px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.Infusion-form-group{
+  display:flex;
+  margin-bottom: 20px;
+  gap: 30px;
+}
+.Infusion-form-group input,.Infusion-form-group select,.Infusion-form-group textarea{
+width: 100%;
+padding: 5px;
+border-radius: 4px;
+border: 1px solid #ccc;
+font-size: 14px;
+}
+
+.Infusion-form-group-button{
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s, transform 0.1s;
+  display: flex;
+  justify-content: center; 
+  gap: 15px;
+  margin: 20px;
+  margin-bottom: 30px;
+}
+.Infusion-form-group-button:active{
+  transform: scale(0.98);
+}
+.Infusion-form-cancel{
+  background-color: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.Infusion-form-cancel:hover{
+background-color: white;
+color: #dc3545;
+border: 1px solid #dc3545 ;
+
+}
+.Infusion-form-submit {
+  background-color: var(--button-color);
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+}
+
+.Infusion-form-submit:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-color);
+  border: 1px solid var(--button-color);
+}

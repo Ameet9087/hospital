@@ -1,0 +1,152 @@
+/* Mohini_PatientSalesReport_WholePage_14/sep/2024 */
+.patient-sales-report-container {
+  background-color:var( --background-color);
+  padding: 20px;
+  height: 90vh;
+  font-family: Arial, sans-serif;
+  font-size: 16px; /* Ensure all text is at 16px */
+}
+
+.patient-sales-report-container h2 {
+  color: black;
+  margin-bottom: 20px;
+  font-size: 16px; /* Ensure h2 is at 16px */
+}
+
+.patient-sales-report-report-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.patient-sales-report-date-range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.patient-sales-report-date-range input[type="date"] {
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+
+.patient-sales-report-show-report-btn,
+.patient-sales-report-more-columns {
+  background-color:var( --button-color);
+  color: white; /* White text */
+  border: none;
+  padding: 5px 5px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid var( --button-hover-border-color);
+
+  border-radius: 3px;
+}
+.patient-sales-report-show-report-btn:hover,
+.patient-sales-report-more-columns:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+
+}
+
+.patient-sales-report-star-btn,
+.patient-sales-report-minus-btn{
+  color: #f2f2f2f2; /* White text */
+  border: none;
+  padding: 5px 5px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+
+
+
+.patient-sales-report-star-btn,
+.patient-sales-report-minus-btn {
+  margin-left: 5px;
+}
+
+.patient-sales-report-filters {
+  margin-left: 20px;
+  margin-top: -22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.patient-sales-report-filters label {
+  display: flex;
+  font-size: 14px;
+  flex-direction: column;
+  /* font-weight: bold; */
+}
+
+.patient-sales-report-filters input,
+.patient-sales-report-filters select {
+  padding: 5px;
+  font-size: 16px;
+  margin-top: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+.patient-sales-report-show-report-btn {
+  align-self: flex-end;
+}
+
+.patient-sales-report-more-columns {
+  align-self: flex-end;
+  padding: 5px;
+}
+
+.patient-sales-report-summary {
+  background-color: #f0f0f0;
+  padding: 10px;
+  width: 40%; /* Adjust width as needed */
+  margin: 0 auto; /* Center horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center contents horizontally */
+  justify-content: center; /* Center contents vertically */
+  /* margin-top: 20px; */
+}
+
+.patient-sales-report-summary h3 {
+  margin-top: 0;
+  text-align: center;
+  font-size: 16px;
+}
+
+.patient-sales-report-summary-content {
+  display: flex;
+
+  gap: 40px;
+  justify-content: center; /* Center contents horizontally */
+  width: 100%; /* Ensure it stretches to the full width of the container */
+}
+
+.patient-sales-report-summary-content div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.patient-sales-report-summary-content span {
+  margin: 5px 0;
+ color: #0066cc;
+
+  font-size: 16px;
+}
+
+.patient-sales-report-summary-content .patient-sales-report-value {
+  color: #0066cc;
+  font-size: 16px;
+}
+/* Mohini_PatientSalesReport_WholePage_14/sep/2024 */
+

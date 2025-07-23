@@ -1,0 +1,202 @@
+.labNotificationSms-N-imu-btn{
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid #cfcdcd;
+  height: 47px;
+  /* background-color: #FAFAFA; */
+  /* justify-content:space-between; */
+}
+.labNotificationSms-page {
+    background-color: var(--background-color);
+    padding: 1px 1px  1px 10px;
+    font-family: Arial, sans-serif;
+    height: 80vh;
+
+  }
+  
+  .labNotificationSms-tabs {
+    margin-bottom: 20px;
+  }
+  
+  .labNotificationSms-tab {
+    padding: 10px 20px;
+    border: none;
+    background-color: var(--background-color);
+    cursor: pointer;
+  }
+  
+  .labNotificationSms-tab.labNotificationSms-active {
+    /* background-color: #007bff; */
+    color: black;
+    border-bottom: 5px solid var(--sideBar-bg-color);;
+    padding:  10px 20px;
+  }
+  
+  .labNotificationSms-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px 0 10px;
+    margin-bottom: 20px;
+  }
+  
+  .labNotificationSms-date-filters {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #EBF7FF;
+    color: black;
+    font-size: var(--font-size);
+  }
+  
+
+  .labNotificationSms-controls {
+    display: flex;
+  }
+  .labNotificationSms-date-range {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    background-color: #f0f0f0;
+    padding: 3px 10px;
+  }
+  .labNotificationSms-date-range label{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    font-size: var(--font-size);
+  }
+  
+  .labNotificationSms-date-range input[type="date"] {
+    padding: 3px;
+    margin-left: 10px;
+  }
+
+ 
+  
+  .labNotificationSms-show-data-btn {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    /* margin-left: 100px; */
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;;
+    }
+    
+    .labNotificationSms-show-data-btn:hover{
+      border: 1px solid var( --button-hover-border-color);
+      color: var(--button-hover-text-color);
+      background-color: var(--button-hover-background-color);
+    }
+  
+  
+  .labNotificationSms-filter-options, .labNotificationSms-filter-findings {
+    font-size: var(--font-size);
+    width: 300px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 10px;
+  }
+  .labNotificationSms-checkbx{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .filter-options label, .labNotificationSms-filter-findings label,.labNotificationSms-filter-findings button {
+    margin-left: 10px;
+    font-size: var(--font-size);
+  }
+  
+  .labNotificationSms-Showing span{
+    /* color: #0F63AF; */
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+  }
+  .labNotificationSms-print-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-top: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+    padding: 5px 10px;
+  }
+  .labNotificationSms-print-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .labNotificationSms-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .labNotificationSms-data-table th, .labNotificationSms-data-table td {
+    border: 1px solid #e6e3e3;
+    padding: 3px;
+    text-align: center;
+  }
+  
+  .labNotificationSms-data-table th {
+    background-color: #A5ACAC;
+    /* color: #5a5959; */
+    font-size: var(--heading-font);
+  }
+  
+  .labNotificationSms-pagination {
+    text-align: right;
+    
+  }
+  
+  .labNotificationSms-pagination button {
+    border: none;
+    border-radius: 15px;
+    margin-left: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: var(--background-color);
+    /* color: #d8d5d5; */
+
+  }
+  
+  .labNotificationSms-search-n-filter{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .labNotificationSms-search-input {
+   
+    padding: 5px;
+    font-size: var(--font-size);
+    width: 200px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  .labNotificationSms-search-bar{
+  /* margin-left: -15px; */
+  position: relative;
+  }
+.labNotificationSms-search-bar i{
+  position: absolute;
+  top: 8px;
+  left: 180px;
+  /* display: flex;
+  justify-content: ; */
+  color: gray;
+}
+.labNotificationSms-content{
+  margin: 15px 10px 0px 0px;
+}

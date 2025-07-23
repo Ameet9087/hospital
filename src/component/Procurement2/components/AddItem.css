@@ -1,0 +1,74 @@
+.aadddContainer {
+ 
+  background: #fff;
+  border-radius: 10px;
+}
+
+.aadddHeading {
+  text-align: center;
+  font-size: var(--heading-font);
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.aadddFormContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.aadddColumn {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+
+.aadddColumn-part {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.aadddHeading-checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #444;
+}
+
+
+.aadddFooter {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.aadddButton {
+  padding: 5px;
+  background-color: var(--button-color);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.aadddButton:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+@media (max-width: 768px) {
+  .aadddContainer {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .aadddColumn-part {
+    min-width: 100%;
+  }
+}

@@ -1,0 +1,97 @@
+.patient-survival-tracking-container {
+    width: auto;
+    margin: 20px;
+}
+
+.patient-survival-tracking {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: var(--background-color);
+    height: 90vh;
+    overflow-y: auto; /* Change to 'auto' for better scrolling behavior */
+}
+
+/* Flex items */
+.patient-survival-tracking-left,
+.patient-survival-tracking-right {
+    width: 48%;
+}
+
+/* Tracking group */
+.patient-survival-tracking-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.patient-survival-tracking-group label {
+    flex: 0 0 120px;
+    margin-right: 10px;
+    margin-left: 20px;
+    font-size: var(--heading-font);
+}
+
+.patient-survival-tracking-group input[type="text"],
+.patient-survival-tracking-group input[type="number"],
+.patient-survival-tracking-group input[type="date"],
+.patient-survival-tracking-group input[type="email"],
+.patient-survival-tracking-group textarea {
+    flex: 1;
+    padding: 4px;
+    font-size: var(--font-size);
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.patient-survival-tracking-submit-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    margin-left: 20px;
+    padding: 5px 10px; /* Adjust padding for better button size */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.patient-survival-tracking-submit-btn:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-color);
+    background-color: white;
+}
+
+.mandatory {
+    color: red;
+}
+
+.patient-survival-tracking-left h3,
+.patient-survival-tracking-right h3 {
+    font-size: var(--heading-font);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .patient-survival-tracking {
+        flex-direction: column; /* Stack the left and right sections vertically */
+        height: auto; /* Allow height to adjust based on content */
+        padding: 10px; /* Reduce padding for smaller screens */
+    }
+
+    .patient-survival-tracking-left,
+    .patient-survival-tracking-right {
+        width: 100%; /* Full width on small screens */
+        margin-bottom: 20px; /* Add space between sections */
+    }
+
+    .patient-survival-tracking-group label {
+        flex: 0 0 100px; /* Adjust label width for smaller screens */
+    }
+
+    .patient-survival-tracking-submit-btn {
+        margin-left: 0; /* Remove left margin for smaller screens */
+        width: 100%; /* Full width button */
+        padding: 10px; /* Increase padding for better touch targets */
+    }
+}

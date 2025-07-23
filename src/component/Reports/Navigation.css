@@ -1,0 +1,195 @@
+/* Navigation bar container */
+.reports-tabs-nav {
+    display: flex;
+    /* margin-left: 10px; */
+    gap: 15px;
+    /* justify-content: space-around; */
+    padding: 10px;
+}
+
+/* Navigation links */
+.reports-nav-link {
+    /* text-decoration: none;
+    color: #2d68ea;;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: transparent;
+    font-weight: normal;
+    transition: background-color 0.3s, font-weight 0.3s; */
+
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Hover and active state */
+
+/*  */
+
+
+/* Patient Sub-navigation Styles */
+.patient-sub-nav-container {
+    background-color: #e3f2fd;
+    padding: 0;
+}
+
+.patient-sub-nav {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    border-bottom: 1px solid white;
+    gap: 10px; /* Creates a 10px gap between items */
+}
+
+.patient-sub-nav a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    position: relative;
+    border: none; /* Remove any existing borders */
+    border-bottom: 4px solid transparent; /* Initial border-bottom to be transparent */
+    transition: border-bottom 0.3s ease; /* Smooth transition for border-bottom */
+}
+
+
+
+
+/* Responsive Design for Navigation */
+@media (max-width: 768px) {
+    .reports-tabs-nav {
+        flex-direction: column;
+    }
+
+    .reports-nav-link {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .patient-sub-nav {
+        flex-direction: column;
+    }
+
+    .patient-sub-nav a {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+/*  */
+/* Navigation bar container */
+.reports-tabs-nav {
+    display: flex;
+    /* justify-content: space-around; */
+    padding: 10px;
+}
+
+/* Navigation links */
+.reports-nav-link {
+    text-decoration: none;
+    color: black;
+    border-radius: 5px;
+    background-color: transparent;
+    font-weight: normal;
+    transition: background-color 0.3s, font-weight 0.3s;
+}
+
+/* Hover and active state */
+.reports-nav-link:hover,
+.reports-nav-link.active {
+    background-color: var(--button-bg-color);
+    color: white; /* Optional: change text color on hover */
+    font-weight: bold;
+}
+/* Patient Sub-navigation Styles */
+.patient-sub-nav-container {
+    background-color: #e3f2fd;
+    padding: 0;
+}
+
+.patient-sub-nav {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    gap: 10px; /* Creates a 10px gap between items */
+    position: relative; /* For the pseudo-element positioning */
+}
+
+.patient-nav-link {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    position: relative;
+    border: none; /* Remove any existing borders */
+    overflow: hidden; /* Ensures pseudo-element is contained */
+}
+
+.patient-nav-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+    /* background-color: blue; */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.patient-nav-link.active::before {
+    transform: translateX(0);
+}
+
+/* Responsive Design for Navigation */
+@media (max-width: 768px) {
+    .reports-tabs-nav {
+        flex-direction: column;
+    }
+
+    .reports-nav-link {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .patient-sub-nav {
+        flex-direction: column;
+    }
+
+    .patient-nav-link {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+/*  */
+.patient-sub-nav-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap to the next line */
+    gap: 10px; /* Adds space between items */
+    padding: 10px; /* Optional padding for some space around the nav */
+}
+
+.Appointment-sub-nav {
+    display: flex;
+    flex-wrap: wrap; /* Enables wrapping of the links */
+    gap: 10px; /* Space between the links */
+    border-bottom: 1px solid white;
+}
+
+.patient-nav-link {
+    padding: 8px 12px; /* Adds padding inside the links */
+    text-decoration: none; /* Removes the underline */
+    color: #333; /* Text color */
+    border: 1px solid transparent; /* Initial border for alignment */
+    transition: border-bottom 0.3s ease; /* Smooth transition for border */
+}
+

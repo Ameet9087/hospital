@@ -1,0 +1,172 @@
+.onlineAppointment-list {
+  padding: 20px;
+}
+
+.onlineAppointment-tab-header {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+
+.onlineAppointment-tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+  background-color: #e6e6e6;
+  margin-right: 5px;
+}
+
+.onlineAppointment-tab.active {
+  background-color: var(--button-bg-color);
+  color: white;
+}
+
+.onlineAppointment-tab-content {
+  padding: 20px 0;
+}
+
+.onlineAppointment-filters {
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.onlineAppointment-date-range {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.onlineAppointment-date-range label {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.onlineAppointment-date-range input {
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.onlineAppointment-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.onlineAppointment-filter-item {
+  margin-right: 20px;
+}
+
+.onlineAppointment-filter-item label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.onlineAppointment-filter-item input, 
+.onlineAppointment-filter-item select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.onlineAppointment-reload-btn, 
+.onlineAppointment-search-btn, 
+.onlineAppointment-export-btn, 
+.onlineAppointment-print-btn {
+  padding: 5px 10px;
+  border: none;
+  background-color: var(--button-color);
+  color: white;
+  cursor: pointer;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.onlineAppointment-reload-btn:hover, 
+.onlineAppointment-search-btn:hover, 
+.onlineAppointment-export-btn:hover, 
+.onlineAppointment-print-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  /* border: 1px solid var(--button-hover-border-color); */
+}
+
+.onlineAppointment-star-btn, 
+.onlineAppointment-minus-btn {
+  padding: 5px 11px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  margin-left: 5px;
+  border-radius: 50%;
+}
+.onlineAppointment-searchContainer{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  align-items: center;
+}
+.onlineAppointment-search-bar {
+  background-color: #f2f2f2;
+  height: fit-content;
+}
+
+.onlineAppointment-search-bar input {
+  padding: 5px;
+  border-radius: 4px;
+  margin-right: 10px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.onlineAppointment-results-actions {
+  margin: 15px 0;
+}
+
+.onlineAppointment-table-container {
+  overflow-x: auto;
+}
+
+.onlineAppointment-patientList-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background-color: #f2f2f2;
+}
+
+.onlineAppointment-patientList-table th, 
+.onlineAppointment-patientList-table td {
+  padding: 10px;
+  text-align: left;
+}
+
+.onlineAppointment-patientList-table th {
+  position: relative;
+}
+
+.onlineAppointment-loading {
+  text-align: center;
+  font-size: 16px;
+}
+
+.onlineAppointment-resizable-th {
+  position: relative;
+}
+
+.onlineAppointment-resizer {
+  width: 5px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: col-resize;
+  user-select: none;
+}
+
+.onlineAppointment-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -1,0 +1,127 @@
+ /* Ajhar Tamboli relEditDoctors.css 19-09-24 */
+
+
+/* Akash Pawar Radiology 14/24 */
+.relEditDoctors-active-imaging-request {
+    padding: 10px;
+    background-color: var(--background-color);
+    height: 75vh;
+  }
+  
+  .relEditDoctors-active-imaging-request header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-bottom: 20px; */
+  }
+  
+  .relEditDoctors-active-imaging-request h4 {
+    /* color: black; */
+    font-size: var(--heading-font);
+    margin: 0;
+  }
+  
+
+  /* .relEditDoctors-filter select {
+    padding: 3px 5px 3px 5px;
+    margin-left: 10px;
+    width: 100px;
+  }
+  .relEditDoctors-filter label {
+font-size: var(--font-size);
+} */
+  
+  .relEditDoctors-controls {
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .relEditDoctors-date-range {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    gap: 10px;
+    background-color: #f0f0f0;
+    padding: 3px 10px;
+  }
+  /* .relEditDoctors-date-range label{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    font-size: var(--font-size);
+  }
+  
+  .relEditDoctors-date-range input[type="date"] {
+    padding: 3px;
+    margin-left: 10px;
+  } */
+
+  
+  .relEditDoctors-search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    margin-bottom: 10px;
+  }
+  
+  /* .relEditDoctors-search-bar input {
+   outline: none;
+   border: none;
+   height: 25px;
+   background-color: transparent;
+  }
+  .relEditDoctors-search-bar i{
+    color: gray;
+  } */
+  
+  .relEditDoctors-results-info {
+    text-align: right;
+    /* color: black; */
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+  }
+  .relEditDoctors-search-N-results{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+  .relEditDoctors-ex-pri-buttons{
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    margin-left: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    /* margin: 1px; */
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .relEditDoctors-ex-pri-buttons:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .relEditDoctors-action-button-add-report{
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    /* padding: 6px; */
+    padding: 5px;
+    cursor: pointer;
+  }
+  .relEditDoctors-ex-pri-buttons:hover,.relEditDoctors-action-button-add-report:hover{
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+
+
+  
+  
+
+  

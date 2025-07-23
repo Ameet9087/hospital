@@ -1,0 +1,204 @@
+/* IpdIssuedWard.css */
+
+.ipd-issues-ward-container {
+  display: flex;
+  flex-direction: column;
+  padding:12px;
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  overflow-y: scroll;
+}
+
+.ipd-issues-ward-container h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.patient-details {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  background-color: white;
+  margin-bottom: 10px;
+  padding: 40px;
+
+}
+
+.detail {
+  display: grid;
+  /* grid-template-columns: 80px 150px 40px;  */
+  align-items: center;
+  gap: 2px;
+}
+
+.detail label {
+  /* font-weight: bold; */
+  font-size: 12px;
+}
+
+
+
+
+
+/* .detail button:hover {
+  background-color: #0056b3;
+} */
+
+/* .patient-details a {
+  grid-column: span 4;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 10px;
+} */
+
+.item-details {
+  margin-top: 20px;
+  
+}
+
+.item-table {
+  width:100%;
+  overflow-x: scroll;
+  table-layout: auto;
+  border-collapse: collapse;
+}
+
+.item-table th, .item-table td {
+  border: 1px solid #ccc;
+  padding: 5px;
+  text-align: left;
+}
+
+.item-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.add-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: #218838;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+
+.ipdissuedward-form{
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 6px;
+   border-radius: 5px;
+   background-color: var(--background-color);
+ }
+ 
+ .ipdissuedward-section {
+   display: flex;
+   flex-direction: row;
+ }
+ 
+ .ipdissuedward-section label {
+   flex: 1;
+   font-size: 14px;
+   /* width: 50px; */
+ }
+ 
+ .ipdissuedward-section input {
+   flex: 2;
+   padding: 5px;
+   border: 1px solid #ccc;
+   border-radius: 3px;
+ }
+ 
+ 
+ .ipdissuedadd-btn,
+ .ipdissuedremove-btn {
+   background-color: #4caf50;
+   color: white;
+   border: none;
+   padding: 5px 10px;
+   cursor: pointer;
+ }
+ 
+ .remove-btn {
+   background-color: #f44336;
+ }
+ 
+ .item-table input[type="text"],.ipdissuedward-form input[type="text"] {
+  width: 100%; 
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.item-table input[type="text"]:focus {
+  border-color: #007bff;
+  outline: none;
+  background-color: #fff;
+}
+.item-table input[type="number"] {
+  width: 100%; 
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.item-table input[type="number"]:focus {
+  border-color: #007bff;
+  outline: none;
+  background-color: #fff;
+}
+.subStoreDropdown-div select{
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 200px;
+  margin-top: 10px;
+  font-size: 12px; 
+}
+.subStoreDropdown-div label{
+  font-size: 12px;; 
+  font-weight: bold;
+}
+
+
+.postIssue-buttons {
+  margin-top: 20px;
+  background-color: var(--button-bg-color);
+  color: var(--button-hover-background-color);
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 5px;
+  float: right;
+}
+.postIssue-buttons:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color);
+}

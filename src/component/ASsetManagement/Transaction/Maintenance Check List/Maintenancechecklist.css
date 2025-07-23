@@ -1,0 +1,91 @@
+.MaintenanceCheckList-container {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0 auto;
+  }
+  .MaintenanceCheckList-add-button {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .MaintenanceCheckList-add-button:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .MaintenanceCheckList-search-bar {
+    background-color: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }  
+  .MaintenanceCheckList-search-bar input {
+    padding: 5px;
+    font-size: var(--font-size);
+    width: 200px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  .MaintenanceCheckList-search-bar i {
+    color: gray;
+    position: absolute;
+    right: 5px;  
+  }
+  .MaintenanceCheckList-search-N-result {
+    margin: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .MaintenanceCheckList-results-info {
+    display: flex;
+    align-items: center;
+  }
+  .MaintenanceCheckList-results-info span {
+    font-size: var(--font-size);
+    margin-right: 10px;
+  }
+  .MaintenanceCheckList-edit-button, .MaintenanceCheckList-deactivate-button {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 1px 5px;
+  }
+  
+  .MaintenanceCheckList-edit-button:hover, .MaintenanceCheckList-deactivate-button:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+  .MaintenanceCheckList-print-button {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .MaintenanceCheckList-print-button:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  

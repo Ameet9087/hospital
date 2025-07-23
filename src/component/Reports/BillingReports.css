@@ -1,0 +1,43 @@
+.billing-card-dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #e0f7fa;
+  padding: 20px;
+  justify-content: center;
+  gap: 10px;
+}
+
+.billing-card-report-card {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  margin: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  transition: background-color 0.3s ease; 
+}
+
+.billing-card-report-card:hover {
+  background-color: var(--button-color);
+  cursor: pointer;
+}
+
+.billing-card-icon {
+  margin-right: 15px;
+  font-size: 24px;
+  color: #0059ff;
+}
+
+.billing-card-content h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.billing-card-content p {
+  margin: 0;
+  font-size: 14px;
+  color: #777;
+}

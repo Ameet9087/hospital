@@ -1,0 +1,79 @@
+.dischargeSummary-container {
+  width: 90%;
+  margin: 20px auto;
+  border: 2px solid #ccc;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #fff;
+}
+
+.dischargeSummary-header {
+  background:var(--button-bg-color);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 5px;
+  text-align: center;
+}
+
+.dischargeSummary-content {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.dischargeSummary-section {
+  width: 48%;
+  padding: 10px;
+ 
+}
+
+.dischargeSummary-section  h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: white;
+  padding: 5px;
+  background:var(--button-bg-color);
+}
+
+.dischargeSummary-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+
+
+.dischargeSummary-field span {
+  color: red;
+}
+
+.dischargeSummary-otnotes,
+.dischargeSummary-template {
+  margin-top: 20px;
+}
+
+.quill-editor {
+  background: white;
+  border-radius: 5px;
+  min-height: 150px;
+}
+
+.ql-container {
+  font-size: 16px;
+}
+  
+.dischargeSummary-save{
+  padding: 5px 10px;
+  font-size: var(--font-size);
+  color: #fff;
+  background: var(--button-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.dischargeSummary-save:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}

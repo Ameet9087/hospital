@@ -1,0 +1,102 @@
+
+.dispensary-Navigation-bar {
+  background-color: white;
+}
+
+.dispensary-Navigation-bar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 10px 0px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Enable wrapping for smaller screens */
+}
+
+.dispensary-Navigation-bar li {
+  margin: 0;
+}
+
+.dispensary-Navigation-bar a {
+  /* background-color: var( --button-hover-background-color);
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 5px; */
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border:1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  /* margin-left: 10px; */
+}
+
+.dispensary-Navigation-bar a:hover {
+  /* background-color: white;
+  color: var( --button-color);;
+  border: 1px solid gray; */
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.dispensary-Navigation-bar a.active {
+  border: 1px solid var(--button-bg-color);
+  color:white;
+  background-color: var(--button-bg-color);
+}
+
+.dispensary-Activebtn-N-LogOut {
+  display: flex;
+  justify-content: start;
+  gap: 5px;
+  margin-right: 20px;
+  
+}
+
+.activeDispensary-btn {
+  background-color: var( --button-color);
+  color: white;
+  /* margin-left: 60px; */
+  font-size: 16px;
+  padding: 0px 5px;
+  border: none;
+  float: right;
+}
+.dispensary-LogOut {
+  border: none;
+  background: none;
+  font-size: 18px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.dispensary-LogOut i {
+  color: #333;
+}
+
+.disPrescription-Navbttn-N-act {
+  display: flex;
+}
+
+.disPrescription-Navbttn-N-act li {
+  padding: 0 5px;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+  .dispensary-Navigation-bar ul {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the start */
+  }
+
+  .dispensary-Navigation-bar li {
+    margin-bottom: 10px; /* Add some space between items */
+  }
+
+  .disPrescription-Navbttn-N-act {
+    flex-direction: column; /* Stack prescription nav buttons vertically */
+  }
+}

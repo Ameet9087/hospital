@@ -1,0 +1,167 @@
+.dispenSalesStockDetails-container {
+  background-color: var(--background-color);
+  padding: 10px;
+  height: 75vh;
+}
+
+.dispenSalesStockDetails-header-tabs {
+  display: flex;
+  gap: 40px;
+  font-size: var(--heading-font);
+  margin-bottom: 10px;
+  background-color: #fafafa;
+  border-bottom: 1px solid #dad7d7;
+}
+
+.dispenSalesStockDetails-tab {
+  cursor: pointer;
+}
+
+.dispenSalesStockDetails-tab-active {
+  border-bottom: 5px solid var(--button-bg-color);
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+
+.dispenSalesStockDetails-filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0 10px 0;
+}
+
+.dispenSalesStockDetails-filter-options {
+  display: flex;
+  justify-content: right;
+  gap: 40px;
+}
+.dispenSalesStockDetails-filter-options span {
+  font-size: var(--font-size);
+}
+.dispenSalesStockDetails-filter-options label {
+  font-size: var(--font-size);
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+.dispenSalesStockDetails-controls {
+  display: flex;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.dispenSalesStockDetails-date-range {
+  display: flex;
+  align-items: center;
+  width: 33%;
+  gap: 10px;
+  margin-left: -10px;
+}
+
+
+.sales-stock-details-dSSD-results-info {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size);
+  gap: 10px;
+}
+
+.sales-stock-details-dSSD-export-btn,
+.dSSD-print-btn {
+  padding: 5px 10px;
+  font-size: 16px;
+  color: white;
+  border: 1px solid gray;
+  border-radius: 5px;
+
+  cursor: pointer;
+}
+
+.dSSD-stock-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.dSSD-stock-table th {
+  border: 1px solid #ccc;
+  background-color: #f3f3f3;
+  padding: 3px;
+  text-align: center;
+  font-size: var(--heading-font);
+}
+
+.dSSD-stock-table td {
+  border: 1px solid #ccc;
+  background-color: white;
+  padding: 10px;
+  font-size: var(--font-size);
+  text-align: center;
+}
+.sales-stock-details-dSSDetails-pagination-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+.sales-stock-details-dSSDetails-pagination-bar span {
+  font-size: var(--font-size);
+}
+
+.sales-stock-details-dSSDetails-pagination-bar button {
+  padding: 5px 10px;
+  font-size: var(--font-size);
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: white;
+  background-color: #0056b3;
+  cursor: pointer;
+}
+
+.sales-stock-details-summary {
+  font-size: var(--heading-font);
+  text-align: center;
+  margin-top: 10px;
+}
+.sales-stock-details-summary h4 {
+  font-size: var(--heading-font);
+}
+.sales-stock-details-summary strong {
+  font-size: var(--font-size);
+}
+
+.dispenSalesStockDetails-search-bar input {
+  width: 200px;
+}
+
+
+.dispenSalesStockDetails-results-info {
+  display: flex;
+  align-items: center;
+}
+.dispenSalesStockDetails-results-info span {
+  font-size: var(--font-size);
+}
+.dispenSalesStockDetails-search-N-result {
+  margin: 10px 0 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dispenSalesStockDetails-print-button {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  margin-left: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+.dispenSalesStockDetails-print-button:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}

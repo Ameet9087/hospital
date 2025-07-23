@@ -1,0 +1,160 @@
+.insentiveSettingsEISEditIP-container {
+  font-family: Arial, sans-serif;
+  padding: 10px;
+  background-color: white;
+  border-radius: 5px;
+  /* width: 80%; */
+  margin: auto;
+}
+
+.insentiveSettingsEISEditIP-header {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-bottom: 5px;
+  color: #504f4f;
+  border-bottom: 1px solid #a09f9f;
+}
+
+.insentiveSettingsEISEditIP-doctor-name {
+  color: blue;
+  font-size: 16px;
+  font-weight: bold;
+margin-left: 20px;
+}
+
+.insentiveSettingsEISEditIP-tds-info {
+  margin-left: 40px;
+  /* margin-left: auto; */
+}
+
+.inceninsentiveSettingsEISEditBtntive-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.insentiveSettingsEISEditIP-price-category {
+  width: 200px;
+  padding: 5px;
+}
+.insentiveSettingsEISEditIP-form label {
+  color: #504f4f;
+  font-weight: bold;
+  font-size: 12px;
+  align-items: center;
+  padding-bottom: 10px;
+  /* text-align: center; */
+}
+
+.insentiveSettingsEISEditIP-form-row {
+  display: flex;
+  background-color: #DDE3E9;
+  padding: 10px 5px;
+  margin-top: 10px;
+  gap: 5px;
+  align-items: center;
+}
+
+.insentiveSettingsEISEditIP-input-field {
+  width: 150px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.insentiveSettingsEISEditIP-save-btn {
+  background-color: #26C281;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.insentiveSettingsEISEditIP-discard-btn {
+  background-color: #E31D2D;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.insentiveSettingsEISEditIP-incentive-settings {
+  margin-top: 20px;
+  width: 60%;
+}
+.insentiveSettingsEISEditIP-incentive-settings h4{
+color: #797777;
+font-weight: 100;
+}
+.insentiveSettingsEISEditIP-search-pagination{
+  display: flex;
+  justify-content: space-between;
+}
+.insentiveSettingsEISEditIP-pagination-info span{
+color: #659BE0;
+font-size: 12px;
+font-weight: bold;
+margin-right: 10px;
+}
+
+.insentiveSettingsEISEditIP-search-bar {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.insentiveSettingsEISEditIP-search-input {
+  padding: 5px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.insentiveSettingsEISEditIP-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.insentiveSettingsEISEditIP-table th, .insentiveSettingsEISEditIP-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  font-size: 12px;
+  color: rgb(73, 73, 73);
+}
+.insentiveSettingsEISEditIP-table th{
+  background-color: #F3F3F3;
+
+}
+
+.insentiveSettingsEISEditIP-no-rows {
+  text-align: center;
+  background-color: #FFE6A0;
+  color: #333;
+}
+
+.insentiveSettingsEISEditBtnp-pagination-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.insentiveSettingsEISEditIP-print-btn {
+  background-color: #659BE0;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  
+}

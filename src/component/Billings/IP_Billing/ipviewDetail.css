@@ -1,0 +1,472 @@
+/* BillingPage.css */
+
+/* .ip-view-detail-heading{
+    display: flex;
+    background-color: #e0f5fc;
+    justify-content: space-between;
+    padding: 3px 10px;
+    align-items: center;
+    
+}
+.ip-view-membership-lable{
+    font-size: 20px;
+}
+.ip-view-membership-select {
+    font-size: 16px;
+
+}
+.billing-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f0f8ff;
+    display: flex;
+  }
+
+  
+  .header-section {
+    
+    justify-content: space-between;
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 20px;
+  }
+  
+  .detail-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .detail-column {
+    width: 48%; 
+  }
+  
+  .detail-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .detail-item b {
+    margin-right: 10px;
+    width: 40%; 
+    padding: 5px; 
+  }
+  
+  .detail-item input {
+    width: calc(60% - 80px);
+    padding: 4px;
+  }
+  
+  
+  .remarks-section {
+
+    gap: 10px;
+    
+  }
+  
+  .remarks-section input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+  }
+  
+  .remarks-section button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .content-section {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .table-section {
+    width: 65%;
+  }
+  
+  .search-bar {
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+  
+  .search-bar input {
+    padding: 8px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .billing-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .billing-table th, .billing-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+  .billing-table th{
+    background-color: #eee;
+  }
+  .billing-table td {
+    background-color: white;
+  }
+  
+  .billing-detail-section {
+    width: 30%;
+    background-color: white;
+    padding: 15px;
+    color: gray;
+    border-radius: 4px;
+    
+  }
+  .ipviewupdatebtn{
+    background-color: #ccc;
+    padding: 8px;
+    color: gray;
+
+}
+  
+  .billing-detail-section .detail-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 3px 0px;
+  }
+  
+  .billing-detail-section input[type="number"], .billing-detail-section input[type="text"], .billing-detail-section select {
+    padding: 5px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .alert-msg {
+    color: red;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  
+  .discharge-btn {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+  }
+  
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  } */
+  
+  /* .fade-in {
+    opacity: 1;
+  }
+  
+  .modal-content {
+    background: #fff;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 900px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+  } */
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  /* .modal-body {
+    padding: 20px 0;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    background-color: #ccc;
+  } */
+  
+  .save-button, .cancel-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .cancel-button {
+    background-color: #dc3545;
+  }
+  
+  
+
+  .navbar {
+  display: flex;
+  justify-content: center;
+  background-color: #f2f2f2;
+  padding: 10px 0;
+}
+
+.navbar button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 0 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.navbar button.back {
+  background-color: #008CBA;
+}
+
+.navbar button.new-item {
+  background-color: #008CBA;
+}
+
+.navbar button.estimation-bill {
+  background-color: #008CBA;
+}
+
+.navbar button.add-deposit {
+  background-color: #008CBA;
+}
+
+.navbar button.item-discount {
+  background-color: #008CBA;
+}
+
+.navbar button.edit-items {
+  background-color: #008CBA;
+}
+
+.navbar button.partial-clearance {
+  background-color: #008CBA;
+}
+
+.ipviewdetail-new-intern-btn {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content-ipviewdetail-new-intern-btn {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 80%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.ipviewdetail-new-intern-btn-h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.form-groupipviewdetail-newintern-btn {
+  margin-bottom: 15px;
+  display: flex;
+}
+
+.labelipviewdetail-newintern-btn {
+  display: inline-block;
+  width: 120px;
+  font-weight: bold;
+}
+
+.selectlabelipviewdetail-newintern-btn {
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.tableipviewdetail-newintern-btn {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+.tablehead-ipviewdetail-newintern-btn, .tabledata-ipviewdetail-newintern-btn {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.tablehead-ipviewdetail-newintern-btn {
+  background-color: #f2f2f2;
+}
+
+.ipviewdetail-newintern-btn-input[type="text"],
+.ipviewdetail-newintern-btn-input[type="number"] {
+  width: 90%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.total-ipviewdetail-new-intern-btn{
+  text-align: right;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.button-group-ipviewdetail-new-intern-btn {
+  text-align: right;
+}
+
+.print-slip-ipviewdetail-new-intern-btn,
+.request-ipviewdetail-new-intern-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.ipviewdetail-new-intern-btn-new-item-close-button {
+  position: relative;
+
+  right: 10px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+}
+
+
+.estimate_bill_modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.estimate_bill_modal_content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 800px;
+}
+
+.estimate_bill_close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.estimate_bill_close:hover,
+.estimate_bill_close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.estimate_bill_details, .estimate_bill_summary {
+  margin-bottom: 20px;
+}
+
+.estimate_bill_table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.estimate_bill_table th, .estimate_bill_table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.estimate_bill_print {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.estimate_bill_printer_select {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.estimate_bill_printer_select select {
+  flex-grow: 1;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.estimate_bill_ok {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 15px;
+  border: none;
+  cursor: pointer;
+} 

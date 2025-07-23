@@ -1,0 +1,60 @@
+.pkgingAddItemSubcategory {
+    width: 400px;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.pkgingAddItemSubcategory h2 {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.pkgingFormGroup {
+    margin-bottom: 15px;
+}
+
+.pkgingFormGroup label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.pkgingFormGroup input[type="text"],
+.pkgingFormGroup select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.pkgingRequired {
+    color: red;
+}
+
+.pkgingCreateLedger {
+    display: block;
+    color: #f0a500;
+    margin-top: 5px;
+    font-size: var(--font-size); 
+}
+
+.pkgingFormGroup input[type="checkbox"] {
+    margin-top: 10px;
+}
+
+.pkgingBtnAdd {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pkgingBtnAdd:hover {
+    background-color: #218838;
+}

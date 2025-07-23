@@ -1,0 +1,128 @@
+
+.good-receipt-com{
+  width: 1000px;
+  height: 500px;
+  margin: 0 auto;
+  padding: 2px;
+  border-radius: 5px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+.GoodsReceiptSettings-container {
+  /* width: 92%; */
+  /* height: 500px;
+  margin: 0 auto;
+  padding: 2px;
+  border-radius: 5px;
+  overflow-y: scroll;
+  scrollbar-width: none; */
+}
+
+
+.GoodsReceiptSettings-form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+.GoodsReceiptSettings-form-row{
+  margin-top: 10px;
+}
+
+
+
+
+
+
+.GoodsReceiptSettings-form-calculation
+{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.GoodsReceiptSettings-item-row {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 10px;
+  margin-bottom: 2px;
+}
+
+.GoodsReceiptSettings-add-item-button {
+  margin-top: 2px;
+  padding: 5px 8px;
+  background: var(--button-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+}
+.GoodsReceiptSettings-form-submit
+{
+  width: 100%;
+  display:flex ;
+  justify-content: end;
+}
+
+.GoodsReceiptSettings-add-item-button:hover {
+  background: white;
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+
+.GoodsReceiptSettings-total-section
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.goods-receipts-form-group
+{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.GoodsReceiptSettings-form-row-date
+{
+  margin-top: 10px;
+ gap: 20px;
+  display: flex;
+ 
+}
+
+.GoodsReceiptSettings-btn-submit {
+  background: var(--button-color);
+  color: #fff;
+}
+
+.GoodsReceiptSettings-btn-submit:hover {
+  background: white;
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.GoodsReceiptSettings-btn-discard {
+  background: var(--button-color);
+  color: #fff;
+}
+
+.GoodsReceiptSettings-btn-discard:hover {
+  background: white;
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+@media (max-width: 768px) {
+  .GoodsReceiptSettings-item-row {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .GoodsReceiptSettings-item-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+/* ============================================================ */
+

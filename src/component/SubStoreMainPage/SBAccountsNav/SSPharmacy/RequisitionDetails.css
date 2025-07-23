@@ -1,0 +1,53 @@
+.requisition-container {
+    font-family: Arial, sans-serif;
+    width: 90%;
+    margin: auto;
+    border: 1px solid #ccc;
+    padding: 20px;
+  }
+  
+  .requisition-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .requisition-main-title
+  {
+    font-size: 20px;
+  }
+  .requisition-submain-title
+  {
+    font-size: 18px;
+  }
+  
+  .requisition-details {
+    margin: 20px 0;
+  }
+  
+  .requisition-details p {
+    margin: 5px 0;
+  }  
+  .medicine-link {
+    color: var(--button-color);
+    font-style: italic;
+  }
+  
+  .requisition-footer {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+  
+  .print-button {
+    padding: 5px 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .print-button:hover {
+    background-color:white;
+  }
+  

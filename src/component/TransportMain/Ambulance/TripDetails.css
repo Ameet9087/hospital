@@ -1,0 +1,48 @@
+.trip-details-ambulance-management {
+  padding: 20px;
+  background-color: var(--background-color);
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+/* Heading */
+.trip-details-ambulance-management h1 {
+  font-size: var(--heading-font);
+  margin-bottom: 10px;
+}
+
+/* Paragraph */
+.trip-details-ambulance-management p {
+  font-size: var(--font-size);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .trip-details-ambulance-management {
+      padding: 15px;  /* Reduce padding for better fit on smaller screens */
+      height: auto;   /* Allow height to adjust based on content */
+  }
+
+  .trip-details-ambulance-management h1 {
+      font-size: calc(var(--heading-font) - 4px);  /* Slightly decrease heading size */
+  }
+
+  .trip-details-ambulance-management p {
+      font-size: calc(var(--font-size) - 2px);  /* Slightly decrease paragraph size */
+  }
+}
+
+@media (max-width: 480px) {
+  .trip-details-ambulance-management {
+      padding: 10px;  /* Further reduce padding for very small devices */
+      height: auto;   /* Let content determine the height */
+  }
+
+  .trip-details-ambulance-management h1 {
+      font-size: calc(var(--heading-font) - 6px);  /* Further decrease heading size */
+  }
+
+  .trip-details-ambulance-management p {
+      font-size: calc(var(--font-size) - 4px);  /* Further decrease paragraph size */
+  }
+}

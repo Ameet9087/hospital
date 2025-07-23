@@ -1,0 +1,80 @@
+.dispenSales-counter-selection {
+  padding: 20px;
+  background-color: #e0f7ff; /* Background color similar to the screenshot */
+}
+
+.dispenSales-counter-options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dispenSales-counter-option {
+  border: 1px solid #ddd;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.dispenSales-counter-option:hover {
+  background-color: #f0f0f0;
+}
+
+.dispenSales-counter-Sub-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dispenSales-active-counter-info {
+  border: 1px solid #ddd;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.dispenSales-active-counter-info h5 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.dispenSales-active-counter-info p {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.dispenSales-active-counter {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.counter-number {
+  font-weight: bold;
+  color: green;
+  padding-right: 5px;
+}
+
+.counter-name {
+  color: green;
+  background-color: #f2fdf2;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.dispenSales-deactivate-btn {
+  background-color: red;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.dispenSales-deactivate-btn:hover {
+  background-color: #cc0000;
+}

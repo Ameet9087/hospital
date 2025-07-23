@@ -1,0 +1,70 @@
+/* Container */
+ .reports-com {
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  padding: 20px;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+} 
+
+/* Report Card */
+.report-card-container {
+  display: flex;
+  margin-top: 30px;
+  align-items: center;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease,
+    background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  margin-bottom: 20px; /* Adds spacing between cards if more are added */
+}
+
+.report-card-container:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px); /* Slight lift on hover */
+  background-color: var(--button-color); /* Change background color to blue on hover */
+  color: white; /* Change text color to white on hover */
+}
+
+.report-icon-container {
+  font-size: 18px; /* Icon size */
+  color: #007bff;
+  margin-right: 20px;
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.report-details-cont h4 {
+  /* margin: 0; */
+  font-size: 16px;
+  color: #333;
+  transition: color 0.3s ease; /* Smooth transition for text color */
+}
+
+
+.report-details-cont p {
+  margin: 0;
+  font-size: 14px;
+  color: #777;
+  transition: color 0.3s ease; /* Smooth transition for text color */
+}
+
+/* Hover effect for icon and text */
+.report-card-container:hover .report-icon-container,
+.report-card-container:hover .report-details-container h4,
+.report-card-container:hover .report-details-container p {
+  color: white; /* Change icon and text color to white on hover */
+}
+.report-icon-container {
+  font-size: 32px; /* Adjust the size of the icon */
+  color: #007bff; /* Ensure the color makes the icon visible */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px; /* Adjust width and height as needed */
+  height: 50px;
+}

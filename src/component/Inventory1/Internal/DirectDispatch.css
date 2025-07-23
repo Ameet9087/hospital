@@ -1,0 +1,181 @@
+/*  Swapnil ROkade adding className And Applying colors 14/09 */ 
+.direct-dispatch-dispatch-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.direct-dispatch-dispatch-table th, .direct-dispatch-dispatch-table td {
+    padding: 10px;
+    text-align: left; /* Aligns text to the left */
+    border: 1px solid #dee2e6;
+    font-size: var(--font-size); 
+    color: #495057;
+    vertical-align: middle; /* Aligns text vertically in the middle */
+}
+
+.direct-dispatch-dispatch-table th {
+    background-color: #e9ecef;
+}
+
+.direct-dispatch-dispatch-table td input, 
+.direct-dispatch-dispatch-table td select {
+    width: 100%;
+    padding: 6px;
+    font-size: var(--font-size); 
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.direct-dispatch-dispatch-table td input[type="number"] {
+    width: 100%; /* Ensure numeric inputs are full-width */
+}
+
+/*  */
+.direct-dispatch-dispatch-date {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Adjust this value to control the gap between the heading and the date input */
+    margin-bottom: 20px; /* Space below the section */
+    padding-bottom: 10px; /* Space between the content and the border-bottom */
+    border-bottom: 1px solid #f2f2f2; /* Border at the bottom */
+    margin-top: 20px; /* Space above the section */
+}
+
+.direct-dispatch-dispatch-date h1 {
+    margin: 0;
+    font-size: var(--heading-font);
+    color: #333;
+}
+
+.direct-dispatch-dispatch-date label {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: var(--font-size); 
+}
+
+.direct-dispatch-dispatch-date input {
+    margin-left: 10px;
+    padding: 8px;
+    font-size: var(--font-size); 
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+/*  */
+
+.direct-dispatch-store-name {
+    margin-bottom: 20px;
+    display: flex; /* Use Flexbox to align items horizontally */
+    align-items: center; /* Vertically center items */
+}
+
+.direct-dispatch-store-name label {
+    flex: 0 0 30%; /* Takes up 30% of the container width */
+    color: #495057;
+    margin-right: 10px; /* Space between label and select box */
+}
+
+.direct-dispatch-store-name select {
+    flex: 1; /* Takes up the remaining space */
+    padding: 8px;
+    font-size: var(--font-size); 
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+    height: 40px; /* Height of the select box */
+}.direct-dispatch-remarks {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center; /* Vertically centers the label and textarea */
+    gap: 10px; /* Adds space between the label and textarea */
+}
+
+.direct-dispatch-remarks label {
+    flex: 0 0 auto; /* Prevents the label from growing or shrinking */
+    color: #495057;
+    text-align: right; /* Aligns text to the right */
+}
+.direct-dispatch-remarks textarea {
+    width: 50%; /* Sets the width of the textarea to 50% of its container */
+    height: 80px; /* Adjust the height to fit your design needs */
+    padding: 10px; /* Adds padding inside the textarea */
+    font-size: var(--font-size); /* Sets the font size for the text inside the textarea */
+    border: 1px solid #ced4da; /* Adds a border around the textarea */
+    border-radius: 4px; /* Rounds the corners of the textarea */
+    box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+    resize: vertical; /* Allows resizing the textarea only vertically */
+}
+
+.direct-dispatch-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.direct-dispatch-buttons button {
+    padding: 5px;
+    font-size: var(--heading-font);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    outline: none;
+}
+
+.direct-dispatch-buttons-direct-dispatch {
+    background-color:var(--button-color); /* Green color for submit button */
+}
+
+.direct-dispatch-buttons-direct-dispatch:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.direct-dispatch-buttons-discard-change {
+    background-color: #dc3545; /* Red color for discard button */
+}
+
+.direct-dispatch-buttons-discard-change:hover {
+    background-color: #c82333; /* Darker red for hover effect */
+}
+
+
+/* Style for the Add button (+) */
+.direct-dispatch-buttons-direct-add {
+    background-color: red; /* Red background color */
+    color: white; /* White text color */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Round the corners */
+    padding: 5px; /* Add some padding */
+    font-size: var(--font-size); /* Set the font size */
+    cursor: pointer; /* Show pointer cursor on hover */
+    margin: 0; /* Remove default margin */
+}
+
+/* Style for the Remove button (X) */
+.direct-dispatch-buttons-remove {
+    background-color:var(--button-color); /* Green background color */
+    color: white; /* White text color */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Round the corners */
+    padding: 5px; /* Add some padding */
+    font-size: var(--font-size); /* Set the font size */
+    cursor: pointer; /* Show pointer cursor on hover */
+    margin: 0; /* Remove default margin */
+}
+
+/* Optional: Add hover effects */
+.direct-dispatch-buttons-direct-add:hover {
+    background-color: darkred; /* Darker red on hover */
+}
+
+.direct-dispatch-buttons-remove:hover {
+    background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}

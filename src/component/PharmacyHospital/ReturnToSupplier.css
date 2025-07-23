@@ -1,0 +1,285 @@
+/* Mohini_ReturnToSupplier_WholePage_14/sep/2024 */
+.return-to-supplier-container {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    padding: 20px;
+    height: 90vh;
+  }
+  
+  .return-to-supplier-header-title {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  
+  .return-to-supplier-filters-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .return-to-supplier-filter-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .return-to-supplier-filter-group label {
+    margin-right: 5px;
+    font-size: 14px;
+  }
+  
+  .return-to-supplier-input-box {
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .return-to-supplier-search-button {
+    background-color:var( --button-color);
+    color: white;
+    border: none;
+    margin-right: 10px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+    transition: background-color 0.3s ease;
+  }
+
+  .return-to-supplier-search-button:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .return-to-supplier-search-button:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+
+  }
+  
+  .return-to-supplier-date-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 60%;
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 3px;
+    margin-bottom: 15px;
+  }
+  
+  .return-to-supplier-date-filter {
+    display: flex;
+    align-items: center;
+  }
+  
+  .return-to-supplier-input-date {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .return-to-supplier-date-filter-actions button {
+    margin-left: 5px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .return-to-supplier-date-filter-actions button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+
+  }
+  
+  .return-to-supplier-star-button {
+    /* background-color: #f0ad4e; */
+    color: gray;
+  }
+  
+  .return-to-supplier-minus-button {
+    /* background-color: #d9534f; */
+    color: gray;
+  }
+  
+  .return-to-supplier-ok-button {
+    background-color:var( --button-color);
+    color: white;
+    border: none;
+    margin-right: 10px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+    transition: background-color 0.3s ease;
+
+  }
+  .return-to-supplier-ok-button:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+
+  }
+  
+  .return-to-supplier-search-bar {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  .return-to-supplier-search-input {
+    /* flex-grow: 1; */
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 3px 0 0 3px;
+  }
+  
+  .return-to-supplier-search-icon-button {
+    background: none; /* Remove background color */
+    border: none; /* Remove border */
+    padding: 0; /* Remove padding */
+    margin-left: -20px;
+    cursor: pointer; /* Keep the pointer cursor */
+}
+  /* .return-to-supplier-print-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+  } */
+  
+  .return-to-supplier-print-button {
+    background-color:var( --button-color);
+    color: white;
+    border: none;
+    /* margin-right: 10px; */
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin-left: auto;
+    transition: background-color 0.3s ease;
+
+  }
+
+  .returnpageshowbtn {
+    background-color:var( --button-color);
+    color: white;
+    border: none;
+    /* margin-right: 10px; */
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin-left: auto;
+    transition: background-color 0.3s ease;
+
+  }
+  .return-to-supplier-print-button:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+   .return-to-supplier-print-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+   }
+  
+  .return-to-supplier-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    margin-bottom: 15px;
+  }
+  
+  .return-to-supplier-data-table th, .return-to-supplier-data-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .return-to-supplier-data-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .return-to-supplier-no-rows {
+    background-color: #fff3cd;
+    /* color: #856404; */
+    text-align: center;
+    padding: 15px;
+  }
+  
+  .return-to-supplier-pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .return-to-supplier-pagination-button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .return-to-supplier-pagination-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .return-to-supplier-retuurn-store-supplier{
+    background-color: white;
+  }
+  .return-to-supplier-pagination-button {
+    background-color: #007bff; /* Blue color */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .return-to-supplier-pagination-button:disabled {
+    background-color: #0056b3; /* Darker blue color when disabled */
+    cursor: not-allowed;
+  }
+  
+  /*  */
+  .return-to-supplier-print-container {
+    display: flex;
+    justify-content: flex-end; /* Aligns content to the right */
+    align-items: center; /* Vertically centers content */
+    font-size: 14px;
+
+}
+
+
+.return-to-supplier-print-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns the span and button to the right side */
+  align-items: center; /* Vertically centers the content */
+  width: 100%; /* Ensures the container takes the full width */
+  margin-right: 0; /* Optional: Removes any unwanted margin */
+}
+
+.return-to-supplier-print-container span {
+  margin-left: 70%;
+}
+
+.return-to-supplier-print-button {
+  /* padding: 5px 10px; */
+  /* background-color: #f2f2f2; */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+/* Mohini_ReturnToSupplier_WholePage_14/sep/2024 */

@@ -1,0 +1,267 @@
+
+.booking-list-container {
+  height: 100vh;
+  background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  font-size: var(--font-size);
+}
+
+/* Header section with the button */
+.booking-list-booking-header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+
+}
+
+/* New OT Booking button */
+.booking-list-btn-btn-success {
+  background-color: var(--button-color);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+/* New OT Booking button */
+.booking-list-btn-btn-success:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+/* Search bar container */
+.booking-list-patient-search-dropdown {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.booking-list-patient-search-dropdown input {
+  width: 300px;
+  padding: 2px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Action buttons in the table */
+.booklist-action-btn {
+  color: white;
+  background-color: var(--button-color);
+  text-align: center;
+  padding: 5px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Modal overlay */
+.booking-list-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; /* Higher z-index to be above other content */
+}
+
+
+
+
+
+
+/* Modal content */
+.booking-list-modal-content {
+  background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 8px;
+  max-height: 700px; 
+  overflow-y: auto; 
+}
+
+
+/* Form Panels */
+.booking-list-form-panels {
+  display: flex;
+  justify-content: space-between;
+  max-width: 100%;
+}
+
+.booking-list-form-panel {
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Input Fields */
+.booking-list-patient-search-dropdown input {
+  padding: var(--input-box-padding);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: var(--font-size);
+  margin-bottom: 10px;
+}
+
+.booking-list-patient-search-dropdown label {
+  font-size: var(--heading-font);
+  font-weight: bold;
+}
+
+/* Modal Footer */
+.booking-list-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.booking-list-btn-submit {
+  background-color: var(--button-color); 
+  border: 1px solid white; 
+  color: white; 
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+
+}
+
+.booking-list-btn-cancel {
+  background-color:red;
+  color: white;
+  padding: 10px 20px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.booking-list-btn-submit:hover,
+.booking-list-btn-cancel:hover {
+  background-color: white; 
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+
+}
+
+.ot-filtersection {
+  display: flex;
+  width: 100%;
+  padding: 1px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ot-datefilter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1px;
+}
+
+.ot-daterange label {
+  margin-right: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.ot-input {
+  padding: 5px 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.ot-bookinglist-searchsection {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.ot-bookinglist-search-input {
+  padding: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.ot-bookinglist-print-button {
+  color: white;
+  background-color: var(--button-color);
+  text-align: center;
+  padding: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 200px;
+}
+
+.ot-bookinglist-print-button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.booking-list-patient-search-dropdown select {
+  width: 150px;
+  margin-left: 15px;
+}
+
+.booking-list-patient-search-dropdown label {
+  margin-left: 10px;
+  width: 150px;
+}
+.booking-list-input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.booking-list-input-with-icon input {
+  width: 100%;
+  padding-right: 30px; /* Adjust padding to accommodate icon */
+}
+
+.booking-list-search-icon {
+  position: absolute;
+  right: 10px;
+  font-size: 16px;
+  color: gray;
+  cursor: pointer;
+}
+
+.booking-list-search-icon::before {
+  content: "\1F50D"; /* Unicode for search icon */
+}
+.booking-list-patient-search-dropdown select {
+  width: 80%; /* Adjust width to match the input fields */
+  padding: 5px; /* Add padding for a better look */
+  border-radius: 4px; /* Rounded corners */
+  border: 1px solid #ccc; /* Light border */
+  background-color: #f9f9f9; /* Background color */
+  font-size: 16px; /* Font size */
+  color: #333; /* Text color */
+  transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+

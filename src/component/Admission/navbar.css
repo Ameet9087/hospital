@@ -1,0 +1,77 @@
+/* // neha-ADT-homepage-19/09/24 */
+.admission-header {
+  background-color: white;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+
+
+.nav-links {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.admission-header .logo{
+  font-size: 18px;
+}
+
+.nav-links a ,.logo{
+  color: black;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 5px;
+  margin-right: 10px;
+  position: relative;
+}
+.fa-house-chimney
+{
+  color: black;
+}
+
+.nav-links a:hover,.logo:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border-radius: 5px;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  /* background-color: #3598dc; */
+  left: 0;
+  bottom: 0;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* navbar.css */
+.adt-header-button {
+  font-size: 16px; /* Ensure font-size is consistent */
+  text-decoration: none; /* Remove default link underline */
+  color: #333; /* Dark text color */
+  padding: 10px 15px; /* Padding around each link */
+  margin-right: 20px; /* Add right margin for spacing */
+  transition: color 0.3s, background-color 0.3s; /* Smooth transition for hover effects */
+  border-radius: 5px; /* Rounded corners for links */
+}
+
+.adt-header-button:hover,
+.adt-header-button.active {
+  color: #fff; 
+  background-color: var(--sideBar-bg-color); 
+}
+

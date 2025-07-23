@@ -1,0 +1,119 @@
+.PACRequest-form-container {
+  width: 100%;
+  /* max-width: 1250px; */
+  margin: 20px auto;
+  padding: 8px;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+}
+.PACRequest-form-container h3 {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.ReferralConsultation-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.ReferralConsultation-table th,
+.ReferralConsultation-table td {
+  border: 1px solid gray;
+  padding: 5px;
+  text-align: left;
+}
+
+.ReferralConsultation-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.ReferralConsultation-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.ReferralConsultation-table tr:hover {
+  background-color: #f1f1f1;
+}
+.PACRequest-form-group-content {
+  background-color: white;
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 10px;
+  padding-top: 10px;
+  margin: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.PACRequest-form-group-right,
+.PACRequest-form-group-left {
+  flex: 1px;
+}
+.PACRequest-form-group {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 30px;
+}
+.PACRequest-form-group label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 350px;
+}
+.PACRequest-form-group input,
+.PACRequest-form-group select,
+.PACRequest-form-group textarea {
+  width: 100%;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+.PACRequest-form-group-buttons {
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s, transform 0.1s;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin: 20px;
+  margin-bottom: 30px;
+}
+.PACRequest-form-group-buttons:active {
+  transform: scale(0.98);
+}
+.PACRequest-cancel-btn {
+  width: 13%;
+  background-color: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.PACRequest-cancel-btn:hover {
+  background-color: white;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+.PACRequest-submit-btn {
+  width: 13%;
+  background-color: var(--button-color);
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+}
+
+.PACRequest-submit-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-color);
+  border: 1px solid var(--button-color);
+}

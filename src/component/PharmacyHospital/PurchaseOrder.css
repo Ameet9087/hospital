@@ -1,0 +1,488 @@
+.purchase-order-container {
+    padding: 20px;
+    height: 90vh;
+    overflow-y: scroll;
+    background-color: var(--background-color);
+}
+
+.purchaseOrders-add-btn{
+  background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+}
+
+/* Header */
+.purchase-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+.purchase-order-button{
+    justify-content: end;
+}
+/* Add Purchase Order Button */
+.purchase-order-add-purchase-order-button,.pobtn-view {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+}
+.pharmacy-btn
+{
+    width: 100%;
+    display: flex;
+    gap: 5px;
+}
+.purchase-order-add-purchase-order-button:hover
+{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+/* Status Filters */
+.purchase-order-status-filters {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.purchase-order-status-filters label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.purchase-order-status-filters input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Filters Container */
+.purchase-order-filters {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.purchaseOrders-add-btn {
+    background-color:var(--button-color); 
+    color: white;
+    border: none;
+   
+    padding: 5px; 
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+  }
+
+/* Date Range Filter */
+.purchase-order-date-range {
+    display: flex;
+    align-items: center;
+    background-color: #f2f2f2;
+    gap: 10px;
+    width: 50%;
+}
+
+.purchase-order-date-range label {
+    font-size: 14px;
+}
+
+.purchase-order-date-range input[type="date"] {
+    padding: 5px;
+    border-radius: 5px;
+    /* width: 30%; */
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.purchase-order-date-range-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.purchase-order-date-range-button:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+.purchase-order-date-range-button:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+/* Favorite and Reset Buttons */
+.purchase-order-favorite-btn,
+.purchase-order-reset-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 0 5px;
+    padding: 0;
+    line-height: 1;
+    color: gray;
+}
+
+/* Search Box */
+.purchase-order-search-box {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+    /* width: 30%; */
+    font-size: 14px;
+}
+
+
+
+/* No Rows */
+.purchase-order-no-rows {
+    text-align: center;
+    background-color: #fff3e0;
+    color: #ff6f00;
+    font-weight: bold;
+}
+
+/* Pagination */
+.purchase-order-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px 0;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.purchase-order-pagination span {
+    margin: 0 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+.purchase-order-pagination button {
+    background-color: #0069d9;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.purchase-order-pagination button:hover {
+    background-color: #0056b3;
+}
+
+.purchase-order-pagination button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* Search Container */
+.purchase-order-search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Print Button */
+.purchase-order-print-button {
+    background-color:var( --button-color);
+    color: white;
+    border: 1px solid var( --button-hover-border-color);
+    margin-right: 10px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+    transition: background-color 0.3s ease;
+}
+.purchase-order-print-button:hover{
+
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+.purchase-order-button span {
+ /* This pushes the span to the right */
+    font-size: 14px; /* Adjust font size if needed */
+  }
+  
+
+
+/* Data Order */
+.purchase-data-order {
+    display: flex;
+    margin-left: 10px;
+}
+
+/* Supplier Filter */
+.purchase-order-supplier-filter {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-left: 50px;
+    /* margin-left: 280px; */
+}
+
+.purchase-order-supplier-filter label {
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.purchase-order-supplier-filter select{
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.purchase-order-supplier-filter input {
+    padding: 3px;
+    /* width: 30%; */
+    margin-right: 50%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.purchase-order-supplier-filter input[type="number"] {
+    width: 100px;
+}
+
+/* Button Container */
+.purchase-order-button {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 5px;
+}
+
+/* Modal Styles */
+.purchase-order-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+/* Modal Content */
+.purchase-order-modal .modal-dialog {
+    max-width: 100%;
+    margin: 0;
+}
+
+.purchase-order-modal .modal-content {
+    width: 100%;
+    height: auto;
+    max-height: 90vh;
+    overflow: auto;
+    border-radius: 2px;
+    /* background-color: #fff; */
+    /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Modal Header and Footer */
+.purchase-order-modal .modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.purchase-order-modal .modal-title {
+    font-size: 16px;
+}
+
+.purchase-order-modal .modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+.purchase-order-modal .modal-dialog {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+  
+/* Modal Body for Horizontal Form */
+.purchase-order-form-horizontal {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    min-width: 100%;
+}
+
+.purchase-order-form-horizontal > div {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Adjust for Mobile Responsiveness */
+@media (max-width: 768px) {
+    .purchase-order-form-horizontal {
+        flex-direction: column;
+    }
+
+    .purchase-order-form-horizontal > div {
+        min-width: 100%;
+    }
+}
+.purchase-order-modal .modal-content{
+    display: contents!important;
+}
+
+
+/*Table */
+
+.purchase-order-table-container {
+    margin-top: 5px;
+    /* background-color: white; */
+    border-radius: 5px;
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.purchase-order-table-container {
+    /* background-color: white; */
+    padding: 10px;
+  }
+  
+  .purchase-order-tab {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .purchase-order-tab th, .purchase-order-tab td {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 5px 0; /* Only top-bottom padding */
+  }
+  
+  .purchase-order-tab th {
+    background-color: #f1f1f1;
+    white-space: nowrap;
+    font-size: 16px;
+  }
+  
+  .purchase-order-tab td {
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .purchase-order-no-rows {
+    background-color: #ffecb3;
+    text-align: center;
+    padding: 15px;
+  }
+  
+  .purchase-order-pagination {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .purchase-order-pagination-btn {
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: #90caf9;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .purchase-order-pagination-btn:hover {
+    background-color: var(--button-color);
+  }
+  .purchase-results-count-span {
+    font-size: 14px;
+    color: black;
+    margin-right: 10px;
+  }
+
+
+  /*  */
+  
+  @media (max-width: 768px) {
+
+    /* Adjustments for flexbox */
+    .purchase-order-header,
+    .purchase-order-status-filters,
+    .purchase-order-filters,
+    .purchase-order-date-range,
+    .purchase-order-search-container,
+    .purchase-order-supplier-filter,
+    .purchase-order-button {
+      flex-direction: column;
+      gap: 10px; /* Maintain a reasonable gap without adding too much vertical space */
+      align-items: flex-start;
+    }
+  
+    /* Responsive buttons and inputs */
+    .purchase-order-add-purchase-order-button,
+    .purchase-order-date-range input[type="date"],
+    .purchase-order-search-box,
+    .purchase-order-print-button {
+      width: 100%; /* Make inputs and buttons take full width */
+      font-size: 14px; /* Ensure font size remains readable */
+    }
+  
+    /* Responsive table container */
+    .purchase-order-table-container {
+      max-width: 100%;
+      overflow-x: auto; /* Allow horizontal scroll if needed */
+      margin-top: 5px; /* Avoid large vertical spaces */
+    }
+  
+    /* Responsive modal content */
+    .purchase-order-modal .modal-dialog {
+      margin: 10px;
+      width: 100%; /* Ensure the modal is full width */
+    }
+  
+    /* Responsive form in modal */
+    .purchase-order-form-horizontal {
+      flex-direction: column; /* Stack form fields vertically */
+      gap: 10px; /* Minimal gap between form fields */
+    }
+  
+    .purchase-order-form-horizontal > div {
+      width: 100%;
+      min-width: unset;
+    }
+  
+   
+  }
+  

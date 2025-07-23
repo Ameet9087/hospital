@@ -1,0 +1,50 @@
+.vitals-page {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    position: relative;
+  }
+  
+  .vitals-page-tab-navigation {
+    width: 100%;
+    background-color: #e0e0e0;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .vitals-page-tab-navigation-navTab
+  {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .vitals-page-tab {
+    padding: 5px 10px;
+    background-color: #e0e0e0;
+    color: black;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .vitals-page-tab.active {
+    background-color: var(--button-color);
+    color: white;
+  }
+  
+  .vitals-page-content-area {
+    display: flex;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  .vitals-page-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+  }

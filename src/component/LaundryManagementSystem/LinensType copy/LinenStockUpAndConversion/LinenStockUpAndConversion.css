@@ -1,0 +1,148 @@
+.StockUpAndConversion-container {
+    /* padding: 5px; */
+    background-color: var(--background-color);
+    height: auto;
+}
+.StockUpAndConversion-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+.StockUpAndConversion-header h2 {
+    margin: 0;
+    color: black;
+}
+.StockUpAndConversion-type-select,
+.StockUpAndConversion-department-select {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+.StockUpAndConversion-type-select {
+    border-radius: 5px;
+}
+.StockUpAndConversion-load-button {
+    color: blue;
+    border: none;
+    cursor: pointer;
+}
+
+.LinenCondemnationDisposal-table-content {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+.StockUpAndConversion-table th,
+.StockUpAndConversion-table td {
+    border: 1px solid gray;
+    padding: 5px;
+    text-align: center;
+}
+.StockUpAndConversion-table th {
+    background-color: var(background-color);
+    /* color: black; */
+}
+.StockUpAndConversion-action-button {
+    margin: 0 10px;
+    padding: 5px 10px;
+    border: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+}
+
+.StockUpAndConversion-action-button.delete {
+    
+    background-color: #f44336;
+}
+
+
+.StockUpAndConversionH2 {
+    font-size: var(--heading-font);
+    background-color: var(--upperBar-bg-color);
+    padding: 5px 10px;
+    color: white;
+    /* margin: 10px; */
+
+}
+
+.StockUpAndConversionlabel {
+    font-size: var(--heading-font);
+}
+
+
+.label2 {
+    font-size: var(--heading-font);
+}
+
+
+
+.Label44 {
+    color: red;
+}
+
+
+.label3 {
+    font-size: var(--heading-font);
+    color: white;
+}
+
+.LinesRequirementlabeldiv {
+    background-color: var(--upperBar-bg-color);
+    padding: 5px 10px;
+    margin-top: 10px;
+}
+
+
+.InputLinens {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+
+.StockUpAndConversion-search-icon-row {
+    font-size: 14px;
+    color: gray;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.StockUpAndConversion-cell {
+    display: flex;
+    justify-content: space-between;
+    /* Push the contents to both sides of the cell */
+    align-items: center;
+    /* Align items vertically in the center */
+}
+
+.StockUpAndConversion-search-icon-row {
+    font-size: 16px;
+    color: gray;
+    margin-left: 10px;
+    /* Add some space between the linen text and the search icon */
+}
+.LinenStockUpAndConversion-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 10px;
+    background-color: white;
+    /* margin-top: 10px; */
+  }
+  .LinenStockUpAndConversion-save{
+    background-color: var(--button-color);
+    color: white;
+    padding: var(--input-box-padding);
+    border-radius: 5px;
+    border: var(--button-hover-border-color);
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  .LinenStockUpAndConversion-save:hover{
+    background-color:var(--button-hover-background-color);
+    color: var(--button-color);
+    font-size: var(--font-size);
+    border:1px solid var(--button-hover-border-color);
+  }

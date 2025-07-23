@@ -1,0 +1,272 @@
+:root {
+  --sideBar-bg-color: #007973;
+  --upperBar-bg-color: #00968f;
+  --button-bg-color: #00968f;
+  --button-color: #00c9c0;
+  --background-color: #e3fffe;
+  --heading-font: 16px;
+  --font-size: 14px;
+  --button-hover-border-color: #00c9c0;
+  --button-hover-text-color: #00c9c0;
+  --button-hover-background-color: white;
+  --input-box-padding: 5px;
+}
+
+/* Akash Pawar Table related All Css 14/24 */
+
+.table-container {
+  width: 100%;
+  max-height: 60vh;
+
+  overflow-x: auto; /* Allow horizontal scrolling */
+  overflow-y: auto; /* Allow vertical scrolling */
+  scrollbar-width: none;
+}
+
+table {
+  width: 100%;
+  background-color: #f2f2f2;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+thead {
+  background-color: #f2f2f2;
+  z-index: 15;
+  position: sticky;
+
+  top: -0.5px;
+}
+
+table th {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+  font-weight: bold;
+  font-size: var(--font-size);
+  white-space: nowrap; /* Prevent wrapping */
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+table td {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+  font-size: var(--font-size);
+  white-space: nowrap; /* Prevent wrapping */
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+table th .header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-overflow: ellipsis;
+}
+
+table th:last-child,
+table td:last-child {
+  width: 250px;
+  text-align: center;
+}
+/* Resizable Columns */
+.resizable-th {
+  position: relative;
+}
+
+.resizer {
+  width: 5px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: col-resize;
+  z-index: 1;
+}
+
+table th .resizer:hover {
+  background-color: #aaa;
+}
+/* Akash Pawar Table related All Css 14/24 */
+
+/* Layout Container */
+.layout-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  transition: width 0.3s ease;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 250px; /* Adjust width as needed */
+  background-color: #2f3542;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 100;
+  padding-top: 60px; /* Space for header */
+  transition: color 0.2s;
+}
+
+/* Main Content Area */
+.main-content {
+  width: 100%;
+  overflow: auto;
+  /* width: calc(100% - 250px); */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  transition: margin-left 0.3s ease;
+  background-color: var(--background-color);
+}
+
+/* Header Styling */
+.header {
+  background-color: var(--upperBar-bg-color);
+  color: white;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  position: fixed;
+  top: 0;
+  left: 250px; /* Offset by the sidebar width */
+  width: calc(100% - 250px);
+  z-index: 100;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Custom input styling*/
+/* Container */
+.custom-floating-field {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.custom-floating-input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.custom-floating-label {
+  position: absolute;
+  left: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 4px;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  width: calc(100% - 3px);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Active label */
+.custom-floating-field.active .custom-floating-label {
+  top: 0px;
+  padding: 0 5px;
+  left: 5px;
+  font-size: 12px;
+  width: fit-content;
+
+  color: #00897b;
+}
+
+/* Search Icon */
+.custom-search-icon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.custom-search-icon:hover {
+  color: #00897b;
+}
+
+/* Container */
+.custom-floating-select-field {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* Select Field */
+.custom-floating-select {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  appearance: none;
+  background: white;
+  cursor: pointer;
+}
+
+/* Floating Label */
+.custom-floating-select-label {
+  position: absolute;
+  left: 1px;
+  top: 50%;
+  padding: 0 60px 0 0;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 4px;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  width: calc(100% - 3px);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* When select has a value or is focused */
+.custom-floating-select-field.active .custom-floating-select-label {
+  top: 0px;
+  left: 5px;
+  padding: 0 5px;
+  font-size: 12px;
+  width: fit-content;
+  color: #00897b;
+}
+
+/* Focus effect */
+.custom-floating-select:focus {
+  outline: none;
+  border-color: #00897b;
+  box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+}
+
+/* Error state */
+.custom-floating-select-field.error .custom-floating-select {
+  border: 2px solid red;
+}
+
+.custom-floating-select-field.error .custom-floating-select-label {
+  color: red;
+}
+
+.toastify-text {
+  font-size: 13px; /* Adjust font size */
+}

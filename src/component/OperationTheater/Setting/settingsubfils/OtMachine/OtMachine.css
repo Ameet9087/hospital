@@ -1,0 +1,166 @@
+/* neha-OT-ot-machine-14-9-24 */
+.ot_machine_main{
+    background-color:var( --background-color);
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    font-size: var(--font-size);
+
+  }
+  
+  .ot_machine_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+.ot_machine_tablehead, .ot_machine_tablehead{
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .ot_machine_tabledata {
+    background-color: white;
+  }
+  
+  .ot_machine_tablehead {
+    background-color: #f2f2f2;
+  }
+  .ot_machine_container_button{
+    background-color: var(--button-color);
+    border:1px solid var(--button-color);
+    color: white;
+    padding: var(--input-box-padding);
+    margin-left: 7px;
+    border-radius: 5px;
+  }
+  .ot_machine_container_button:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border-color:var(--button-hover-border-color);
+  }
+  .ot_machine_table_button{
+    background-color: var(--button-color);
+    border:1px solid var(--button-color);
+    color: white;
+    padding: var(--input-box-padding);
+    border-radius: 5px;
+  }
+  .ot_machine_table_button:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border-color:var(--button-hover-border-color);
+    
+  }
+  .ot_machine_search_bar input[type="text"] {
+    width: 300px;
+    padding: 2px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .ot_machine_filter_button {
+    background-color: white;
+    color: gray;
+    font-size: 20px;
+    padding: 4px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .ot_machine_filter_button:hover {
+    background-color: #45a049;
+  }
+  
+  .ot_machine_pagination {
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  .ot_machine_pagination button {
+    background-color: #ddd;
+    color: black;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 4px;
+  }
+  
+  .ot_machine_pagination button:hover {
+    background-color: #ccc;
+  }
+  
+ 
+  
+  .ot_machine_container {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    margin-bottom: 20px;
+  }
+  
+  .ot_machine_input {
+    display: flex;
+    flex-direction: row;
+  }
+  
+    .ot_machine_input label {
+      margin-bottom: 5px;
+      line-height: 2;
+    }
+  
+  .ot_machine_input input {
+    width: 200px;
+    padding: 2px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    line-height: 1;
+    height: 30px;
+  }
+  
+  .ot_machine_checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 20px;
+  }
+  .ot_machine_checkbox input[type="checkbox"]{
+    width: 20px;
+    height: 20px;
+
+  }
+  
+  .ot_machine_buttons {
+    display: flex;
+    gap: 10px;
+    margin-left: 200px;
+  }
+  
+  .ot_machine_save, .ot_machine_clear {
+    padding:5px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .ot_machine_save {
+    background-color: var(--button-color);
+    color: white;
+  }
+  
+  .ot_machine_clear {
+    background-color: var(--button-color);
+  }
+  
+  .ot_machine_save:hover, .ot_machine_clear:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  

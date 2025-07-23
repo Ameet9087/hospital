@@ -1,0 +1,88 @@
+.checkInPrintInvoice{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2555;
+    background-color: rgba(0, 0, 0, 0.485);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.checkInPrintInvoiceCloseBTN{
+    background-color: red;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    border: none;
+}
+.checkInPrintInvoiceContainer{
+    width: 800px;
+    background-color: white;
+    padding: 20px;
+    position: relative;
+}
+.checkInPrintInvoiceData{
+    border: 1px solid black;
+    padding: 20px;
+}
+.checkInPrintInvoice h1 {
+    color: #2c3e50;
+    text-align: center;
+    font-size: var(--heading-font);
+}
+.invoice-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: var(--font-size);
+}
+.invoice-details h2{
+    font-weight: bold;
+}
+.invoice-details p{
+    margin-bottom: 5px;
+}
+.print-invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+.print-invoice-table th,.print-invoice-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    white-space: wrap;
+}
+.print-invoice-table th {
+    background-color: #f2f2f2;
+}
+.print-invoice-total {
+    text-align: right;
+    font-size: var(--font-size);
+}
+.print-invoice-inWords{
+    float: left;
+    font-weight: bold;
+}
+.print-invoice-print-button {
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 10px; 
+    border: none;            
+    border-radius: 5px;     
+    cursor: pointer;         
+    font-size: 16px;        
+    margin-top: 20px;   
+    border: 1px solid var(--button-color);    
+}
+
+.print-invoice-print-button:hover {
+    background-color: var(--button-hover-background-color); 
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}

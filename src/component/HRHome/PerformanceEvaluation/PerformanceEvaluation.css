@@ -1,0 +1,259 @@
+/* Ravindra_Sanap_PerformanceEvaluation.css_04_10_2024_Start */
+
+
+.performance-evaluation-container {
+    padding: 20px;
+    background-color: #e3fffe;
+    
+
+}
+
+.performance-evaluation-container h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 18px;
+}
+
+.performance-evaluation-container h2 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-size: 18px;
+}
+
+.performance-button {
+    margin-left: 0; /* Align the button to the start */
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    margin: 2px;
+}
+
+.evaluation-table {
+    width: 100%;
+    background-color: #f2f2f2;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.evaluation-table th,
+.evaluation-table td {
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+    font-size: var(--font-size);
+    white-space: nowrap; /* Prevent wrapping */
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.evaluation-table th {
+    background-color: #eaeaea;
+    color: black;
+}
+
+.evaluation-table tr:hover {
+    background-color: #ddd;
+}
+
+.evaluation-table td {
+    color: #555;
+}
+
+/* Resizable Columns */
+.resizable-th {
+    position: relative;
+  }
+  
+  .resizer {
+    width: 5px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: col-resize;
+    z-index: 1;
+  }
+  
+  table th .resizer:hover {
+    background-color: #aaa;
+  }
+
+@media (max-width: 600px) {
+
+    .evaluation-table,
+    .evaluation-table th,
+    .evaluation-table td {
+        font-size: 12px;
+    }
+}
+
+.HRpagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.HRpagination button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.HRpagination button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.HRpagination button.active {
+    background-color: #333;
+    color: white;
+}
+
+
+.performance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+
+
+
+
+.nodatatoshow {
+    text-align: center;
+    background-color: rgba(212, 194, 29, 0.582);
+    padding: 10px;
+}
+
+
+.performance-evaluation-searchAndActions {
+
+    margin: 10px;
+    margin-left: 0;
+}
+
+.performance-evaluation-search-N-results {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.performance-evaluation-search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid gray;
+    background-color: white;
+    padding: 3px;
+}
+
+.performance-evaluation-search-bar i {
+    color: gray;
+}
+
+.performance-evaluation-search-bar input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.performance-evaluation-search-button {
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-left: 5px;
+    /* Adds some spacing between the input and the button */
+    border-radius: 4px;
+    /* Optional: rounds the corners of the button */
+    font-size: var(--font-size);
+    /* Adjusts the font size for consistency */
+}
+
+.performance-evaluation-search-button:hover {
+    background-color: #e0e0e0;
+    /* Changes the background color on hover */
+}
+
+
+.performance-evaluation-results-info {
+    text-align: right;
+    font-size: var(--font-size);
+    /* color: rgb(88, 87, 87); */
+    /* font-weight: bold; */
+    /* margin-top: 5px; */
+}
+
+
+
+
+.performance-evaluation-ex-pri-buttons {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+}
+
+.performance-evaluation-ex-pri-buttons:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+.performance-evaluation-action-button-add-reports {
+    background-color: var(--button-color);
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+}
+
+.performance-evaluation-ex-pri-buttons:hover,
+.performance-evaluation-action-button-add-reports:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.performance-evaluation-searchInput {
+    /* padding: 5px; */
+    width: 300px;
+    transition: border-color 0.3s;
+    font-size: 14px;
+    margin-left: 0;
+
+}
+
+.performance-evaluation-searchInput:focus {
+    border-color: skyblue;
+    outline: none;
+}
+
+
+
+/* Ravindra_Sanap_PerformanceEvaluation.css_04_10_2024_End */

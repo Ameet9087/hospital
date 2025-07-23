@@ -1,0 +1,173 @@
+/* Dhanashree_AuditTrial_19/09 */
+.AuditTrials-audit-trail {
+  background-color: var(--background-color);
+  padding: 20px;
+}
+
+.AuditTrials-section-title {
+  color: #00559f;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.AuditTrials-filters {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.AuditTrials-filter-item {
+  display: flex;
+  align-items: center;
+}
+
+.AuditTrials-filter-item label {
+  margin-right: 10px;
+}
+
+.AuditTrials-select {
+  padding: 5px;
+  width: 200px;
+}
+
+.AuditTrials-date-range {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.AuditTrials-date-input {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.AuditTrials-date-input label {
+  margin-right: 5px;
+}
+
+.AuditTrials-date-input input {
+  padding: 5px;
+}
+
+.AuditTrials-star-btn, 
+.AuditTrials-minus-btn, 
+.AuditTrials-ok-btn {
+  margin-left: 5px;
+  padding: 5px 10px;
+  background-color: var(--button-color);
+}
+
+.AuditTrials-ok-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+}
+
+.AuditTrials-search-bar {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.AuditTrials-search-bar input {
+  flex-grow: 1;
+  padding: 5px;
+}
+
+.AuditTrials-results-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.AuditTrials-export-btn, 
+.AuditTrials-print-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+}
+
+.AuditTrials-audit-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+.AuditTrials-audit-table th, 
+.AuditTrials-audit-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.AuditTrials-audit-table th {
+  background-color: #f2f2f2;
+}
+
+.AuditTrials-no-rows {
+  text-align: center;
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.AuditTrials-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.AuditTrials-pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+}
+
+.AuditTrials-login-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.AuditTrials-login-info-table th, 
+.AuditTrials-login-info-table td {
+  padding: 7px 10px;
+  border: 1px solid #dddddd;
+}
+
+.AuditTrials-login-info-table th {
+  background-color: #f4f4f4;
+  color: #333333;
+  font-weight: bold;
+}
+
+.AuditTrials-login-info-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.AuditTrials-login-info-table tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.AuditTrials-login-info-table tr:hover {
+  background-color: #e2e2e2;
+}
+
+.AuditTrials-login-info-table td {
+  color: #555555;
+}
+
+.AuditTrials-login-info-table th:first-child,
+.AuditTrials-login-info-table td:first-child {
+  border-left: none;
+}
+
+.AuditTrials-login-info-table th:last-child,
+.AuditTrials-login-info-table td:last-child {
+  border-right: none;
+}
+/* Dhanashree_AuditTrial_19/09 */

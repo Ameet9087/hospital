@@ -1,0 +1,55 @@
+.er-clinical-entries-container {
+  padding: 20px;
+}
+
+.er-clinical-entries-container-age {
+  color: red;
+}
+
+.er-clinical-entries-container-card-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-items: center;
+}
+
+.er-clinical-entries-container-card {
+  background-color: white;
+  width: 30%;
+  height: 14vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  box-shadow: 0 6px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 0 10px;
+}
+.er-clinical-entries-container-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 6px rgba(0, 0, 0, 0.2);
+}
+
+.er-clinical-entries-container-card-id {
+  background-color: #e53935;
+  color: white;
+  font-size: var(--heading-font);
+  padding: 5px;
+  border-radius: 5px;
+  width: 40%;
+  margin: 0;
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -10px;
+}
+
+.er-clinical-entries-container-card-label {
+  color: #424242;
+  font-size: var(--font-size);
+  font-weight: 500;
+}
+.er-clinical-entries-container-card-label:hover {
+  color: blue;
+}

@@ -1,0 +1,141 @@
+.reparingAndSewing-type {
+  background-color: var(--background-color);
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+}
+
+.reparingAndSewing-form-group-load {
+  color: rgba(0, 0, 0, 0.58);
+}
+
+.line-reparing-sew-in {
+  width: 70%;
+  padding: 5px;
+  font-size: var(--font-size);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.reparingAndSewing-header {
+  width: 100%;
+  height: 30px;
+  background-color: var(--upperBar-bg-color);
+  color: white;
+  font-size: var(--heading-font);
+  line-height: 30px;
+}
+.reparingAndSewing-headingName {
+  margin-left: 45%;
+  font-size: var(--heading-font);
+  font-weight: bolder;
+}
+.reparingAndSewing-form-group-search {
+  width: 80%;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: end;
+  cursor: pointer;
+}
+
+.reparingAndSewing-form-group-search svg {
+  margin-top: 5px;
+
+}
+
+.reparingAndSewing-action-buttons {
+  display: flex;
+  gap: 5px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+.reparingAndSewing-action-buttons button {
+  background-color: var(--button-bg-color);
+  color: var(--button-hover-background-color);
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 5px;
+}
+
+.reparingAndSewing-action-buttons button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color);
+}
+
+.reparingAndSewing-services-table-heading {
+  background-color: var(--button-bg-color);
+  color: white;
+  padding: 0 0 0 7px;
+}
+.reparingAndSewing-add-btn,
+.reparingAndSewing-del-btn {
+  margin-right: 4px;
+  padding: 2px 8px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+
+.reparingAndSewing-add-btn {
+  color: green;
+}
+
+.reparingAndSewing-del-btn {
+  color: red;
+}
+
+.reparingAndSewing-services-table table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: white;
+  margin-top: -10px;
+}
+
+.reparingAndSewing-services-table table thead {
+  background-color: #cccccc46;
+  padding: var(--input-box-padding);
+}
+
+.reparingAndSewing-services-table table td {
+  text-align: center;
+}
+.reparingAndSewing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 10px;
+  background-color: white;
+  /* margin-top: 10px; */
+}
+
+.reparingAndSewing-floating-field {
+  position: relative;
+}
+
+.reparingAndSewing-search-field {
+  position: relative;
+}
+
+.reparingAndSewing-search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+

@@ -1,0 +1,64 @@
+.gps-map-con-map-gps {
+  padding: 20px;
+  background-color: var(--background-color);
+  height: 90vh; /* Maintain height for larger screens */
+  overflow-y: scroll;
+}
+
+.gps-map-con-map-gps h1 {
+  font-size: var(--heading-font);
+  margin-bottom: 10px; /* Add margin for spacing */
+}
+
+.map-placeholder {
+  height: 400px; /* Fixed height for larger screens */
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--heading-font);
+}
+
+.map-con-gps-map {
+  height: 500px; /* Fixed height for larger screens */
+  width: 100%; /* Full width */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .gps-map-con-map-gps {
+      padding: 15px; /* Reduce padding for smaller screens */
+      height: auto;  /* Allow height to adjust based on content */
+  }
+
+  .gps-map-con-map-gps h1 {
+      font-size: calc(var(--heading-font) - 4px); /* Slightly decrease font size */
+  }
+
+  .map-placeholder {
+      height: 300px; /* Decrease height for smaller screens */
+      font-size: calc(var(--heading-font) - 6px); /* Slightly decrease font size */
+  }
+
+  .map-con-gps-map {
+      height: 400px; /* Decrease height for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .gps-map-con-map-gps {
+      padding: 10px; /* Further reduce padding */
+  }
+
+  .gps-map-con-map-gps h1 {
+      font-size: calc(var(--heading-font) - 6px); /* Further decrease font size */
+  }
+
+  .map-placeholder {
+      height: 250px; /* Further decrease height for very small devices */
+  }
+
+  .map-con-gps-map {
+      height: 300px; /* Further decrease height for very small devices */
+  }
+}

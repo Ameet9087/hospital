@@ -1,0 +1,224 @@
+ /* Ajhar Tamboli vehicleMaintenance.css 25-09-24 */
+
+
+.vehicleMaintenance-container {
+    background-color: var(--background-color);
+    padding: 10px;
+    border-radius: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    /* width: 100%; */
+    /* max-width: 1200px; */
+    margin: 0 auto;
+    height: 75vh;
+  }
+  .vehicleMaintenance-firstRow{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .vehicleMaintenance-add-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .vehicleMaintenance-add-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .vehicleMaintenance-search-bar{
+    margin-left: -15px;
+    /* margin: 0; */
+  }  
+    .vehicleMaintenance-search-bar input {
+      /* margin-top: 10px; */
+      padding: 3px;
+      width: 200px;
+    }
+    .vehicleMaintenance-search-bar i{
+      position: relative;
+      color:gray;
+      top: 3px;
+    left: 205px;
+    }
+  
+  .vehicleMaintenance-search-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .vehicleMaintenance-search-box {
+    display: block;
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  
+  .vehicleMaintenance-search-N-result{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+.vehicleMaintenance-results-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    /* padding-top: 10px; */
+  }
+  .vehicleMaintenance-results-info span {
+    /* display: flex;
+    align-items: center; */
+    /* padding-top: 10px; */
+    /* color: #008CBA; */
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+    margin-right: 10px;
+  }
+  
+  /* .vehicleMaintenance-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: white;
+  }
+  
+  .vehicleMaintenance-container th, .vehicleMaintenance-container td {
+    padding: 3px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: var(--font-size);
+  }
+  
+  .vehicleMaintenance-container th {
+    background-color: #f2f2f2;
+    font-size: var(--heading-font);
+  } */
+  
+  .vehicleMaintenance-edit-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 1px 5px;
+  }
+  
+  .vehicleMaintenance-edit-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+
+  .vehicleMaintenance-print-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .vehicleMaintenance-print-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  /* Modal styles */
+  .vehicleMaintenance-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .vehicleMaintenance-modal-content {
+    /* padding: 20px; */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    /* width: 100%; */
+    position: relative;
+  }
+  
+  .vehicleMaintenance-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .vehicleMaintenance-pagination button {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: 1var(--font-size)2px;
+  }
+  
+  .vehicleMaintenance-pagination span {
+    margin: 0 10px;
+    color: gray;
+    font-size: var(--font-size);
+  }
+  
+  .vehicleMaintenance-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    z-index: 1000;
+  }
+  
+  .vehicleMaintenance-modal-content {
+    margin: 20px;
+    /* padding: 20px; */
+    /* background-color: red; */
+    /* background-color: #fff; */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 95%;
+    /* width: 100%; */
+    position: relative;
+  }
+  

@@ -1,0 +1,142 @@
+.breakage-container {
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.breakage-header {
+  font-size: var(--heading-font);
+  color: var(--sideBar-bg-color);
+  font-weight: bold;
+}
+
+.breakage-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.breakage-table th,
+.breakage-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.breakage-table th {
+  background-color: var(--upperBar-bg-color);
+  color: white;
+}
+
+.breakage-table input {
+  padding: var(--input-box-padding);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.remove-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.add-button {
+  background-color: var(--button-bg-color);
+  color: var(--button-color);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: var(--button-hover-background-color);
+  border-color: var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+
+.breakage-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.left-panel,
+.center-panel,
+.right-panel {
+  width: 30%;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.center-panel,
+.right-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.input-container label {
+  display: inline-block;
+  width: 150px;
+  font-size: var(--font-size);
+}
+
+.input-container input,
+.input-container textarea {
+  padding: var(--input-box-padding);
+  width: calc(100% - 160px); /* Adjust for the label width */
+  box-sizing: border-box;
+}
+
+.input-container textarea {
+  height: 80px;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.request-button,
+.cancel-button {
+  background-color: var(--button-bg-color);
+  color: var(--button-color);
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.request-button:hover,
+.cancel-button:hover {
+  background-color: var(--button-hover-background-color);
+  border-color: var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+.add-item-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin: 20px 0;
+}
+
+.add-item-button:hover {
+  background-color: #45a049;
+}
+
+.action-row {
+  display: flex;
+  justify-content: flex-start;
+}

@@ -1,0 +1,184 @@
+/* vitals-container styling with position, background, etc. */
+.vitals-container {
+  position: absolute;
+  height: 100vh;
+  background: transparent;
+  display: flex;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: var(--background-color);
+  z-index: 10;
+}
+
+@keyframes slideFromRight {
+  0% {
+    transform: translateX(100%) scaleX(0);
+  }
+  100% {
+    transform: translateX(0%) scaleX(1);
+  }
+}
+
+.vitals-container.slideFromRight {
+  animation: slideFromRight 1s forwards;
+}
+
+@keyframes slideFromLeft {
+  0% {
+    transform: translateX(-100%) scaleX(0);
+  }
+  100% {
+    transform: translateX(0%) scaleX(1);
+  }
+}
+
+.vitals-container.slideFromLeft {
+  animation: slideFromLeft 1s forwards;
+}
+
+@keyframes slideToLeft {
+  0% {
+    transform: translateX(0%) scale(1); /* Start from the current position */
+  }
+  100% {
+    transform: translateX(-100%) scale(0); /* Slide to the left (off screen) */
+  }
+}
+
+.vitals-container.hide {
+  animation: slideToLeft 1s ease-out forwards;
+}
+
+/* Slide to Right Animation (Move off-screen to the right side) */
+@keyframes slideToRight {
+  0% {
+    transform: translateX(0%) scale(1); /* Start from the current position */
+  }
+  100% {
+    transform: translateX(100%) scale(0); /* Slide to the right (off screen) */
+  }
+}
+
+.vitals-container.hideRight {
+  animation: slideToRight 1s ease-out forwards;
+}
+
+.add-vitals-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.vitals-table {
+  border-collapse: separate;
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+.vitals-table th,
+.vitals-table td {
+  border-radius: 7px;
+  padding: 10px;
+  text-align: left;
+  color: inherit;
+}
+
+.vitals-table th {
+  background-color: transparent;
+  font-weight: bold;
+}
+.vitals-table td {
+  width: auto;
+  background-color: transparent;
+}
+
+.vitals-table tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.vitals-form-content {
+  background: white;
+  border-radius: 5px;
+  height: 70vh;
+  overflow: scroll;
+  scrollbar-width: none;
+}
+
+/* .vital-sub-div
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+} */
+
+.vitals-list h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.vitals-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.vitals-list ul li {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.vitals-form h3 {
+  text-align: start;
+  font-size: 20px;
+}
+
+.vitals-form-form-row {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.vitals-form .form-row label {
+  width: 30%;
+}
+
+.vitals-form-form-row-input {
+  width: 50%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.vitals-form-header {
+  width: 100%;
+  display: flex;
+  flex-direction: end;
+  padding: 10px 0px;
+}
+.vitals-form-button 
+{
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px;
+  gap: 10px;
+}
+.vitals-form-save-button {
+  width: 100%;
+  padding: 5px;
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-hover-border-color);
+  border-radius: 5px;
+}
+.vitals-form-save-button:hover {
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+}

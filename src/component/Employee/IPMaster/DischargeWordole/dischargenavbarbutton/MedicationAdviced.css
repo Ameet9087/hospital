@@ -1,0 +1,33 @@
+.medication-container {
+    padding: 20px;
+  }
+  
+  .medication-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .medication-table th, .medication-table td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .medication-table th {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .medication-table input {
+    padding: 5px;
+    margin: 2px;
+   
+  }
+  
+  .medication-table button {
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+  }
+  

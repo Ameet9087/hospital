@@ -1,0 +1,160 @@
+
+  .hh-employee-list {
+    font-family: Arial, sans-serif;
+    padding: 10px 20px;
+    background-color: var(--background-color);
+    height: 75vh;
+  }
+  
+  .hh-employee-list h4 {
+    /* color: #532C7B; */
+    /* font-weight: 100; */
+    padding-bottom: 10px;
+    margin: 0;
+    font-size: var(--heading-font);
+  }
+  .hh-search-container-N-search{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    /* align-items: center; */
+    margin-bottom: 10px;
+    /* border: 1px solid red; */
+
+  }
+  
+  .hh-search-container {
+    display: flex;
+    background-color: #f2f2f2;
+    position: relative;
+    align-items: center;
+    padding: 0 10px;
+}
+.hh-search-container i{
+   position: absolute;
+   right: 10px;
+   color: gray;
+}
+
+.hh-search-input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+  }
+  
+  .hh-search-button {
+    padding: 8px 12px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+  }
+  
+  .hh-results-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-bottom: 10px; */
+    font-size: var(--heading-font);
+    /* color: #666; */
+    gap: 7px;
+  }
+  .hh-results-info span{
+    /* color: #0056b3; */
+    margin-right: 10px;
+  }
+  
+  .hh-print-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .hh-print-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+  .hhEmpInfo-table-N-paginat table {
+    width: 100%;
+    border-collapse: collapse;
+    /* font-size: 12px; */
+  }
+  
+  .hhEmpInfo-table-N-paginat th, .hhEmpInfo-table-N-paginat td {
+    padding: 3px 5px;
+    text-align: center;
+    font-size: var(--font-size);
+    /* color: #696565; */
+    border: 1px solid #cac3c3;
+  }
+  
+  .hhEmpInfo-table-N-paginat th {
+    background-color: #F3F3F3;
+    font-size: var(--heading-font);
+    /* font-weight: bold; */
+    /* color: #474646; */
+  }
+  
+  /* tr:nth-child(even) {
+    background-color: #e62020;
+  } */
+   .hhEmpInfo-table-N-paginat tr{
+    background-color: white;
+   }
+
+   .hhEmpInfo-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  }
+  
+  .hhEmpInfo-pagination button {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 5px;
+  }
+  
+  .hhEmpInfo-pagination span {
+    margin: 0 10px;
+    color: gray;
+    font-size: var(--font-size);
+  }
+  .hhEmpInfo-table-N-paginat{
+    background-color: white;
+  }
+  /* hhEmpInformation.css */
+
+@media print {
+    /* Hide everything except the table */
+    body * {
+      visibility: hidden;
+    }
+  
+    .hh-employee-list table, .hh-employee-list table * {
+      visibility: visible;
+    }
+  
+    /* Ensure the table is positioned correctly for printing */
+    .hh-employee-list {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+  }
+  

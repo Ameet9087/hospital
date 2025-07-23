@@ -1,0 +1,164 @@
+.sSIPatientConsumConsumEntry-entry {
+    background-color: var(--background-color);
+    padding: 20px;
+    width: 100%;
+    margin: 20px auto;
+    border-radius: 8px;
+    /* align-items: left; */
+    float: left;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .sSIPatientConsumConsumEntry-section{
+    display: flex;
+    justify-content: space-between;
+  }
+  .sSIPatientConsumConsumEntry-title {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #333333;
+    font-weight: bold;
+  }
+  
+  .sSIPatientConsumConsumEntry-form-section {
+    margin-bottom: 15px;
+    display: flex;
+    width: 20px;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .sSIPatientConsumConsumEntry-form-section label {
+    font-size: 14px;
+    margin-right: 10px;
+    /* font-weight: bold; */
+  }
+
+  
+  
+  .sSIPatientConsumConsumEntry-back-btn {
+    margin-left: auto;
+    background-color: var(--button-color);
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .sSIPatientConsumConsumEntry-table-section {
+    margin-top: 20px;
+    border: 1px solid #006688;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .sSIPatientConsumConsumEntry-table-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    background-color: #006688;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+  }
+  
+  .sSIPatientConsumConsumEntry-table-row {
+    display: grid;
+    grid-template-columns: 40px 2fr 1fr 1fr 1fr 40px;
+    align-items: center;
+    padding: 5px;
+    gap: 5px;
+    background-color: white;
+  }
+  
+  .sSIPatientConsumConsumEntry-delete-btn {
+    background-color: #ff4d4d; /* Red color for delete */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    font-size: var(--font-size);
+
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+ 
+  
+  .sSIPatientConsumConsumEntry-add-btn {
+    background-color: var(--button-color); /* Green color for add */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: var(--font-size);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  
+  /* input[type="number"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+  } */
+  .sSIPatientConsumConsumEntry-remark{
+    display: flex;
+    justify-content: right;
+    float: right;
+    padding: 5PX;
+
+  }
+  
+  .sSIPatientConsumConsumEntry-remark-section {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F5F5F5;
+    padding: 10px;
+  }
+  
+  
+  
+  /* textarea {
+    flex-grow: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  } */
+  
+  .sSIPatientConsumConsumEntry-button-section {
+    margin-top: 20px;
+    display: flex;
+    float: right;
+    gap: 10px;
+  }
+  
+  .sSIPatientConsumConsumEntry-save-btn {
+    background-color: var(--button-color);
+    color: white;
+    padding: var(--input-box-padding);
+    border: 1px solid var(--button-color);;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .sSIPatientConsumConsumEntry-save-btn:hover{
+    background-color: white;
+    color: var(--button-color);
+  }
+  
+  .sSIPatientConsumConsumEntry-discard-btn {
+    background-color:red;
+    color: white;
+    padding: 8px 15px;
+    border: 1px solid red;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .sSIPatientConsumConsumEntry-textarea{
+    width: 300px;
+    font-size: var(--font-size);
+  }

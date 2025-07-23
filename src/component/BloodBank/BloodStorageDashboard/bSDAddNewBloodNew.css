@@ -1,0 +1,98 @@
+.BSDAddNewBloodNew-modal-modal-container {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    width: 500px;
+    font-size: var(--font-size);
+  }
+  
+  .BSDAddNewBloodNew-modal-modal-container h3 {
+    font-size: var(--heading-font);
+    /* margin-bottom: 20px; */
+    text-align: center;
+    color: black;
+  }
+  
+  .BSDAddNewBloodNew-modal-form-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .BSDAddNewBloodNew-feild {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+  }
+  
+  /* .BSDAddNewBloodNew-feild label {
+    font-size: var(--font-size);
+    margin-bottom: 5px;
+    color: black;
+  } */
+  
+  /* .BSDAddNewBloodNew-feild input,
+  .BSDAddNewBloodNew-feild select {
+    width: 100%;
+    padding: 5px ;
+    padding: var(--input-box-padding);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: var(--font-size);
+  } */
+  
+  .BSDAddNewBloodNew-modal-modal-actions {
+    display: flex;
+    justify-content: start;
+    /* margin-top: 20px; */
+  }
+  
+  .BSDAddNewBloodNew-modal-modal-actions button {
+    background-color: var(--button-color);
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    font-size: var(--font-size);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .BSDAddNewBloodNew-modal-modal-actions button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  .BSDAddNewBloodNew-status {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px; 
+    margin-bottom: 16px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* .BSDAddNewBloodNew-status label {
+    font-size: 16px;
+    color: #333;
+  } */
+  
+  /* .BSDAddNewBloodNew-status select {
+    flex: 1; 
+    max-width: 300px;
+    padding: 5px ;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease;
+  } */
+  
+ 
+  
+  .BSDAddNewBloodNew-status select option {
+    font-size: 14px;
+    color: #333;
+  }
+  

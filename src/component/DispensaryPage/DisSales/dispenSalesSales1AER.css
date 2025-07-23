@@ -1,0 +1,121 @@
+
+.addExternalReferral-modal-container {
+    /* padding: 20px; */
+    width: 35%;
+    height:75vh;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    margin-top: 20px;
+}
+
+.addExternalReferral-modal-header {
+    /* background-color: #007bff; */
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #b1b0b0;
+}
+
+
+.addExternalReferral-modal-header h2 {
+    margin: 0;
+    font-size: var(--heading-font);
+    color: black;
+}
+
+
+.addExternalReferral-close-button {
+    background-color: #E31D2D;
+    padding: 3px 11px;
+    border-radius: 17px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    /* top: 1px; */
+}
+
+.addExternalReferral-modal-body {
+    padding: 20px;
+}
+
+.addExternalReferral-form-group {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.addExternalReferral-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color:black;
+    font-size: var(--font-size);
+    
+}
+
+.addExternalReferral-form-group span {
+    color:black;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.addExternalReferral-form-group input[type="text"],
+.addExternalReferral-form-group input[type="email"],
+.addExternalReferral-form-group input[type="number"] {
+    /* width: calc(100% - 10px ); */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    outline: none;
+    width: 60%;
+}
+
+.addExternalReferral-form-group input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.addExternalReferral-form-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.addExternalReferral-form-actions button {
+    
+    background-color: #26C281;
+    color: white;
+    padding: 5px 30px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.addExternalReferral-form-actions button:hover {
+    background-color: #218838;
+}
+
+/* Add this CSS in your dispenSalesSales.css or AddExternalReferral.css file */
+
+
+.addExternalReferral-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* height: 200px; */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    z-index: 1000;
+  }
+  
+  
+  
+  

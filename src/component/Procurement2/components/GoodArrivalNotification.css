@@ -1,0 +1,130 @@
+.DonationInterface-container {
+  background-color: var(--background-color);
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.DonationInterface-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.DonationInterface-btn-action{
+  background-color: var(--button-color);
+  border: var(--button-color);
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+}
+.DonationInterface-btn-action:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+.DonationInterface-btn-primary {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.DonationInterface-status-filter {
+  width: 300px;
+  display: flex;
+  align-items: center;
+}
+
+.DonationInterface-date-range {
+  display: flex;
+  background-color: white;
+  align-items: center;
+  width: 45%;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+
+
+.DonationInterface-btn-star {
+  background-color: var(--button-color);
+  border: 1px solid #ccc;
+}
+
+.DonationInterface-btn-reset {
+  background-color: var(--button-color);
+  color: white;
+}
+
+.DonationInterface-btn-ok {
+  background-color: var(--button-color);
+  color: white;
+}
+
+.DonationInterface-search-bar {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.DonationInterface-search-bar input {
+ font-size: var(--font-size);
+  margin-right: 5px;
+  padding: 5px;
+}
+
+.DonationInterface-btn-search {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+}
+
+.DonationInterface-results-info {
+  display: flex;
+  justify-content: flex-end; /* Aligns content to the right */
+  margin-bottom: 5px;
+  gap: 10px;
+}
+
+
+.DonationInterface-btn-secondary {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px ;
+  cursor: pointer;
+}
+
+.DonationInterface-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.DonationInterface-data-table th {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  padding: 8px;
+  text-align: left;
+}
+
+.DonationInterface-no-data {
+  text-align: center;
+  padding: 20px;
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.DonationInterface-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.DonationInterface-btn-page {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}

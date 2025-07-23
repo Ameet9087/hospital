@@ -1,0 +1,107 @@
+/* Mohini_Purchase_WholePage_14/sep/2024 */
+.purchase-report-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    height: 90vh;
+    background-color: var( --background-color);
+    box-sizing: border-box;
+}
+
+/* Grid layout for the first four items */
+.report-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    width: 100%; /* Full width for grid */
+    margin-bottom: 20px; /* Space below the grid */
+}
+
+/* Individual report container */
+.reports-cont {
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Icon container */
+.report-icon-container {
+    font-size: 36px;
+    color:var(--button-color);
+    margin-right: 20px;
+    transition: color 0.3s ease;
+}
+
+/* Details container: Align text to the top */
+.report-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align text to the top */
+}
+
+.report-details-container h4,
+.report-details-container p {
+    margin: 0;
+    margin-top: -40px;
+    color: #333333;
+    margin-left: 60px;
+    transition: color 0.3s ease;
+}
+
+.report-details-container h4 {
+    font-size: 16px;
+}
+
+.report-details-container p {
+    margin-top: 8px;
+    font-size: 16px;
+    color: #777777;
+}
+
+
+
+
+
+
+
+/* Hover effect: icon and text turn white, background turns blue */
+.reports-cont:hover {
+    background-color: var(--button-color);
+}
+
+.reports-cont:hover .report-icon-container,
+.reports-cont:hover .report-details-container h4,
+.reports-cont:hover .report-details-container p {
+    color: #ffffff;
+}
+
+/* Special styling for the last summary report */
+.reports-cont-summary {
+    width: 25%; /* Full width */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .report-grid {
+        grid-template-columns: repeat(2, 1fr); /* Two columns for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .report-grid {
+        grid-template-columns: 1fr; /* Single column for small screens */
+    }
+
+    .reports-cont-summary {
+        width: 100%; /* Ensure the last item takes full width on small screens */
+    }
+}
+/* Mohini_Purchase_WholePage_14/sep/2024 */
+

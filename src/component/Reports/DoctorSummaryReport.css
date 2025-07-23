@@ -1,0 +1,67 @@
+.doctor-summary-report-doc {
+    background-color: #d3eaf8;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+  
+  .doctor-summary-report-doc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .report-date, .print-date {
+    font-size: 14px;
+  }
+  
+  .doctor-summary-report-doc h2 {
+    margin: 0;
+    text-align: center;
+    font-size: 20px;
+  }
+  
+  .doctor-summary-report-doc-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+  }
+  
+  .doctor-summary-report-doc-table th, .doctor-summary-report-doc-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .doctor-summary-report-doc-table th {
+    background-color: #f0f8ff;
+  }
+  
+  .even-row {
+    background-color: #d3eaf8; /* Matches the background color for consistency */
+  }
+  
+  .odd-row {
+    background-color: #d3eaf8; /* Keeping the same color for both row types */
+  }
+  
+  /* .totals-row td {
+    font-weight: bold;
+    background-color: #f0f8ff;
+  } */
+  
+  .doctor-summary-report-doc-print-btn {
+    background-color: #4b65c3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .doctor-summary-report-doc-print-btn:hover {
+    background-color: #364599;
+  }
+  

@@ -1,0 +1,111 @@
+.DefectRaisingBreackageRequestPopUp-container {
+  width: 1280px;
+  font-family: Arial, sans-serif;
+  height: 80vh;
+  overflow-x: auto;
+}
+
+.DefectRaisingBreackageRequestPopUp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 16px;
+}
+
+.DefectRaisingBreackageRequestPopUp-header h4 {
+  font-size: var(--heading-font);
+  margin: 0;
+}
+
+.DefectRaisingBreackageRequestPopUp-close-btn {
+  background-color: #E52F3E;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.DefectRaisingBreackageRequestPopUp-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px; /* Adjust gap between panels */
+}
+
+.DefectRaisingBreackageRequestPopUp-panel {
+  flex: 1;
+  min-width: 600px; /* Ensures both panels fit nicely */
+}
+
+.DefectRaisingBreackageRequestPopUp-form-group {
+  display: flex;
+  flex-direction: row; /* Align items in a row */
+  align-items: center; /* Vertically align label and input */
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+
+
+.DefectRaisingBreackageRequestPopUp-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.DefectRaisingBreackageRequestPopUp-form-group-1row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.EquipmentGetPassOut-tab-bar {
+  display: flex;
+  gap: 5px;
+  padding: 4px;
+}
+
+.EquipmentGetPassOut-tab {
+  padding: 4px 12px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  color: white;
+  font-size: var(--font-size);
+  background: var(--button-bg-color);
+  cursor: pointer;
+}
+
+.EquipmentGetPassOut-tab:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color);
+}
+
+.DefectRaisingBreackageRequestPopUp-add-btn {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  padding: 5px 5px;
+}
+.DefectRaisingBreackageRequestPopUp-tab-btn{
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  padding: 5px 5px;
+
+}
+
+.DefectRaisingBreackageRequestPopUp-add-btn:hover,.DefectRaisingBreackageRequestPopUp-tab-btn:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}

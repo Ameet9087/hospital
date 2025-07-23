@@ -1,0 +1,114 @@
+.clinical-medication-container {
+  height: 70vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.clinical-medication-list-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clinical-medication-list {
+  flex: 2;
+  margin-right: 20px;
+}
+
+.clinical-medication-list h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.clinical-medication-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.clinical-medication-table th, 
+.clinical-medication-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.clinical-medication-add-new-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.clinical-add-medication-form {
+  background-color: #f9f9f9;
+  padding: 10px;
+  padding-bottom: 70px;
+  border-radius: 10px;
+  width: 400px;
+}
+
+.clinical-medication-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.clinical-medication-close-button {
+  background-color: #ff5c5c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 50%;
+  padding: 5px 10px;
+}
+
+.clinical-medication-form-row-subdiv {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.clinical-medication-form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.clinical-medication-form-row label {
+  text-align: start;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.clinical-medication-form-row input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.clinical-medication-form-row input[type="text"],
+.clinical-medication-form-row textarea {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.clinical-medication-add-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}

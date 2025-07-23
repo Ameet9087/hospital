@@ -1,0 +1,130 @@
+/* Mohini_DiscountApprovalRequestForm_WholePage_27/sep/24 */
+.discount-approval-form-module {
+  padding: 20px;
+  background-color: var(--background-color);
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.discount-approval-form__heading {
+  font-size: var(--heading-font);
+  color: black;
+  margin-bottom: 20px;
+}
+
+.discount-approval-form__buttons {
+  margin-bottom: 20px;
+  display: flex; /* Use Flexbox to arrange buttons */
+  flex-wrap: wrap; /* Allow wrapping of buttons if necessary */
+  gap: 60px; /* Space between buttons */
+}
+
+.discount-approval-form__button {
+  padding: 5px 10px; /* Added horizontal padding */
+  background-color: var(--button-color); /* Example button color */
+  border: none;
+  font-size: var(--font-size);
+  cursor: pointer;
+  color: white; /* Default text color */
+  border-radius: 5px; /* Optional: rounded corners */
+  text-align: center; /* Center the text */
+  transition: background-color 0.3s; /* Smooth transition for hover */
+  border-bottom: 1px solid var(--button-hover-border-color);
+}
+
+.discount-approval-form__button:hover {
+  background-color: white; /* Darker shade on hover */
+  color: var(--button-color);
+  border-bottom: 1px solid var(--button-hover-border-color);
+}
+
+.discount-approval-form__details {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.discount-approval-form__button.active {
+  background-color: var(--button-bg-color); /* Active background color */
+  color: white; /* Active text color */
+}
+.billin-approve-button,
+.billing-denied-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin-right: 10px; /* Add margin to create space between buttons */
+}
+
+.billin-approve-button:hover,
+.billing-denied-button:hover {
+  background-color: white;
+  color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+/* Optional: If you want to remove the margin on the last button */
+.billing-denied-button {
+  margin-right: 0; /* Removes the margin on the last button to keep layout clean */
+}
+.discount-approve-review-input {
+  
+  padding: 5px; /* Space inside the input */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: var(--font-size) ;/* Font size */
+  color: #333; /* Text color */
+  background-color: #fff; /* White background */
+  transition: border-color 0.3s ease; /* Smooth border color transition */
+}
+.discount-approve-status-dropdown{
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .discount-approval-form-module {
+    padding: 10px; /* Reduced padding for mobile */
+    height: auto; /* Allow height to adjust based on content */
+  }
+
+  .discount-approval-form__heading {
+    font-size: 1.5rem; /* Adjust heading size */
+    margin-bottom: 15px; /* Reduce margin below heading */
+  }
+
+  .discount-approval-form__buttons {
+    gap: 20px; /* Reduced gap between buttons */
+    justify-content: center; /* Center buttons on small screens */
+  }
+
+  .discount-approval-form__button {
+    flex: 1 1 45%; /* Allow buttons to grow and wrap */
+    padding: 10px; /* Increased padding for easier clicking */
+    font-size: 14px; /* Adjust font size for better readability */
+  }
+}
+
+@media (max-width: 480px) {
+  .discount-approval-form__heading {
+    font-size: 1.2rem; /* Further reduce heading size */
+  }
+
+  .discount-approval-form__buttons {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center buttons */
+  }
+
+  .discount-approval-form__button {
+    width: 100%; /* Full width for buttons */
+    margin-bottom: 10px; /* Space below each button */
+  }
+}
+/* Mohini_DiscountApprovalRequestForm_WholePage_27/sep/24 */

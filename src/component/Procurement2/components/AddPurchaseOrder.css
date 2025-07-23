@@ -1,0 +1,76 @@
+.AddPurchaseOrder-add-purchase-order {
+  background-color: var(--background-color);
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.AddPurchaseOrder-form-row {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+/* .purchaseorderItemInput{
+  width: 80px;
+  padding: 5px;
+} */
+
+/* .purchaseorderItemSelect{
+  width: 80px;
+  padding: 5px;
+} */
+.purchaseorder-add-btn{
+   background-color: var(--button-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.AddPurchaseOrder-form-group {
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.AddPurchaseOrder-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.AddPurchaseOrder-items-table th, .AddPurchaseOrder-items-table td {
+  border: 1px solid #ccc;
+  padding: 5px;
+  /* width: 100px; */
+  text-align: left;
+}
+
+
+.AddPurchaseOrder-button-group {
+  display: flex;
+  justify-content: flex-end; /* Aligns button to the right */
+  margin-top: 10px; /* Adjust as needed */
+}
+
+
+.AddPurchaseOrder-add-button,
+.AddPurchaseOrder-discard-button {
+  background-color: var(--button-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.AddPurchaseOrder-add-button:hover,
+.AddPurchaseOrder-discard-button:hover {
+  background-color: var(--button-hover-color);
+}
+.Pro-Purchase-add-btn{
+  background-color: var(--button-color);
+  color: white;
+  padding: 5px 10px;
+  margin: 2px;
+  border: none;
+  cursor: pointer;
+}

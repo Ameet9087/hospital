@@ -1,0 +1,102 @@
+.EquipmentParts-container {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0 auto;
+    
+  }
+  
+  .EquipmentParts-add-button {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .EquipmentParts-add-button:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+  .EquipmentParts-search-bar {
+    background-color: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .EquipmentParts-search-bar input {
+    padding: 5px;
+    font-size: var(--font-size);
+    width: 200px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  
+  .EquipmentParts-search-bar i {
+    color: gray;
+    position: absolute;
+    right: 5px;
+  }
+  
+  .EquipmentParts-search-N-result {
+    margin: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .EquipmentParts-results-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .EquipmentParts-results-info span {
+    font-size: var(--font-size);
+    margin-right: 10px;
+  }
+  
+  .EquipmentParts-edit-button,
+  .EquipmentParts-deactivate-button {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 1px 5px;
+  }
+  
+  .EquipmentParts-edit-button:hover,
+  .EquipmentParts-deactivate-button:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+  .EquipmentParts-print-button {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .EquipmentParts-print-button:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  

@@ -1,0 +1,412 @@
+.CondemnationandDisposalViewPopUp-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5px;
+    background-color: var(--background-color);
+  }
+  
+  .CondemnationandDisposalViewPopUp-header {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 5px;
+    font-size: var(--heading-font);
+    border-radius: 5px 5px 0 0;
+  }
+  
+  .CondemnationandDisposalViewPopUp-form-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    background-color: white;
+    padding: 5px;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .CondemnationandDisposalViewPopUp-form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .CondemnationandDisposalViewPopUp-form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 32px;
+  }
+  
+  .CondemnationandDisposalViewPopUp-label {
+    width: 130px;
+    font-size: var(--font-size);
+    color: black;
+  }
+  
+  .CondemnationandDisposalViewPopUp-separator {
+    color: #718096;
+  }
+  
+  .CondemnationandDisposalViewPopUp-input-field {
+    flex: 1;
+    padding: 5px 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: var(--font-size);
+    transition: border-color 0.2s;
+  }
+  
+  .CondemnationandDisposalViewPopUp-input-field:focus {
+    outline: none;
+    border-color: #008cba;
+    box-shadow: 0 0 0 2px rgba(22, 160, 133, 0.1);
+  }
+  
+  .CondemnationandDisposalViewPopUp-date-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+  }
+  
+  .CondemnationandDisposalViewPopUp-calendar-icon {
+    width: 20px;
+    height: 20px;
+    color: black;
+    cursor: pointer;
+  }
+  
+  .CondemnationandDisposalViewPopUp-calendar-icon:hover {
+    color: #16a085;
+  }
+  
+  .CondemnationandDisposalViewPopUp-section-header {
+    background-color: var(--upperBar-bg-color);
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    color: white;
+    border-radius: 5px;
+  }
+  
+  .CondemnationandDisposalViewPopUp-format-section {
+    margin-top: 10px;
+    padding: 5px;
+    background-color: white;
+    border-radius: 5px;
+  }
+  
+  .CondemnationandDisposalViewPopUp-file-upload {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+  }
+  
+  .CondemnationandDisposalViewPopUp-btn-secondary {
+    padding: 5px 10px;
+    background-color: #e2e8f0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    transition: background-color 0.2s;
+  }
+  
+  .CondemnationandDisposalViewPopUp-btn-secondary:hover {
+    background-color: #cbd5e0;
+  }
+  
+  .CondemnationandDisposalViewPopUp-tabs-section {
+    margin-top: 10px;
+  }
+  
+  .CondemnationandDisposalViewPopUp-tab-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .CondemnationandDisposalViewPopUp-tab-btn {
+    padding: 5px 10px;
+    background-color: #e2e8f0;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 5px 5px 0 0;
+  }
+  
+  .CondemnationandDisposalViewPopUp-tab-btn:hover {
+    background-color: #cbd5e0;
+  }
+  
+  .CondemnationandDisposalViewPopUp-tab-btn.active {
+    background-color: #16a085;
+    color: white;
+  }
+  
+  .CondemnationandDisposalViewPopUp-table-container {
+    background-color: white;
+    padding: 10px;
+    border-radius: 0 5px 5px 5px;
+  }
+  
+  .CondemnationandDisposalViewPopUp-table-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: var(--font-size);
+    color: black;
+  }
+  
+  .CondemnationandDisposalViewPopUp-btn-add {
+    color: #16a085;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: color 0.2s;
+  }
+  
+  .CondemnationandDisposalViewPopUp-btn-add:hover {
+    color: #13896f;
+    text-decoration: underline;
+  }
+  
+  .CondemnationandDisposalViewPopUp-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .CondemnationandDisposalViewPopUp-data-table th,
+  .CondemnationandDisposalViewPopUp-data-table td {
+    border: 1px solid gray;
+    padding: 5px;
+    text-align: left;
+  }
+  
+  .CondemnationandDisposalViewPopUp-data-table th {
+    background-color: #f7fafc;
+    color: black;
+    font-size: var(--font-size);
+  }
+  
+  .CondemnationandDisposalViewPopUp-data-table tr:hover {
+    background-color: #f7fafc;
+  }
+  
+  .CondemnationandDisposalViewPopUp-data-table input,
+  .CondemnationandDisposalViewPopUp-data-table select {
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: var(--font-size);
+  }
+  
+  .CondemnationandDisposalViewPopUp-data-table input:focus,
+  .CondemnationandDisposalViewPopUp-data-table select:focus {
+    outline: none;
+    border-color: #16a085;
+    box-shadow: 0 0 0 2px rgba(22, 160, 133, 0.1);
+  }
+  
+  .CondemnationandDisposalViewPopUp-btn-delete {
+    color: red;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  
+  .CondemnationandDisposalViewPopUp-btn-delete:hover {
+    color: #c53030;
+    text-decoration: underline;
+  }
+  
+  /* Required field indicator */
+  .CondemnationandDisposalViewPopUp-label:has(+ .CondemnationandDisposalViewPopUp-separator + .CondemnationandDisposalViewPopUp-input-field[required])::after {
+    content: "*";
+    color: #e53e3e;
+    margin-left: 5px;
+  }
+  
+  /* =========================================================================== */
+  .CondemnationandDisposalViewPopUp-input-field {
+    width: 100%; /* Adjust width as needed */
+    font-size: var(--font-size); /* Adjust font size as needed */
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .CondemnationandDisposalViewPopUp-input-field:focus {
+    outline: none;
+    border-color: #008cba; /* Highlight color on focus */
+    box-shadow: 0 0 3px rgba(0, 140, 186, 0.5); /* Optional: glowing effect */
+  }
+  
+  .CondemnationandDisposalViewPopUp-input-field option {
+    color: black;
+    background-color: white;
+  }
+  
+  
+  .CondemnationandDisposalViewPopUp-status {
+    display: flex;
+    align-items: center;
+  }
+  
+  .CondemnationandDisposalViewPopUp-label {
+    margin-right: 10px; /* Space between the label and the radio buttons */
+  }
+  
+  .CondemnationandDisposalViewPopUp-radio-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .CondemnationandDisposalViewPopUp-radio-buttons input {
+    margin-right: 5px; /* Space between the radio button and its label */
+  }
+  
+  .CondemnationandDisposalViewPopUp-radio-buttons label {
+    margin-right: 20px; /* Space between the two labels */
+  }
+  
+  
+  .CondemnationandDisposalViewPopUp-required{
+    color: red;
+  }
+  
+  
+  .CondemnationandDisposalViewPopUp-form-group {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .CondemnationandDisposalViewPopUp-label {
+    font-size: var(--font-size);
+    min-width: 160px;
+  }
+  
+  
+  .CondemnationandDisposalViewPopUp-input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .CondemnationandDisposalViewPopUp-input-field {
+    padding: 5px;
+    font-size: var(--font-size);
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  
+  .CondemnationandDisposalViewPopUp-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .CondemnationandDisposalViewPopUp-checkbox-label {
+    font-size: var(--font-size);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .CondemnationandDisposalViewPopUp-checkbox {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+  
+  
+  
+  
+  
+  /* Responsive styles */
+  @media (max-width: 1024px) {
+    .CondemnationandDisposalViewPopUp-form-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .CondemnationandDisposalViewPopUp-table-container {
+        overflow-x: auto;
+    }
+    
+    .CondemnationandDisposalViewPopUp-data-table {
+        min-width: 800px;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .CondemnationandDisposalViewPopUp-container {
+        padding: 10px;
+    }
+    
+    .CondemnationandDisposalViewPopUp-form-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .CondemnationandDisposalViewPopUp-label {
+        width: 100%;
+    }
+    
+    .CondemnationandDisposalViewPopUp-input-field {
+        width: 100%;
+    }
+    
+    .CondemnationandDisposalViewPopUp-file-upload {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .CondemnationandDisposalViewPopUp-tab-buttons {
+        flex-direction: column;
+    }
+    
+    .CondemnationandDisposalViewPopUp-tab-btn {
+        width: 100%;
+        border-radius: 4px;
+    }
+  }
+  
+  /* Print styles */
+  @media print {
+    .CondemnationandDisposalViewPopUp-container {
+        padding: 0;
+        max-width: none;
+    }
+    
+    .CondemnationandDisposalViewPopUp-btn-add,
+    .CondemnationandDisposalViewPopUp-btn-delete,
+    .CondemnationandDisposalViewPopUp-btn-secondary {
+        display: none;
+    }
+    
+    .CondemnationandDisposalViewPopUp-table-container {
+        background-color: white;
+    }
+    
+    .CondemnationandDisposalViewPopUp-data-table {
+        border: 1px solid #000;
+    }
+    
+    .CondemnationandDisposalViewPopUp-data-table th,
+    .CondemnationandDisposalViewPopUp-data-table td {
+        border: 1px solid #000;
+    }
+  }

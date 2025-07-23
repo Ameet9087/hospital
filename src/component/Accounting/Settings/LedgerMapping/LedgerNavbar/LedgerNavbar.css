@@ -1,0 +1,100 @@
+.ledger-main {
+    padding: 0px 0px;
+  }
+  
+  
+  .ledger-navbar {
+    position: relative;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  
+ 
+  .ledger-navbar ul {
+    display: flex;
+    color: black;
+    font-size: 14px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+
+  .ledger-navbar ul li {
+    position: relative;
+    color: black;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+
+  .ledger-navbar ul li a {
+    text-decoration: none;
+    color: black;
+    position: relative;
+    display: inline-block;
+  }
+  
+
+  .ledger-navbar ul li a.active {
+    color: black;
+  }
+  
+  .underline {
+    position: absolute;
+    bottom: 0;
+    height: 4px;
+    background-color: var(--button-bg-color);
+    transition: left 0.3s ease, width 0.3s ease;
+  }
+  
+
+  .ledger-navbar ul li::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 0;
+    background-color: var(--button-bg-color);
+    transition: width 0.3s ease-in-out;
+  }
+  
+
+  .ledger-navbar ul li:hover::after {
+    width: 100%; /* Expand the underline to full width on hover */
+  }
+  
+  .dropdown {
+    position: relative;
+
+  }
+  
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    background-color: white;
+    list-style: none;
+    padding: 0;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dropdown-menu span {
+    padding: 10px 20px;
+  }
+  .dropdown-menu span a {
+    color: black;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-menu span a:hover {
+    background-color: #f0f0f0;
+  }
+  

@@ -1,0 +1,92 @@
+ /* prachi parab user interface changed  14/9 */
+
+.emergency-contact-page {
+    background-color:#e3fffe;;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .emergency-contact-page h2 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .emergency-contact-page form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .emergency-contact-type {
+    display: flex;
+    align-items: center;
+  }
+  
+  .emergency-contact-type label {
+    margin-right: 10px;
+  }
+  
+  .emergency-contact-type div {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .emergency-contact-input {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .emergency-contact-input label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  .emergency-contact-input input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .emergency-contact-input input:focus {
+    outline: none;
+    border-color: #4a90e2;
+  }
+  
+  .emergency-contact-input input::placeholder {
+    color: #999;
+  }
+  
+  .emergency-contact-add-btn {
+    background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  width: fit-content;
+  }
+  
+  .emergency-contact-add-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+  @media (max-width: 768px) {
+    .emergency-contact-type {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .emergency-contact-type div {
+      margin-top: 10px;
+    }
+  } 
+.emergency-page-form{
+  background-color: white;
+  padding: 20px;
+}
+   

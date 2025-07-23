@@ -1,0 +1,21 @@
+.pharmacysummary-container {
+    padding: 20px;
+  }
+  
+  .pharmacysummary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .pharmacysummary-table th, .pharmacysummary-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .pharmacysummary-table th {
+    background-color: #ddd;
+    color: black;
+  }
+  

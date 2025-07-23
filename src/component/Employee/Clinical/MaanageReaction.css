@@ -1,0 +1,200 @@
+.ManageReaction-container {
+    background-color: var(--background-color);
+    padding: 20px;
+    height: 90vh;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+}
+
+.ManageReaction-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.ManageReaction-addButton {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.ManageReaction-addButton:hover{
+    color: var(--button-color);
+    background-color: white;
+    border-bottom:  1px solid var(--button-color);
+}
+
+.manage-reaction-search-input {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    /* width: 180px; */
+}
+
+.manage-reaction-span {
+    text-align: right;
+    color: black;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.manage-reaction-tab {
+    background-color: white;
+}
+
+.manage-reaction-users-table {
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.manage-reaction-users-table th,
+.manage-reaction-users-table td {
+    border: 1px solid #e0e0e0;
+    padding: 8px;
+    text-align: left;
+    font-size: 13px;
+}
+
+.manage-reaction-users-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    color: #333;
+}
+
+.manage-reaction-users-table tbody tr:hover {
+    background-color: #f0f0f0;
+}
+
+.manage-reaction-action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.ManageReaction-editButton {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    border-bottom: 1px solid var(--button-color);
+
+}
+.ManageReaction-editButton:hover{
+    color: var(--button-color);
+    background-color: white;
+    border-bottom: 1px solid var(--button-color);
+
+}
+
+
+.manage-reaction-pagination {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.manage-reaction-pagination-controls button {
+    margin: 0 4px;
+    padding: 4px 8px;
+    background-color: var(--button-color);
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.manage-reaction-pagination span {
+    margin: 0 8px;
+    font-size: 13px;
+}
+
+@media (max-width: 768px) {
+    .manage-reaction-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .manage-reaction-add-button {
+        margin-bottom: 8px;
+    }
+
+    .manage-reaction-search-input {
+        width: 100%;
+    }
+
+    .manage-reaction-users-table th,
+    .manage-reaction-users-table td {
+        font-size: 12px;
+    }
+}
+
+.ManageReaction-modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.ManageReaction-modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+    max-width: 90%;
+}
+
+.ManageReaction-closeButton {
+    float: right;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.ManageReaction-form {
+    /* Form styles */
+}
+
+.ManageReaction-formGroup {
+    margin-bottom: 15px;
+}
+
+.ManageReaction-formGroup label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.ManageReaction-formGroup input[type="text"] {
+    width: 100%;
+    padding: 5px;
+}
+
+.ManageReaction-submitButton {
+    background-color: var(--button-color);
+    color: white;
+    border: 1px solid var(--button-color);
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.ManageReaction-submitButton:hover {
+    background-color: var(--button-hover-color);
+    color: var(--button-color);
+    border: 1px solid var(--button-color);
+}

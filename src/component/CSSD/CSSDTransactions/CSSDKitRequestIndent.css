@@ -1,0 +1,209 @@
+/* Outer Container */
+.KitRequestIndent-container {
+    width: 80%;
+    margin: 5px ;
+    padding: 20px;
+    /* border: 1px solid #ddd; */
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  }
+  
+  /* Header */
+  /* .KitRequestIndent-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+   */
+
+  .KitRequestIndent-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .KitRequestIndent-header h3 {
+    margin: 0;
+  }
+  /* Content Layout */
+  .KitRequestIndent-content {
+    display: flex;
+    justify-content: space-between; /* Horizontal split: 50% / 50% */
+    gap: 200px;
+
+  }
+ 
+  /* Form Layout */
+  .KitRequestIndent-form {
+    flex: 1; /* Occupy 50% of the width */
+    /* display: grid; */
+    grid-template-columns: 1fr;
+   
+    /* row-gap: 20px; Space between form groups */
+  }
+
+  
+ .KitRequestIndent-form-group{
+  margin: 20px;
+  width: 70%;
+ }
+  
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding-right: 30px;
+  /* Adjust padding to make space for the icon */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: var(--input-box-padding);
+  font-size: var(--font-size);
+}
+
+.input-with-icon .search-icon {
+  position: absolute;
+  right: 10px;
+  /* Adjust to align the icon properly */
+  color: #aaa;
+  cursor: pointer;
+}
+  
+  /* Button Container */
+  .KitRequestIndent-buttonContainer {
+    flex: 1; /* Occupy 50% of the width */
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: flex-end; /* Align to the right */
+    gap: 10px;
+  }
+/* Button Container */
+.KitRequestIndent-buttonContainer {
+  flex: 1; /* Occupy 50% of the width */
+  display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap when necessary */
+  justify-content: space-between; /* Space buttons evenly */
+  gap: 10px; /* Space between buttons */
+  margin-top: 20px; /* Add top margin to separate from the form */
+}
+
+
+  
+  /* Table Styling */
+  .KitRequestIndent-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .KitRequestIndent-items-table th,
+  .KitRequestIndent-items-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .KitRequestIndent-items-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding-right: 30px;
+  /* Adjust padding to make space for the icon */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: var(--input-box-padding);
+  font-size: var(--font-size);
+}
+
+.input-with-icon .search-icon {
+  position: absolute;
+  right: 10px;
+  /* Adjust to align the icon properly */
+  color: #aaa;
+  cursor: pointer;
+}
+.modal-overlay-for-items {
+  position: fixed;
+  /* Ensures the modal overlays the entire screen */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensures it's above other elements */
+}
+
+.modal-content-for-items {
+  background-color: white;
+  padding: 20px;
+  width: 90%; /* Width of the modal */
+  max-width: 600px; /* Maximum width of the modal */
+  max-height: 70%; /* Restrict the height of the modal */
+  overflow-y: auto; /* Add vertical scroll if content exceeds height */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative; /* Ensure the modal is properly positioned */
+}
+
+.modal-content-for-items h2 {
+  margin-top: 0;
+}
+
+.modal-content-for-items table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.modal-content-for-items th,
+.modal-content-for-items td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.modal-content-for-items th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.modal-content-for-items input[type="text"] {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.modal-content-for-items button {
+  background-color: var(--button-bg-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: var(--font-size);
+}
+
+.modal-content-for-items button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+
+
+

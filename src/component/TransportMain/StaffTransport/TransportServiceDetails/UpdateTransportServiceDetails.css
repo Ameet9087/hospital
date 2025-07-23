@@ -1,0 +1,134 @@
+/* Form Container */
+.StaffTransportManagement-form-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Form Title */
+  .StaffTransportManagement-form-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+  
+  /* Form */
+  .StaffTransportManagement-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Form Group */
+  .StaffTransportManagement-form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Label */
+  .StaffTransportManagement-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  /* Input */
+  .StaffTransportManagement-input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease-in-out;
+  }
+  
+  .StaffTransportManagement-input:focus {
+    border-color: #007BFF;
+  }
+  
+  /* Select */
+  .StaffTransportManagement-select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .StaffTransportManagement-select:focus {
+    border-color: #007BFF;
+  }
+  
+  /* Shift Timing */
+  .StaffTransportManagement-shift-timing {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .StaffTransportManagement-shift-to {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Submit Button */
+  .StaffTransportManagement-submit-button {
+    padding: 12px;
+    background-color: var(--button-color);
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .StaffTransportManagement-submit-button:hover {
+    background-color: white;
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+  /* Form Row */
+.StaffTransportManagement-form-row {
+    display: flex;
+    justify-content: space-between; /* Aligns items in two columns */
+    gap: 15px; /* Gap between the columns */
+}
+
+/* Adjust width for form groups */
+.StaffTransportManagement-form-group {
+    flex: 1; /* Takes equal space */
+}
+
+  /* Responsiveness */
+  @media (max-width: 768px) {
+    .StaffTransportManagement-form-container {
+      padding: 15px;
+    }
+  }
+  
+  /* Additional Styles */
+  .StaffTransportManagement-input:disabled {
+    background-color: #e9ecef;
+    opacity: 1; /* To prevent the input from appearing more faded */
+  }
+  
+  .StaffTransportManagement-form-group.error {
+    border: 1px solid #dc3545; /* Red border for error state */
+  }
+  
+  .StaffTransportManagement-error-message {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  

@@ -1,0 +1,138 @@
+ /* Ajhar Tamboli rdlListReports.jsx 19-09-24 */
+
+
+/* Akash Pawar Radiology 14/24 */
+.rDLListReport-active-imaging-request {
+  padding: 10px;
+  background-color: var(--background-color);
+  height: 75vh;
+}
+  
+ .rDLListReport-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .rDLListReport-header h4 {
+    /* color: black; */
+    font-size: var(--heading-font);
+    margin: 0;
+  }
+  
+  /* .rDLListReport-filter  {
+  } */
+  /* .rDLListReport-filter select {
+    padding: 3px 5px 3px 5px;
+    margin-left: 10px;
+    width: 100px;
+  }
+  .rDLListReport-filter label {
+font-size: var(--font-size);
+} */
+  
+  .rDLListReport-controls {
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .rDLListReport-date-range {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    gap: 10px;
+    background-color: #f0f0f0;
+    padding: 1px 10px;
+  }
+  /* .rDLListReport-date-range label{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    font-size: var(--font-size);
+  } */
+  
+  /* .rDLListReport-date-range input[type="date"] {
+    padding: 3px;
+    margin-left: 10px;
+  } */
+
+    .rDLListReport-search-N-results{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.rDLListReport-search-bar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid gray; */
+  /* background-color: white; */
+  padding: 3px;
+}
+/* .rDLListReport-search-bar i{
+  color: gray;
+}
+  
+  .rDLListReport-search-bar input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+  } */
+  
+  .rDLListReport-search-button {
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-left: 5px; /* Adds some spacing between the input and the button */
+    border-radius: 4px; /* Optional: rounds the corners of the button */
+    font-size: var(--font-size); /* Adjusts the font size for consistency */
+  }
+  
+  .rDLListReport-search-button:hover {
+    background-color: #e0e0e0; /* Changes the background color on hover */
+  }
+  
+
+  .rDLListReport-results-info {
+    text-align: right;
+    font-size: var(--font-size);
+    /* color: rgb(88, 87, 87); */
+    /* font-weight: bold; */
+    /* margin-top: 5px; */
+}
+
+  
+
+
+  .rDLListReport-ex-pri-buttons{
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .rDLListReport-ex-pri-buttons:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .rDLListReport-action-button-add-reports{
+    background-color: var(--button-color);
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+  }
+  .rDLListReport-ex-pri-buttons:hover,.rDLListReport-action-button-add-reports:hover{
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }

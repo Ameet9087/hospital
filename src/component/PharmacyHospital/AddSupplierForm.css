@@ -1,0 +1,77 @@
+/* Mohini_AddSupplierForm_WholePage_14/sep/2024 */
+.add-supplier-form-modal-form {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .add-supplier-form-success-message {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #dff0d8;
+  color: #3c763d;
+  border: 1px solid #d6e9c6;
+  border-radius: 4px;
+  text-align: center;
+}
+
+  .add-supplier-form-add-supplier-modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+  }
+  
+  .add-supplier-form-add-supplier-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .add-supplier-form-form-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    gap: 20px;
+  }
+  
+  .add-supplier-form-form-group label {
+    flex: 1;
+  }
+  
+  .add-supplier-form-form-group input[type="text"],
+  .add-supplier-form-form-group input[type="email"],
+  .add-supplier-form-form-group input[type="checkbox"] {
+    flex: 2;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .add-supplier-form-save-btn {
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .add-supplier-form-save-btn:hover {
+    background-color: #0056b3;
+  }
+/* Mohini_AddSupplierForm_WholePage_14/sep/2024 */

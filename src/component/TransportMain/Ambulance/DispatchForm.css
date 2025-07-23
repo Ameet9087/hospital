@@ -1,0 +1,160 @@
+/* Base Styles */
+.dispatch-form-module-container{
+ width: auto;
+ padding: 20px;
+}
+.dispatch-form-module-com {
+  display: flex; 
+  justify-content: space-between; 
+  padding: 20px;
+  background-color: var(--background-color);
+  height: 90vh;
+  overflow-y: auto; 
+}
+
+.dispatch-form-module-com-left,
+.dispatch-form-module-com-right {
+  width: 50%; 
+  display: flex; 
+  flex-direction: column; 
+}
+
+.first-div-dispatch-form,
+.second-div-dispatch-form {
+  display: flex; 
+  flex-direction: column; 
+  flex: 1; 
+  margin-right: 20px;
+}
+
+.dispatch-form-module-com-group {
+  display: flex; 
+  align-items: center; 
+  margin-bottom: 15px; 
+}
+
+.dispatch-form-module-com-group label {
+  flex: 0 0 150px; 
+  margin-right: 10px; 
+  font-size: var(--heading-font);
+}
+
+.dispatch-form-module-com-group input[type="text"],
+.dispatch-form-module-com-group input[type="number"],
+.dispatch-form-module-com-group input[type="time"],
+.dispatch-form-module-com-group select,
+.dispatch-form-module-com-group textarea {
+  flex: 1; 
+  padding: 5px; 
+  font-size: var(--font-size);
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.dispatch-form-module-com-group input[type="checkbox"] {
+  margin-left: 50px; 
+}
+
+.dispatch-form-module-com-group label .mandatory {
+  color: red; 
+  margin-left: 5px; 
+}
+
+.dispatch-form-module-com-submit-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px; 
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin-top: 20px; 
+}
+
+.dispatch-form-module-com-submit-button:hover {
+  background-color: white;
+  color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.dispatch-form-module-com-group textarea {
+  resize: vertical; 
+  height: 50px; 
+  font-size: var(--font-size);
+}
+
+.dispatch-form-module-com-group select {
+  padding: 5px; 
+}
+
+.dispatch-form-module-com-group input,
+.dispatch-form-module-com-group select,
+.dispatch-form-module-com-group textarea {
+  margin-left: 10px; 
+}
+
+.dispatch-form-submit-container {
+  display: flex;
+  justify-content: center; 
+}
+
+.mandatory {
+  color: red; 
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .dispatch-form-module-com {
+    flex-direction: column; /* Stack sections vertically */
+    height: auto; /* Allow height to adjust based on content */
+    padding: 10px; /* Reduced padding */
+  }
+
+  .dispatch-form-module-com-left,
+  .dispatch-form-module-com-right {
+    width: 100%; /* Full width for mobile */
+  }
+
+  .dispatch-form-module-com-group {
+    flex-direction: column; /* Stack label and input vertically */
+    align-items: flex-start; /* Align items to the left */
+  }
+
+  .dispatch-form-module-com-group label {
+    flex: none; /* Reset flex for label */
+    margin-right: 0; /* Remove margin */
+    margin-bottom: 5px; /* Add space below label */
+  }
+
+  .dispatch-form-module-com-group input[type="text"],
+  .dispatch-form-module-com-group input[type="number"],
+  .dispatch-form-module-com-group input[type="time"],
+  .dispatch-form-module-com-group select,
+  .dispatch-form-module-com-group textarea {
+    width: 100%; /* Full width for inputs */
+  }
+
+  .dispatch-form-module-com-submit-button {
+    width: 100%; /* Full width for button */
+  }
+}
+
+/* Additional Media Query for smaller devices */
+@media (max-width: 480px) {
+  .dispatch-form-module-com {
+    padding: 5px; /* Further reduce padding for very small devices */
+  }
+
+  .dispatch-form-module-com-submit-button {
+    padding: 8px; /* Adjust button padding */
+    font-size: 14px; /* Adjust button font size */
+  }
+
+  .dispatch-form-module-com-group input[type="checkbox"] {
+    margin-left: 0; /* Remove margin on small devices */
+  }
+
+  .dispatch-form-module-com-group {
+    margin-bottom: 10px; /* Reduce space between groups */
+  }
+}

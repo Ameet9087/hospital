@@ -1,0 +1,109 @@
+.InsuranceEntryMasterFormPopUp-container {
+    width: 100%;
+    font-family: Arial, sans-serif;
+  }
+  
+  .InsuranceEntryMasterFormPopUp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 16px;
+  }
+  
+  .InsuranceEntryMasterFormPopUp-header h4 {
+    font-size: var(--heading-font);
+    margin: 0;
+  }
+  
+  .InsuranceEntryMasterFormPopUp-close-btn {
+    background-color: #E52F3E;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  
+  .InsuranceEntryMasterFormPopUp-form .InsuranceEntryMasterFormPopUp-InsuranceEntryMasterFormPopUp-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .InsuranceEntryMasterFormPopUp-form-group {
+    /* flex: 1; */
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-size: var(--font-size);
+    width: 400px;
+    /* border: 1px solid red; */
+  }
+  
+  .InsuranceEntryMasterFormPopUp-form-group label {
+    display: block;
+    margin-bottom: 4px;
+    /* font-weight: bold; */
+    width: 75%;
+  }
+  
+  .InsuranceEntryMasterFormPopUp-form-group input,
+  .InsuranceEntryMasterFormPopUp-form-group select,
+  .InsuranceEntryMasterFormPopUp-form-group textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.InsuranceEntryMasterFormPopUp-form-group-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.InsuranceEntryMasterFormPopUp-form-group-options label {
+  margin-right: 20px;
+  font-size: var(--font-size);
+  display: flex;
+  align-items: center;
+}
+
+.InsuranceEntryMasterFormPopUp-form-group-options input {
+  margin-right: 5px;
+}
+
+  .InsuranceEntryMasterFormPopUp-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    font-size: var(--font-size);
+    gap: 8px;
+    margin-top: 16px;
+  }
+  
+  .InsuranceEntryMasterFormPopUp-add-btn {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .InsuranceEntryMasterFormPopUp-add-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .InsuranceEntryMasterFormPopUp-form-group-1row{
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+  }
+  
+  

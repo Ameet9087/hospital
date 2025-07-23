@@ -1,0 +1,91 @@
+/* Dhanashree_Department_27/09_Ends */
+
+.ControlDepartmentHIMS-department-table {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.ControlDepartmentHIMS-department-table th, .ControlDepartmentHIMS-department-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.ControlDepartmentHIMS-department-table th {
+    background-color: #f2f2f2;
+    color: black;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.ControlDepartmentHIMS-department-table td {
+    background-color: #f9f9f9;
+}
+
+/* Action button - Remove background and set hover effect */
+.ControlDepartmentHIMS-action-btn {
+    background-color: transparent; /* Remove background */
+    color: var(--button-bg-color); /* Icon/text color */
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: none; /* Remove border */
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.ControlDepartmentHIMS-action-btn svg {
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+/* Hover effect */
+.ControlDepartmentHIMS-action-btn:hover {
+    color: var(--button-color); /* Change color on hover */
+}
+
+/* Status buttons */
+.ControlDepartmentHIMS-button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+}
+
+.ControlDepartmentHIMS-status-btn:hover {
+    opacity: 0.8;
+}
+
+
+
+
+
+
+
+
+
+/* Status buttons */
+/* .ControlDepartmentHIMS-status-btn {
+    padding: 8px 15px;
+    margin: 0 5px;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+}
+
+.ControlDepartmentHIMS-approved {
+    background-color: #28a745;
+}
+
+.ControlDepartmentHIMS-pending {
+    background-color: #ffc107;
+}
+
+.ControlDepartmentHIMS-rejected {
+    background-color: #dc3545;
+} */
+
+
+
+/* Dhanashree_Department_27/09_Ends */

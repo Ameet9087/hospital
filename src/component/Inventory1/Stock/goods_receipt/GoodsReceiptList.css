@@ -1,0 +1,122 @@
+.goods-receipt-list {
+  padding: 5px 25px 5px 5px;
+  border-radius: 5px;
+  height: calc(100vh - 70px); /* Adjusted for screen fit */
+  overflow-y: auto;
+}
+
+.goods-receipt-filters {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+  width: 30%;
+}
+
+.goods-receipt-date-input {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  width: 50px;
+}
+
+.goods-receipt-ok-button {
+  padding: 5px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.goods-receipt-search-export {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.goods-receipt-search-export input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 200px;
+}
+
+.goods-receipt-search-export button {
+  padding: 8px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.goods-receipt-export-btn {
+  background-color: var(--button-color);
+  color: white;
+}
+.goods-receipt-export-btn:hover
+{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.goods-receipt-print {
+  background-color: var(--button-color);
+  color: white;
+}
+.goods-receipt-print:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+
+.goods-receipt-receipt-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.good-receipt-ta{
+  background-color: white;
+}
+
+.goods-receipt-receipt-table th, 
+.goods-receipt-receipt-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.goods-receipt-receipt-table th {
+  background-color: #f2f2f2f2;
+  color: black;
+  font-size: var(--heading-font);
+}
+
+.goods-receipt-no-rows {
+  background-color: #fff3cd;
+  color: #856404;
+  text-align: center;
+  padding: 15px 0;
+  font-size: var(--heading-font);
+}
+
+.goods-receipt-pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.goods-receipt-pagination button {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #42a5f5;
+  color: #fff;
+  border-radius: 5px;
+}

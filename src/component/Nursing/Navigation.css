@@ -1,0 +1,45 @@
+
+
+
+ /* prachi parab user interface changed  14/9 */
+
+
+.nursing-actions-container {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f0f8ff; /* Light blue background */
+  }
+  
+  .nursing-actions-container a {
+    border-radius: 5px;
+    text-decoration: none; /* Remove underline from links */
+  }
+  
+  .nursing-action-button {
+    background-color: transparent;
+    color: black;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+
+  
+  .nursing-action-button i{
+    font-size: 18px;
+  }
+  
+  .nursing-action-button:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-color);
+    background-color: var(--button-hover-color);
+  }
+  
+  .nursing-action-button.selected {
+    background-color: var(--button-bg-color);
+    color: white !important;
+    border-radius: 5px;
+  }
+  

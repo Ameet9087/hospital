@@ -1,0 +1,78 @@
+ /* Dhanashree_AddEmergencyPageTransport_24/09_Starts */
+
+.AddEmergencyPageTransport-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .AddEmergencyPageTransport-form-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .AddEmergencyPageTransport-form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .AddEmergencyPageTransport-form-row label {
+    flex: 0 0 35%;
+    text-align: left;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .AddEmergencyPageTransport-form-row input,
+  .AddEmergencyPageTransport-form-row select {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .AddEmergencyPageTransport-form-row input:focus,
+  .AddEmergencyPageTransport-form-row select:focus {
+    border-color: #4CAF50;
+    outline: none;
+  }
+  
+  .AddEmergencyPageTransport-submit-btn {
+    display: block;
+    margin-left: 40%;
+    width: 30%;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .AddEmergencyPageTransport-submit-btn:hover {
+    background-color: white;
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  @media (max-width: 768px) {
+    .AddEmergencyPageTransport-form-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .AddEmergencyPageTransport-form-row label {
+      margin-bottom: 5px;
+    }
+  }
+  
+   /* Dhanashree_AddEmergencyPageTransport_24/09_Starts */

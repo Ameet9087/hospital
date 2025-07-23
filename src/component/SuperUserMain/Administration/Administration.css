@@ -1,0 +1,128 @@
+
+
+.superuser-administration-outerDiv {
+
+    padding: 10px;
+    margin: 0;
+}
+
+
+.superuser-administration-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: center;
+
+}
+
+.superuser-administration-table th {
+    font-size: 16px;
+}
+/* all */
+.superuser-administration-table td {
+    font-size: 14px;
+}
+
+.superuser-administration-table th,
+.superuser-administration-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.superuser-administration-button {
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007b6f;
+    color: white;
+}
+
+.superuser-administration-button :hover {
+    background-color: white;
+    color: #007b6f;
+}
+
+.superuser-administration-modalOverlay {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modalContent {
+    background: #333;
+    color: #fff;
+    width: 200px;
+    margin: auto;
+    border: none;
+    border-radius: 8px;
+}
+
+.superuser-administration-closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: black;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.superuser-administration-requestDetail-title {
+    font-size: 16px;
+}
+
+.superuser-administration-app-rej-btn {
+
+    text-align: center;
+    padding: 20px;
+}
+
+.superuser-administration-approve-button {
+    padding: 5px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.superuser-administration-approve-button:hover {
+    background-color: white;
+    color: green;
+}
+
+.superuser-administration-button-reject {
+    padding: 5px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.superuser-administration-button-reject:hover {
+    background-color: white;
+    color: red;
+}
+
+
+
+.superuser-administration-heading-text {
+    font-size: 16px;
+
+}
+
+.superuser-administration-modalTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.superuser-administration-modalTable td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.superuser-administration-modalTable td:first-child {
+    font-weight: bold;
+}

@@ -1,0 +1,104 @@
+.dispenSalessalesStockDetails-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: white;
+}
+
+
+.dispenSalessalesStockDetails-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.dispenSalessalesStockDetails-search-bar {
+    padding: 5px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.dispenSalessalesStockDetails-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dispenSalessalesStockDetails-store-filter {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.dispenSalessalesStockDetails-checkbox-label {
+    display: flex;
+    align-items: center;
+}
+
+.dispenSalessalesStockDetails-header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dispenSalessalesStockDetails-print-btn,
+.dispenSalessalesStockDetails-close-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+/* .close-btn {
+    background-color: #dc3545;
+} */
+
+.dispenSalessalesStockDetails-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.dispenSalessalesStockDetails-table th,
+.dispenSalessalesStockDetails-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.dispenSalessalesStockDetails-table th {
+    background-color: #f8f9fa;
+}
+
+.dispenSalessalesStockDetails-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.salesStockDetails-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* .salesStockDetails-popup-overlay */
+   .dispenSalessalesStockDetails-close-popup-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+
+  
+  

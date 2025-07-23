@@ -1,0 +1,111 @@
+/* Ravindra_Sanap_AddPerformancePopup.css_04_10_2024_Start */
+
+.addperformance__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    z-index: 55555;
+  }
+  
+  .addperformance__popup {
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    width: 80%;
+
+  }
+  
+  .addperformance__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: var(--heading-font);
+    
+  }
+  .addperformance__header h2{
+    color: black;
+  }
+  
+  .addperformance__closeButton {
+    background: none;
+    border: none;
+    padding: 5px 12px;
+    /* font-size: 2rem; */
+    cursor: pointer;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+  }
+  
+  .addperformance__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  
+  .addperformance__formGroup {
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  
+  
+
+  
+  .addperformance__formActions {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 10px;
+  }
+  
+  .addperformance__formActions button {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .addperformance__formActions button:first-child {
+    background-color: var(--button-color);
+    color: white;
+  }
+  
+  .addperformance__formActions button:last-child {
+    background-color: var(--button-color);
+    color: white;
+  }
+
+  .addperformance__formActions button:last-child:hover {
+    background-color: var(--button-bg-color);
+  }
+  
+  .addperformance__note {
+    grid-column: span 2;
+    margin-top: 0px;
+    color: green;
+  }
+  
+  .addperformance__openButton {
+    padding: 10px 20px;
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+/* Ravindra_Sanap_AddPerformancePopup.css_04_10_2024_End */

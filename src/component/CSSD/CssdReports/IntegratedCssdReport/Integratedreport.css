@@ -1,0 +1,161 @@
+.IntegratedCssdReport {
+    font-size: 14px;
+}
+.IntegratedCssdReport-ok-btn {
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--button-color);
+    color: white;
+    cursor: pointer;
+}
+.IntegratedCssdReport-ok-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+   border: 1px solid var(--button-hover-border-color);
+}
+.IntegratedCssdReport-main {
+      
+    /* background-color: white; */
+    padding: 20px;
+    border-radius: 5px;
+  }
+
+  .IntegratedCssdReport-form {
+    background-color: #d3d3d3;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .IntegratedCssdReport-star-btn{
+    background-color: transparent;
+    color: #007bff;
+    font-size: 18px;
+    border: none;
+  }
+  .IntegratedCssdReport-dash-btn{
+    background-color: #007bff5b;
+    /* background-color: transparent; */
+    color: #007bff;
+    font-size: 18px;
+    border: none;
+    padding: 0 10px;
+    /* position: relative; */
+  }
+  .IntegratedCssdReport-form-input-group input,.IntegratedCssdReport-form-input-group select{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 150px;
+    margin: 0 5px;
+    font-size: 14px;
+  }
+  .IntegratedCssdReport-options {
+    /* width: 100%; */
+    display: flex;
+    gap: 50px;
+    margin-bottom: 15px;
+  }
+  
+  .IntegratedCssdReport-option label {
+    margin-right: 10px;
+  }
+  
+  .IntegratedCssdReport-option select {
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #c2cad8;
+  }
+  
+  .IntegratedCssdReport-dropdown-options {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 111;
+  }
+  
+  .IntegratedCssdReport-dropdown-options div {
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .IntegratedCssdReport-dropdown-options div:hover {
+    background-color: #f2f2f2;
+  }
+  .IntegratedCssdReport-search{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  }
+  .IntegratedCssdReport-search-bar {
+    margin-bottom: 10px;
+    color: gray;
+    background-color: #f2f2f2;
+    padding: 2px 8px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .IntegratedCssdReport-search-bar input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding: 5px;
+  }
+  
+  .IntegratedCssdReport-results {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+    gap: 10px;
+  }
+  
+  .IntegratedCssdReport-export-btn, .IntegratedCssdReport-print-btn {
+    padding: 5px 15px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .IntegratedCssdReport-export-btn:hover, .IntegratedCssdReport-print-btn:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+     border: 1px solid var(--button-hover-border-color);
+  }
+.IntegratedCssdReport-table-btn{
+    background-color: #007bff;
+    color: white;
+    border-radius: 15px;
+    border: none;
+    padding: 2px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+  .IntegratedCssdReport-dropdown {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 5px; /* Adjust to position below dash button */
+    z-index: 1000;
+    width: 150px; /* Match the width of the dash button */
+  }
+  
+  .IntegratedCssdReport-dropdown div {
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .IntegratedCssdReport-dropdown div:hover {
+    background-color: #f2f2f2;
+  }
+  

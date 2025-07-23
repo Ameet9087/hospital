@@ -1,0 +1,364 @@
+.beds-panel{
+    width: 500px;
+    overflow: hidden;
+    /* height: 400px; */
+}
+.beds {
+    background-color: var(--background-color);
+    padding: 4px;
+    font-size: 12px;
+}
+
+.beds-title-bar {
+    background-color: var(--background-color);
+    color: white;
+    padding: 8px;
+    margin-bottom: 4px;
+}
+
+.beds-header {
+    font-size: var(--heading-font-size);
+}
+
+.beds-checkbox-label {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    margin-left: -440px;
+}
+.beds-checkbox{
+  text-align: start;
+  margin-left: -120px;
+}
+
+
+.beds-form-row {
+    display: flex;
+    align-items: end;
+    gap: 2px;
+    /* margin: 10px 0; */
+}
+
+.beds-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.beds-main-section {
+    display: flex;
+    gap: 4px;
+}
+
+.beds-panel {
+    flex: 1;
+    background: white;
+    border: 1px solid #ccc;
+}
+
+.beds-panel-header {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 4px 8px;
+    font-size: var(--heading-font-size);
+}
+
+.beds-panel-content {
+    padding: 8px;
+    display: grid;
+    gap: 10px;
+    margin: 10px 0;
+    grid-template-columns: repeat(2,1fr);
+}
+
+.beds-form-row {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 4px;
+    font-size: var(--font-size);
+}
+
+.beds-input-with-search {
+    display: flex;
+    align-items: center;
+    width: 47%;
+}
+
+.beds-input-with-search input {
+    padding: var(--input-box-padding);
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.beds-magnifier-btn {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 2px 6px;
+    cursor: pointer;
+    
+}
+
+.beds-status-controls {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--font-size);
+}
+
+.beds-radio-group {
+    display: flex;
+    gap: 12px;
+}
+
+.beds-services-section {
+    background: white;
+    border: 1px solid #ccc;
+}
+
+.beds-tab-bar {
+    display: flex;
+    gap: 5px;
+    background: var(--upper-bar-bg-color);
+    padding: 4px;
+}
+
+.beds-tab {
+    padding: 4px 12px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    color: var(--button-color);
+    font-size: var(--font-size);
+    background: var(--button-hover-bg-color);
+    cursor: pointer;
+}
+
+.beds-tab.active {
+    background: var(--button-color);
+    color: var(--button-hover-bg-color);
+    font-weight: bold;
+}
+
+.services-table {
+    padding: 8px;
+}
+
+.table-actions {
+    margin-bottom: 4px;
+}
+
+.beds-add-btn,
+.beds-del-btn {
+    margin-right: 4px;
+    padding: 2px 8px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: var(--font-size);
+}
+
+.beds-button-section {
+    margin-top: 20px;
+    display: flex;
+    gap: 1px;
+}
+
+.beds-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+
+.beds-btn:hover {
+    opacity: 0.8;
+}
+
+.beds-action-buttons {
+    display: flex;
+    gap: 1px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.beds-action-buttons button {
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-bg-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+}
+
+.beds-action-buttons button:hover {
+    background-color: var(--button-hover-bg-color);
+    color: var(--button-bg-color);
+}
+.modal-overlay-for-items {
+    position: fixed;
+    /* Ensures the modal overlays the entire screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensures it's above other elements */
+  }
+  
+  .modal-content-for-items {
+    background-color: white;
+    padding: 20px;
+    width: 90%; /* Width of the modal */
+    max-width: 600px; /* Maximum width of the modal */
+    max-height: 70%; /* Restrict the height of the modal */
+    overflow-y: auto; /* Add vertical scroll if content exceeds height */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative; /* Ensure the modal is properly positioned */
+  }
+  
+  .modal-content-for-items h2 {
+    margin-top: 0;
+  }
+  
+  .modal-content-for-items table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  
+  .modal-content-for-items th,
+  .modal-content-for-items td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .modal-content-for-items th {
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  .modal-content-for-items input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .modal-content-for-items button {
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: var(--font-size);
+  }
+  
+  .modal-content-for-items button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .search-icon {
+    cursor: pointer;
+    margin-left: 8px;
+    font-size: 16px;
+  }
+  .beds-table-container {
+    height: 450px;
+    overflow-y: auto;  /* Enable vertical scrolling if content exceeds height */
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  .beds-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;  /* Minimum width of the table */
+  }
+  
+  .beds-table thead {
+    position: sticky;  /* Make header stick to the top */
+    top: 0;
+    background-color: #f8f9fa;  /* Header background color */
+    z-index: 1;
+  }
+  
+  .beds-table th, 
+  .beds-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .beds-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+  }
+  
+  .beds-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+  }
+  
+  .beds-table tbody tr:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .beds-edit-btn, .beds-delete-btn {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .beds-edit-btn {
+    background-color: var(--button-bg-color);
+    color: white;
+  }
+  
+  .beds-delete-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .beds-edit-btn:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-color);
+  }
+  
+  .beds-delete-btn:hover {
+    background-color: var(--button-hover-background-color);
+    color: #da190b;
+  }
+  
+  .beds-btn-blue {
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    margin-top: 10px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .beds-btn-blue:hover {
+    background-color:var(--button-hover-bg-color);
+    color: var(--button-color);
+    border: 1px solid var(--button-color);
+    font-size: var(--font-size);
+  }

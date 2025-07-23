@@ -1,0 +1,112 @@
+/* Dhanashree_QueryPage_27/09_Starts */
+
+.HIMSQueryPage-query-page {
+    width: 60%;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+}
+
+.HIMSQueryPage-card {
+    background-color: #f9f9f9; /* Light gray background for the card */
+    padding: 20px; /* Padding inside the card */
+    border-radius: 8px; /* Rounded corners for the card */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.HIMSQueryPage-form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.HIMSQueryPage-query-page label {
+    flex: 0 0 150px; /* Fixed width for the label */
+    margin-right: 10px; /* Space between label and input */
+    font-weight: bold;
+}
+
+.HIMSQueryPage-query-page input, 
+.HIMSQueryPage-query-page textarea {
+    flex: 1; /* Allow input to take remaining space */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.HIMSQueryPage-action-buttons {
+    margin-top: 20px;
+}
+
+.HIMSQueryPage-action-buttons button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.HIMSQueryPage-send-btn {
+    background-color: var(--button-color);
+    color: white;
+}
+
+.HIMSQueryPage-send-btn:hover {
+    background-color: white;
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.HIMSQueryPage-approve-btn {
+    background-color: var(--button-color);
+    color: white;
+}
+
+.HIMSQueryPage-approve-btn:hover {
+    background-color: white;
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.HIMSQueryPage-reject-btn {
+    background-color: var(--button-color);
+    color: white;
+}
+
+.HIMSQueryPage-reject-btn:hover {
+    background-color: white;
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.HIMSQueryPage-send-btn:hover, 
+.HIMSQueryPage-approve-btn:hover, 
+.HIMSQueryPage-reject-btn:hover {
+    opacity: 0.8;
+}
+
+.HIMSQueryPage-message {
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.HIMSQueryPage-message.success {
+    background-color: #d4edda; /* Light green background */
+    color: #155724; /* Dark green text */
+}
+
+.HIMSQueryPage-message.error {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text */
+}
+
+.HIMSQueryPage-message-icon {
+    margin-right: 10px; /* Spacing between icon and text */
+}
+
+/* Dhanashree_QueryPage_27/09_Ends */

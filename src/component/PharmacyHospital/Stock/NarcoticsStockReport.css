@@ -1,0 +1,187 @@
+  /* Mohini_NarcoticsStockReport_WholePage_14/sep/2024 */
+  .narcotics-stock-report-container {
+    background-color: var(--background-color);
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.narcotics-stock-report-container h1 {
+    color: black; /* Keeps the current color */
+    font-size: 16px; /* Set font size to 18px */
+    margin-bottom: 20px; /* Space below the heading */
+    text-align: left; /* Aligns text to the left */
+  }
+  
+
+.narcotics-stock-report-report-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.narcotics-stock-report-search-bar {
+    display: flex;
+    
+}
+
+.narcotics-stock-report-search-bar input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px 0 0 3px;
+}
+
+.narcotics-stock-report-search-bar button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0 3px 3px 0;
+    padding: 5px 10px;
+}
+
+.narcotics-stock-report-filters {
+    display: flex;
+    align-items: center;
+}
+
+.narcotics-stock-report-filters label {
+    margin-left: 20px;
+}
+
+.narcotics-stock-report-filters select {
+    margin-left: 10px;
+    padding: 5px;
+}
+
+.narcotics-stock-report-results-info {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.narcotics-stock-report-export-btn, 
+.narcotics-stock-report-print-btn {
+    background-color:var( --button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 5px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.narcotics-stock-report-export-btn:hover, 
+.narcotics-stock-report-print-btn:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+
+}
+.narcotics-stock-report-stock-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+.narcotics-stock-report-stock-table th, 
+.narcotics-stock-report-stock-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.narcotics-stock-report-stock-table th {
+    background-color: #f2f2f2;
+}
+
+.narcotics-stock-report-stock-table .odd {
+    background-color: #f9f9f9;
+}
+
+.narcotics-stock-report-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.narcotics-stock-report-pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #6495ED;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.narcotics-stock-report-summary {
+    margin-top: 20px;
+    width: 23%;
+    padding: 10px;
+}
+
+.narcotics-stock-report-summary h2 {
+    text-align: center;
+    background-color: #f2f2f2;
+    margin-bottom: 10px;
+    font-size: 16px;
+
+}
+.narcotics-stock-report-narcotics-stock-ta{
+    background-color: white;
+}
+
+.narcotics-stock-report-total-sales {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+.narcotics-stock-report-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the child elements horizontally */
+    text-align: center; /* Centers text within each child element */
+    margin: 0 auto; /* Ensures the div itself is centered if it has a fixed width */
+  }
+  /*  */
+  .narcotics-stock-selection {
+    display: flex;
+    align-items: center; /* Vertically center the items */
+    justify-content: space-around; /* Evenly distribute space between and around the items */
+    gap: 20px; /* Increase the space between elements */
+    margin: 20px auto; /* Center the container and add some margin */
+  }
+  
+  .narcotics-stock-selection label {
+
+    margin-right: 40px; /* Increase space between the label and select */
+  }
+  
+  .narcotics-stock-selection select {
+    padding: 8px 12px; /* Add more padding for better usability */
+    border-radius: 4px; /* Slightly round the corners */
+    border: 1px solid #ccc; /* Add a subtle border */
+    background-color: #fff; /* White background */
+    margin-right: 10px; /* Add space between the select and button */
+  }
+  
+  .nacotics-stock-selection-btn {
+    margin-bottom: 20px;
+    padding: 5px 5px; /* Add padding for the button */
+    margin-left: 40px;
+    justify-content: flex-end; /* Evenly distribute space between and around the items */
+    background-color:var( --button-color);
+    color: white;
+    border: 1px solid var( --button-hover-border-color);
+    border: 1px solid var( --button-hover-border-color);
+    border: none; /* Remove the border */
+    border-radius: 4px; /* Slightly round the corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .nacotics-stock-selection-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+  
+  /* Mohini_NarcoticsStockReport_WholePage_14/sep/2024 */

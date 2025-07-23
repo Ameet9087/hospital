@@ -1,0 +1,78 @@
+/* fixedAssetsReport.css */
+
+.fixed-asset-report {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .fixed-asset-report-nav {
+    padding: 1rem;
+    /* border-bottom: 1px solid #ddd; */
+  }
+  .fixed-assets-btn{
+    background-color: white;
+    display: flex;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    gap: 10px;
+    color: black;
+    /* padding: 0; */
+  }
+  .fixed-assets-btn:hover{
+    background-color:#2d68ea;
+    color: white;
+  }
+  .fixed-assets-btn:hover> .fixed-assets-icon{
+    background-color: white;
+    color: #2d68ea; 
+  } 
+  .fixed-assets-icon{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: #2d68ea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: white;
+  }
+  .fixed-assets-text{
+    font-size: 14px;
+  }
+  .fixed-assets-text h3{
+    padding: 5px;
+    margin: 0;
+  }
+  .fixed-assets-text p{
+    padding: 5px;
+    margin: 0;
+    /* color: gray; */
+  }
+  .fixed-asset-report-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .fixed-asset-report-nav li {
+    display: inline;
+  }  
+  /* .fixed-asset-report-nav a.active,
+  .fixed-asset-report-nav a:hover {
+    background-color: #2d68ea;
+    color: white;
+  } */
+  
+  .fixed-asset-report-content {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+  

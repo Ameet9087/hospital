@@ -1,0 +1,23 @@
+/* Dhanashree_HomePage_26/09_Starts */
+
+.HomePageBroadcast-home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+}
+
+.HomePageBroadcast-broadcast-button {
+  padding: 15px 30px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.5rem;
+}
+
+.HomePageBroadcast-broadcast-button:hover {
+  background-color: #218838;
+}
+
+/* Dhanashree_HomePage_26/09_Ends */

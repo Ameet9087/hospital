@@ -1,0 +1,122 @@
+/* UpdateLedger.css */
+.ul-popup-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 150;
+}
+.ul-container {
+    position: relative;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    height: 550px;
+  }
+  
+  .ul-title {
+    font-size: 16px;
+    /* font-size: 1rem; */
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .ul-form {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .ul-column {
+    width: 48%;
+  }
+  
+  .ul-field {
+    display: flex;
+    justify-content: start;
+    white-space: nowrap;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .ul-field label {
+    width: 300px;
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .ul-field input[type="text"],
+  .ul-field input[type="number"],
+  .ul-field select {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 30px !important;
+  }
+  
+  .ul-radio-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .ul-radio-group label {
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+  }
+  
+  .ul-radio-group input[type="radio"] {
+    margin-right: 5px;
+    /* width: 100%; */
+  }
+  
+  .ul-update-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin-top: 20px;
+  }
+  
+  .ul-update-btn:hover{
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+
+  
+  .ul-close-btn{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    border: none;
+    color: white;
+    font-size: 16px;
+    padding: 5px 12px;
+    border-radius: 50%;
+  }
+
+  /* Add responsive design */
+  @media (max-width: 768px) {
+    .ul-form {
+      flex-direction: column;
+    }
+    
+    .ul-column {
+      width: 100%;
+    }
+  }

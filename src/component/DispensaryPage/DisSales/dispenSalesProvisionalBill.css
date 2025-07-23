@@ -1,0 +1,230 @@
+ /* Ajhar Tamboli dispenSalesProvisionalBill.css 19-09-24 */
+
+.dispenSalesProvisionalBill-active-imaging-request {
+    font-family: Arial, sans-serif;
+    
+  }
+  
+  .dispenSalesProvisionalBill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  
+  .dispenSalesProvisionalBill-CreateRequisition{
+      margin-left: 10px;
+      background-color: #26C281;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 0px 10px;
+      font-size: var(--font-size);
+      margin-left: 100px;
+      height: 28px;
+      text-align: center;
+    }
+    
+  .dispenSalesProvisionalBill-checkBox select {
+    padding: 3px 5px 3px 5px;
+    background-color: #f0f0f0;
+    margin-left: 10px;
+    width: 100px;
+  }
+  .dispenSalesProvisionalBill-checkBox label {
+font-size: var(--font-size);
+color: green;
+}
+  
+  .dispenSalesProvisionalBill-controls {
+    display: flex;
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .dispenSalesProvisionalBill-date-range {
+    display: flex;
+    align-items: center;
+    width: 38%;
+    gap: 10px;
+    background-color: #f0f0f0;
+    margin-bottom: 10px;
+    padding: 3px;
+  }
+  .dispenSalesProvisionalBill-date-range label{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    font-size: var(--font-size);
+  }
+  
+  .dispenSalesProvisionalBill-date-range input[type="date"] {
+    padding: 3px;
+    margin-left: 10px;
+  }
+  
+
+  
+
+  
+  .dispenSalesProvisionalBill-search-bar {
+    display: flex;
+    margin-left:-15px;
+  }
+  
+  .dispenSalesProvisionalBill-search-bar input {
+    flex-grow: 1;
+    padding: 3px;
+    width: 210px;
+
+  }
+  .dispenSalesProvisionalBill-search-bar i{
+    position: relative;
+    color:gray;
+    top: 7px;
+  left: 205px;
+  }
+  
+ 
+  
+  .dispenSalesProvisionalBill-results-info {
+    text-align: right;
+    color: black;
+    font-size: var(--font-size);
+}
+.dispenSalesProvisionalBill-print-btn{
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+  padding: 5px 10px;
+}
+.dispenSalesProvisionalBill-print-btn:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+  
+  .dispenSalesProvisionalBill-table-N-paginat table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.dispenSalesProvisionalBill-table-N-paginat th, td {
+    border: 1px solid #ddd;
+    padding: 3px;
+    text-align: center;
+    font-size: var(--font-size);
+    color:black;
+}
+  
+  .dispenSalesProvisionalBill-table-N-paginat th {
+    /* background-color: red; */
+    background-color: #F3F3F3;
+    font-size: var(--heading-font);
+
+  }
+  
+  .dispenSalesProvisionalBill-table-N-paginat tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .dispenSalesProvisionalBill-action-button {
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    border-radius: 13px;
+  }
+  
+  .dispenSalesProvisionalBill-add-report {
+    background-color: #008CBA;
+  }
+  
+  .dispenSalesProvisionalBill-scan-done {
+    background-color: #008CBA;
+  }
+  
+  .dispenSalesProvisionalBill-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  
+  .dispenSalesProvisionalBill-search-N-results{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.dispenSalesProvisionalBill-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  }
+  
+  .dispenSalesProvisionalBill-pagination button {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 5px;
+  }
+  
+  .dispenSalesProvisionalBill-pagination span {
+    margin: 0 10px;
+    color: gray;
+    font-size: var(--font-size);
+  }
+  .dispenSalesProvisionalBill-table-N-paginat{
+    background-color: white ;
+  }
+
+  
+.dispenSalesProvisionalBill-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal content styling */
+.dispenSalesProvisionalBill-modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  max-width: 1300px;
+  width: 100%;
+}
+
+/* Close button styling */
+.dispenSalesProvisionalBill-close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}

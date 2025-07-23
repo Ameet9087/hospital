@@ -1,0 +1,349 @@
+/*  Neha Superuser-revenue manaeh=ment 2709-24 */
+.revenuemgnt-container {
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+/* Header */
+.revenuemgnt-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.revenuemgnt-header-h1 {
+  font-size: 20px;
+  color: #4caf50;
+}
+
+.revenuemgnt-filters select {
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.revenuemgnt-filter {
+  margin-bottom: 20px;
+}
+
+.revenuemgnt-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.revenuemgnt-filter-type select,
+.revenuemgnt-filter-daterange input {
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.revenuemgnt-filter-buttons button {
+  margin-left: 10px;
+  padding: 5px ;
+  border: 1px solid #00c9c0;
+  background-color: white;
+  color: #00c9c0;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.revenuemgnt-filter-buttons button.btn-today {
+  background-color: #00c9c0;
+  color: white;
+}
+
+.revenuemgnt-filter-buttons button:hover {
+  background-color: #00c9c0;
+  color: white;
+}
+
+
+/* KPI Cards */
+.revenuemgnt-kpi-cards {
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.revenuemgnt-kpi-card {
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 8px;
+  flex: 1;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.revenuemgnt-kpi-card h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.revenuemgnt-kpi-card p {
+  font-size: 22px;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+/* Charts Section */
+.revenuemgnt-charts {
+  display: flex;
+  gap: 30px;
+  width: 90%;
+}
+.revenuemgnt-pie-chart {
+  width: 600px; /* Custom width for the pie chart container */
+  height: 400px; /* Custom height for the pie chart container */
+  margin: 0 auto; /* Center the chart */
+}
+
+
+.revenuemgnt-pie-chart, .revenuemgnt-line-chart {
+  flex: 1;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+}
+.revenuemgnt-line-chart{
+  width: 900px; 
+  height: 400px; 
+  margin: 0 auto;
+
+}
+
+
+.revenuemgnt-pie-chart h3, .revenuemgnt-line-chart h3 {
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/* Table Section */
+.revenuemgnt-table {
+  margin-top: 40px;
+}
+
+.revenuemgnt-table h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.revenuemgnt-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.revenuemgnt-table th, .revenuemgnt-table td {
+  padding: 5px;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+
+.revenuemgnt-table th {
+  background-color: #f4f4f4;
+  color: black;
+  font-size: 14px;
+}
+
+.revenuemgnt-table td {
+  font-size: 14px;
+  color: #333;
+}
+.revenuemgntopd-dept-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.revenuemgntopd-dept-modal-content {
+  background-color: white;
+  padding: 20px;
+  width: 900px;
+  border-radius: 8px;
+}
+
+.revenuemgntopd-dept-modal-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.revenuemgntopd-dept-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.revenuemgntopd-dept-table th, .revenuemgntopd-dept-table td {
+  padding: 2px;
+  border: 1px solid #ddd;
+}
+.revenuemgntopd-dept-table th{
+  background-color: #f4f4f4;
+  color: black;
+}
+.revenuemgntopd-dept-table td{
+  padding: 2px;
+}
+
+.revenuemgntopd-dept-close-btn {
+  margin-top: 20px;
+  padding: 5px;
+  background-color: #00c9c0;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+
+.revenuemgntopd-dept-charts{
+  display: flex;
+  flex-direction: row;
+  
+}
+.revenuemgntopd-dept-view-btn{
+  margin-bottom: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #00c9c0;
+  color:white;
+  border: 1px solid #00c9c0 ;
+}
+
+.revenuemgntopd-dept-view-btn:hover{
+  background-color: white;
+  color:#00c9c0 ;
+}
+
+.superuserview-opdpatient-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.superuserview-opdpatient-modal-content {
+  background-color: #fff;
+  padding: 20px;
+  width: 80%;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif;
+  color: #333;
+  text-align: left;
+}
+
+.superuserview-opdpatient-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.superuserview-opdpatient-status {
+  color: green;
+  font-weight: bold;
+}
+
+.superuserview-opdpatient-time {
+  font-size: 14px;
+  color: #888;
+}
+
+.superuserview-opdpatient-close-btn {
+  margin-bottom: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #00c9c0;
+  color:white;
+  border: 1px solid #00c9c0 ;
+}
+
+.superuserview-opdpatient-close-btn:hover {
+  border:1px solid #00c9c0;
+  color: #00c9c0;
+  background-color: white;
+}
+
+.superuserview-opdpatient-details,
+.superuserview-opdpatient-general-advice {
+  margin-bottom: 20px;
+}
+
+.superuserview-opdpatient-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.superuserview-opdpatient-table th,
+.superuserview-opdpatient-table td {
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: left;
+ 
+}
+
+.superuserview-opdpatient-table th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+}
+
+.superuserview-opdpatient-general-advice h4 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+.superuserview-opdpatient-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+/* DrModal.css */
+.drmodalrevenue {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure modal is on top */
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  width: 600px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+}

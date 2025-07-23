@@ -1,0 +1,167 @@
+.autopsy-scheduling-add-btn,.autopsy-scheduling-print-button{
+    margin-bottom: 10px;
+    background-color: var(--button-color);
+    font-size: var(--heading-font);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    border: 1px solid var(--button-hover-border-color); 
+}
+.AccidentReportForm-radio-button{
+  margin-left: 10px;
+}
+.autopsy-scheduling-search-bar{
+  display: flex;
+  gap: 10px;
+}
+
+.autopsy-scheduling-search-bar input  {
+  padding: 5px;
+  transition: border-color 0.3s;
+  font-size: var(--font-size);
+  margin-left: 0;
+
+}
+.autopsy-scheduling-search-bar .fa-search {
+  margin-left: 10px;
+  color: black;
+  cursor: pointer;
+  align-self: center;
+}
+
+.autopsy-scheduling-results-info{
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  margin: 10px;
+}
+
+.autopsy-scheduling-search-bar input :focus {
+  border-color: skyblue;
+  outline: none;
+}
+.autopsy-scheduling-container {
+    margin: 0 auto;
+    padding: 5px;
+    background-color:var(--background-color);
+  }
+
+  .autopsy-scheduling-section {
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+.autopsy-scheduling-form-header{
+    background-color: #00897b;
+    color: white;
+    padding: 5px 10px;
+    font-size: var(--heading-font);
+}
+.autopsy-scheduling-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 5px;
+  }
+  .autopsy-scheduling-grid.two-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .autopsy-scheduling-floating-field {
+    position: relative;
+  }
+  .autopsy-scheduling-floating-input {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: var(--font-size);
+    background: white;
+    transition: all 0.2s ease;
+  }
+  .autopsy-scheduling-floating-input{
+    width: 95%;
+  }
+
+  .autopsy-scheduling-floating-label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    padding: 0 5px;
+    color: black;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    font-size: var(--font-size);
+  }
+  .autopsy-scheduling-floating-field.active .autopsy-scheduling-floating-label {
+    top: 0;
+    font-size: var(--font-size);
+    color: #00897b;
+  }
+  .autopsy-scheduling-floating-field.active .autopsy-scheduling-floating-input,
+  .autopsy-scheduling-floating-field.active .autopsy-scheduling-floating-select {
+    border-color: #00897b;
+  }
+
+.autopsy-scheduling-action{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.autopsy-scheduling-button{
+    display: flex;
+    justify-content: end;
+}
+.autopsy-scheduling-submit-btn,.autopsy-scheduling-status-btn{
+    padding: 5px;
+    font-size: var(--heading-font);
+    background-color: var(--button-bg-color);
+    color: white;
+    border: 1px solid var(--button-hover-border-color);
+    border-radius: 5px;
+}
+.autopsy-scheduling-confirm-checkbox{
+    display: flex;
+    gap: 10px;
+}
+.autopsy-scheduling-action{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.autopsy-scheduling-button{
+    display: flex;
+    justify-content: end;
+}
+.autopsy-scheduling-submit-btn,.autopsy-scheduling-status-btn{
+    padding: 5px;
+    font-size: var(--heading-font);
+    background-color: var(--button-bg-color);
+    color: white;
+    border: 1px solid var(--button-hover-border-color);
+    border-radius: 5px;
+}
+.autopsy-scheduling-submit-btn:hover,.autopsy-scheduling-status-btn:hover
+,.autopsy-scheduling-print-button:hover,
+.autopsy-scheduling-add-btn:hover{
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+.autopsy-scheduling-search-field{
+    position: relative;
+    width: 100%;
+
+}
+.autopsy-scheduling-search-icon{
+    position: absolute; 
+    right: 10px;        
+    top: 40%;          
+    transform: translateY(-50%); 
+    cursor: pointer;   
+    font-size: var(--font-size);   
+    color: #000;  
+}

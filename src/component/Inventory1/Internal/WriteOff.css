@@ -1,0 +1,251 @@
+/* Swapnil ROkade adding className And Applying colors 14/09 */
+.writeOff-content {
+    margin-bottom: 20px;
+    padding: 2px;
+    background-color: var(--background-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 550px;
+    width: 100%;
+}
+.error-message
+{
+    color: red;
+}
+/* .writeOff-select
+{
+    padding: 7px;
+    width: 100%;
+} */
+
+/* .writeOff-tab-content {
+    width: 100%;
+} */
+
+.writeOff-write-off-table {
+    width: 100%;
+    margin-left: 5px;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: auto; /* Allows the table to adjust based on content */
+    overflow-x: auto;
+}
+.write-off-header{
+    font-size: var(--heading-font);
+    margin-left: 10px;
+}
+
+.writeOff-write-off-table th,
+.writeOff-write-off-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ccc;
+    word-wrap: break-word;
+    font-size: var(--font-size);
+}
+
+.writeOff-write-off-table th {
+    background-color: #f2f2f2;
+    color: black;
+    position: sticky;
+    font-size: var(--heading-font);
+    top: 0;
+    z-index: 1;
+}
+
+/* .writeOff-input{
+    width: 100%;
+} */
+
+.writeOff-remove-row {
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.writeOff-remove-row:hover {
+    background-color: #b71c1c;
+}
+
+.writeOff-add-row {
+    background-color: var( --button-color);
+    color: white;
+    margin-left: 2px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    /* transition: background-color 0.3s ease; */
+    margin-bottom: 10px;
+    border: none; /* Ensure no border is applied */
+}
+
+
+/* .writeOff-totals-container {
+    width: 98%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    margin-top: 20px;
+} */
+
+.writeOff-totals {
+    width: 100%;
+    max-width: 350px; /* Adjusted the max width */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+/* .writeOff-totals label {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size);
+} */
+
+/*    */
+
+.writeOff-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px; /* Added gap for better spacing */
+}
+
+.writeOff-write-off-request {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: var(--font-size);
+    background-color: var(--button-color);
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.writeOff-write-off-request:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+    
+}
+
+.writeOff-cancel {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: var(--font-size);
+    background-color: #d32f2f;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.writeOff-cancel:hover {
+    background-color: #c62828;
+}
+
+@media (max-width: 768px) {
+    .writeOff-totals {
+        width: 100%;
+        max-width: none; /* Allows totals to take full width on smaller screens */
+    }
+
+    .writeOff-buttons {
+        justify-content: center;
+    }
+
+    .writeOff-buttons button {
+        flex: 1 1 100%; /* Makes buttons take full width on small screens */
+        margin-bottom: 10px;
+    }
+}
+
+
+/*  */
+
+.writeOff-totals-container {
+    width: 98%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align the container to the right side */
+    margin-top: 20px;
+}
+
+.writeOff-totals {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    max-width: 350px; /* Adjust the max width if needed */
+}
+
+.writeOff-total-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.writeOff-total-field label {
+    margin-right: 10px; /* Space between label and input */
+    font-weight: bold;
+    font-size: var(--font-size);
+    flex-basis: 40%; /* Adjust if necessary */
+}
+
+.writeOff-total-field input[type="text"] {
+    width: 100%; /* Full width input */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: var(--font-size);
+    box-sizing: border-box;
+    background-color: #f1f1f1;
+    text-align: right;
+}
+
+.writeOff-buttons {
+    display: flex;
+    gap: 10px; /* Spacing between buttons */
+    margin-top: 20px;
+    justify-content: flex-end; /* Align buttons to the right */
+}
+
+.writeOff-write-off-request {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: var(--font-size);
+    background-color: var(--button-color);
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.writeOff-write-off-request:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.writeOff-cancel {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: var(--font-size);
+    background-color: #d32f2f;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.writeOff-cancel:hover {
+    background-color: #c62828;
+}

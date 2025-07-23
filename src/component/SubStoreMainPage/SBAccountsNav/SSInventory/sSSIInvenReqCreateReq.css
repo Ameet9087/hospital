@@ -1,0 +1,274 @@
+/* Ajhar Tamboli sSSIInvenReqCreateReq.css 19-09-24 */
+
+
+.sSSIInvenReqCreateReq-form {
+  font-family: Arial, sans-serif;
+  /* max-width: 1200px; */
+  margin: 0 auto;
+  padding: 10px;
+  background-color: white;
+}
+
+.sSSIInvenReqCreateReq-form-title{
+  font-size: var(--heading-font);
+  margin-bottom: 20px;
+  /* color: #333; */
+}
+
+.sSSIInvenReqCreateReq-form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sSSIInvenReqCreateReq-form-group {
+  display: flex;
+  align-items: center;
+}
+
+.sSSIInvenReqCreateReq-form-group label {
+  margin-bottom: 5px;
+  font-size: var(--font-size);
+}
+.sSSIInvenReqCreateReq-add-row-button{
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  color: white;
+  /* border: none; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  padding: var(--input-box-padding);
+}
+.sSSIInvenReqCreateReq-add-row-button:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-color);
+}
+.sSSIInvenReqCreateReq-delete-row-button{
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  padding: var(--input-box-padding);
+}
+.sSSIInvenReqCreateReq-delete-row-button:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-color);
+}
+/* .sSSIInvenReqCreateReq-form-group input,
+.sSSIInvenReqCreateReq-form-group textarea {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 10px;
+} */
+
+/* .sSSIInvenReqCreateReq-date-input {
+  position: relative;
+  
+} */
+/* .sSSIInvenReqCreateReq-date-input  textarea{
+  padding: 5px;
+  margin-left: 5px;
+
+} */
+.sSSIInvenReqCreateReq-table-select{
+  width: 100%;
+}
+.sSSIInvenReqCreateReq-table-input{
+  width: 100%;
+}
+
+
+.sSSIInvenReqCreateReq-inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.sSSIInvenReqCreateReq-inventory-table th,
+.sSSIInvenReqCreateReq-inventory-table td {
+  border: 1px solid #ccc;
+  padding: 3px;
+  text-align: center;
+  font-size: var(--font-size);
+}
+
+.sSSIInvenReqCreateReq-inventory-table th {
+  background-color: #f0f0f0;
+  font-size: var(--heading-font);
+}
+
+.sSSIInvenReqCreateReq-table-category {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+.sSSIInvenReqCreateReq-checkbox-group {
+  flex-direction: row;
+  align-items: center;
+}
+
+
+.sSSIInvenReqCreateReq-min-buttonFs{
+  background-color:var( --button-color);
+  margin-left: 10px;
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  /* margin: 1px; */
+  transition: background-color 0.3s ease;
+  padding: 3px 8px;
+}
+.sSSIInvenReqCreateReq-min-buttonFs:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+
+}
+.sSSIInvenReqCreateReq-form-group-needVerification-N-Remark{
+
+display: flex;
+justify-content: space-between; 
+}
+.sSSIInvenReqCreateReq-checked-by {
+  display: flex;
+  align-items: center;
+  margin: 10px 0px ;
+}
+
+.sSSIInvenReqCreateReq-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.sSSIInvenReqCreateReq-btn-remove {
+  background-color:var( --button-color);
+  margin-left: 10px;
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  /* margin: 1px; */
+  transition: background-color 0.3s ease;
+  padding: 3px 8px;
+}
+.sSSIInvenReqCreateReq-btn-remove:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+
+}
+
+.sSSIInvenReqCreateReq-btn-checked {
+  background-color:var( --button-color);
+  margin-left: 10px;
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  /* margin: 1px; */
+  transition: background-color 0.3s ease;
+  padding: 3px 8px;
+}
+.sSSIInvenReqCreateReq-btn-checked:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+
+}
+
+
+.sSSIInvenReqCreateReq-btn-add {
+  background-color:var( --button-color);
+  margin-left: 10px;
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  /* margin: 1px; */
+  transition: background-color 0.3s ease;
+  padding: 3px 8px;
+}
+.sSSIInvenReqCreateReq-btn-add:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+
+}
+
+.sSSIInvenReqCreateReq-btn-request {
+  background-color:var( --button-color);
+  margin-left: 10px;
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  /* margin: 1px; */
+  transition: background-color 0.3s ease;
+  padding: 3px 8px;
+}
+.sSSIInvenReqCreateReq-btn-request:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  
+}
+.sSSIInvenReqCreateReq-btn-discard {
+  border: 1px solid #f44336;
+  background-color: #f44336;
+  border-radius: 5px;
+  color: white;
+  margin-left: 10px;
+}
+
+.sSSIInvenReqCreateReq-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+
+.sSSIInvenReqCreateReq-minus-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .sSSIInvenReqCreateReq-delete-row-button {
+  background-color: #ff4d4d; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+} */
+/* 
+.sSSIInvenReqCreateReq-delete-row-button:hover{
+  background-color: #ff4d4d; 
+  color: white;
+} */

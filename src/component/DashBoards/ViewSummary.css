@@ -1,0 +1,78 @@
+.ive-container {
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .ive-nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    border-bottom: 2px solid #e0e0e0;
+  }
+  
+  .ive-nav li {
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #666;
+  }
+  
+  .ive-nav li.ive-active {
+    color: var(--upperBar-bg-color);
+    border-bottom: 2px solid var(--upperBar-bg-color);
+  }
+  
+  .ive-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .ive-header h2 {
+    color: #333;
+    font-size: 18px;
+  }
+  
+  .ive-add-btn {
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  th {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  a.ive-edit-link, a.ive-set-active-link {
+    color: var(--sideBar-bg-color);
+    text-decoration: none;
+  }
+  
+  .ive-star {
+    color: var(--button-bg-color);
+    margin-right: 5px;
+  }
+  
+  input[type="checkbox"] {
+    transform: scale(1.2);
+  }
+  

@@ -1,0 +1,60 @@
+.cons-container {
+  max-width: 800px;  /* Limit the container width */
+ 
+ 
+  padding: 10px;  /* Add padding inside the container */
+}
+
+.cons-heading {
+  font-size: 24px;  /* Larger font size for the heading */
+  margin-bottom: 20px;  /* Space below the heading */
+}
+
+.terms-quill {
+  width: 100%;  /* Make Quill editor responsive (full width of parent) */
+  height: 200px;  /* Set fixed height for the editor */
+  border-radius: 4px;  /* Round the corners of the editor */
+}
+
+.cons-terms-form {
+  display: flex;
+  flex-direction: column; /* Stack the form elements vertically */
+  gap: 10px;
+}
+
+.cons-input-text {
+  width: 100%;  /* Full width of the parent container */
+  padding: 5px;  /* Add padding inside the input field */
+  font-size: var(--font-size);  /* Set font size */
+  border: 1px solid #ccc;  /* Light gray border */
+  border-radius: 4px;  /* Rounded corners */
+}
+
+.cons-input-checkbox {
+  margin-left: 10px;  /* Space between checkbox and label */
+}
+
+.cons-form-actions {
+  display: flex;
+  justify-content: flex-end;  /* Align the button to the right */
+}
+
+.cons-save-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+
+.cons-save-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+.cons-form-groupsdf{
+  margin-bottom: 50px;
+}
+

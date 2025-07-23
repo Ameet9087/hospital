@@ -1,0 +1,42 @@
+/* Dhanashree_SendMessageHistory_26/09_Starts */
+
+.SMHP-SendMessageHistory-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.SMHP-SendMessageHistory-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: gray; /* Gray background for the whole table */
+  color: black; /* Text color for visibility */
+}
+
+.SMHP-SendMessageHistory-table th, 
+.SMHP-SendMessageHistory-table td {
+  border: 1px solid gray; /* Add border for clarity */
+  padding: 10px;
+  text-align: left;
+}
+
+.SMHP-SendMessageHistory-table th {
+  background-color: #f2f2f2; /* Darker gray for headers */
+}
+
+.SMHP-SendMessageHistory-table tbody tr:nth-child(even) {
+  background-color: #777; /* Lighter gray for even rows */
+}
+
+.SMHP-SendMessageHistory-table tbody tr:hover {
+  background-color: #888; /* Hover effect */
+}
+
+/* h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+} */
+
+
+/* Dhanashree_SendMessageHistory_26/09_Ends */

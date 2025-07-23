@@ -1,0 +1,48 @@
+.changeDoctorContainer{
+    display: flex;
+    width: 600px;
+    padding: 20px;
+    flex-direction: column;
+}
+.changeDoctorContainer h2{
+    font-size: var(--heading-font);
+    margin-bottom: 0;
+}
+.changeDoctorPatientData,.changeDoctorPreviousDoctorData,.changeDoctorNewDataUpdate{
+    width: 100%;
+    background-color: #fff9f9;
+    border: 1px solid gray;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    padding: 10px;
+    margin: 5px;
+    gap: 10px;
+}
+.changeDoctorPatientData p{
+    margin-bottom: 0;
+    font-size: var(--font-size);
+    font-weight: bold;
+}
+.changeDoctorPreviousDoctorData p{
+    width: 100%;
+    margin-bottom: 0;
+    font-size: var(--font-size);
+}
+.changeDoctorPreviousDoctorData p span:first-child{
+    font-weight: bold;
+}
+.changeDoctorBTN{
+    display: inline-block;
+    width: fit-content;
+    background-color: var(--button-color);
+    padding: 5px 10px;
+    color: white;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+}
+.changeDoctorBTN:hover{
+   background-color: var(--button-hover-background-color);
+   color: var(--button-hover-text-color);
+}

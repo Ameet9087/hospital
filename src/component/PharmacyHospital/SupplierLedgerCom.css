@@ -1,0 +1,119 @@
+/* Mohini_SupplierLedgerCom_WholePage_14/sep/2024 */
+.supplier-ledger-page {
+    padding: 20px;
+    background-color: #e6f3ff;
+  }
+  
+  .supplier-ledger-search {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .supplier-ledger-search input {
+    flex-grow: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px 0 0 3px;
+  }
+  
+  .supplier-ledger-search button {
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0 3px 3px 0;
+    cursor: pointer;
+  }
+  
+  .supplier-ledger-table-container {
+    overflow-x: auto;
+  }
+  
+  .supplier-ledger-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+  }
+  
+  .supplier-ledger-table th,
+  .supplier-ledger-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .supplier-ledger-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .view-details-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .supplier-ledger-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .supplier-ledger-pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .supplier-ledger-pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .supplier-ledger-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .print-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .sub-store-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sub-store-pagination span {
+    margin: 0 10px;
+    font-size: 16px;
+}
+
+.sub-store-pagination button {
+    background-color: #2196f3; /* Blue color */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.sub-store-pagination button:hover {
+    background-color: #1976d2; /* Darker blue on hover */
+}
+/* Mohini_SupplierLedgerCom_WholePage_14/sep/2024 */

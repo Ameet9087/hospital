@@ -1,0 +1,26 @@
+/* Swapnil ROkade inventory-internal adding className And Applying colors 14/09 */
+  .inventory-internal-tabs {
+    display: flex;
+    background-color: var(--background-color);
+  }
+  
+  .inventory-internal-tabs button {
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+  
+  .inventory-internal-tabs .active {
+    border-bottom: 2px solid var(--button-bg-color);
+  }
+  
+  .inventory-internal-tabs-content {
+    /* width: 100%; */
+    height: calc(100vh - 150px); /* Adjust based on header/tabs height */
+    overflow-y: auto;
+    /* padding: 20px; */
+    /* background-color: #f9f9f9; */
+  }
+  
+  

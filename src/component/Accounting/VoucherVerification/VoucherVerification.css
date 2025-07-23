@@ -1,0 +1,150 @@
+.vv {
+    font-size: 14px;
+  }
+  
+  .vv-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .vv-refresh-btn, .vv-active-btn {
+    padding: 5px 10px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .vv-fiscal-year {
+    font-size: 0.8em;
+    text-align: right;
+  }
+  
+  .vv-main {
+    /* background-color: white; */
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .vv-title {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+  
+  .vv-form {
+    background-color: #d3d3d3;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  
+  .vv-form-group {
+    display: flex;
+    /* align-items: center; */
+    gap: 10px;
+    flex-direction: column;
+  }
+  .vv-form-second-group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .vv-load-btn {
+    padding: 5px 15px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    align-self: flex-end;
+  }
+  .vv-load-btn:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  .vv-star-btn{
+    background-color: transparent;
+    color: var(--button-color);
+    font-size: 18px;
+    border: none;
+  }
+  .vv-form-input-group input,.vv-form-input-group select{
+    border: 1px solid #c2cad8;
+    border-radius: 3px !important;
+    height: 30px !important;
+    width: 150px;
+    margin: 0 5px;
+    font-size: 14px;
+  }
+  .vv-search{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  }
+  .vv-search-bar {
+    margin-bottom: 10px;
+    color: gray;
+    width: 200px;
+    background-color: #f2f2f2;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .vv-search-bar input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding: 5px;
+  }
+  
+  .vv-results {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-size: 14px;
+    gap: 10px;
+  }
+  
+  .vv-export-btn, .vv-print-btn {
+    padding: 5px 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .vv-export-btn:hover, .vv-print-btn:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+.vv-table-btn{
+    background-color: var(--button-color);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.vv-table-btn:hover{
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+  
+  .vv-no-rows {
+    text-align: center;
+    background-color: #fff9c4;
+    color: #efb005;
+  }

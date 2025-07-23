@@ -1,0 +1,136 @@
+.returnToVendor-interface {
+    width: 100%;
+    height: 90vh;
+    padding: 20px;
+    background-color: var( --background-color);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.returnToVendor-button {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.returnToVendor-button .ret-button {
+    padding: 5px;
+    background-color: var(--button-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.returnToVendor-button .ret-button:hover {
+    background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.returnToVendor-searchBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.returnToVendor-searchBar .ret-input {
+    /* width: 40%;  */
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.returnToVendor-searchBar .ret-inner-div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.returnToVendor-searchBar .ret-inner-div p {
+    margin: 0;
+    color: #333;
+}
+
+.returnToVendor-searchBar .ret-button {
+    padding: 5px 10px;
+    background-color:var(--button-color) ;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+/* 
+.returnToVendor-table {
+    margin-top: 10px;
+    overflow-x: auto;
+} */
+
+.returnToVendor-receipt-table {
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+}
+/* .return-to-vendor-ta{
+    background-color: white;
+} */
+
+.returnToVendor-receipt-table th, .returnToVendor-receipt-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.returnToVendor-receipt-table th {
+    background-color: #f2f2f2;
+    color: black;
+    font-size: var(--heading-font);
+}
+
+.returnToVendor-no-rows {
+    background-color: #fff3cd;
+    color: #856404;
+    text-align: center;
+    padding: 15px 0;
+    font-size: var(--heading-font);
+}
+.returnToVendor-returnToVendor-pagination {
+    margin-top: 10px;
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+ 
+ 
+  .returnToVendor-returnToVendor-pagination button {
+    background-color: #42a5f5;
+    color: white;
+    border: none; /* Optional: remove border */
+    padding: 8px 12px; /* Optional: adjust padding */
+    cursor: pointer; /* Optional: change cursor to pointer */
+  }
+
+ .returnToVendor-ret-button {
+    background-color: var(--button-color); /* Sets the background color to blue */
+    color: white; /* Sets the text color to white */
+    border: none; /* Removes the default border */
+    padding: 5px; /* Adds some padding for a better appearance */
+    border-radius: 15px; /* Rounds the corners slightly */
+    cursor: pointer; /* Changes the cursor to a pointer on hover */
+    transition: background-color 0.3s ease; /* Adds a smooth transition effect */
+
+  }
+  .returnToVendor-ret-button:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }

@@ -1,0 +1,51 @@
+.add-new-patient-container {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-new-patient-container h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.add-new-patient-form-group {
+  margin-bottom: 16px;
+}
+
+.add-new-patient-form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.add-new-patient-form-group input,
+.add-new-patient-form-group select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-new-patient-name-fields {
+  display: flex;
+  gap: 8px;
+}
+
+.add-new-patient-name-fields input {
+  flex: 1;
+}
+
+.add-new-patient-print-invoice-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-new-patient-print-invoice-btn:hover {
+  background-color: #0056b3;
+}

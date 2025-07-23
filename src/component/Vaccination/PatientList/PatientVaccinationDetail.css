@@ -1,0 +1,121 @@
+/* Akash Pawar Vaccination 14/24 */
+.PatientVaccinationDetail-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    padding: 50px;
+    z-index: 150;
+  }
+  
+  .PatientVaccinationDetail-popup {
+    background-color: rgb(243, 242, 242);
+    padding: 20px;
+    border-radius: 5px;
+    /* overflow-y: auto; */
+    position: relative;
+  }
+  
+  .PatientVaccinationDetail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .PatientVaccinationDetail-header h2 {
+   font-size: var(--heading-color);
+    color: black;
+  }
+  
+  .PatientVaccinationDetail-closeBtn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    /* z-index: 15550; */
+    cursor: pointer;
+  }
+  
+  .PatientVaccinationDetail-patientInfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  
+  .PatientVaccinationDetail-patientInfo span {
+    font-size: 14px;
+  }
+  
+  .PatientVaccinationDetail-fiscalYear {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .PatientVaccinationDetail-updateBtn,.PatientVaccinationDetail-submitBtn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+  }
+  .PatientVaccinationDetail-updateBtn:hover,.PatientVaccinationDetail-submitBtn:hover ,.PatientVaccinationDetail-cancelBtn:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+     border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .PatientVaccinationDetail-newVaccine {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+ 
+  .PatientVaccinationDetail-formGroup {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    align-items: center;
+    /* flex-direction: column; */
+  }
+  
+  .PatientVaccinationDetail-addBtn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .PatientVaccinationDetail-vaccinesList h3 {
+    background-color: #035e7d;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  .PatientVaccinationDetail-cancelBtn{
+    background-color:var(--button-color);
+    color: white;
+    border: none;
+    margin-left: 5px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+

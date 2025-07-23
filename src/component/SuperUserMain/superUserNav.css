@@ -1,0 +1,68 @@
+.activesuperUserNav-btn {
+  /* background-color: var( --button-color); */
+  color: black;
+  /* margin-left: 60px; */
+  font-size: var(--heading-font);
+  padding: 5px 5px;
+  border: none;
+  float: right;
+}
+
+.superUserNav-Navigation-bar {
+  background-color: white;
+}
+
+.superUserNav-Navigation-bar ul {
+  list-style-type: none;
+  margin: 0;
+  /* padding: 10px 0px; */
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; 
+}
+
+.superUserNav-Navigation-bar li {
+  display: inline-flex;
+  flex-flow: row nowrap;
+}
+
+.superUserNav-Navigation-bar a {
+  /* background-color: var( --button-color);
+  border: 1px solid var( --button-color); */
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.superUserNav-Navigation-bar a:hover {
+  background-color: white;
+  color: var( --button-color);;
+  /* border: 1px solid gray; */
+}
+
+.superUserNav-Navigation-bar .active {
+  background-color: var( --button-bg-color);
+  color: white;
+}
+
+.superUserNav-Navbttn-N-act {
+  display: flex;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+  .superUserNav-Navigation-bar ul {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the start */
+  }
+
+  .superUserNav-Navigation-bar li {
+    margin-bottom: 10px; /* Add some space between items */
+  }
+
+  .superUserNav-Navbttn-N-act {
+    flex-direction: column; /* Stack prescription nav buttons vertically */
+  }
+}

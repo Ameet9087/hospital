@@ -1,0 +1,70 @@
+.inventory-navbar {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  gap: 10px;
+  background-color: white; /* Adjust as needed */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.inventory-home-button {
+  border: none;
+  background: var(--upperBar-bg-color);
+  color: white;
+  font-size: var(--heading-font);
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.inventory-home-button.active {
+  color: var(--button-hover-background-color);
+  border-radius: 5px;
+}
+
+.inventory-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.inventory-nav-links a {
+  border: 1px solid var(--sideBar-bg-color);
+  cursor: pointer;
+  font-size: var(--heading-font);
+  color: #333;
+  border-radius: 5px;
+  padding: 5px 10px;
+  text-decoration: none;
+  transition: border-bottom 0.5s, color 0.3s;
+}
+
+.inventory-nav-links a.active {
+  background-color: var(--sideBar-bg-color);
+  color: white;
+  border-radius: 4px;
+}
+
+.inventory-nav-links a:hover {
+  background-color: var(--sideBar-bg-color);
+  color: white;
+  border: 1px solid var(--button-color);
+}
+
+.inventory-active-inventory {
+  margin-left: auto;
+  font-size: var(--heading-font);
+  padding: 5px;
+  border-radius: 5px;
+  background-color: var(--button-bg-color);
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.inventory-arrow {
+  margin-left: 5px;
+  color: black;
+  font-size: var(--heading-font);
+}

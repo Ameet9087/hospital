@@ -1,0 +1,38 @@
+/* Dhanashree_BroadcastPage_26/09_Starts */
+.BroadcastPageHIMS-container {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center vertically */
+    padding: 50px;
+    background: linear-gradient(100deg, #007973, #00968f, gray); /* Blue gradient */
+}
+
+.BroadcastPageHIMS-card {
+    background-color: white; /* Card background color */
+    padding: 20px; /* Padding inside the card */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    text-align: center; /* Center text inside the card */
+    background-color: var(--background-color);
+}
+
+.BroadcastPageHIMS-action-button {
+    padding: 10px 25px;
+    margin: 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.BroadcastPageHIMS-action-button:hover {
+    background-color: white;
+    color: var( --button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+/* Dhanashree_BroadcastPage_26/09_Ends */
+

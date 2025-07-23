@@ -1,0 +1,71 @@
+.provisional_discharge_list {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f0f8ff;
+    padding: 10px;
+  }
+  
+  .provisional_discharge_search_print {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .provisional_discharge_search_bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .provisional_discharge_input_search_bar {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .provisional_discharge_searchbar_btn {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: -20px;
+  }
+  
+  .provisional_discharge_print_btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .provisional_discharge_table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .provisional_discharge_table th, .provisional_discharge_table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+    font-size: 12px;
+  }
+  
+  .provisional_discharge_table th {
+    background-color: #f2f2f2;
+  }
+  
+  .provisional_discharge_action_btn {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 12px;
+  
+  }
+  

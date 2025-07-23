@@ -1,0 +1,31 @@
+.transport-request-form-group{
+  display: flex;
+  width: 500px;
+  gap:10px;
+  padding:5px;
+}
+.transport-request-form-group label{
+  width:150px;
+  font-size:14px;
+}
+
+/* .transport-request-form-group input{
+  padding:1px;
+  width:300px;
+  border-radius:5px;
+} */
+
+.transport-request-model-action-button{
+  background-color: var(--button-bg-color);
+  color: white;
+  border: none;
+  padding: 5px;
+  font-size: var(--font-size);
+  border-radius: 5px;
+  margin:5px;
+}
+.transport-request-model-action-button:hover{
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}

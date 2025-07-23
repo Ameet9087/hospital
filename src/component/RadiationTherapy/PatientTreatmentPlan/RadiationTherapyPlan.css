@@ -1,0 +1,117 @@
+.radiation-therapyplan-container {
+    padding: 20px;
+    background-color:var( --background-color);
+  }
+  
+
+  
+  .radiation-therapyplan-add-button,
+  .radiation-therapyplan-edit-button {
+   
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    margin: 2px;
+  }
+  
+  .radiation-therapyplan-add-button:hover,
+  .radiation-therapyplan-edit-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .radiation-therapyplan-edit-button {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  .radiation-therapyplan-edit-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  /* Modal Styles */
+  .radiation-therapyplan-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .radiation-therapyplan-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 70%;
+    height: auto;
+  }
+  
+  .radiation-therapyplan-close {
+    position: absolute;
+    top: 1px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .radiation-therapyplan-form-group {
+    margin-bottom: 1px;
+    display: flex;
+  }
+  
+  .radiation-therapyplan-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    width: 150px;
+    font-size: 14px;
+  }
+  
+  .radiation-therapyplan-form-group input,
+  .radiation-therapyplan-form-group textarea {
+    width: 100%;
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+  }
+  
+  .radiation-therapyplan-submit-button {
+   
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    margin-left: 500px;
+    margin-top: 20px;
+  }
+  
+  .radiation-therapyplan-submit-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  

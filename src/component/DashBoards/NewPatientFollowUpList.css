@@ -1,0 +1,62 @@
+/* swapnil Rokade New-Patient Adding className And color and table css 18/09 */
+.New-Patient-table-container {
+    margin-top: 20px;
+    width: 100%;
+    /* margin: 0 auto; */
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.New-Patient-search-input {
+    padding: var(--input-box-padding);
+    margin-bottom: 10px;
+}
+
+.New-Patient-custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+.New-Patient-custom-table th,
+.New-Patient-custom-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.New-Patient-custom-table th {
+    background-color: #f5f5f5;
+}
+
+.New-Patient-no-rows {
+    background-color: #fff3cd;
+    text-align: center;
+    padding: 15px 0;
+    color: #b66d00;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination-buttons button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: #e7e7e7;
+    border: none;
+    border-radius: 4px;
+    cursor: not-allowed;
+}
+
+.New-Patient-print-button {
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
