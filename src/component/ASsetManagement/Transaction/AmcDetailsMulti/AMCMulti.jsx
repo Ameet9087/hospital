@@ -3,7 +3,7 @@ import "./AMCMulti.css";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import AMCDetailsMulti from "./AMCDetailsmulti";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../../api/api";
 
 const AMCMulti = () => {

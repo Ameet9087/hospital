@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "./LinenRequirement.css";
 import { FaSearch, FaArrowCircleRight } from "react-icons/fa"; // Importing icons
 import axios from "axios";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import PopupTable from "../../Admission/PopupTable";
 import { toast } from "react-toastify";

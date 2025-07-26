@@ -8,7 +8,7 @@ import {
   PopupTable,
 } from "../../FloatingInputs/index";
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";

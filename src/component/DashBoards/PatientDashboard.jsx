@@ -9,7 +9,7 @@ import PatientDischargeForm from "./DischargeSummary";
 import Allergy from "./ClinicalAllergy";
 import CinicalDocument from "./ClinicalDocuments";
 import axios from "axios";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import RadiologyReportDoc from "./RadiologyReportDoc";
 import VisitTable from "./EncounterHistory";
 import LabReportResult from "./LabReportResult";

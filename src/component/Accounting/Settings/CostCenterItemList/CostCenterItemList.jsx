@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./CostCenterItemList.css"; // Assuming you'll create a CSS file for styling
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 
 const CostCenterItemList = () => {
   const [showEdit, setShowEdit] = useState(false);

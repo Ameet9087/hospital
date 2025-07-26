@@ -5,7 +5,7 @@ import "./SampleTable.css";
 import CustomModal from "../../../CustomModel/CustomModal";
 import SampleTestCard from "./SampleTableEdit";
 import { API_BASE_URL } from "../../api/api";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 const HIMSSampleDataTable = () => {
   const [data, setData] = useState([]);
   const [selectedTest, setSelectedTest] = useState(null);

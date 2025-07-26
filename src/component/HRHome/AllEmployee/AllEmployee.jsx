@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './AllEmployee.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import AddEmployeePopup from './AddEmployeePopup';
 import UpdateEmployeePopup from './UpdateEmployeePopup';
 import * as XLSX from 'xlsx';  // Import the XLSX library for exporting to Excel

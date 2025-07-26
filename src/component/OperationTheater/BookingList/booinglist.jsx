@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import axios from "axios";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { useNavigate } from "react-router-dom";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import SurgeryEvents from "../SurgeryEvent/SurgeryEventsPage";
 import { API_BASE_URL } from "../../api/api";
 

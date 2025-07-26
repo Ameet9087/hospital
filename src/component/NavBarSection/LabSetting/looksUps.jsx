@@ -11,7 +11,7 @@ const LookUps = () => {
   const [labTests, setLabTests] = useState([]); // State to store fetched lab lookups
   const [showPopup, setShowPopup] = useState(false);
   const [showUpdatePopup, setShowUpdatePopup] = useState(false);
-  const [lookup, setLookUp] = useState({});
+  const [lookup, setLookUp] = useState({});c
   const [loading, setLoading] = useState(false); // Loading state
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState(""); // State for search term

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./MakePayment.css";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 
 function MakePayment() {
   const [module, setModule] = useState("Pharmacy");

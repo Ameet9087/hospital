@@ -1,7 +1,7 @@
 /* Mohini_AppointmentReminder_WholePage_8/10/24 */
 import React, { useState, useRef } from 'react';
 import './AppointmentReminder.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 
 
 const AppointmentReminder = () => {

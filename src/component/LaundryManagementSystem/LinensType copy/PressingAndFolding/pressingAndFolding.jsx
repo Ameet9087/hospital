@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./pressingAndFolding.css";
 import { FaSearch } from "react-icons/fa"; // Importing the search icon from React Icons
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 import axios from "axios"; // Importing axios for making API requests
 import PopupTable from "../../../Admission/PopupTable";
 import { FloatingInput } from "../../../../FloatingInputs";

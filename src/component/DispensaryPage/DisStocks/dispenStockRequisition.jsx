@@ -5,7 +5,7 @@ import { useReactToPrint } from "react-to-print";
 import axios from "axios";
 import * as XLSX from 'xlsx';
 import { API_BASE_URL } from "../../api/api";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { toast } from "react-toastify";
 import {

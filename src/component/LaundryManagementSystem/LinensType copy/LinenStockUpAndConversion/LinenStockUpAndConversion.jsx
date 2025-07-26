@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./LinenStockUpAndConversion.css";
 import { FaSearch } from "react-icons/fa"; // Importing the search icon from React Icons
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 import PopupTable from "../../../Admission/PopupTable";
 import { API_BASE_URL } from "../../../api/api";
 import axios from "axios";

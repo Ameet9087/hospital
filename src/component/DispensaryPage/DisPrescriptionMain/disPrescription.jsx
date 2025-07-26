@@ -10,7 +10,7 @@ import html2canvas from "html2canvas";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
 import * as XLSX from "xlsx";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { toast } from "react-toastify";
 import {
   FloatingInput,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../HhEmployeeInformation/hhEmpInformation.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 
 const HHEmpInformation = () => {

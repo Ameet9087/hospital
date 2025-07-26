@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./dischargedpatient.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 import AdmissionDischargePrint from "./AdmissionDischargePrint";
 import { FloatingInput } from "../../FloatingInputs";

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import "./GoodsReceiptList.css"
-import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/resizableColumns';
 import FloatingInput from '../../../../FloatingInputs/FloatingInput';
 import FloatingSelect from '../../../../FloatingInputs/FloatingSelect';
 import { toast } from 'react-toastify';

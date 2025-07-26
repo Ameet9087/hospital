@@ -3,7 +3,7 @@ import "./Opd.css";
 import PatientDashboard from "./PatientDashboard";
 import OpdRecordMyFavourites from "../DashBoards/OpdRecordMyFavourite";
 import OpdRecordFollowUpList from "../DashBoards/OpdRecordFollowUpList";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
 import { useFilter } from "../ShortCuts/useFilter";

@@ -1,7 +1,7 @@
 // AppointmentList.js
 import React, { useState, useRef } from "react";
 import "./OnlineAppointment.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 
 const OnlineAppointment = () => {
   const [activeTab, setActiveTab] = useState("Initiated");

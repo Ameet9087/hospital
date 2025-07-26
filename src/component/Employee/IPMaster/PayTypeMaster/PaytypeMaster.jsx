@@ -3,7 +3,7 @@ import axios from "axios";
 import "./PaytypeMaster.css";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 import { toast } from "react-toastify";
 import { FloatingInput, PopupTable } from "../../../../FloatingInputs";
 

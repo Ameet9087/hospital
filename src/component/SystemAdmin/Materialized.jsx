@@ -3,7 +3,7 @@
 import React, { useState, useRef } from 'react';
 import ReactToPrint from 'react-to-print';
 import './Materialized.css';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 const MaterializedSalesView = () => {
   // State to control the visibility of the table

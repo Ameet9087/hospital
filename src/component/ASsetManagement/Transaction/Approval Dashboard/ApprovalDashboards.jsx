@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Approvaldashboards.css';
-import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/resizableColumns';
 import CustomModal from '../../../../CustomModel/CustomModal';
 import CondemnationandDisposalViewPopUp from '../Condemnation and Disposal View/CondemnationandDisposalViewPopUp';
 import EquipmentGatePassInViewPopUp from '../Equipment Gate Pass In View/EquipmentGatePassInViewPopUp';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './DrugExpiryAlert.css'; // Import your CSS file
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 
 const DrugExpiryAlert = () => {
     const [items, setItems] = useState([]);

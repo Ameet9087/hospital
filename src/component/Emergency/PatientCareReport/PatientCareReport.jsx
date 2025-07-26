@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import "./PatientCareReport.css";
 import axios from "axios";
 import PopupTable from "../popup";

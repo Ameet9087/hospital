@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import * as XLSX from "xlsx";
 import "./opdlab.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 
 function Opdlab() {

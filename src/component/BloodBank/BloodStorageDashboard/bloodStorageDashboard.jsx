@@ -4,7 +4,7 @@ import "./bloodStorageDashboard.css"
 import CustomModal from '../../../CustomModel/CustomModal';
 import BSDAddNewBloodNew from './bSDAddNewBloodNew';
 import { API_BASE_URL } from '../../api/api';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 const BloodStorageDashboard = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [storageData, setStorageData] = useState([]);

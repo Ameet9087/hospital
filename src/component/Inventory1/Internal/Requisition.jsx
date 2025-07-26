@@ -4,7 +4,7 @@ import DirectDispatch from "./DirectDispatch";
 import DispatchTable from "./DispatchTable";
 import RequisitionDetail from "./RequisitionDetail";
 import axios from "axios";
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from "../../api/api";
 import CustomModal from "../../../CustomModel/CustomModal";
 import DispatchRequisition from "./DispatchRequisition";

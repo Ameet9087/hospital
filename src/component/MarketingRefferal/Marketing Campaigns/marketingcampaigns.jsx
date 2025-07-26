@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './CampaignManagement.css';
 import axios from 'axios'; // Import Axios
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 function CampaignManagement() {
     const tableRef = useRef(null);
     const [columnWidths, setColumnWidths] = useState([]);

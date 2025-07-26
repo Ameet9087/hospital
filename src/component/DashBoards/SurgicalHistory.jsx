@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import "./SurgicalHistory.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
 import { toast } from "react-toastify";

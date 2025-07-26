@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ClinicalMedication.css"; // Separate CSS file for uniqueness
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 import { toast } from "react-toastify";

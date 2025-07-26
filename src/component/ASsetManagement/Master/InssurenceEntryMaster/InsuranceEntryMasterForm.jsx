@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./InsuranceEntryMasterForm.css";
 import InsuranceEntryMasterFormPopUp from "./InsuranceEntryMasterFormPopUp";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 import { FloatingInput } from "../../../../FloatingInputs";

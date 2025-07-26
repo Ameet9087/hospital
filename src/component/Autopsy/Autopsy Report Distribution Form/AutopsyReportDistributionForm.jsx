@@ -3,7 +3,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomModal from '../../../CustomModel/CustomModal';
 import PopupTable from '../../../FloatingInputs/PopupTable';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import './AutopsyReportDistributionform.css';
 import axios from 'axios';
 import { API_BASE_URL } from '../../api/api';

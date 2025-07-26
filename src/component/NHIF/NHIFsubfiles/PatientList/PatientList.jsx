@@ -2,7 +2,7 @@
 import React, { useState ,useRef} from 'react';
 import { FaSearch, FaPlus } from 'react-icons/fa';
 import './patient_list.css';
-import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/resizableColumns';
 
 function PatientList() {
   const [showModal, setShowModal] = useState(false);

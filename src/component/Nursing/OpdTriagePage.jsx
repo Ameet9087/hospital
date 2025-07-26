@@ -6,7 +6,7 @@ import { Modal } from "react-bootstrap";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 import NursingCustomModal from "./NursingCustomModal";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import CustomModal from "../../CustomModel/CustomModal";
 
 function OPDTriagePage({ onClose, data }) {

@@ -8,7 +8,7 @@ import {
   PopupTable,
 } from "../../../../FloatingInputs";
 import { API_BASE_URL } from "../../../api/api";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 import { toast } from "react-toastify";
 
 const Rooms = () => {

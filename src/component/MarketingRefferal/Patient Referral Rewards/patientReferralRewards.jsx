@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ReferralReward.css';
 import axios from 'axios'; // Import Axios
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 function ReferralReward() {
     const tableRef = useRef(null);
     const [columnWidths, setColumnWidths] = useState([]);

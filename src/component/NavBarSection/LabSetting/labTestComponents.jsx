@@ -3,7 +3,7 @@ import "../LabSetting/labTestComponents.css";
 import LSLabTestAddNLTest from "./lSLabTestAddNLTest";
 import LabTestComponentsAddNewLTC from "./labTestComponentsAddNewLTC";
 
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
 import { FloatingInput } from "../../../FloatingInputs";

@@ -3,7 +3,7 @@ import React, { useState, useEffect ,useRef} from 'react';
 import axios from 'axios';
 import { FaPlus, FaSearch } from 'react-icons/fa';
 import './reffering.css';
-import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/resizableColumns';
 
 const ReferringParty = () => {
   const [searchTerm, setSearchTerm] = useState('');

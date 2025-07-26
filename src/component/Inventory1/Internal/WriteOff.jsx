@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import "./WriteOff.css";
 import { API_BASE_URL } from '../../api/api';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import FloatingInput from '../../../FloatingInputs/FloatingInput';
 import FloatingSelect from '../../../FloatingInputs/FloatingSelect';
 import { toast } from 'react-toastify';

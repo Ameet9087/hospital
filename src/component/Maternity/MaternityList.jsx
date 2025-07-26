@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./MaternityList.css";
 import NewPatientRegistrationForm from "./NewPatientRegistrationForm";
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import MaternityANCPopUp from "./MaternityANC/MaternityANCPopUp";
 import MaternityRegisterPopUp from "./MaternityANC/MaternityRegisterPopUp";
 import MaternityUploadFilesPopUp from "./MaternityANC/MaternityUploadFilesPopUp";

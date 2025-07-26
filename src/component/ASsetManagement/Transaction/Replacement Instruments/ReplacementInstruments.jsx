@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Replacementinstruments.css";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import ReplacementInstrumentsPopUp from "./ReplacementInstrumentsPopUp";

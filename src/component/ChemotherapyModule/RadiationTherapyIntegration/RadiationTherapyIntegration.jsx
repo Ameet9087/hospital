@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios'; // Import axios
 import './RadiationTherapyIntegration.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 
 const RadiationTherapyIntegration = () => {
     const [columnWidths, setColumnWidths] = useState({});

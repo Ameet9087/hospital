@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./MaintenanceCheckListtypeMaster.css";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import MaintenanceCheckListtypeMasterPopUp from "./MaintenanceCheckListtypeMasterPopUp";
 import { API_BASE_URL } from "../../../api/api";

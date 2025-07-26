@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./LedgerList.css";
 import CreateLedgerPopup from "./NewLedgerPopup";
 import UpdateLedgerPopup from "./UpdateLedgerPopup";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 
 const dummyData = [
   {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './MaanageReaction.css'; // Ensure this is the correct filename
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 
 const usersData = [
   {

@@ -4,7 +4,7 @@ import '../MedicalRec/MRInpatientList.css';
 import { useNavigate } from 'react-router-dom';
 
 import Modal from 'react-modal';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../api/api';
 
 

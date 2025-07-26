@@ -5,7 +5,7 @@ import { CSVLink } from "react-csv";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import ReactToPrint from "react-to-print";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 const DatabaseBackup = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);

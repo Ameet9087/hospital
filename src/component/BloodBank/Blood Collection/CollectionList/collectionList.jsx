@@ -4,7 +4,7 @@ import "./collectionList.css";
 import { API_BASE_URL } from "../../../api/api";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import BloodTestingPopup from "./BloodTestingPage";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 function Colletionlist() {
   const [patients, setPatients] = useState([]);
   const [showTest, setShowTest] = useState(false);

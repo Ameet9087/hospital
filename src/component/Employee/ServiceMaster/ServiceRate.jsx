@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ServiceRate.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { FloatingInput } from "../../../FloatingInputs";
 
 function ServiceRate({ rates, onRateChange }) {

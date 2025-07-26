@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./VoucherVerification.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 
 const VoucherVerification = () => {
   const [columnWidths, setColumnWidths] = useState({});

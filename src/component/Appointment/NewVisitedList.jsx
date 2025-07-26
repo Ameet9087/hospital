@@ -3,7 +3,7 @@ import axios from "axios";
 import "./NewVisitedList.css";
 import AddNewPateint from "./AddNewPateint";
 import { useNavigate } from "react-router-dom";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 
 const NewVisitedList = () => {

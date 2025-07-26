@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./GatePasssecuritycheckPopUp.css";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../../api/api";
 import { FloatingInput,FloatingSelect,FloatingTextarea } from "../../../../FloatingInputs";
 import { toast } from "react-toastify";

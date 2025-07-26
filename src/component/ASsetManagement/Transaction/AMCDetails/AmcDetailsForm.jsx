@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './AmcDetailsForm.css';
 import { API_BASE_URL } from '../../../api/api';
 import PopupTable from '../../../Admission/PopupTable';
-import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/resizableColumns';
 import { FloatingInput, FloatingSelect } from '../../../../FloatingInputs';
 import {toast}  from "react-toastify";
 

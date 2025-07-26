@@ -1,7 +1,7 @@
 /* Mohini_HomeHealthCareModule_PatientRegistrationForm_27/sep/24 */
 import React, { useState, useRef, useEffect } from 'react';
 import './PatientRegistrationForm.css';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 const PatientRegistrationForm = ({ sendpatientdata, patientdata }) => {
     const [columnWidths, setColumnWidths] = useState({});

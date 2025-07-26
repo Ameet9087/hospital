@@ -5,7 +5,7 @@ import LabCategoryAddNewLC from "./labCategoryAddNewLC";
 import LabCategoryUpdateNewLC from "./LabCategoryUpdateNewLC";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { FloatingInput } from "../../../FloatingInputs";
 
 const LabCategories = () => {

@@ -2,7 +2,7 @@
 import React, { useEffect, useState,useRef } from 'react';
 import axios from 'axios';
 import './Mreport.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 
 const Mreport = () => {
   const [data, setData] = useState([]);

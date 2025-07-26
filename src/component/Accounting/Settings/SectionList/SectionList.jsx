@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./Section.css";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 
 const SectionList = () => {
   const sectionData = [

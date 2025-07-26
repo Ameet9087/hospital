@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import "./bloodDonationForm.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
 import CustomModal from "../../../CustomModel/CustomModal";

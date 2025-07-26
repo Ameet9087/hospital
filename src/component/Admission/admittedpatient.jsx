@@ -12,7 +12,7 @@ import {
   ModalDialog,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 import IPChangeRoom from "../Admission/ipchangeroom";
 import CustomModal from "../../CustomModel/CustomModal";

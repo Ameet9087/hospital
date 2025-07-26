@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import "./MaternityRegisterPopUp.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
 import { toast } from 'react-toastify';

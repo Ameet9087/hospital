@@ -2,7 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { FaSearch, FaUser, FaSync } from 'react-icons/fa';
 import './IPD_Billing.css'; 
-import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/resizableColumns';
 
 
 function IPD_billing() {

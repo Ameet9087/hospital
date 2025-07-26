@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./PreventiveMaintenance.css";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import PreventiveMaintenanceForm from "./PreventiveMaintenanceForm";
 import * as XLSX from "xlsx";

@@ -3,7 +3,7 @@ import "./AddEmployeeForm.css";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 import { toast } from "react-toastify";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { FaSearch } from "react-icons/fa";
 import {
   FloatingInput,

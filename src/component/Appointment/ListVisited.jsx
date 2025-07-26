@@ -3,7 +3,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Table, Button, FormControl, InputGroup } from "react-bootstrap";
 import "./ListVisited.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { useNavigate } from "react-router-dom";
 import BarCode from "react-barcode";
 

@@ -2,7 +2,7 @@
 import React, { useState, useEffect ,useRef} from 'react';
 import { FaSearch } from 'react-icons/fa';
 import './transaction.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../../api/api';
 
 function Transaction() {

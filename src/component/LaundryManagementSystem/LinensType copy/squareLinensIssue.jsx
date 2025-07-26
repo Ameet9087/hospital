@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./squareLinensIssue.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import LinensIssueNew from "./LinensIssueNew/LinensIssueNew";
 import SquareLinenReceive from "./squareLinenReceive/squareLinenReceive";
 import LinenCondemnationDisposal from "./LinenCondemnationDisposal/LinenCondemnationDisposal";
