@@ -4,7 +4,7 @@ import { FloatingInput } from "../../../FloatingInputs";
 import "./GoodsReceipt.css";
 import { API_BASE_URL } from "../../api/api";
 import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { toast } from "react-toastify";
 const GoodsReceipt = ({ goodReceipt, onClose }) => {
   const [vendorBillDate, setVendorBillDate] = useState("");

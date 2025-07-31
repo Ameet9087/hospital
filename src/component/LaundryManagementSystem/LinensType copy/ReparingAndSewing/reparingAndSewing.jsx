@@ -3,7 +3,9 @@ import "./reparingAndSewing.css";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import axios from 'axios';
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
 import { API_BASE_URL } from "../../../api/api";
 import PopupTable from "../../../Admission/PopupTable";
 import { FloatingInput } from "../../../../FloatingInputs";

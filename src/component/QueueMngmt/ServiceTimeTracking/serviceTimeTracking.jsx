@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import "./serviceTimeTracking.css";
 import AddServiceTimeTracking from "./addServiceTimeTracking.jsx";
 import * as XLSX from 'xlsx';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns.js';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns.js';
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import CustomModal from '../../../CustomModel/CustomModal';
 

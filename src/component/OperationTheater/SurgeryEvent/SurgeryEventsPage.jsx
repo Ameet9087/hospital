@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./SurgeryEventsPage.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import PopupTable from "../../Admission/PopupTable";

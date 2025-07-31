@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import "./queuePrioritization.css";
 import AddQueuePrioritization from './addQueuePrioritization';
 import * as XLSX from 'xlsx'; // Import the xlsx library
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import CustomModal from '../../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../../api/api';

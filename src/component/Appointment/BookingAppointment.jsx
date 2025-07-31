@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import "./BookingAppointment.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios if you are using it
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns.js";
+
+import { startResizing } from "../../TableHeadingResizing/resizableColumns.js";
 import AddNewAppointmentForm from "./AddNewappointment";
 import { API_BASE_URL } from "../api/api.js"
 import { toast } from "react-toastify";

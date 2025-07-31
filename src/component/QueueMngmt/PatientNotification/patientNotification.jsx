@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import "./patientNotification.css";
 import AddPatientNotification from "./addPatientNotification.jsx";
 import * as XLSX from 'xlsx';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns.js';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns.js';
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import CustomModal from '../../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../../api/api.js';

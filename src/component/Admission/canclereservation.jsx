@@ -3,7 +3,9 @@ import React, { useState, useRef } from 'react';
 import { Modal, Button, Table } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
 import './canclereservation.css';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+
 const CancelReservation = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const tableRef = useRef(null);

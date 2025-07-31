@@ -71,7 +71,7 @@
 // export default OperationOrProcedureRate;
 import React, { useState, useRef } from "react";
 import "./ServiceRate.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { FloatingInput } from "../../../FloatingInputs";
 
 function OperationOrProcedureRate({ rates, onRateChange }) {

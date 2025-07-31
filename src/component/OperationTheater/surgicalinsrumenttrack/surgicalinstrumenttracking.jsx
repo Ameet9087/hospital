@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios"; // Import Axios
 import "./SurgicalInstrumentTracking.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 
 // const baseURL = 'http://192.168.210.48:8080';

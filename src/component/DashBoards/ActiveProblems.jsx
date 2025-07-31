@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Activeproblems.css";
 import { Label } from "recharts";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 import { FloatingInput, FloatingTextarea } from "../../FloatingInputs";
 import { toast } from "react-toastify";

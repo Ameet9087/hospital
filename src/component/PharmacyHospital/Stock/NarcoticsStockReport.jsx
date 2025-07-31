@@ -1,7 +1,7 @@
   /* Mohini_NarcoticsStockReport_WholePage_14/sep/2024 */
   import React, { useState, useEffect, useRef } from 'react';
   import './NarcoticsStockReport.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 
 const NarcoticsStockReport = () => {
   const [searchTerm, setSearchTerm] = useState('');

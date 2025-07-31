@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./PurchaseOrder.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 import * as XLSX from 'xlsx';
 

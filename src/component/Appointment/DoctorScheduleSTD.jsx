@@ -15,7 +15,7 @@ import {
   FaInfoCircle,
 } from "react-icons/fa";
 import axios from "axios";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 import { FloatingInput, FloatingSelect } from "../../FloatingInputs";
 import { toast } from "react-toastify";

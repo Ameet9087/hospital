@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './UserCollectionReport.css';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';

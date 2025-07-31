@@ -3,7 +3,7 @@ import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 import './UserCollectionReport.css';
 import { API_BASE_URL } from '../api/api';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 const PhoneBookAppointmentReport = () => {
   const [showReport, setShowReport] = useState(false);

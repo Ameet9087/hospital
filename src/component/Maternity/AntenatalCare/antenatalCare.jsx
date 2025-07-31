@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios'; // Import Axios
 import './AntenatalCare.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+
 import { API_BASE_URL } from '../../api/api';
 
 const AntenatalCare = () => {

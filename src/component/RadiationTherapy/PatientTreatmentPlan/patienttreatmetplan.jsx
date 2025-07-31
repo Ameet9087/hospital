@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import "./RadiationTherapyPlan.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 const Patienttreatmentplan = () => {
   const [therapyPlans, setTherapyPlans] = useState([]);
   const [showModal, setShowModal] = useState(false);

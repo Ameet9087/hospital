@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
 import './PurchaseRequest.css';
 import * as XLSX from 'xlsx';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../../api/api';
 import CustomModal from '../../../CustomModel/CustomModal';
 import AddPurchaseOrderDraft from './AddPurchaseOrder';

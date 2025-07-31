@@ -4,7 +4,7 @@ import "./SettingTerm.css";
 import * as XLSX from "xlsx";
 // import ReturnForm from './ReturnForm';
 import AddBreakageItem from "./AddBreakeageItem";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 
 const StoreBreakageItem = () => {

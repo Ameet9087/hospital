@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import "./RadiationSafetyCompliance.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 const Radiationsafetycompliance = () => {
   const [complianceLogs, setComplianceLogs] = useState([]);
   const [showModal, setShowModal] = useState(false);

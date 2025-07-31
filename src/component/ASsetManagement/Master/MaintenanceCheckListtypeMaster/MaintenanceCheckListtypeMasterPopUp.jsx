@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import "./MaintenanceCheckListtypeMasterPopUp.css";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
 import { API_BASE_URL } from "../../../api/api";
 import { toast } from "react-toastify";
 import { FloatingInput } from "../../../../FloatingInputs";

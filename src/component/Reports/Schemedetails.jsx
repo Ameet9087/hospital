@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios"; // Import axios for API calls
 import "./UserCollectionReport.css";
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 
 const Schemedetails = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './PaymentComponent.css';
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+
 function PaymentComponent({ patient }) {
   const [paymentReturn, setPaymentReturn] = useState(false);
   const [paidAmount, setPaidAmount] = useState("");

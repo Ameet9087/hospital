@@ -1,7 +1,7 @@
 import React, { useState,useRef } from 'react';
 import { Button } from 'react-bootstrap';
 import './UserCollectionReport.css';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 const CancelBill = () => {
   const [showReport, setShowReport] = useState(false); // State to control report visibility
   const [isPopupOpen, setIsPopupOpen] = useState(false); // State to control popup visibility

@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import "./SubLedger.css";
 import CreateSubLedgerPopup from "./NewSubLedgerPopup";
 import UpdateSubLedgerPopup from "./UpdateSubLedgerPopup";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
 
 const subledgerData = [
   {

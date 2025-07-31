@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./AppointmentBookingList.css";
 import { Link } from "react-router-dom";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

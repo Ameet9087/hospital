@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './FamilyPlanningSupport.css'; 
 import axios from 'axios'; // Import Axios
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+
 
 const FamilyPlanningSupportManagement = () => {
     const [columnWidths, setColumnWidths] = useState({});

@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
 import './OpdRecordFollowUpList.css'; // Ensure correct styling
 import OpdRecordApp from './PatientDashboard';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+
 
 const OpdRecordFollowUpList = () => {
   const [columnWidths, setColumnWidths] = useState({});

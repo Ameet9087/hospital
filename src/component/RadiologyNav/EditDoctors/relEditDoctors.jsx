@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "../EditDoctors/relEditDoctors.css";
 import TransactionDetails from "./rdlEditDrEditBtn";
 import * as XLSX from "xlsx";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
 const getCurrentDate = () => new Date().toISOString().split("T")[0];

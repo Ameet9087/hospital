@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./StockManage.css";
 import { API_BASE_URL } from "../../../api/api";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
 
 const StockManage = ({ item, onBack }) => {
   const [minStockQuantity, setMinStockQuantity] = useState(item.minStockQuantity || 0);

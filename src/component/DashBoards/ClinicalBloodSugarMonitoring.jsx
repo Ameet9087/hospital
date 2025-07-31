@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./ClinicalBloodSugarMonitoring.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 import { toast } from "react-toastify";

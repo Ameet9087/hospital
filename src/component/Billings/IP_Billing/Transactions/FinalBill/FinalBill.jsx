@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./FinalBill.css";
 import { CiSearch } from "react-icons/ci";
-import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../../TableHeadingResizing/resizableColumns";
 import {
   PopupTable,
   FloatingInput,

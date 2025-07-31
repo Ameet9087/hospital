@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faIdBadge } from '@fortawesome/free-solid-svg-icons';
 import VisitorIdModal from './VisitorIdModal'; // Import the new ID modal component
 import * as XLSX from 'xlsx'; // Import xlsx library
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import { API_BASE_URL } from '../../api/api';
 

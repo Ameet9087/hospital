@@ -12,7 +12,6 @@ const DoctorBlockingTable = () => {
   const [editingData, setEditingData] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
   
-
   // Fetch doctor blocking data
   useEffect(() => {
     const fetchDoctorBlockingData = async () => {

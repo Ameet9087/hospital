@@ -6,7 +6,9 @@ import AddPerformancePopup from './AddPerformancePopup';
 import { toast } from 'react-toastify';
 import * as XLSX from 'xlsx'; // Import XLSX
 import './PerformanceEvaluation.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import { API_BASE_URL } from '../../api/api';
 import { FloatingInput } from '../../../FloatingInputs';

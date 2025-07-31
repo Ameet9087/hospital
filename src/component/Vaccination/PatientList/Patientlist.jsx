@@ -5,7 +5,7 @@ import UpdateVaccinationRegister from "./UpdateVaccinationRegister";
 import Sticker from "./Sticker";
 import VaccinationFollowup from "./VaccinationFollowup";
 import PatientVaccinationDetails from "./PatientVaccinationDetails";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 
 function Patientlist() {

@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./PmCalibrationFrom.css";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
 import CustomModal from "../../../../CustomModel/CustomModal";
 import PmCalibrationFromPopUp from "./PmCalibrationFromPopUp";
 import { API_BASE_URL } from "../../../api/api";

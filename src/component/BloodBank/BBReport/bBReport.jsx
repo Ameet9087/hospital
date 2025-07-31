@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 // import './BloodDonationReportModule.css'; 
 // import { startResizing} from ""
 import "./bBReport.css"

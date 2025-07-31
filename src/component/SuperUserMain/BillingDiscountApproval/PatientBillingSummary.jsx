@@ -1,6 +1,6 @@
 /* Mohini_PatientBillingSummaryForm_WholePage_27/sep/24 */
 import React, { useState, useRef } from 'react';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import './DiscountApprovalReviewForm.css';
 const PatientBillingSummary = () => {
   const [selectedRequest, setSelectedRequest] = useState(null);

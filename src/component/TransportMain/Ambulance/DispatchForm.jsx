@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './DispatchForm.css';
 import axios from 'axios';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../../api/api';
 
 const DispatchForm = () => {

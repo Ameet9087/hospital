@@ -7,7 +7,7 @@ import './SettingSupplier.css';
 import * as XLSX from 'xlsx';
 import CustomModal from '../../CustomModel/CustomModal';
 import useCustomAlert from '../../alerts/useCustomAlert';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import { FloatingInput } from '../../FloatingInputs';
 
 const usersData = [

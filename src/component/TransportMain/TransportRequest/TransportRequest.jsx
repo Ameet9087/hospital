@@ -3,7 +3,7 @@ import axios from 'axios';
 import './TransportRequest.css';
 import CreateRequest from './CreateRequest';
 import CustomModal from '../../../CustomModel/CustomModal';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../../api/api';
 import {
   FloatingInput,

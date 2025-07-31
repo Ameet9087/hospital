@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./cssdkitreturn.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { API_BASE_URL } from "../../api/api";

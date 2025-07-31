@@ -5,7 +5,7 @@ import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import './UserCollectionReport.css';
 import { API_BASE_URL } from '../api/api';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 const PaymentModewiseReport = () => {
   const [showReport, setShowReport] = useState(false);

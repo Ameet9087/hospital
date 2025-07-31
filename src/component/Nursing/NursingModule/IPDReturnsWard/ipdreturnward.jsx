@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./IpdReturnsWard.css";
 
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
 import {
   FloatingInput,
   FloatingSelect,

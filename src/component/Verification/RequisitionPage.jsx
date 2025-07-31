@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import VerifyModal from "./VerifyModal";
 import "./RequisitionPage.css";
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 function RequisitionPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [requisitions, setRequisitions] = useState([]);

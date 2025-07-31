@@ -8,7 +8,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 import './UserCollectionReport.css';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../api/api';
 
 const AdmissionAndDischargedList = () => {

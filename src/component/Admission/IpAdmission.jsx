@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import "./IpAdmission.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+
 import { API_BASE_URL } from "../api/api";
 import {
   PopupTable,

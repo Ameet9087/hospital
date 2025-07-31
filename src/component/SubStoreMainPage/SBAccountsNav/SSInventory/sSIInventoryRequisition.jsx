@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../../api/api";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import SSIReceivedRequisition from "./sSIReceivedRequisition";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 import { useFilter } from "../../../ShortCuts/useFilter";
 import * as XLSX from 'xlsx';
 

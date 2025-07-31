@@ -5,7 +5,9 @@ import "../NavBarSection/pendingReports.css";
 
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+
 import { FloatingInput } from "../../FloatingInputs";
 
 function PendingReports() {

@@ -3,7 +3,9 @@ import { Modal, Button } from "react-bootstrap";
 import "./EmployeeTable.css";
 import UpdateEmployeeForm from "./UpdateEmployeeForm"; // Ensure this path is correct
 import AddEmployeeForm from "./AddEmployeeForm";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+
 import { API_BASE_URL } from "../api/api";
 import CustomModal from "../../CustomModel/CustomModal";
 import { useFilter } from "../ShortCuts/useFilter";

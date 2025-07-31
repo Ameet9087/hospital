@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './TotalStockValueTable.css';
-import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/resizableColumns';
 
 
 const TotalStockValueTable = () => {

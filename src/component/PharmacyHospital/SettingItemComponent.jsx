@@ -7,7 +7,7 @@ import { API_BASE_URL } from '../api/api';
 import CustomModal from '../../CustomModel/CustomModal';
 import useCustomAlert from '../../alerts/useCustomAlert';
 import * as XLSX from 'xlsx';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import AddItemMaster from './AddItemMaster';
 
 

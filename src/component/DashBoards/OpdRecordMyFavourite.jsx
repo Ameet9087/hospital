@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
 import './OpdRecordMyFavourite.css';
 import PatientDashboard from './PatientDashboard';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+
 
 const OpdRecordMyFavourites = () => {
   const [columnWidths, setColumnWidths] = useState({});

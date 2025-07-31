@@ -1,7 +1,7 @@
 
 import './CurrentInventoryDisplay.css';
 import { Link } from 'react-router-dom';
-import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/resizableColumns';
 import React, { useState, useRef } from "react";
 
 const CurrentInventoryDisplay = () => {

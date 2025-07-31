@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 import './UserCollectionReport.css';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 const DiscountSchemeReport = () => {
   const [showReport, setShowReport] = useState(false);
 

@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import "./ReturnFromSubstore.css"; // Updated to match the provided file
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+
 import * as XLSX from 'xlsx';
 import FloatingSelect from '../../../FloatingInputs/FloatingSelect';
 import {

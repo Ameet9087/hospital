@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ReferralTracking.css';
 import axios from 'axios';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+
 
 function ReferralTracking() {
   const [referrals, setReferrals] = useState([]);

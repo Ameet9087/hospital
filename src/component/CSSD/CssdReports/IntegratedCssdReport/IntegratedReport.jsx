@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Integratedreport.css";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
 
 function IntegratedReport() {
   const [columnWidths, setColumnWidths] = useState({});

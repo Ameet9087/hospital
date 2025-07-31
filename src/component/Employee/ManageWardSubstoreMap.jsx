@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
 import { Modal, Button } from "react-bootstrap";
 import "./ManageWardSubstoreMap.css"; // Custom styles for this component
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns"; // Assuming this is defined
+
+import { startResizing } from "../../TableHeadingResizing/resizableColumns"; // Assuming this is defined
+
 import CustomModal from "../../CustomModel/CustomModal";
 import AddWardSubstoreMap from "./AddWardSubstoreMap";
 

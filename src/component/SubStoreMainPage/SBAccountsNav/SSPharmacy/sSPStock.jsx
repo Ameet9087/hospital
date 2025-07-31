@@ -8,7 +8,7 @@ import SSPReports from "./sSPReports"; // Import the Reports component
 import SSPharmacyNInven from "./sSPharmacyNInven";
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../../api/api";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 import * as XLSX from 'xlsx';
 import { toast } from "react-toastify";
 import {

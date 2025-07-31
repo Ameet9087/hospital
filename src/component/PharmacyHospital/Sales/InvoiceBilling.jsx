@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './InvoiceBilling.css';
 import * as XLSX from 'xlsx';
 
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 const InvoiceBilling = () => {
   const [columnWidths,setColumnWidths] = useState({});
   const tableRef=useRef(null);

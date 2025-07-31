@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './PhysiotherapySessionList.css';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 const PhysiotherapySession = () => {
     const [sessions, setSessions] = useState([]);

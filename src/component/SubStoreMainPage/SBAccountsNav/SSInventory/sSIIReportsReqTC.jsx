@@ -4,7 +4,7 @@ import React, { useState, useRef } from "react";
 import * as XLSX from "xlsx"; // Import the xlsx library
 import "../SSInventory/sSIIReportsReqTC.css";
 import { useReactToPrint } from "react-to-print";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 import { toast } from "react-toastify";
 import {
   FloatingInput,

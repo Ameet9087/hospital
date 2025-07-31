@@ -2,7 +2,8 @@
 // neha HI-visitlist-19/09/24
 import React, { useState,useRef } from 'react';
 import { FaSearch, FaUser, FaSync } from 'react-icons/fa';
-import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../../../TableHeadingResizing/resizableColumns';
 
 import './VisitList.css';
 

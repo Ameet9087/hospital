@@ -6,7 +6,7 @@ import UpdateItem from "../components/UpdateItem";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
 import * as XLSX from 'xlsx';
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 
 const ItemList = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);

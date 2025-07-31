@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './respiratoryFunctionTests.css';
 import axios from 'axios';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 function RespiratoryFunctionTests() {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);

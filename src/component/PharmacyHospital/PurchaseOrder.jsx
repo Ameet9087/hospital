@@ -5,7 +5,7 @@ import { API_BASE_URL } from "../api/api";
 import PurchaseOrderForm from "./PurchaseOrderForm";
 import CustomModel from "../../CustomModel/CustomModal";
 import "./PurchaseOrder.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import GoodsReceiptForm from "./GoodsReceiptForm";
 import PurchaseOrderBillPrint from "./PurchaseOrderBillPrint";
 import UpdatePurchaseOrder from "./UpdatePurchaseOrder";

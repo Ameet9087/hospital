@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import "./CSSDKitDiscard.css";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+
 import { API_BASE_URL } from "../../api/api";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";

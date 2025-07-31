@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./consultant.css";
-import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../../TableHeadingResizing/resizableColumns";
 
 function Consultant() {
   const consultants = [

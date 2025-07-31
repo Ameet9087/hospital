@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Visitinghours.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import * as XLSX from 'xlsx';
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import { API_BASE_URL } from '../../api/api';

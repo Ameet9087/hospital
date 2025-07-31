@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "../ListRequest/rdlListRequest.css";
 import AddReportForm from "./rdlAddReport";
 import RDLAddScanDoneDetails from "./rdlScanDone";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";

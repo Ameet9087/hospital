@@ -5,7 +5,9 @@ import { API_BASE_URL } from "../../api/api";
 import { FloatingInput } from "../../../FloatingInputs";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { useFilter } from "../../ShortCuts/useFilter";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+
 import "./ManageImagingType.css";
 
 const ManageImagingType = () => {

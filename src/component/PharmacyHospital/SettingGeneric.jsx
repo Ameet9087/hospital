@@ -6,7 +6,7 @@ import './SettingSupplier.css';
 import { API_BASE_URL } from '../api/api';
 import CustomModal from '../../CustomModel/CustomModal';
 import useCustomAlert from '../../alerts/useCustomAlert';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 const genericApiUrl = `${API_BASE_URL}/generic-names`;
 const categoryApiUrl = `${API_BASE_URL}/categories`;
 import * as XLSX from 'xlsx';

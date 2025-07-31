@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./EquipmentGatePassOut.css";
 import EquipmentGatePassOutPopUp from "./EquipmentGatePassOutPopUp";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
 import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 import * as XLSX from "xlsx";

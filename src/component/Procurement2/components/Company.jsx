@@ -6,7 +6,7 @@ import './Company.css';
 import CustomModal from '../../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../../api/api';
 import ReactToPrint from 'react-to-print';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import * as XLSX from 'xlsx';
 
 Modal.setAppElement('#root');

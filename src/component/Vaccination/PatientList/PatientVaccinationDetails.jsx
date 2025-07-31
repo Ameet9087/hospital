@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./PatientVaccinationDetail.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import FloatingInput from "../../../FloatingInputs/FloatingInput";
 import FloatingSelect from "../../../FloatingInputs/FloatingSelect";

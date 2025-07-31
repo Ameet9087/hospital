@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 import './MaanageReaction.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+
 
 const usersData = [
     { code: 'AN', name: 'ANNAPHYLAXIS' },

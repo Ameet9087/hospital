@@ -3,7 +3,9 @@ import "./doctormaster.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faL, faSearch } from "@fortawesome/free-solid-svg-icons";
 import CustomModal from "../../../CustomModel/CustomModal";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
 import {

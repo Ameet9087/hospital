@@ -1,6 +1,6 @@
 import React, { useState,useRef } from 'react';
 import './UserCollectionReport.css';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 const InPatientOutstandingReport = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [showReport, setShowReport] = useState(false);

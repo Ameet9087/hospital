@@ -3,7 +3,9 @@ import * as XLSX from "xlsx"; // Import the xlsx library
 import "../BloodIssue/bloodIssue.css";
 import { useReactToPrint } from "react-to-print";
 import { API_BASE_URL } from "../../api/api";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+
 
 function BloodIssue() {
   const printRef = useRef();

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./AutopsyexecutionForm.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+
 import CustomModal from "../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import AutopsyExecutionFormPopUp from "./AutopsyExecutionFormPopUp";

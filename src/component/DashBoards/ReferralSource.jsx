@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ReferralSource.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+
 import { API_BASE_URL } from "../api/api";
 import OutPatient from "./OutPatient";
 import { FloatingInput } from "../../FloatingInputs";

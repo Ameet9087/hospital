@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+
 import "./ManageWard.css";
 import { API_BASE_URL } from "../../api/api";
 import CustomModal from "../../../CustomModel/CustomModal";

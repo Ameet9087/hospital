@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-// import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
+
 import "./DischargeIntimationForm.css";
 import PopupTable from "../Services/PopupTable";
 import axios from "axios";

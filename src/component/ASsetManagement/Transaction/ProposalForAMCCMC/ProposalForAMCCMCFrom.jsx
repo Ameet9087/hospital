@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import "./ProposalForAMCCMCFrom.css"; // Adjust the CSS file name
 import CustomModal from "../../../../CustomModel/CustomModal";
 import ProposalForAMCCMC from "./ProposalForAMCCMCPopUp";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
 import { API_BASE_URL } from "../../../api/api";
 import * as XLSX from "xlsx";
 

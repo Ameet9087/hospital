@@ -3,7 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 
 
 import './UserCollectionReport.css';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 const UserCollectionReport = () => {
   const [showReport, setShowReport] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});

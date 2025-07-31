@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./PharmacySupplier.css"; // Import your CSS for styling
-import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../../TableHeadingResizing/resizableColumns";
 
 const PharmacySupplier = () => {
   // Sample data (you can replace this with your actual data)

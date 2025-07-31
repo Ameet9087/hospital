@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { Button } from "react-bootstrap";
 import "./EmployeeTypeTable.css"; // Assuming your CSS is included here
 import AddEmployeeType from "./AddEmployeeType"; // Import the AddEmployeeType component
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+
 import { API_BASE_URL } from "../api/api"; // Ensure the correct API_BASE_URL is imported
 import { useFilter } from "../ShortCuts/useFilter";
 import axios from "axios";

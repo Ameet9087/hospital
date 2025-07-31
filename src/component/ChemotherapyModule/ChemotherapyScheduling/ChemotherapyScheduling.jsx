@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios'; // Import axios
 import './ChemotherapyScheduling.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import * as XLSX from 'xlsx';
 
 const ChemotherapyScheduling = () => {

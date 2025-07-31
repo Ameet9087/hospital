@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import './ItemWisePurchaseReport.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import * as XLSX from 'xlsx';
 
 const ItemWisePurchaseReportCom = () => {

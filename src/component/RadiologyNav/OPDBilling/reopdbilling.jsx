@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import * as XLSX from "xlsx";
 import "./reopdbilling.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import Modal from "react-bootstrap/Modal";
 
 function RDopdbilling() {

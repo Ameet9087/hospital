@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import "./OPCancelationApprovalAction.css";
 import { FloatingInput, FloatingSelect, FloatingTextarea, PopupTable } from "../../FloatingInputs/index";
 import { API_BASE_URL } from "../api/api";

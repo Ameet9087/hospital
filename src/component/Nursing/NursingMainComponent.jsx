@@ -5,7 +5,9 @@ import "./NursingMainComponent.css";
 import OpdTriagePage from "./OpdTriagePage";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+
 import { API_BASE_URL } from "../api/api";
 import VitalsPage from "../DashBoards/ClinicalVitals";
 import axios from "axios";

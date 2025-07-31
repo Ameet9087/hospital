@@ -4,7 +4,7 @@ import CustomModal from "../../../CustomModel/CustomModal";
 import AddTermsAndConditions from "./AddTerms";
 import { API_BASE_URL } from "../../api/api";
 import * as XLSX from 'xlsx';
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 
 const Terms = () => {
   const [terms, setTerms] = useState([]);

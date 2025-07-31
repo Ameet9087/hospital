@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import "./NewPatientFollowUpList.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+
 
 const NewPatientFollowUpList = () => {
   const [columnWidths, setColumnWidths] = useState({});

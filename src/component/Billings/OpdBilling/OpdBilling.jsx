@@ -5,7 +5,7 @@ import {
   FloatingInput,
   FloatingSelect,
 } from "../../../FloatingInputs/index";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
 import { toast } from "react-toastify";

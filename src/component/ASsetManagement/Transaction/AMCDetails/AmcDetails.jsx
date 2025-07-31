@@ -4,7 +4,9 @@ import CustomModal from "../../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import AmcDetailsForm from "./AmcDetailsForm";
 import { API_BASE_URL } from "../../../api/api";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
 const AmcDetails = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});

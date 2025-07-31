@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./EmergencyRequest.css";
 import axios from "axios";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import {
   FloatingInput,

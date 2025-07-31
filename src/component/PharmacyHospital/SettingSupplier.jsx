@@ -4,7 +4,7 @@ import axios from "axios";
 import "./SettingSupplier.css";
 import { API_BASE_URL } from "../api/api";
 import * as XLSX from "xlsx";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import CustomModal from "../../CustomModel/CustomModal";
 import useCustomAlert from "../../alerts/useCustomAlert";
 import { FloatingInput } from "../../FloatingInputs";

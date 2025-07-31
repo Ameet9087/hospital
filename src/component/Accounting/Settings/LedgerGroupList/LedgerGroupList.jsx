@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import "./LedgerGroup.css";
 import CreateledgergroupPopup from "./CreateLedgerGroupPopup";
 import UpdateLedgerGroupPopup from "./UpdateLedgerGroupPopup"; // Assuming this component exists
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
 
 const dummyData = [
   {

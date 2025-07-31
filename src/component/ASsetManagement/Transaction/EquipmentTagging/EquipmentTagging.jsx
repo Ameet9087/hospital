@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./EquipmentTagging.css";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
 import CustomModal from "../../../../CustomModel/CustomModal";
 import EquipmentTaggingForm from "./EquipmentTaggingForm";
 import * as XLSX from "xlsx";

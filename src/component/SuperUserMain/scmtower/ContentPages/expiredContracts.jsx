@@ -678,7 +678,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import "./ExpiredContractsSCM.css"
-import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/resizableColumns';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import * as XLSX from 'xlsx';

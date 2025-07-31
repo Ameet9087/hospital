@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import "./Dgmaster.css";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+
 import DgMasterPopup from "./DgMasterPopup";
 import { toast } from "react-toastify";
 

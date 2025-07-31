@@ -1,6 +1,6 @@
 /* Mohini_DiscountHistoryFormCom_WholePage_27/sep/24 */
 import React, { useState, useRef } from 'react';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import './DiscountApprovalReviewForm.css';
 const DiscountHistory= () => {
   const [selectedRequest, setSelectedRequest] = useState(null);

@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import "./StockList.css";
 import StockManage from './StockManage'; // Import StockManage component
 import { API_BASE_URL } from '../../../api/api';
-import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../../../TableHeadingResizing/resizableColumns';
+
 import * as XLSX from 'xlsx';
 import FloatingInput from '../../../../FloatingInputs/FloatingInput';
 import FloatingSelect from '../../../../FloatingInputs/FloatingSelect';

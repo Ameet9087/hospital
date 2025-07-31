@@ -7,7 +7,7 @@ import { API_BASE_URL } from "../api/api";
 import CustomModal from "../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import useCustomAlert from "../../alerts/useCustomAlert";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { toast } from "react-toastify";
 import { FloatingInput } from "../../FloatingInputs";
 const SettingItemType = () => {

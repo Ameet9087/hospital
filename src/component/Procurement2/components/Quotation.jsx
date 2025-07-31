@@ -6,7 +6,7 @@ import "./Quotation.css";
 import RequestForQuotation from "../components/RequestForQuotation";
 import RFQDetails from "../components/RFQDetails";
 import CustomModal from "../../../CustomModel/CustomModal";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import * as XLSX from 'xlsx';
 import { API_BASE_URL } from "../../api/api";
 

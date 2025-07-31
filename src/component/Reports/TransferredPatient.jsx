@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import './UserCollectionReport.css';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import { useReactToPrint } from "react-to-print";
 
 import * as XLSX from 'xlsx';

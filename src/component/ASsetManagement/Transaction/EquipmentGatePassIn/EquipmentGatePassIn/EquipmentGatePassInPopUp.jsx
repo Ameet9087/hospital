@@ -1,7 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./EquipmentGatePassInPopUp.css";
 import { FaSearch } from "react-icons/fa"; // Using react-icons
-import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../../TableHeadingResizing/resizableColumns";
+
 import { API_BASE_URL } from "../../../../api/api";
 import { FloatingInput,FloatingSelect } from "../../../../../FloatingInputs";
 import {toast}  from "react-toastify";

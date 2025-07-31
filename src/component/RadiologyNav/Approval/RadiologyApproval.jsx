@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "../ListReports/rdlListReports.css";
 import * as XLSX from "xlsx"; // Import xlsx library
 import RadiologyApprovalReport from "./RadiologyApprovalReport";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
 

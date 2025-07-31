@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./User.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
 import NewUserForm from "./NewUserForm";
 import { API_BASE_URL } from "../../api/api";

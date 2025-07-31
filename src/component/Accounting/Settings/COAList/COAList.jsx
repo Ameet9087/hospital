@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import "./COAList.css";
 import CreateCoaPopup from "./NewCoaPopup";
 import UpdateCoaPopup from "./UpdateCoaPopup";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 
 const dummyData = [
   {

@@ -7,7 +7,7 @@ import { useReactToPrint } from 'react-to-print'; // Import for print functional
 import './AccountHead.css';
 import CustomModal from '../../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../../api/api';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import * as XLSX from 'xlsx';
 
 Modal.setAppElement('#root'); // Set the app element for accessibility

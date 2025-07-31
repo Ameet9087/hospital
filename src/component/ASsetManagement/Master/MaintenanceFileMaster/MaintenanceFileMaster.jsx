@@ -3,7 +3,9 @@ import "./MaintenanceFileMaster.css";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import MaintenanceFileMasterPopUp from "../MaintenanceFileMaster/MaintenanceFileMasterPopUp";
 import { API_BASE_URL } from "../../../api/api";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
 import { FloatingInput } from "../../../../FloatingInputs";
 
 const MaintenanceTypeMaster = () => {

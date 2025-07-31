@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import "./BillingLedger.css"; // Import your CSS for styling
-import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../../TableHeadingResizing/resizableColumns";
+
 
 const BillingLedger = () => {
   const [data, setData] = useState([

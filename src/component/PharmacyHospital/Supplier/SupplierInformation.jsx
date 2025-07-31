@@ -1,7 +1,7 @@
 /* Mohini_HospitalHeader_WholePage_14/sep/2024 */
 import React, { useState, useEffect, useRef } from 'react';
 import './SupplierInformation.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import * as XLSX from 'xlsx';
 
 const SupplierInformationCom = () => {

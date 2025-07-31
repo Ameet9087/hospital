@@ -6,7 +6,7 @@ import './SettingSupplier.css';
 import { API_BASE_URL } from '../api/api';
 import CustomModal from '../../CustomModel/CustomModal';
 import useCustomAlert from '../../alerts/useCustomAlert';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import * as XLSX from 'xlsx';
 import { toast } from 'react-toastify';
 import { FloatingInput } from '../../FloatingInputs';

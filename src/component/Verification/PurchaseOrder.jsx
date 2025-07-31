@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./RequisitionPage.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 
 function PurchaseOrder() {

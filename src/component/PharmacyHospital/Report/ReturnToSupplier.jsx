@@ -1,7 +1,7 @@
 /* Mohini_ReturnToSupplier_14/sep/2024 */
 import React, { useState, useRef } from 'react'; // Import useState and useRef
 import './ReturnToSupplier.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 
 const ReturnToSupplier = () => {
   const [columnWidths, setColumnWidths] = useState({});

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ClinicalNotes.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 
 const ClinicalNotes = () => {
   const [columnWidths, setColumnWidths] = useState({});

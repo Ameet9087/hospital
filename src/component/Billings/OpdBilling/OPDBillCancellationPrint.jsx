@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import "./OpdBillingCancellationPrint.css"; // Make sure the CSS file is created for styling
 import { useLocation } from "react-router-dom";
 

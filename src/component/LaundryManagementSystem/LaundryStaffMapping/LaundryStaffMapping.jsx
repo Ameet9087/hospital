@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+
 import "./LaundryStaffMapping.css";
 import { FaSearch, FaArrowCircleRight } from "react-icons/fa";
 import PopupTable from "../../Admission/PopupTable";

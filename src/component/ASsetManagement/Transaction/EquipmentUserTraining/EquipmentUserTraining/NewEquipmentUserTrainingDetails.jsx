@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./NewEquipmentUserTrainingDetails.css";
 import EquipmentInstallationDetailsPopUp from "./EquipmentUserTrainingDetailsPopUp";
-import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../../TableHeadingResizing/resizableColumns";
+
 import CustomModal from "../../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../../api/api";
 

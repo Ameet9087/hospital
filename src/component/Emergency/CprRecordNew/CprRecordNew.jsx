@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "./CprRecordNew.css";
 import PopupTable from "../popup";
 import axios from "axios";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";

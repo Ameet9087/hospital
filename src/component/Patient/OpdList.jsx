@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import axios from "axios";
 import "./OpdList.css";
 import { API_BASE_URL } from "../api/api";

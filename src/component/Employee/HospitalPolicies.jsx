@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Hospitalpolicies.css";
 import PopupTable from "../../FloatingInputs/PopupTable";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 import { FloatingInput, FloatingSelect } from "../../FloatingInputs";

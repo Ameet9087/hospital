@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 // import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import axios from "axios";
 import "./ipbilling.css";
 import { API_BASE_URL } from "../../api/api";

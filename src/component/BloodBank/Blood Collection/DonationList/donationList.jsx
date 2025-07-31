@@ -3,7 +3,9 @@ import React, { useState, useEffect, useRef } from "react";
 import "./donationList.css";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import axios from "axios";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+
 import { API_BASE_URL } from "../../../api/api";
 import { FloatingInput, FloatingSelect } from "../../../../FloatingInputs";
 import { toast } from 'react-toastify';

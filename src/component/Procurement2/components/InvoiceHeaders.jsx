@@ -5,7 +5,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import InvoiceHeaderForm from "../components/AddInvoiceHeader";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import * as XLSX from 'xlsx';
 
 

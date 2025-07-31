@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ClinicalAllergy.css"; // Separate CSS file
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
 import OutPatient from "./OutPatient";

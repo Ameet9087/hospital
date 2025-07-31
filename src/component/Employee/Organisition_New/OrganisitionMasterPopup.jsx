@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaArrowCircleRight } from "react-icons/fa";
 import "./OrganisitionMasterPopup.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+
 import { CiSearch } from "react-icons/ci";
 import axios from "axios";
 import { toast } from "react-toastify";

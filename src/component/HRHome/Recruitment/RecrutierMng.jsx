@@ -4,7 +4,9 @@ import axios from 'axios';
 import { utils, writeFile } from 'xlsx';
 import AddNewrecrutier from './AddNewrecrutier';
 import Updaterecruiter from './Updaterecruiter'
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import { API_BASE_URL } from '../../api/api';
 import { FloatingInput } from '../../../FloatingInputs';
